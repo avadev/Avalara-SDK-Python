@@ -1,0 +1,63 @@
+# TransactionLineDetailModel
+
+An individual tax detail element.  Represents the amount of tax calculated for a particular jurisdiction, for a particular line in an invoice.
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **int** | The unique ID number of this tax detail. | [optional] [readonly] 
+**transaction_line_id** | **int** | The unique ID number of the line within this transaction. | [optional] [readonly] 
+**transaction_id** | **int** | The unique ID number of this transaction. | [optional] [readonly] 
+**address_id** | **int** | The unique ID number of the address used for this tax detail. | [optional] 
+**country** | **str** | The two character ISO 3166 country code of the country where this tax detail is assigned. | [optional] 
+**region** | **str** | The two-or-three character ISO region code for the region where this tax detail is assigned. | [optional] 
+**county_fips** | **str** | For U.S. transactions, the Federal Information Processing Standard (FIPS) code for the county where this tax detail is assigned. | [optional] 
+**state_fips** | **str** | For U.S. transactions, the Federal Information Processing Standard (FIPS) code for the state where this tax detail is assigned. | [optional] 
+**exempt_amount** | **float** | The amount of this line that was considered exempt in this tax detail. | [optional] 
+**exempt_reason_id** | **int** | The unique ID number of the exemption reason for this tax detail. | [optional] 
+**in_state** | **bool** | True if this detail element represented an in-state transaction. | [optional] 
+**juris_code** | **str** | The code of the jurisdiction to which this tax detail applies. | [optional] 
+**juris_name** | **str** | The name of the jurisdiction to which this tax detail applies. | [optional] 
+**jurisdiction_id** | **int** | The unique ID number of the jurisdiction to which this tax detail applies. | [optional] 
+**signature_code** | **str** | The Avalara-specified signature code of the jurisdiction to which this tax detail applies. | [optional] 
+**state_assigned_no** | **str** | The state assigned number of the jurisdiction to which this tax detail applies. | [optional] 
+**juris_type** | **str** | DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Use jurisdictionTypeId instead.  The type of the jurisdiction to which this tax detail applies. | [optional] 
+**jurisdiction_type** | **str** | The type of the jurisdiction in which this tax detail applies. | [optional] 
+**non_taxable_amount** | **float** | The amount of this line item that was considered nontaxable in this tax detail. | [optional] 
+**non_taxable_rule_id** | **int** | The rule according to which portion of this detail was considered nontaxable. | [optional] 
+**non_taxable_type** | **str** | The type of nontaxability that was applied to this tax detail. | [optional] 
+**rate** | **float** | The rate at which this tax detail was calculated. | [optional] 
+**rate_rule_id** | **int** | The unique ID number of the rule according to which this tax detail was calculated. | [optional] 
+**rate_source_id** | **int** | The unique ID number of the source of the rate according to which this tax detail was calculated. | [optional] 
+**ser_code** | **str** | For Streamlined Sales Tax customers, the SST Electronic Return code under which this tax detail should be applied. | [optional] 
+**sourcing** | **str** | Indicates whether this tax detail applies to the origin or destination of the transaction. | [optional] 
+**tax** | **float** | The amount of tax for this tax detail. | [optional] 
+**taxable_amount** | **float** | The taxable amount of this tax detail. | [optional] 
+**tax_type** | **str** | The type of tax that was calculated.  Depends on the company&#39;s nexus settings as well as the jurisdiction&#39;s tax laws. | [optional] 
+**tax_sub_type_id** | **str** | The id of the tax subtype. | [optional] 
+**tax_type_group_id** | **str** | The id of the tax type group. | [optional] 
+**tax_name** | **str** | The name of the tax against which this tax amount was calculated. | [optional] 
+**tax_authority_type_id** | **int** | The type of the tax authority to which this tax will be remitted. | [optional] 
+**tax_region_id** | **int** | The unique ID number of the tax region. | [optional] 
+**tax_calculated** | **float** | The amount of tax that AvaTax calculated.  If an override for tax amount is used, there may be a difference between the tax  field which applies your override, and the this amount that is calculated without override. | [optional] 
+**tax_override** | **float** | The amount of tax override that was specified for this tax line. | [optional] 
+**rate_type** | **str** | DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Please use rateTypeCode instead.  The rate type for this tax detail. | [optional] 
+**rate_type_code** | **str** | Indicates the code of the rate type that was used to calculate this tax detail.  Use [ListRateTypesByCountry](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListRateTypesByCountry/) API for a full list of rate type codes. | [optional] 
+**taxable_units** | **float** | Number of units in this line item that were calculated to be taxable according to this rate detail. | [optional] 
+**non_taxable_units** | **float** | Number of units in this line item that were calculated to be nontaxable according to this rate detail. | [optional] 
+**exempt_units** | **float** | Number of units in this line item that were calculated to be exempt according to this rate detail. | [optional] 
+**unit_of_basis** | **str** | When calculating units, what basis of measurement did we use for calculating the units? | [optional] 
+**is_non_pass_thru** | **bool** | True if this value is a non-passthrough tax.                A non-passthrough tax is a tax that may not be charged to a customer; it must be paid directly by the company. | [optional] 
+**is_fee** | **bool** | The Taxes/Fee component. True if the fee is applied. | [optional] 
+**reporting_taxable_units** | **float** | Number of units in this line item that were calculated to be taxable according to this rate detail in the reporting currency. | [optional] 
+**reporting_non_taxable_units** | **float** | Number of units in this line item that were calculated to be nontaxable according to this rate detail in the reporting currency. | [optional] 
+**reporting_exempt_units** | **float** | Number of units in this line item that were calculated to be exempt according to this rate detail in the reporting currency. | [optional] 
+**reporting_tax** | **float** | The amount of tax for this tax detail in the reporting currency. | [optional] 
+**reporting_tax_calculated** | **float** | The amount of tax that AvaTax calculated in the reporting currency.  If an override for tax amount is used, there may be a difference between the tax  field which applies your override, and the this amount that is calculated without override. | [optional] 
+**liability_type** | **str** | LiabilityType identifies the party liable to file the tax. This field is used to filter taxes from reports and tax filings as appropriate. | [optional] 
+**avt_user_bin** | **str** | ID of the AvaTax user creating the transaction. This field will be calculated by AvaTax based on the Company settings and the transaction details. | [optional] 
+**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
