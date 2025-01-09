@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    
+@version    24.12.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -39,14 +39,16 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from Avalara.SDK.model.EInvoicing.V1.bad_download_request import BadDownloadRequest
-from Avalara.SDK.model.EInvoicing.V1.bad_request import BadRequest
-from Avalara.SDK.model.EInvoicing.V1.document_list_response import DocumentListResponse
-from Avalara.SDK.model.EInvoicing.V1.document_status_response import DocumentStatusResponse
-from Avalara.SDK.model.EInvoicing.V1.document_submission_error import DocumentSubmissionError
-from Avalara.SDK.model.EInvoicing.V1.document_submit_response import DocumentSubmitResponse
-from Avalara.SDK.model.EInvoicing.V1.forbidden_error import ForbiddenError
-from Avalara.SDK.model.EInvoicing.V1.not_found_error import NotFoundError
+from datetime import datetime
+from pydantic import Field, StrictBytes, StrictFloat, StrictInt, StrictStr
+from typing import Optional, Union
+from typing_extensions import Annotated
+from Avalara.SDK.models.EInvoicing.V1.document_fetch import DocumentFetch
+from Avalara.SDK.models.EInvoicing.V1.document_fetch_request import DocumentFetchRequest
+from Avalara.SDK.models.EInvoicing.V1.document_list_response import DocumentListResponse
+from Avalara.SDK.models.EInvoicing.V1.document_status_response import DocumentStatusResponse
+from Avalara.SDK.models.EInvoicing.V1.document_submit_response import DocumentSubmitResponse
+from Avalara.SDK.models.EInvoicing.V1.submit_document_metadata import SubmitDocumentMetadata
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper import avalara_retry_oauth
 
@@ -61,12 +63,12 @@ class DocumentsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("")
+        api_client.set_sdk_version("24.12.0")
         self.api_client = api_client
 		
         self.download_document_endpoint = _Endpoint(
             settings={
-                'response_type': (file_type,),
+                'response_type': (bytearray,),
                 'auth': [
                     'Bearer'
                 ],
@@ -125,13 +127,78 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.0',
+                'avalara-version': '1.2',
                 'accept': [
                     'application/pdf',
                     'application/xml',
                     'application/json'
                 ],
                 'content_type': [],
+            },
+            api_client=api_client,
+            required_scopes=''
+        )
+        self.fetch_documents_endpoint = _Endpoint(
+            settings={
+                'response_type': (DocumentFetch,),
+                'auth': [
+                    'Bearer'
+                ],
+                'endpoint_path': '/einvoicing/documents/$fetch',
+                'operation_id': 'fetch_documents',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'avalara_version',
+                    'document_fetch_request',
+                    'x_avalara_client',
+                ],
+                'required': [
+                    'avalara_version',
+                    'document_fetch_request',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'avalara_version':
+                        (str,),
+                    'document_fetch_request':
+                        (DocumentFetchRequest,),
+                    'x_avalara_client':
+                        (str,),
+                },
+                'attribute_map': {
+                    'avalara_version': 'avalara-version',
+                    'x_avalara_client': 'X-Avalara-Client',
+                },
+                'location_map': {
+                    'avalara_version': 'header',
+                    'document_fetch_request': 'body',
+                    'x_avalara_client': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'avalara-version': '1.2',
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
             },
             api_client=api_client,
             required_scopes=''
@@ -225,7 +292,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.0',
+                'avalara-version': '1.2',
                 'accept': [
                     'application/json'
                 ],
@@ -240,7 +307,7 @@ class DocumentsApi(object):
                 'auth': [
                     'Bearer'
                 ],
-                'endpoint_path': '/einvoicing/document/{documentId}/status',
+                'endpoint_path': '/einvoicing/documents/{documentId}/status',
                 'operation_id': 'get_document_status',
                 'http_method': 'GET',
                 'servers': None,
@@ -289,7 +356,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.0',
+                'avalara-version': '1.2',
                 'accept': [
                     'application/json'
                 ],
@@ -337,9 +404,9 @@ class DocumentsApi(object):
                     'avalara_version':
                         (str,),
                     'metadata':
-                        ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),
+                        (SubmitDocumentMetadata,),
                     'data':
-                        ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),
+                        (str,),
                     'x_avalara_client':
                         (str,),
                 },
@@ -359,7 +426,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.0',
+                'avalara-version': '1.2',
                 'accept': [
                     'application/json',
                     'text/xml'
@@ -382,7 +449,7 @@ class DocumentsApi(object):
     ):
         """Returns a copy of the document  # noqa: E501
 
-        When the document is available, use this endpoint to download it as text, XML, or PDF. The output format needs to be specified in the Accept header and it will vary depending on the mandate. If the file has not yet been created, then status code 404 (not found) is returned.  # noqa: E501
+        When the document is available, use this endpoint to download it as text, XML, or PDF. The output format needs to be specified in the Accept header, and it will vary depending on the mandate. If the file has not yet been created, then status code 404 (not found) is returned.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -395,7 +462,7 @@ class DocumentsApi(object):
             document_id (str): The unique ID for this document that was returned in the POST /einvoicing/document response body
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -417,7 +484,7 @@ class DocumentsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            file_type
+            bytearray
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -441,13 +508,81 @@ class DocumentsApi(object):
             '_check_return_type', True
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['avalara_version'] = \
-            avalara_version
-        kwargs['accept'] = \
-            accept
-        kwargs['document_id'] = \
-            document_id
+        kwargs['avalara_version'] = avalara_version
+        kwargs['accept'] = accept
+        kwargs['document_id'] = document_id
         return self.download_document_endpoint.call_with_http_info(**kwargs)
+
+    @avalara_retry_oauth(max_retry_attempts=2)
+    def fetch_documents(
+        self,
+        avalara_version,
+        document_fetch_request,
+        **kwargs
+    ):
+        """Fetch the inbound document from a tax authority  # noqa: E501
+
+        This API allows you to retrieve an inbound document. Pass key-value pairs as parameters in the request, such as the confirmation number, supplier number, and buyer VAT number.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.fetch_documents(avalara_version, document_fetch_request, async_req=True)
+        >>> result = thread.get()
+
+        Args:
+            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
+            document_fetch_request (DocumentFetchRequest):
+
+        Keyword Args:
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
+            _return_http_data_only (bool): response data without head status
+                code and headers. Default is True.
+            _preload_content (bool): if False, the urllib3.HTTPResponse object
+                will be returned without reading/decoding response data.
+                Default is True.
+            _request_timeout (int/float/tuple): timeout setting for this request. If
+                one number provided, it will be total request timeout. It can also
+                be a pair (tuple) of (connection, read) timeouts.
+                Default is None.
+            _check_input_type (bool): specifies if type checking
+                should be done one the data sent to the server.
+                Default is True.
+            _check_return_type (bool): specifies if type checking
+                should be done one the data received from the server.
+                Default is True.
+            _host_index (int/None): specifies the index of the server
+                that we want to use.
+                Default is read from the configuration.
+            async_req (bool): execute request asynchronously
+
+        Returns:
+            DocumentFetch
+                If the method is called asynchronously, returns the request
+                thread.
+        """
+        self.__verify_api_client(self.api_client)
+        kwargs['async_req'] = kwargs.get(
+            'async_req', False
+        )
+        kwargs['_return_http_data_only'] = kwargs.get(
+            '_return_http_data_only', True
+        )
+        kwargs['_preload_content'] = kwargs.get(
+            '_preload_content', True
+        )
+        kwargs['_request_timeout'] = kwargs.get(
+            '_request_timeout', None
+        )
+        kwargs['_check_input_type'] = kwargs.get(
+            '_check_input_type', True
+        )
+        kwargs['_check_return_type'] = kwargs.get(
+            '_check_return_type', True
+        )
+        kwargs['_host_index'] = kwargs.get('_host_index')
+        kwargs['avalara_version'] = avalara_version
+        kwargs['document_fetch_request'] = document_fetch_request
+        return self.fetch_documents_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
     def get_document_list(
@@ -468,7 +603,7 @@ class DocumentsApi(object):
             avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             start_date (datetime): Start date of documents to return. This defaults to the previous month.. [optional]
             end_date (datetime): End date of documents to return. This defaults to the current date.. [optional]
             flow (str): Optionally filter by document direction, where issued = `out` and received = `in`. [optional]
@@ -522,8 +657,7 @@ class DocumentsApi(object):
             '_check_return_type', True
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['avalara_version'] = \
-            avalara_version
+        kwargs['avalara_version'] = avalara_version
         return self.get_document_list_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -547,7 +681,7 @@ class DocumentsApi(object):
             document_id (str): The unique ID for this document that was returned in the POST /einvoicing/documents response body
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -593,10 +727,8 @@ class DocumentsApi(object):
             '_check_return_type', True
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['avalara_version'] = \
-            avalara_version
-        kwargs['document_id'] = \
-            document_id
+        kwargs['avalara_version'] = avalara_version
+        kwargs['document_id'] = document_id
         return self.get_document_status_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -609,7 +741,7 @@ class DocumentsApi(object):
     ):
         """Submits a document to Avalara E-Invoicing API  # noqa: E501
 
-        For both e-invoices and credit notes, when a document is sent to this endpoint, it generates an invoice or credit note in the required format as mandated by the specified country. Additionally, it initiates the workflow to transmit the generated document to the relevant tax authority, if necessary.<br><br>The response from the endpoint contains a unique document ID, which can be used to request the status of the document and verify if it was successfully accepted at the destination.<br><br>Furthermore, the unique ID enables the download of a copy of the e-invoice or credit note for reference purposes.  # noqa: E501
+        When a UBL document is sent to this endpoint, it generates a document in the required format as mandated by the specified country. Additionally, it initiates the workflow to transmit the generated document to the relevant tax authority, if necessary.<br><br>The response from the endpoint contains a unique document ID, which can be used to request the status of the document and verify if it was successfully accepted at the destination.<br><br>Furthermore, the unique ID enables the download of a copy of the generated document for reference purposes.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -619,10 +751,10 @@ class DocumentsApi(object):
         Args:
             avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
             metadata (SubmitDocumentMetadata):
-            data ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): The document to be submitted, as indicated by the metadata fields 'dataFormat' and 'dataFormatVersion'
+            data (str): The document to be submitted, as indicated by the metadata fields 'dataFormat' and 'dataFormatVersion'
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -668,11 +800,8 @@ class DocumentsApi(object):
             '_check_return_type', True
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['avalara_version'] = \
-            avalara_version
-        kwargs['metadata'] = \
-            metadata
-        kwargs['data'] = \
-            data
+        kwargs['avalara_version'] = avalara_version
+        kwargs['metadata'] = metadata
+        kwargs['data'] = data
         return self.submit_document_endpoint.call_with_http_info(**kwargs)
 

@@ -2,28 +2,35 @@ name: Upload Python Package
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build
-        pip install -r ./requirements.txt
-        pip install -r ./test-requirements.txt
-    - name: Build package
-      run: python -m build
-    - name: Test package
-      run: pytest -s -v --cov=Avalara.SDK --username=${{ secrets.API_USERNAME }} --password=${{ secrets.API_PASSWORD }}
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+          pip install -r ./requirements.txt
+          pip install -r ./test-requirements.txt
+      - name: Retrieve bearer token
+        id: get_bearer_token
+        run: |
+          response=$(curl -X POST ${{secrets.OKTA_ACCESS_TOKEN_URL}}/connect/token \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "grant_type=client_credentials&client_id=${{secrets.OKTA_CLIENT_ID}}&client_secret=${{secrets.OKTA_CLIENT_SECRET}}")
+          token=$(echo $response | jq -r '.access_token')
+          echo "BEARER_TOKEN=${token}" >> $GITHUB_ENV
+      - name: Build package
+        run: python -m build
+      - name: Test package
+        run: pytest -s -v --cov=Avalara.SDK

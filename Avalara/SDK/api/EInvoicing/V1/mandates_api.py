@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    
+@version    24.12.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -39,10 +39,11 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from Avalara.SDK.model.EInvoicing.V1.forbidden_error import ForbiddenError
-from Avalara.SDK.model.EInvoicing.V1.internal_server_error import InternalServerError
-from Avalara.SDK.model.EInvoicing.V1.mandates_response import MandatesResponse
-from Avalara.SDK.model.EInvoicing.V1.not_found_error import NotFoundError
+from pydantic import Field, StrictFloat, StrictInt, StrictStr
+from typing import List, Optional, Union
+from typing_extensions import Annotated
+from Avalara.SDK.models.EInvoicing.V1.mandate_data_input_field import MandateDataInputField
+from Avalara.SDK.models.EInvoicing.V1.mandates_response import MandatesResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper import avalara_retry_oauth
 
@@ -57,9 +58,85 @@ class MandatesApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("")
+        api_client.set_sdk_version("24.12.0")
         self.api_client = api_client
 		
+        self.get_mandate_data_input_fields_endpoint = _Endpoint(
+            settings={
+                'response_type': (List[MandateDataInputField],),
+                'auth': [
+                    'Bearer'
+                ],
+                'endpoint_path': '/einvoicing/mandates/{mandateId}/data-input-fields',
+                'operation_id': 'get_mandate_data_input_fields',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'avalara_version',
+                    'mandate_id',
+                    'document_type',
+                    'document_version',
+                    'x_avalara_client',
+                ],
+                'required': [
+                    'avalara_version',
+                    'mandate_id',
+                    'document_type',
+                    'document_version',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'avalara_version':
+                        (str,),
+                    'mandate_id':
+                        (str,),
+                    'document_type':
+                        (str,),
+                    'document_version':
+                        (str,),
+                    'x_avalara_client':
+                        (str,),
+                },
+                'attribute_map': {
+                    'avalara_version': 'avalara-version',
+                    'mandate_id': 'mandateId',
+                    'document_type': 'documentType',
+                    'document_version': 'documentVersion',
+                    'x_avalara_client': 'X-Avalara-Client',
+                },
+                'location_map': {
+                    'avalara_version': 'header',
+                    'mandate_id': 'path',
+                    'document_type': 'query',
+                    'document_version': 'query',
+                    'x_avalara_client': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'avalara-version': '1.2',
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            required_scopes=''
+        )
         self.get_mandates_endpoint = _Endpoint(
             settings={
                 'response_type': (MandatesResponse,),
@@ -134,7 +211,7 @@ class MandatesApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.0',
+                'avalara-version': '1.2',
                 'accept': [
                     'application/json'
                 ],
@@ -143,6 +220,83 @@ class MandatesApi(object):
             api_client=api_client,
             required_scopes=''
         )
+
+    @avalara_retry_oauth(max_retry_attempts=2)
+    def get_mandate_data_input_fields(
+        self,
+        avalara_version,
+        mandate_id,
+        document_type,
+        document_version,
+        **kwargs
+    ):
+        """Returns document field information for a country mandate, a selected document type, and its version  # noqa: E501
+
+        This endpoint provides document field details and the optionality of fields (required, conditional, optional) of different documents supported by the country mandate. Use the GET <code>/mandates</code> endpoint to retrieve all available country mandates, their supported document types and supported versions. You can use the `documentType` and `documentVersion` query parameters to retrieve the input fields for a particular document type and document version.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_mandate_data_input_fields(avalara_version, mandate_id, document_type, document_version, async_req=True)
+        >>> result = thread.get()
+
+        Args:
+            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
+            mandate_id (str): The unique ID for the mandate that was returned in the GET /einvoicing/mandates response body
+            document_type (str): Select the documentType for which you wish to view the data-input-fields (You may obtain the supported documentTypes from the GET /mandates endpoint)
+            document_version (str): Select the document version of the documentType (You may obtain the supported documentVersion from the GET /mandates endpoint)
+
+        Keyword Args:
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
+            _return_http_data_only (bool): response data without head status
+                code and headers. Default is True.
+            _preload_content (bool): if False, the urllib3.HTTPResponse object
+                will be returned without reading/decoding response data.
+                Default is True.
+            _request_timeout (int/float/tuple): timeout setting for this request. If
+                one number provided, it will be total request timeout. It can also
+                be a pair (tuple) of (connection, read) timeouts.
+                Default is None.
+            _check_input_type (bool): specifies if type checking
+                should be done one the data sent to the server.
+                Default is True.
+            _check_return_type (bool): specifies if type checking
+                should be done one the data received from the server.
+                Default is True.
+            _host_index (int/None): specifies the index of the server
+                that we want to use.
+                Default is read from the configuration.
+            async_req (bool): execute request asynchronously
+
+        Returns:
+            List[MandateDataInputField]
+                If the method is called asynchronously, returns the request
+                thread.
+        """
+        self.__verify_api_client(self.api_client)
+        kwargs['async_req'] = kwargs.get(
+            'async_req', False
+        )
+        kwargs['_return_http_data_only'] = kwargs.get(
+            '_return_http_data_only', True
+        )
+        kwargs['_preload_content'] = kwargs.get(
+            '_preload_content', True
+        )
+        kwargs['_request_timeout'] = kwargs.get(
+            '_request_timeout', None
+        )
+        kwargs['_check_input_type'] = kwargs.get(
+            '_check_input_type', True
+        )
+        kwargs['_check_return_type'] = kwargs.get(
+            '_check_return_type', True
+        )
+        kwargs['_host_index'] = kwargs.get('_host_index')
+        kwargs['avalara_version'] = avalara_version
+        kwargs['mandate_id'] = mandate_id
+        kwargs['document_type'] = document_type
+        kwargs['document_version'] = document_version
+        return self.get_mandate_data_input_fields_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
     def get_mandates(
@@ -163,7 +317,7 @@ class MandatesApi(object):
             avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> and <code>contains</code>. Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering.. [optional]
             top (float): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.. [optional]
             skip (float): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
@@ -214,7 +368,6 @@ class MandatesApi(object):
             '_check_return_type', True
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['avalara_version'] = \
-            avalara_version
+        kwargs['avalara_version'] = avalara_version
         return self.get_mandates_endpoint.call_with_http_info(**kwargs)
 

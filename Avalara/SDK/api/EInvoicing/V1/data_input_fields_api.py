@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    
+@version    24.12.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -39,9 +39,10 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from Avalara.SDK.model.EInvoicing.V1.data_input_fields_response import DataInputFieldsResponse
-from Avalara.SDK.model.EInvoicing.V1.forbidden_error import ForbiddenError
-from Avalara.SDK.model.EInvoicing.V1.internal_server_error import InternalServerError
+from pydantic import Field, StrictFloat, StrictInt, StrictStr
+from typing import Optional, Union
+from typing_extensions import Annotated
+from Avalara.SDK.models.EInvoicing.V1.data_input_fields_response import DataInputFieldsResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper import avalara_retry_oauth
 
@@ -56,7 +57,7 @@ class DataInputFieldsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("")
+        api_client.set_sdk_version("24.12.0")
         self.api_client = api_client
 		
         self.get_data_input_fields_endpoint = _Endpoint(
@@ -133,7 +134,7 @@ class DataInputFieldsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.0',
+                'avalara-version': '1.2',
                 'accept': [
                     'application/json'
                 ],
@@ -149,7 +150,7 @@ class DataInputFieldsApi(object):
         avalara_version,
         **kwargs
     ):
-        """Returns the mandatory and conditional invoice or creditnote input fields for different country mandates  # noqa: E501
+        """Returns the optionality of document fields for different country mandates  # noqa: E501
 
         This endpoint provides a list of required, conditional, and optional fields for each country mandate. You can use the <code>mandates</code> endpoint to retrieve all available country mandates. You can use the $filter query parameter to retrieve fields for a particular mandate  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -162,7 +163,7 @@ class DataInputFieldsApi(object):
             avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
+            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> and <code>contains</code>. Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering.. [optional]
             top (float): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.. [optional]
             skip (float): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
@@ -213,7 +214,6 @@ class DataInputFieldsApi(object):
             '_check_return_type', True
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['avalara_version'] = \
-            avalara_version
+        kwargs['avalara_version'] = avalara_version
         return self.get_data_input_fields_endpoint.call_with_http_info(**kwargs)
 

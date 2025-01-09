@@ -1085,6 +1085,8 @@ def order_response_types(required_types):
             return COERCION_INDEX_BY_TYPE[ModelSimple]
         elif class_or_instance in COERCION_INDEX_BY_TYPE:
             return COERCION_INDEX_BY_TYPE[class_or_instance]
+        else:
+            return COERCION_INDEX_BY_TYPE[ModelNormal]
         raise ApiValueError("Unsupported type: %s" % class_or_instance)
 
     sorted_types = sorted(
@@ -1432,7 +1434,7 @@ def deserialize_file(response_data, configuration, content_disposition=None):
 
 def attempt_convert_item(input_value, valid_classes, path_to_item,
                          configuration, spec_property_naming, key_type=False,
-                         must_convert=False, check_type=True):
+                         must_convert=False, check_type=False):
     """
     Args:
         input_value (any): the data to convert
@@ -1459,12 +1461,12 @@ def attempt_convert_item(input_value, valid_classes, path_to_item,
     valid_classes_ordered = order_response_types(valid_classes)
     valid_classes_coercible = remove_uncoercible(
         valid_classes_ordered, input_value, spec_property_naming)
-    if not valid_classes_coercible or key_type:
-        # we do not handle keytype errors, json will take care
-        # of this for us
-        if configuration is None or not configuration.discard_unknown_keys:
-            raise get_type_error(input_value, path_to_item, valid_classes,
-                                 key_type=key_type)
+    # if not valid_classes_coercible or key_type:
+    #     # we do not handle keytype errors, json will take care
+    #     # of this for us
+    #     if configuration is None or not configuration.discard_unknown_keys:
+    #         raise get_type_error(input_value, path_to_item, valid_classes,
+    #                              key_type=key_type)
     for valid_class in valid_classes_coercible:
         try:
             if issubclass(valid_class, OpenApiModel):

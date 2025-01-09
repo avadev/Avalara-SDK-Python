@@ -17,10 +17,7 @@ class TestDocumentsApi(unittest.TestCase):
 
     def setUp(self):
         load_dotenv()
-        # ssl.SSLContext.verify_mode = ssl.VerifyMode.CERT_OPTIONAL
         configuration = Avalara.SDK.Configuration(
-            # access_token="",
-            # api_key="",
             environment="sandbox",
             access_token=os.getenv('BEARER_TOKEN')
         )
@@ -32,9 +29,9 @@ class TestDocumentsApi(unittest.TestCase):
 
     def test_get_documents(self):
         try:
-            result = self.api.get_document_list("1.0")
+            result = self.api.get_document_list("1.2")
             print(result)
-            assert result != None
+            assert result is not None, "Result should not be None"
         except Avalara.SDK.ApiException as e:
             print("Exception when calling DocumentsApi->get_document_list: %s\n" % e)
             assert False

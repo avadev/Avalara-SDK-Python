@@ -22,14 +22,13 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    2.4.29
-@link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
+@link       https://github.com/avadev/Avalara-SDK-Python
 """
 
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "Avalara.SDK"
-VERSION = "2.4.29"
+VERSION = "24.12.0"
 # To install the library, run the following
 #
 # python setup.py install
@@ -40,21 +39,23 @@ VERSION = "2.4.29"
 REQUIRES = [
   "urllib3 >= 1.25.3",
   "python-dateutil",
+  "pydantic",
+  "setuptools >= 21.0.0"
 ]
 
 setup(
     name=NAME,
     version=VERSION,
-    description="Avalara Shipping Verification only",
-    author="OpenAPI Generator community",
-    author_email="team@openapitools.org",
+    description="Avalara Unified SDK",
+    author="Jonathan Wenger",
+    author_email="jonathan.wenger@avalara.com",
     url="",
-    keywords=["OpenAPI", "OpenAPI-Generator", "Avalara Shipping Verification only"],
+    keywords=["OpenAPI", "OpenAPI-Generator", "Avalara Unified SDK"],
     python_requires=">=3.6",
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description="""\
-    API for evaluating transactions against direct-to-consumer Beverage Alcohol shipping regulations.  This API is currently in beta.   # noqa: E501
+    SDK for Avalara Services for client use.   # noqa: E501
     """
 )
