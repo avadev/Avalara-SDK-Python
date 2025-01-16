@@ -50,7 +50,7 @@ from Avalara.SDK.models.EInvoicing.V1.document_status_response import DocumentSt
 from Avalara.SDK.models.EInvoicing.V1.document_submit_response import DocumentSubmitResponse
 from Avalara.SDK.models.EInvoicing.V1.submit_document_metadata import SubmitDocumentMetadata
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
-from Avalara.SDK.oauth_helper import avalara_retry_oauth
+from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
 
 class DocumentsApi(object):
 

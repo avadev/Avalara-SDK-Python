@@ -45,7 +45,7 @@ from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.mandate_data_input_field import MandateDataInputField
 from Avalara.SDK.models.EInvoicing.V1.mandates_response import MandatesResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
-from Avalara.SDK.oauth_helper import avalara_retry_oauth
+from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
 
 class MandatesApi(object):
 

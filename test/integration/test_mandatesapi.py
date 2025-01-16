@@ -3,10 +3,17 @@ import unittest
 import pytest
 import ssl
 import time
-import Avalara.SDK
-from Avalara.SDK import api_client
+
+import os
+from dotenv import load_dotenv
+
+# Import the specific classes/functions you need rather than `import Avalara.SDK`
+from Avalara.SDK.configuration import Configuration
+from Avalara.SDK.api_client import ApiClient
+from Avalara.SDK.exceptions import ApiException
+
+# Import your generated API module
 from Avalara.SDK.api.EInvoicing.V1.mandates_api import MandatesApi  # noqa: E501
-from Avalara.SDK.oauth_helper import AvalaraOauth2Client
 
 import os
 from dotenv import load_dotenv
@@ -18,11 +25,11 @@ class TestMandatesApi(unittest.TestCase):
     def setUp(self):
         load_dotenv()
         # ssl.SSLContext.verify_mode = ssl.VerifyMode.CERT_OPTIONAL
-        configuration = Avalara.SDK.Configuration(
+        configuration = Configuration(
             environment="sandbox",
             access_token=os.getenv('BEARER_TOKEN')
         )
-        with Avalara.SDK.ApiClient(configuration) as api_client:
+        with ApiClient(configuration) as api_client:
             self.api = MandatesApi(api_client)
 
     def tearDown(self):
@@ -33,7 +40,7 @@ class TestMandatesApi(unittest.TestCase):
             result = self.api.get_mandates("1.2")
             print(result)
             assert result is not None, "Result should not be None"
-        except Avalara.SDK.ApiException as e:
+        except ApiException as e:
             print("Exception when calling MandatesApi->get_mandates: %s\n" % e)
             assert False
 

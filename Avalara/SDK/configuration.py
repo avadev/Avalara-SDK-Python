@@ -36,9 +36,11 @@ from webbrowser import get
 import urllib3
 
 from http import client as http_client
-from Avalara.SDK import oauth_helper
 from Avalara.SDK.exceptions import ApiValueError
-from Avalara.SDK.oauth_helper import AvalaraApiEnvironment, AvalaraOauth2Client
+from Avalara.SDK.oauth_helper.AvalaraOauth2Client import ( AvalaraOauth2Client )
+from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import (
+    AvalaraApiEnvironment,
+)
 
 
 JSON_SCHEMA_VALIDATION_KEYWORDS = {

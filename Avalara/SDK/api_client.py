@@ -54,7 +54,6 @@ from Avalara.SDK.model_utils import (
     none_type,
     validate_and_convert_types,
 )
-from Avalara.SDK.oauth_helper import AvalaraOauth2Client, AvalaraApiEnvironment
 
 
 class ApiClient(object):
