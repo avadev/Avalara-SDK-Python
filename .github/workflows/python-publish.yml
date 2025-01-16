@@ -30,6 +30,8 @@ jobs:
           pip install -r ./test-requirements.txt
       - name: Build package
         run: python -m build
+      - name: Pip Package
+        run: pip install -e .
       - name: Test package
         run: pytest -s -v --cov=Avalara.SDK --username=${{ secrets.API_USERNAME }} --password=${{ secrets.API_PASSWORD }}
       - name: Publish package
