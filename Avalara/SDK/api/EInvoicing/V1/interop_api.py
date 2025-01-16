@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.0
+@version    24.12.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -44,7 +44,7 @@ from typing import Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.submit_interop_document202_response import SubmitInteropDocument202Response
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
-from Avalara.SDK.oauth_helper import avalara_retry_oauth
+from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
 
 class InteropApi(object):
 
@@ -57,7 +57,7 @@ class InteropApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("24.12.0")
+        api_client.set_sdk_version("24.12.1")
         self.api_client = api_client
 		
         self.submit_interop_document_endpoint = _Endpoint(
