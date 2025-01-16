@@ -13,15 +13,7 @@ Python >= 3.6
 If the python package is hosted on a repository, you can install directly using:
 
 ```sh
-pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
-```
-
-(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git`)
-
-Then import the package:
-
-```python
-import Avalara.SDK
+pip install Avalara.SDK==24.12.1
 ```
 
 ### Setuptools
@@ -32,14 +24,6 @@ Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
 python setup.py install --user
 ```
 
-(or `sudo python setup.py install` to install the package for all users)
-
-Then import the package:
-
-```python
-import Avalara.SDK
-```
-
 ## Getting Started
 
 Please follow the [installation procedure](#installation--usage) and then run the following:
@@ -47,21 +31,22 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```python
 
 import time
-import Avalara.SDK
-from Avalara.SDK import api_client
+from Avalara.SDK.configuration import Configuration
+from Avalara.SDK.api_client import ApiClient
+from Avalara.SDK.exceptions import ApiException
 from Avalara.SDK.api.EInvoicing.V1.mandates_api import MandatesApi  # noqa: E501
 from pprint import pprint
 
 # Define configuration object with parameters specified to your application.
-configuration = Avalara.SDK.Configuration(
-    app_name='test app'
-    app_version='1.0'
-    machine_name='some machine'
-    access_token='YOUR_BEARER_TOKEN'
+configuration = Configuration(
+    app_name='test app',
+    app_version='1.0',
+    machine_name='some machine',
+    access_token='',
     environment='sandbox'
 )
 # Enter a context with an instance of the API client
-with Avalara.SDK.ApiClient(configuration) as api_client:
+with ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = MandatesApi(api_client)
     x_avalara_client = "Swagger UI; 22.7.0; Custom; 1.0" # str | Identifies the software you are using to call this API.  For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional) if omitted the server will use the default value of "Swagger UI; 22.7.0; Custom; 1.0"
@@ -72,7 +57,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
         # Retrieve geolocation information for a specified address
         api_response = api_instance.get_mandates(avalara_version="1.2", x_avalara_client=x_avalara_client)
         pprint(api_response)
-    except Avalara.SDK.ApiException as e:
+    except ApiException as e:
         print("Exception when calling MandatesApi->get_mandates: %s\n" % e)
 ```
 
