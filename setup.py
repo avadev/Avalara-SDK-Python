@@ -15,32 +15,21 @@ AvaTax Software Development Kit for Python.
    See the License for the specific language governing permissions and
    limitations under the License.
 
-    Avalara Shipping Verification only
-    API for evaluating transactions against direct-to-consumer Beverage Alcohol shipping regulations.  This API is currently in beta.  
-
-@author     Sachin Baijal <sachin.baijal@avalara.com>
-@author     Jonathan Wenger <jonathan.wenger@avalara.com>
-@copyright  2022 Avalara, Inc.
-@license    https://www.apache.org/licenses/LICENSE-2.0
-@link       https://github.com/avadev/Avalara-SDK-Python
+   Avalara Shipping Verification only
+   API for evaluating transactions against direct-to-consumer Beverage Alcohol shipping regulations.
+   This API is currently in beta.
 """
 
-from setuptools import setup, find_packages  # noqa: H301
+from setuptools import setup, find_namespace_packages 
 
 NAME = "Avalara.SDK"
-VERSION = "24.12.0"
-# To install the library, run the following
-#
-# python setup.py install
-#
-# prerequisite: setuptools
-# http://pypi.python.org/pypi/setuptools
+VERSION = "24.12.1"
 
 REQUIRES = [
-  "urllib3 >= 1.25.3",
-  "python-dateutil",
-  "pydantic",
-  "setuptools >= 21.0.0"
+    "urllib3 >= 1.25.3",
+    "python-dateutil",
+    "pydantic",
+    "setuptools >= 21.0.0"
 ]
 
 setup(
@@ -53,7 +42,8 @@ setup(
     keywords=["OpenAPI", "OpenAPI-Generator", "Avalara Unified SDK"],
     python_requires=">=3.6",
     install_requires=REQUIRES,
-    packages=find_packages(exclude=["test", "tests"]),
+    # Use find_namespace_packages to pick up directories without __init__.py
+    packages=find_namespace_packages(include=["Avalara.*"], exclude=["test", "tests"]),
     include_package_data=True,
     long_description="""\
     SDK for Avalara Services for client use.   # noqa: E501
