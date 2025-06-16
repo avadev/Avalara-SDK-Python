@@ -23,7 +23,7 @@ AvaTax Software Development Kit for Python.
 from setuptools import setup, find_namespace_packages 
 
 NAME = "Avalara.SDK"
-VERSION = "24.12.1"
+VERSION = "25.6.0"
 
 REQUIRES = [
     "urllib3 >= 1.25.3",

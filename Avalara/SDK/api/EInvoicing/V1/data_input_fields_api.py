@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -39,8 +39,9 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from pydantic import Field, StrictFloat, StrictInt, StrictStr
-from typing import Optional, Union
+from decimal import Decimal
+from pydantic import Field, StrictStr
+from typing import Optional
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.data_input_fields_response import DataInputFieldsResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
@@ -57,7 +58,7 @@ class DataInputFieldsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("24.12.1")
+        api_client.set_sdk_version("25.6.0")
         self.api_client = api_client
 		
         self.get_data_input_fields_endpoint = _Endpoint(
@@ -104,9 +105,9 @@ class DataInputFieldsApi(object):
                     'filter':
                         (str,),
                     'top':
-                        (float,),
+                        (decimal.Decimal,),
                     'skip':
-                        (float,),
+                        (decimal.Decimal,),
                     'count':
                         (bool,),
                     'count_only':
@@ -134,14 +135,15 @@ class DataInputFieldsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -165,8 +167,8 @@ class DataInputFieldsApi(object):
         Keyword Args:
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> and <code>contains</code>. Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering.. [optional]
-            top (float): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.. [optional]
-            skip (float): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
+            top (decimal.Decimal): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.. [optional]
+            skip (decimal.Decimal): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
             count (bool): When set to true, the count of the collection is also returned in the response body. [optional]
             count_only (bool): When set to true, only the count of the collection is returned. [optional]
             _return_http_data_only (bool): response data without head status

@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,6 +43,7 @@ class DocumentSummary(BaseModel):
     Displays a summary of information about the document
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="The unique ID for this document")
+    company_id: Optional[StrictStr] = Field(default=None, description="Unique identifier that represents the company within the system.", alias="companyId")
     process_date_time: Optional[StrictStr] = Field(default=None, description="The date and time when the document was processed, displayed in the format YYYY-MM-DDThh:mm:ss", alias="processDateTime")
     status: Optional[StrictStr] = Field(default=None, description="The Document status")
     supplier_name: Optional[StrictStr] = Field(default=None, description="The name of the supplier in the transaction", alias="supplierName")
@@ -56,7 +57,7 @@ class DocumentSummary(BaseModel):
     country_mandate: Optional[StrictStr] = Field(default=None, description="The e-invoicing mandate for the specified country", alias="countryMandate")
     interface: Optional[StrictStr] = Field(default=None, description="The interface where the document is sent")
     receiver: Optional[StrictStr] = Field(default=None, description="The document recipient based on the interface")
-    __properties: ClassVar[List[str]] = ["id", "processDateTime", "status", "supplierName", "customerName", "documentType", "documentVersion", "documentNumber", "documentDate", "flow", "countryCode", "countryMandate", "interface", "receiver"]
+    __properties: ClassVar[List[str]] = ["id", "companyId", "processDateTime", "status", "supplierName", "customerName", "documentType", "documentVersion", "documentNumber", "documentDate", "flow", "countryCode", "countryMandate", "interface", "receiver"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -110,6 +111,7 @@ class DocumentSummary(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
+            "companyId": obj.get("companyId"),
             "processDateTime": obj.get("processDateTime"),
             "status": obj.get("status"),
             "supplierName": obj.get("supplierName"),

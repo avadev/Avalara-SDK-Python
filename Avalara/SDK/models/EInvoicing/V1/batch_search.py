@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -42,7 +42,7 @@ from typing_extensions import Self
 
 class BatchSearch(BaseModel):
     """
-    BatchSearch
+    Provides details about a batch search operation, including status, timestamps, and potential errors.
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="ID of the batch search")
     name: Optional[StrictStr] = Field(default=None, description="Name of the batch report")

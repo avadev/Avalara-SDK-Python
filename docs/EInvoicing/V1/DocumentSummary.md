@@ -7,6 +7,7 @@ Displays a summary of information about the document
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The unique ID for this document | [optional] 
+**company_id** | **str** | Unique identifier that represents the company within the system. | [optional] 
 **process_date_time** | **str** | The date and time when the document was processed, displayed in the format YYYY-MM-DDThh:mm:ss | [optional] 
 **status** | **str** | The Document status | [optional] 
 **supplier_name** | **str** | The name of the supplier in the transaction | [optional] 

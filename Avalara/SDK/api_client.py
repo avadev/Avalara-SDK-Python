@@ -174,6 +174,7 @@ class ApiClient(object):
         _check_type: typing.Optional[bool] = None,
         required_scopes: typing.Optional[str] = None,
         _content_type: typing.Optional[str] = None,
+        microservice: str = "none",
     ):
 
         config = self.configuration
@@ -245,7 +246,9 @@ class ApiClient(object):
 
         # request url
         if _host is None:
-            url = self.configuration.host + resource_path
+            # Use microservice-aware host setting
+            base_url = self.configuration.get_base_path(microservice)
+            url = base_url + resource_path
         else:
             # use server/host defined in path or operation instead
             url = _host + resource_path
@@ -443,6 +446,7 @@ class ApiClient(object):
         _host: typing.Optional[str] = None,
         _check_type: typing.Optional[bool] = None,
         required_scopes: typing.Optional[str] = None,
+        microservice: str = "none",
     ):
         """Makes the HTTP request (synchronous) and returns deserialized data.
 
@@ -516,6 +520,8 @@ class ApiClient(object):
                 _host,
                 _check_type,
                 required_scopes,
+                _content_type=None,
+                microservice=microservice,
             )
 
         return self.pool.apply_async(
@@ -539,6 +545,10 @@ class ApiClient(object):
                 _check_type,
                 required_scopes,
             ),
+            {
+                '_content_type': None,
+                'microservice': microservice,
+            },
         )
 
     def request(
@@ -802,6 +812,7 @@ class Endpoint(object):
         api_client=None,
         required_scopes=None,
         callable=None,
+        microservice="none",
     ):
         """Creates an endpoint
 
@@ -880,6 +891,7 @@ class Endpoint(object):
         self.api_client = api_client
         self.required_scopes = required_scopes
         self.callable = callable
+        self.microservice = microservice
 
     def __validate_inputs(self, kwargs):
         for param in self.params_map['enum']:
@@ -1038,4 +1050,5 @@ class Endpoint(object):
             _host=_host,
             collection_formats=params['collection_format'],
             required_scopes=self.required_scopes,
+            microservice=self.microservice,
         )

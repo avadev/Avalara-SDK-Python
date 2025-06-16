@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,14 +40,15 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     validate_and_convert_types
 )
 from datetime import datetime
-from pydantic import Field, StrictBytes, StrictFloat, StrictInt, StrictStr
-from typing import Optional, Union
+from decimal import Decimal
+from pydantic import Field, StrictBytes, StrictStr
+from typing import Any, Dict, Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.document_fetch import DocumentFetch
-from Avalara.SDK.models.EInvoicing.V1.document_fetch_request import DocumentFetchRequest
 from Avalara.SDK.models.EInvoicing.V1.document_list_response import DocumentListResponse
 from Avalara.SDK.models.EInvoicing.V1.document_status_response import DocumentStatusResponse
 from Avalara.SDK.models.EInvoicing.V1.document_submit_response import DocumentSubmitResponse
+from Avalara.SDK.models.EInvoicing.V1.fetch_documents_request import FetchDocumentsRequest
 from Avalara.SDK.models.EInvoicing.V1.submit_document_metadata import SubmitDocumentMetadata
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
@@ -63,7 +64,7 @@ class DocumentsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("24.12.1")
+        api_client.set_sdk_version("25.6.0")
         self.api_client = api_client
 		
         self.download_document_endpoint = _Endpoint(
@@ -127,7 +128,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/pdf',
                     'application/xml',
@@ -136,7 +137,8 @@ class DocumentsApi(object):
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.fetch_documents_endpoint = _Endpoint(
             settings={
@@ -152,12 +154,12 @@ class DocumentsApi(object):
             params_map={
                 'all': [
                     'avalara_version',
-                    'document_fetch_request',
+                    'fetch_documents_request',
                     'x_avalara_client',
                 ],
                 'required': [
                     'avalara_version',
-                    'document_fetch_request',
+                    'fetch_documents_request',
                 ],
                 'nullable': [
                 ],
@@ -174,8 +176,8 @@ class DocumentsApi(object):
                 'openapi_types': {
                     'avalara_version':
                         (str,),
-                    'document_fetch_request':
-                        (DocumentFetchRequest,),
+                    'fetch_documents_request':
+                        (FetchDocumentsRequest,),
                     'x_avalara_client':
                         (str,),
                 },
@@ -185,14 +187,14 @@ class DocumentsApi(object):
                 },
                 'location_map': {
                     'avalara_version': 'header',
-                    'document_fetch_request': 'body',
+                    'fetch_documents_request': 'body',
                     'x_avalara_client': 'header',
                 },
                 'collection_format_map': {
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
@@ -201,7 +203,8 @@ class DocumentsApi(object):
                 ]
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.get_document_list_endpoint = _Endpoint(
             settings={
@@ -260,7 +263,7 @@ class DocumentsApi(object):
                     'filter':
                         (str,),
                     'top':
-                        (float,),
+                        (decimal.Decimal,),
                     'skip':
                         (str,),
                 },
@@ -292,14 +295,15 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.get_document_status_endpoint = _Endpoint(
             settings={
@@ -356,14 +360,15 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.submit_document_endpoint = _Endpoint(
             settings={
@@ -406,7 +411,7 @@ class DocumentsApi(object):
                     'metadata':
                         (SubmitDocumentMetadata,),
                     'data':
-                        (str,),
+                        (object,),
                     'x_avalara_client':
                         (str,),
                 },
@@ -426,7 +431,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json',
                     'text/xml'
@@ -436,7 +441,8 @@ class DocumentsApi(object):
                 ]
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -517,7 +523,7 @@ class DocumentsApi(object):
     def fetch_documents(
         self,
         avalara_version,
-        document_fetch_request,
+        fetch_documents_request,
         **kwargs
     ):
         """Fetch the inbound document from a tax authority  # noqa: E501
@@ -526,12 +532,12 @@ class DocumentsApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.fetch_documents(avalara_version, document_fetch_request, async_req=True)
+        >>> thread = api.fetch_documents(avalara_version, fetch_documents_request, async_req=True)
         >>> result = thread.get()
 
         Args:
             avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
-            document_fetch_request (DocumentFetchRequest):
+            fetch_documents_request (FetchDocumentsRequest):
 
         Keyword Args:
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
@@ -581,7 +587,7 @@ class DocumentsApi(object):
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['avalara_version'] = avalara_version
-        kwargs['document_fetch_request'] = document_fetch_request
+        kwargs['fetch_documents_request'] = fetch_documents_request
         return self.fetch_documents_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -610,7 +616,7 @@ class DocumentsApi(object):
             count (str): When set to true, the count of the collection is also returned in the response body. [optional]
             count_only (str): When set to true, only the count of the collection is returned. [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> . Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering. Filtering will be done over the provided startDate and endDate. If no startDate or endDate is provided, defaults will be assumed.. [optional]
-            top (float): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records.. [optional]
+            top (decimal.Decimal): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records.. [optional]
             skip (str): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -751,7 +757,7 @@ class DocumentsApi(object):
         Args:
             avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
             metadata (SubmitDocumentMetadata):
-            data (str): The document to be submitted, as indicated by the metadata fields 'dataFormat' and 'dataFormatVersion'
+            data (object): The document to be submitted, as indicated by the metadata fields 'dataFormat' and 'dataFormatVersion'
 
         Keyword Args:
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]

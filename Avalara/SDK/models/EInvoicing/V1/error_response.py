@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,7 +40,7 @@ from typing_extensions import Self
 
 class ErrorResponse(BaseModel):
     """
-    ErrorResponse
+    Structure for reporting errors encountered during API operations, including title, status, and detailed message.
     """ # noqa: E501
     title: Optional[StrictStr] = None
     status: Optional[StrictStr] = None

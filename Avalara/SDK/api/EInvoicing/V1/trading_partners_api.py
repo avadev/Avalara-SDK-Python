@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -44,6 +44,7 @@ from typing import Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.batch_search import BatchSearch
 from Avalara.SDK.models.EInvoicing.V1.batch_search_list_response import BatchSearchListResponse
+from Avalara.SDK.models.EInvoicing.V1.batch_search_participants202_response import BatchSearchParticipants202Response
 from Avalara.SDK.models.EInvoicing.V1.directory_search_response import DirectorySearchResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
@@ -59,12 +60,12 @@ class TradingPartnersApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("24.12.1")
+        api_client.set_sdk_version("25.6.0")
         self.api_client = api_client
 		
         self.batch_search_participants_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (BatchSearchParticipants202Response,),
                 'auth': [
                     'Bearer'
                 ],
@@ -134,7 +135,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
@@ -143,7 +144,8 @@ class TradingPartnersApi(object):
                 ]
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.download_batch_search_report_endpoint = _Endpoint(
             settings={
@@ -205,7 +207,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'text/csv',
                     'application/json'
@@ -213,7 +215,8 @@ class TradingPartnersApi(object):
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.get_batch_search_detail_endpoint = _Endpoint(
             settings={
@@ -275,14 +278,15 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.list_batch_searches_endpoint = _Endpoint(
             settings={
@@ -363,14 +367,15 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
         self.search_participants_endpoint = _Endpoint(
             settings={
@@ -457,14 +462,15 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
                 'content_type': [],
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -515,7 +521,7 @@ class TradingPartnersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            BatchSearchParticipants202Response
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -626,7 +632,7 @@ class TradingPartnersApi(object):
     ):
         """Get the batch search details for a given id.  # noqa: E501
 
-        Get the batch search details for a given id.  # noqa: E501
+        This endpoint provides a detailed information for a specific batch search based on a given ID. It is ideal for tracking the progress of a previously initiated batch search operation.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -697,7 +703,7 @@ class TradingPartnersApi(object):
     ):
         """List all batch searches that were previously submitted.  # noqa: E501
 
-        Retrieves all batch searches performed by the user.  # noqa: E501
+        This endpoint provides a way to retrieve a comprehensive list of all batch search operations that have been previously submitted. This endpoint returns details about each batch search, such as their id, status, created date and associated metadata, allowing users to easily view past batch search requests. It's particularly useful for tracking the progress of a previously initiated batch search operations.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -772,7 +778,7 @@ class TradingPartnersApi(object):
     ):
         """Returns a list of participants matching the input query.  # noqa: E501
 
-        Returns a list of participants matching the input query.  # noqa: E501
+        This endpoint provides a list of trading partners that match a specified input query. The search is performed based on various filters, search text, and other relevant parameters.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
