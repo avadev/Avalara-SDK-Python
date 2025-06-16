@@ -47,7 +47,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'b4591fca-ad23-44f7-acfe-1b29e86ef386' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'b98696b0-252b-4dbe-ac8b-c4f1f7394f89' # str | Unique correlation Id in a GUID format
     dry_run = False # bool |  (optional) if omitted the server will use the default value of False
     bulk_upsert1099_forms_request = Avalara.SDK.BulkUpsert1099FormsRequest() # BulkUpsert1099FormsRequest |  (optional)
     # example passing only required values which don't have defaults set
@@ -135,7 +135,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'e7998dc4-619c-441e-8e45-694347c43c62' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '71b24561-6f99-4840-a507-627b0a89b66a' # str | Unique correlation Id in a GUID format
     i_create_form1099_request = Avalara.SDK.ICreateForm1099Request() # ICreateForm1099Request |  (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -219,7 +219,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | The unique identifier of the desired form to delete.
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '5a798b0d-9637-46c1-9b5c-7acdb70f315a' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'a76af64f-31aa-4e9f-8785-9adf9af12434' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Deletes a 1099 form.
@@ -295,7 +295,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '4ee0ec52-a2a8-413b-b6d8-ab796bc6be1a' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'c0a1e6d4-3236-463f-8d36-1e4299632e0d' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Retrieves a 1099 form.
@@ -371,7 +371,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '67e8f361-ee44-4f51-8cee-691cfefd8069' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '7df98cd0-ca4b-41fa-bec3-f02d1ce480bc' # str | Unique correlation Id in a GUID format
     mark_edelivered = True # bool | The parameter for marked e-delivered (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -457,7 +457,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '4b177bbc-0a5b-4761-8b09-a6319700daf1' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '3a1a6cb5-4d25-4c6b-a827-0a0e1312c9f1' # str | Unique correlation Id in a GUID format
     filter = 'filter_example' # str | A filter statement to identify specific records to retrieve. For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>.    Collections support filtering only on certain fields. An attempt to filter on an unsupported field will receive a 400 Bad Request response.    Supported filtering fields are as follows:        issuerId      issuerReferenceId      taxYear      addressVerificationStatus - possible values are: unknown, pending, failed, incomplete, unchanged, verified      createdAt      edeliveryStatus - possible values are: sent, unscheduled, bad_verify, bad_verify_limit, scheduled, bounced, accepted      email      federalEfileStatus - possible values are: unscheduled, scheduled, sent, corrected_scheduled, accepted, corrected, corrected_accepted, held      firstPayeeName      mailStatus - possible values are: sent, unscheduled, pending, delivered      referenceId      tinMatchStatus - possible values are: none, pending, matched, failed      type - possible values are: 940, 941, 943, 944, 945, 1042, 1042-S, 1095-B, 1095-C, 1097-BTC, 1098, 1098-C, 1098-E, 1098-Q, 1098-T, 3921, 3922, 5498, 5498-ESA, 5498-SA, 1099-MISC, 1099-A, 1099-B, 1099-C, 1099-CAP, 1099-DIV, 1099-G, 1099-INT, 1099-K, 1099-LS, 1099-LTC, 1099-NEC, 1099-OID, 1099-PATR, 1099-Q, 1099-R, 1099-S, 1099-SA, T4A, W-2, W-2G, 1099-HC      updatedAt      validity - possible values are: true, false (optional)
     top = 10 # int | If nonzero, return no more than this number of results.     Used with skip to provide pagination for large datasets.     Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records. (optional) if omitted the server will use the default value of 10
     skip = 0 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional) if omitted the server will use the default value of 0
@@ -550,7 +550,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'c15eef59-ae3f-4cc9-975f-6dc1e90c0a88' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '5f0f6619-83a2-46a0-b902-8c16169bdc21' # str | Unique correlation Id in a GUID format
     i_update_form1099_request = Avalara.SDK.IUpdateForm1099Request() # IUpdateForm1099Request |  (optional)
     # example passing only required values which don't have defaults set
     try:

@@ -41,7 +41,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = jobs1099_api.Jobs1099Api(api_client)
     id = 'id_example' # str | Job id obtained from other API responses, like `/1099/bulk-upsert`.
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'd8d98be5-3cbc-49ce-afa5-3dda182d258d' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'f908d417-3983-4da2-b496-7b02100d6bb4' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Retrieves information about the job

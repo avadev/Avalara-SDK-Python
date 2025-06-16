@@ -45,7 +45,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '90c8f14f-96bd-465e-ac48-f9e09b300356' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '6a580e73-dc76-4249-bd11-36a010a379b8' # str | Unique correlation Id in a GUID format
     company_create_update_request_model = Avalara.SDK.CompanyCreateUpdateRequestModel() # CompanyCreateUpdateRequestModel | The company to create (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -130,7 +130,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | The company to delete
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '55ef0427-cd01-4bf9-b2fe-9c455277de97' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '8f07ec41-a09d-4e15-bdcf-82b005dd9704' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Deletes a company
@@ -206,7 +206,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '1cb5747f-11ff-4cb8-9dd9-0062d792b822' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '5360d0c7-ed2a-4202-a709-3c1c165f35e1' # str | Unique correlation Id in a GUID format
     filter = 'filter_example' # str | A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>. (optional)
     top = 56 # int | If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets. (optional)
     skip = 56 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional)
@@ -304,7 +304,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | Id of the company
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'f0301ca0-dfb6-4285-8e41-552aeba7af88' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '384995d6-14bb-4911-97dd-f203596a6c04' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Retrieve a company
@@ -383,7 +383,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | The ID of the company to update
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'a1a7f172-6a6c-4cce-bb69-88e3c14af222' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '27feaeac-cebb-4ddd-8c60-80a1c7fd518d' # str | Unique correlation Id in a GUID format
     company_create_update_request_model = Avalara.SDK.CompanyCreateUpdateRequestModel() # CompanyCreateUpdateRequestModel | The updated company data (optional)
     # example passing only required values which don't have defaults set
     try:

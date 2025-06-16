@@ -618,11 +618,6 @@ class Configuration(object):
         """
         return self.get_base_path(microservice)
 
-    @property
-    def host(self):
-        """Return generated host."""
-        return self.get_host_from_settings()
-
 
 class AvalaraMicroservice:
     """Microservice enumeration"""

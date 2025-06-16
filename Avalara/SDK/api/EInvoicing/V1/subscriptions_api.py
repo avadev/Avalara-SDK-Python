@@ -28,6 +28,7 @@ AvaTax Software Development Kit for Python.
 
 import re  # noqa: F401
 import sys  # noqa: F401
+import decimal
 
 from Avalara.SDK.api_client import ApiClient, Endpoint as _Endpoint
 from Avalara.SDK.model_utils import (  # noqa: F401

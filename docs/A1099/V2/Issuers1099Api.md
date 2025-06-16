@@ -45,7 +45,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'ae659bba-eaba-4651-8f79-8efdc0f78a69' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '8e3a88e2-0d76-4e94-8dcb-8c19a0e56017' # str | Unique correlation Id in a GUID format
     issuer_command = Avalara.SDK.IssuerCommand() # IssuerCommand | The issuer to create (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -130,7 +130,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to delete
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'ae56ee1d-9a22-4c77-b84b-f55dd1f7f130' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '4c16967e-29ae-43ae-923e-765d7a3dbb65' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Delete an issuer
@@ -205,7 +205,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '87a33bb6-3b63-45b5-89a2-3175755def48' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '8770c2e2-8772-42e5-9a2f-8e90067e2c8b' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Get an issuer
@@ -280,7 +280,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'aab85168-ad19-419a-b294-e69fa7f35e4f' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'c06c434f-e37b-45d7-95fe-dc1971d9e9b7' # str | Unique correlation Id in a GUID format
     filter = 'filter_example' # str | A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>. (optional)
     top = 56 # int | If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets. (optional)
     skip = 56 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional)
@@ -378,7 +378,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to Update
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '9c0af7df-f7bc-4125-ae73-be0af3f1ebf2' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '6d32bac1-9e77-48e8-82af-2e7efed1919e' # str | Unique correlation Id in a GUID format
     issuer_command = Avalara.SDK.IssuerCommand() # IssuerCommand | The issuer to update (optional)
     # example passing only required values which don't have defaults set
     try:

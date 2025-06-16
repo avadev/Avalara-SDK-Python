@@ -91,9 +91,6 @@ class ApiClient(object):
         if configuration is None:
             raise ApiValueError("Configuration not defined")
 
-        if not configuration.host:
-            raise ApiValueError("Environment is null or not set")
-
         self.configuration = configuration
         self.pool_threads = pool_threads
 
@@ -173,8 +170,8 @@ class ApiClient(object):
         _host: typing.Optional[str] = None,
         _check_type: typing.Optional[bool] = None,
         required_scopes: typing.Optional[str] = None,
+        _microservice: typing.Optional[str] = "none",
         _content_type: typing.Optional[str] = None,
-        microservice: str = "none",
     ):
 
         config = self.configuration
@@ -247,7 +244,7 @@ class ApiClient(object):
         # request url
         if _host is None:
             # Use microservice-aware host setting
-            base_url = self.configuration.get_base_path(microservice)
+            base_url = self.configuration.get_base_path(_microservice)
             url = base_url + resource_path
         else:
             # use server/host defined in path or operation instead
@@ -520,8 +517,8 @@ class ApiClient(object):
                 _host,
                 _check_type,
                 required_scopes,
+                _microservice=microservice,
                 _content_type=None,
-                microservice=microservice,
             )
 
         return self.pool.apply_async(
@@ -546,8 +543,8 @@ class ApiClient(object):
                 required_scopes,
             ),
             {
+                '_microservice': microservice,
                 '_content_type': None,
-                'microservice': microservice,
             },
         )
 
@@ -977,8 +974,7 @@ class Endpoint(object):
         return self.callable(self, *args, **kwargs)
 
     def call_with_http_info(self, **kwargs):
-
-        _host = self.api_client.configuration.get_host_from_settings()
+        _host = self.api_client.configuration.get_host_from_settings(self.microservice)
 
         for key, value in kwargs.items():
             if key not in self.params_map['all']:

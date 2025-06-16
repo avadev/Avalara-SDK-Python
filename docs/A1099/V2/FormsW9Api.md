@@ -45,7 +45,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms_w9_api.FormsW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'cd4f144b-9c88-4906-ba62-105cdde8cd0a' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'b5a0f20a-5d1f-417e-95e6-33559d36bac0' # str | Unique correlation Id in a GUID format
     iw9_form_data_models_one_of = Avalara.SDK.IW9FormDataModelsOneOf() # IW9FormDataModelsOneOf | Form to be created (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -130,7 +130,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form to delete
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '560e1dfa-883e-4709-90ed-416f794d651e' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '6f87d641-f8d8-48a5-ac3f-82743b9e6630' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Delete a form
@@ -205,7 +205,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '1665d66f-aa8c-46ce-aa6b-bb1ae88bb990' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '181b84d8-aaf7-4cca-a34a-25de5e03efaa' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Retrieve a W9/W4/W8 form
@@ -281,7 +281,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     form_request_id = 'form_request_id_example' # str | 
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '8ea8d683-2ca4-42e7-9ed7-f9f8ae68b8dc' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '57a2d900-6533-48eb-8c08-719f9819479f' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Retrieve a form request
@@ -356,7 +356,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms_w9_api.FormsW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'c8fcd10b-a84f-44be-8e77-2431528c9ad3' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'a055ea07-d8e8-461d-8539-2b22312e4aa8' # str | Unique correlation Id in a GUID format
     filter = 'filter_example' # str | A filter statement to identify specific records to retrieve. For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>. (optional)
     top = 10 # int | If nonzero, return no more than this number of results. Used with skip to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records. (optional) if omitted the server will use the default value of 10
     skip = 0 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional) if omitted the server will use the default value of 0
@@ -448,7 +448,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | The ID of the W9/W4/W8 form.
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'ca08ce81-083d-417d-b801-ffa642542cab' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '8ddc6fda-24d1-470f-855c-82e0e02ef1c0' # str | Unique correlation Id in a GUID format
     # example passing only required values which don't have defaults set
     try:
         # Sends a W9 email request to a vendor/payee
@@ -522,7 +522,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form to update
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '3b52dec5-ebcc-47f6-b0a4-8f68b2edfd98' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '4ccd8ec1-5cee-444f-bf11-890e2551b0a1' # str | Unique correlation Id in a GUID format
     iw9_form_data_models_one_of = Avalara.SDK.IW9FormDataModelsOneOf() # IW9FormDataModelsOneOf | Form to be updated (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -608,7 +608,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'f5a2882c-c842-4fa6-85b0-bc83212ca6ad' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '389f401a-494d-4cd8-9559-665ef1b6d46b' # str | Unique correlation Id in a GUID format
     file = None # bytearray |  (optional)
     # example passing only required values which don't have defaults set
     try:
