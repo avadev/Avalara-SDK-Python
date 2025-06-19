@@ -27,7 +27,7 @@ class TestMandatesApi(unittest.TestCase):
         # ssl.SSLContext.verify_mode = ssl.VerifyMode.CERT_OPTIONAL
         configuration = Configuration(
             environment="sandbox",
-            access_token=os.getenv('BEARER_TOKEN')
+            access_token=os.getenv('BEARER_TOKEN_EINVOICING')
         )
         with ApiClient(configuration) as api_client:
             self.api = MandatesApi(api_client)

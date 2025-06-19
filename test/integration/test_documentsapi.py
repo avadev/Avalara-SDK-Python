@@ -25,7 +25,7 @@ class TestDocumentsApi(unittest.TestCase):
         # Use the Configuration from Avalara.SDK
         configuration = Configuration(
             environment="sandbox",
-            access_token=os.getenv('BEARER_TOKEN')
+            access_token=os.getenv('BEARER_TOKEN_EINVOICING')
         )
 
         # Create an API client using that configuration

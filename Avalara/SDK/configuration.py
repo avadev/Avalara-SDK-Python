@@ -574,6 +574,12 @@ class Configuration(object):
                 'key': 'Authorization',
                 'value': f'Bearer {self.access_token}',
             }
+            auth['bearer'] = {
+                'type': 'api_key',
+                'in': 'header',
+                'key': 'Authorization',
+                'value': f'Bearer {self.access_token}',
+            }
         elif self.client_id is not None and not self.is_null_or_empty(
             self.client_secret
         ):
