@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -34,7 +34,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -45,9 +45,11 @@ class SubmitDocumentMetadata(BaseModel):
     workflow_id: StrictStr = Field(description="Specifies a unique ID for this workflow.", alias="workflowId")
     data_format: StrictStr = Field(description="Specifies the data format for this workflow.", alias="dataFormat")
     data_format_version: StrictStr = Field(description="Specifies the data format version number.", alias="dataFormatVersion")
+    output_data_format: Optional[StrictStr] = Field(default=None, description="Specifies the format of the output document to be generated for the recipient. This format should be chosen based on the recipient's preferences or requirements as defined by applicable e-invoicing regulations. When not specified for mandates that don't require a specific output format, the system will use the default format defined for that mandate.", alias="outputDataFormat")
+    output_data_format_version: Optional[StrictStr] = Field(default=None, description="Specifies the version of the selected output document format", alias="outputDataFormatVersion")
     country_code: StrictStr = Field(description="The two-letter ISO-3166 country code for the country where the document is being submitted", alias="countryCode")
     country_mandate: StrictStr = Field(description="The e-invoicing mandate for the specified country.", alias="countryMandate")
-    __properties: ClassVar[List[str]] = ["workflowId", "dataFormat", "dataFormatVersion", "countryCode", "countryMandate"]
+    __properties: ClassVar[List[str]] = ["workflowId", "dataFormat", "dataFormatVersion", "outputDataFormat", "outputDataFormatVersion", "countryCode", "countryMandate"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -103,6 +105,8 @@ class SubmitDocumentMetadata(BaseModel):
             "workflowId": obj.get("workflowId"),
             "dataFormat": obj.get("dataFormat"),
             "dataFormatVersion": obj.get("dataFormatVersion"),
+            "outputDataFormat": obj.get("outputDataFormat"),
+            "outputDataFormatVersion": obj.get("outputDataFormatVersion"),
             "countryCode": obj.get("countryCode"),
             "countryMandate": obj.get("countryMandate")
         })

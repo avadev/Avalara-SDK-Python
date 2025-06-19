@@ -31,7 +31,6 @@ import logging
 import multiprocessing
 from os import access
 import sys
-from tkinter.messagebox import NO
 from webbrowser import get
 import urllib3
 
@@ -149,6 +148,18 @@ class Configuration(object):
 
     _default = None
 
+    # Official URL of EInvoicing Service (Production by Environment)
+    EINVOICING_SERVICE_PRODUCTION_URL = 'https://api.avalara.com'
+    EINVOICING_SERVICE_SANDBOX_URL = 'https://api.sbx.avalara.com'
+    EINVOICING_SERVICE_QA_URL = 'https://superapi.qa.avalara.io'
+    EINVOICING_SERVICE_DEV_URL = 'https://superapi.dev.avalara.io'
+
+    # Official URL of A1099 Service (Production by Environment)
+    A1099_SERVICE_PRODUCTION_URL = 'https://api.avalara.com/avalara1099'
+    A1099_SERVICE_SANDBOX_URL = 'https://api.sbx.avalara.com/avalara1099'
+    A1099_SERVICE_QA_URL = 'https://api-ava1099.gamma.qa.us-west-2.aws.avalara.io'
+    A1099_SERVICE_DEV_URL = 'https://api-ava1099.gamma.dev.us-west-2.aws.avalara.io'
+
     def __init__(
         self,
         api_key=None,
@@ -166,24 +177,19 @@ class Configuration(object):
         client_id=None,
         client_secret=None,
         device_code=None,
+        test_base_path=None,
     ):
         """Constructor"""
         self.__ENVIRONMENT_PROD = "production"
         self.__ENVIRONMENT_SBX = "sandbox"
         self.__ENVIRONMENT_QA = "qa"
+        self.__ENVIRONMENT_DEV = "dev"
         self._base_path = ''
+        self.test_base_path = test_base_path
+        
         """Default Base url
         """
         if environment:
-            if environment.lower() == self.__ENVIRONMENT_PROD:
-                self._base_path = 'https://api.avalara.com'
-            elif environment.lower() == self.__ENVIRONMENT_SBX:
-                self._base_path = 'https://api.sbx.avalara.com'
-            elif environment.lower() == self.__ENVIRONMENT_QA:
-                self._base_path = 'https://superapi.qa.avalara.io'
-            else:
-                raise ApiValueError("Unrecognized Environment")
-
             self.avalara_oauth_api_environment = (
                 self.get_avalara_oauth_api_environment(environment)
             )
@@ -320,6 +326,46 @@ class Configuration(object):
             avalara_api_environment=self.avalara_oauth_api_environment,
         )
 
+    def get_base_path(self, microservice="none"):
+        """Returns base URL for specified operation based on server settings and microservice
+        
+        :param microservice: Microservice name (EInvoicing, A1099, or none)
+        :return: Base URL for the microservice
+        """
+        environment = self.environment.lower() if self.environment else ""
+        
+        if environment == 'test' and not self.test_base_path:
+            raise ApiValueError("TestBasePath must be configured to run in test environment mode.")
+
+        if microservice == "EInvoicing":
+            if environment == "production":
+                return self.EINVOICING_SERVICE_PRODUCTION_URL
+            elif environment == "sandbox":
+                return self.EINVOICING_SERVICE_SANDBOX_URL
+            elif environment == "qa":
+                return self.EINVOICING_SERVICE_QA_URL
+            elif environment == "dev":
+                return self.EINVOICING_SERVICE_DEV_URL
+            elif environment == "test":
+                return self.test_base_path
+            else:
+                raise ApiValueError('Environment not configured correctly, Acceptable values are "production", "sandbox", "qa", "dev", and "test".')
+        elif microservice == "A1099":
+            if environment == "production":
+                return self.A1099_SERVICE_PRODUCTION_URL
+            elif environment == "sandbox":
+                return self.A1099_SERVICE_SANDBOX_URL
+            elif environment == "qa":
+                return self.A1099_SERVICE_QA_URL
+            elif environment == "dev":
+                return self.A1099_SERVICE_DEV_URL
+            elif environment == "test":
+                return self.test_base_path
+            else:
+                raise ApiValueError('Environment not configured correctly, Acceptable values are "production", "sandbox", "qa", "dev", and "test".')
+        elif microservice == "none":
+            raise ApiValueError('Microservice not configured correctly, Acceptable values are "EInvoicing", "A1099", and "none".')
+
     def get_avalara_oauth_api_environment(self, env):
         avalara_environment = None
         if self.__ENVIRONMENT_PROD == env:
@@ -328,6 +374,8 @@ class Configuration(object):
             avalara_environment = AvalaraApiEnvironment.Sandbox
         elif self.__ENVIRONMENT_QA == env:
             avalara_environment = AvalaraApiEnvironment.QA
+        elif self.__ENVIRONMENT_DEV == env:
+            avalara_environment = AvalaraApiEnvironment.Dev
         return avalara_environment
 
     def __deepcopy__(self, memo):
@@ -526,6 +574,12 @@ class Configuration(object):
                 'key': 'Authorization',
                 'value': f'Bearer {self.access_token}',
             }
+            auth['bearer'] = {
+                'type': 'api_key',
+                'in': 'header',
+                'key': 'Authorization',
+                'value': f'Bearer {self.access_token}',
+            }
         elif self.client_id is not None and not self.is_null_or_empty(
             self.client_secret
         ):
@@ -563,13 +617,16 @@ class Configuration(object):
             }
         ]
 
-    def get_host_from_settings(self):
-        """Gets host URL based on the environment
+    def get_host_from_settings(self, microservice="none"):
+        """Gets host URL based on the environment and microservice
+        :param microservice: Microservice name (EInvoicing, A1099, or none)
         :return: URL based on host settings
         """
-        return self._base_path
+        return self.get_base_path(microservice)
 
-    @property
-    def host(self):
-        """Return generated host."""
-        return self.get_host_from_settings()
+
+class AvalaraMicroservice:
+    """Microservice enumeration"""
+    EINVOICING = "EInvoicing"
+    A1099 = "A1099"
+    NONE = "none"

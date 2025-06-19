@@ -22,12 +22,13 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
 import re  # noqa: F401
 import sys  # noqa: F401
+import decimal
 
 from Avalara.SDK.api_client import ApiClient, Endpoint as _Endpoint
 from Avalara.SDK.model_utils import (  # noqa: F401
@@ -57,7 +58,7 @@ class InteropApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("24.12.1")
+        api_client.set_sdk_version("25.6.0")
         self.api_client = api_client
 		
         self.submit_interop_document_endpoint = _Endpoint(
@@ -106,9 +107,8 @@ class InteropApi(object):
                     },
                     ('interchange_type',): {
 
-                        "&#39;B2B&#39;": 'FI-B2B',
-                        "&#39;B2C&#39;": 'FI-B2C',
-                        "&#39;B2G&#39;": 'FI-B2G'
+                        "&#39;B2B-TIEKE&#39;": 'FI-B2B-TIEKE',
+                        "&#39;B2G-TIEKE&#39;": 'FI-B2G-TIEKE'
                     },
                 },
                 'openapi_types': {
@@ -145,7 +145,7 @@ class InteropApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.2',
+                'avalara-version': '1.3',
                 'accept': [
                     'application/json'
                 ],
@@ -154,7 +154,8 @@ class InteropApi(object):
                 ]
             },
             api_client=api_client,
-            required_scopes=''
+            required_scopes='',
+            microservice='EInvoicing'
         )
 
     @avalara_retry_oauth(max_retry_attempts=2)

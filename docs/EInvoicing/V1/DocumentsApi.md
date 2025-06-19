@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **fetch_documents**
-> DocumentFetch fetch_documents(avalara_version, document_fetch_request)
+> DocumentFetch fetch_documents(avalara_version, fetch_documents_request)
 
 Fetch the inbound document from a tax authority
 
@@ -116,10 +116,10 @@ This API allows you to retrieve an inbound document. Pass key-value pairs as par
 import time
 import Avalara.SDK
 from Avalara.SDK.api.EInvoicing.V1 import documents_api
+FetchDocumentsRequest
 DocumentFetch
 ForbiddenError
 InternalServerError
-DocumentFetchRequest
 from pprint import pprint
     
 # Define configuration object with parameters specified to your application.
@@ -136,12 +136,12 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = documents_api.DocumentsApi(api_client)
     avalara_version = '1.2' # str | The HTTP Header meant to specify the version of the API intended to be used
-    document_fetch_request = Avalara.SDK.DocumentFetchRequest() # DocumentFetchRequest | 
+    fetch_documents_request = Avalara.SDK.FetchDocumentsRequest() # FetchDocumentsRequest | 
     x_avalara_client = 'John's E-Invoicing-API Client' # str | You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint. (optional)
     # example passing only required values which don't have defaults set
     try:
         # Fetch the inbound document from a tax authority
-        api_response = api_instance.fetch_documents(avalara_version, document_fetch_request)
+        api_response = api_instance.fetch_documents(avalara_version, fetch_documents_request)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling DocumentsApi->fetch_documents: %s\n" % e)
@@ -150,7 +150,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Fetch the inbound document from a tax authority
-        api_response = api_instance.fetch_documents(avalara_version, document_fetch_request, x_avalara_client=x_avalara_client)
+        api_response = api_instance.fetch_documents(avalara_version, fetch_documents_request, x_avalara_client=x_avalara_client)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling DocumentsApi->fetch_documents: %s\n" % e)
@@ -161,7 +161,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **avalara_version** | **str**| The HTTP Header meant to specify the version of the API intended to be used |
- **document_fetch_request** | [**DocumentFetchRequest**](DocumentFetchRequest.md)|  |
+ **fetch_documents_request** | [**FetchDocumentsRequest**](FetchDocumentsRequest.md)|  |
  **x_avalara_client** | **str**| You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint. | [optional]
 
 ### Return type
@@ -230,7 +230,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     count = 'true' # str | When set to true, the count of the collection is also returned in the response body (optional)
     count_only = 'false' # str | When set to true, only the count of the collection is returned (optional)
     filter = 'id eq 52f60401-44d0-4667-ad47-4afe519abb53' # str | Filter by field name and value. This filter only supports <code>eq</code> . Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering. Filtering will be done over the provided startDate and endDate. If no startDate or endDate is provided, defaults will be assumed. (optional)
-    top = 10 # float | If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. (optional)
+    top = 10 # decimal.Decimal | If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. (optional)
     skip = '10' # str | If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets. (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -262,7 +262,7 @@ Name | Type | Description  | Notes
  **count** | **str**| When set to true, the count of the collection is also returned in the response body | [optional]
  **count_only** | **str**| When set to true, only the count of the collection is returned | [optional]
  **filter** | **str**| Filter by field name and value. This filter only supports &lt;code&gt;eq&lt;/code&gt; . Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering. Filtering will be done over the provided startDate and endDate. If no startDate or endDate is provided, defaults will be assumed. | [optional]
- **top** | **float**| If nonzero, return no more than this number of results. Used with &lt;code&gt;$skip&lt;/code&gt; to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. | [optional]
+ **top** | **decimal.Decimal**| If nonzero, return no more than this number of results. Used with &lt;code&gt;$skip&lt;/code&gt; to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. | [optional]
  **skip** | **str**| If nonzero, skip this number of results before returning data. Used with &lt;code&gt;$top&lt;/code&gt; to provide pagination for large datasets. | [optional]
 
 ### Return type
@@ -413,7 +413,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = documents_api.DocumentsApi(api_client)
     avalara_version = '1.2' # str | The HTTP Header meant to specify the version of the API intended to be used
     metadata = Avalara.SDK.SubmitDocumentMetadata() # SubmitDocumentMetadata | 
-    data = 'data_example' # str | The document to be submitted, as indicated by the metadata fields 'dataFormat' and 'dataFormatVersion'
+    data = None # object | The document to be submitted, as indicated by the metadata fields 'dataFormat' and 'dataFormatVersion'
     x_avalara_client = 'John's E-Invoicing-API Client' # str | You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint. (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -439,7 +439,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **avalara_version** | **str**| The HTTP Header meant to specify the version of the API intended to be used |
  **metadata** | [**SubmitDocumentMetadata**](SubmitDocumentMetadata.md)|  |
- **data** | [**str**](str.md)| The document to be submitted, as indicated by the metadata fields &#39;dataFormat&#39; and &#39;dataFormatVersion&#39; |
+ **data** | [**object**](object.md)| The document to be submitted, as indicated by the metadata fields &#39;dataFormat&#39; and &#39;dataFormatVersion&#39; |
  **x_avalara_client** | **str**| You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint. | [optional]
 
 ### Return type

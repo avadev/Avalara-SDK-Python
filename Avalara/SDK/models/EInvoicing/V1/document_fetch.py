@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,7 +40,7 @@ from typing_extensions import Self
 
 class DocumentFetch(BaseModel):
     """
-    DocumentFetch
+    An object of the inbound document
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique ID for this document that can be used for status checking and file downloads. This is a UID created by the Avalara E-Invoicing platform.")
     status: Optional[StrictStr] = Field(default=None, description="Status of the document")

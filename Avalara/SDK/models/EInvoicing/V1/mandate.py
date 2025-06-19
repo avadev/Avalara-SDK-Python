@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,23 +36,29 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from Avalara.SDK.models.EInvoicing.V1.input_data_formats import InputDataFormats
+from Avalara.SDK.models.EInvoicing.V1.output_data_formats import OutputDataFormats
 from Avalara.SDK.models.EInvoicing.V1.workflow_ids import WorkflowIds
 from typing import Optional, Set
 from typing_extensions import Self
 
 class Mandate(BaseModel):
     """
-    Mandate
+    An object representing the country mandate
     """ # noqa: E501
     mandate_id: Optional[StrictStr] = Field(default=None, description="The `mandateId` is comprised of the country code, mandate type, and the network or regulation type (for example, AU-B2G-PEPPOL). Keep in mind the following when specifying a `mandateId`. - A country can have multiple mandate types (B2C, B2B, B2G). - A entity/company can opt in for multiple mandates. - A `mandateId` is the combination of country + mandate type + network/regulation.", alias="mandateId")
     country_mandate: Optional[StrictStr] = Field(default=None, description="**[LEGACY]** This field is retained for backward compatibility. It is recommended to use `mandateId` instead. The `countryMandate` similar to the `mandateId` is comprised of the country code, mandate type, and the network or regulation type (for example, AU-B2G-PEPPOL). ", alias="countryMandate")
     country_code: Optional[StrictStr] = Field(default=None, description="Country code", alias="countryCode")
     description: Optional[StrictStr] = Field(default=None, description="Mandate description")
-    supported_by_partner_api: Optional[StrictBool] = Field(default=None, description="Indicates whether this mandate supported by the partner API", alias="supportedByPartnerAPI")
+    supported_by_elrapi: Optional[StrictBool] = Field(default=None, description="Indicates whether this mandate supported by the ELR API", alias="supportedByELRAPI")
     mandate_format: Optional[StrictStr] = Field(default=None, description="Mandate format", alias="mandateFormat")
+    e_invoicing_flow: Optional[StrictStr] = Field(default=None, description="The type of e-invoicing flow for this mandate", alias="eInvoicingFlow")
+    e_invoicing_flow_documentation_link: Optional[StrictStr] = Field(default=None, description="Link to the documentation for this mandate's e-invoicing flow", alias="eInvoicingFlowDocumentationLink")
+    get_invoice_available_media_type: Optional[List[StrictStr]] = Field(default=None, description="List of available media types for downloading invoices for this mandate", alias="getInvoiceAvailableMediaType")
+    supports_inbound_digital_document: Optional[StrictStr] = Field(default=None, description="Indicates whether this mandate supports inbound digital documents", alias="supportsInboundDigitalDocument")
     input_data_formats: Optional[List[InputDataFormats]] = Field(default=None, description="Format and version used when inputting the data", alias="inputDataFormats")
+    output_data_formats: Optional[List[OutputDataFormats]] = Field(default=None, description="Lists the supported output document formats for the country mandate. For countries where specifying an output document format is required (e.g., France), this array will contain the applicable formats. For other countries where output format selection is not necessary, the array will be empty.", alias="outputDataFormats")
     workflow_ids: Optional[List[WorkflowIds]] = Field(default=None, description="Workflow ID list", alias="workflowIds")
-    __properties: ClassVar[List[str]] = ["mandateId", "countryMandate", "countryCode", "description", "supportedByPartnerAPI", "mandateFormat", "inputDataFormats", "workflowIds"]
+    __properties: ClassVar[List[str]] = ["mandateId", "countryMandate", "countryCode", "description", "supportedByELRAPI", "mandateFormat", "eInvoicingFlow", "eInvoicingFlowDocumentationLink", "getInvoiceAvailableMediaType", "supportsInboundDigitalDocument", "inputDataFormats", "outputDataFormats", "workflowIds"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,6 +106,13 @@ class Mandate(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['inputDataFormats'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in output_data_formats (list)
+        _items = []
+        if self.output_data_formats:
+            for _item in self.output_data_formats:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['outputDataFormats'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in workflow_ids (list)
         _items = []
         if self.workflow_ids:
@@ -123,9 +136,14 @@ class Mandate(BaseModel):
             "countryMandate": obj.get("countryMandate"),
             "countryCode": obj.get("countryCode"),
             "description": obj.get("description"),
-            "supportedByPartnerAPI": obj.get("supportedByPartnerAPI"),
+            "supportedByELRAPI": obj.get("supportedByELRAPI"),
             "mandateFormat": obj.get("mandateFormat"),
+            "eInvoicingFlow": obj.get("eInvoicingFlow"),
+            "eInvoicingFlowDocumentationLink": obj.get("eInvoicingFlowDocumentationLink"),
+            "getInvoiceAvailableMediaType": obj.get("getInvoiceAvailableMediaType"),
+            "supportsInboundDigitalDocument": obj.get("supportsInboundDigitalDocument"),
             "inputDataFormats": [InputDataFormats.from_dict(_item) for _item in obj["inputDataFormats"]] if obj.get("inputDataFormats") is not None else None,
+            "outputDataFormats": [OutputDataFormats.from_dict(_item) for _item in obj["outputDataFormats"]] if obj.get("outputDataFormats") is not None else None,
             "workflowIds": [WorkflowIds.from_dict(_item) for _item in obj["workflowIds"]] if obj.get("workflowIds") is not None else None
         })
         return _obj

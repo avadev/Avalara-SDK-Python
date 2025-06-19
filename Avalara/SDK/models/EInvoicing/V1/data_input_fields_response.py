@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    24.12.1
+@version    25.6.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,7 +40,7 @@ from typing_extensions import Self
 
 class DataInputFieldsResponse(BaseModel):
     """
-    DataInputFieldsResponse
+    Response model providing a list of input fields required, optional, or conditional for different country mandates.
     """ # noqa: E501
     recordset_count: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total count of results", alias="@recordsetCount")
     next_link: Optional[StrictStr] = Field(default=None, alias="@nextLink")
