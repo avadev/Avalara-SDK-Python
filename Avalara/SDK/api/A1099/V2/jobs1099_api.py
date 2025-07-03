@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.6.0
+@version    25.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -41,6 +41,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     validate_and_convert_types
 )
 from pydantic import Field, StrictStr
+from typing import Optional
 from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.job_result import JobResult
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
@@ -57,7 +58,7 @@ class Jobs1099Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.6.0")
+        api_client.set_sdk_version("25.7.0")
         self.api_client = api_client
 		
         self.get_job_endpoint = _Endpoint(
@@ -76,11 +77,11 @@ class Jobs1099Api(object):
                     'id',
                     'avalara_version',
                     'x_correlation_id',
+                    'x_avalara_client',
                 ],
                 'required': [
                     'id',
                     'avalara_version',
-                    'x_correlation_id',
                 ],
                 'nullable': [
                 ],
@@ -101,16 +102,20 @@ class Jobs1099Api(object):
                         (str,),
                     'x_correlation_id':
                         (str,),
+                    'x_avalara_client':
+                        (str,),
                 },
                 'attribute_map': {
                     'id': 'id',
                     'avalara_version': 'avalara-version',
                     'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
                 },
                 'location_map': {
                     'id': 'path',
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -132,7 +137,6 @@ class Jobs1099Api(object):
         self,
         id,
         avalara_version,
-        x_correlation_id,
         **kwargs
     ):
         """Retrieves information about the job  # noqa: E501
@@ -141,15 +145,16 @@ class Jobs1099Api(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_job(id, avalara_version, x_correlation_id, async_req=True)
+        >>> thread = api.get_job(id, avalara_version, async_req=True)
         >>> result = thread.get()
 
         Args:
             id (str): Job id obtained from other API responses, like `/1099/bulk-upsert`.
             avalara_version (str): API version
-            x_correlation_id (str): Unique correlation Id in a GUID format
 
         Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -197,6 +202,5 @@ class Jobs1099Api(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['id'] = id
         kwargs['avalara_version'] = avalara_version
-        kwargs['x_correlation_id'] = x_correlation_id
         return self.get_job_endpoint.call_with_http_info(**kwargs)
 

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**List[Form1099ListDataInner]**](Form1099ListDataInner.md) |  | [optional] 
+**data** | [**List[Get1099Form200Response]**](Get1099Form200Response.md) |  | [optional] 
 
 ## Example
 

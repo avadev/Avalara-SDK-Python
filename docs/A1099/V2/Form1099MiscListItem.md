@@ -5,7 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**state_and_local_withholding** | [**StateAndLocalWithholding**](StateAndLocalWithholding.md) |  | [optional] 
 **second_tin_notice** | **bool** |  | [optional] 
 **rents** | **float** |  | [optional] 
 **royalties** | **float** |  | [optional] 
@@ -22,17 +21,17 @@ Name | Type | Description | Notes
 **fatca_filing_requirement** | **bool** |  | [optional] 
 **excess_golden_parachute_payments** | **float** |  | [optional] 
 **nonqualified_deferred_compensation** | **float** |  | [optional] 
-**issuer_id** | **str** |  | [optional] 
 **issuer_reference_id** | **str** |  | [optional] 
 **issuer_tin** | **str** |  | [optional] 
 **tax_year** | **int** |  | [optional] 
+**issuer_id** | **str** |  | [optional] 
 **reference_id** | **str** |  | [optional] 
 **recipient_name** | **str** |  | [optional] 
 **recipient_tin** | **str** |  | [optional] 
-**tin_type** | **int** |  | [optional] 
+**tin_type** | **str** |  | [optional] 
 **recipient_second_name** | **str** |  | [optional] 
-**street_address** | **str** |  | [optional] 
-**street_address_line2** | **str** |  | [optional] 
+**address** | **str** |  | [optional] 
+**address2** | **str** |  | [optional] 
 **city** | **str** |  | [optional] 
 **state** | **str** |  | [optional] 
 **zip** | **str** |  | [optional] 
@@ -46,6 +45,7 @@ Name | Type | Description | Notes
 **state_e_file** | **bool** |  | [optional] 
 **tin_match** | **bool** |  | [optional] 
 **address_verification** | **bool** |  | [optional] 
+**state_and_local_withholding** | [**StateAndLocalWithholdingRequest**](StateAndLocalWithholdingRequest.md) |  | [optional] 
 
 ## Example
 

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **create_company**
-> CompanyResponseModel create_company(avalara_version, x_correlation_id)
+> CompanyResponseModel create_company(avalara_version)
 
 Creates a new company
 
@@ -45,12 +45,13 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '6a580e73-dc76-4249-bd11-36a010a379b8' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '3e296ae7-9025-41f6-8c3a-f9db99345d3a' # str | Unique correlation Id in a GUID format (optional)
+    x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     company_create_update_request_model = Avalara.SDK.CompanyCreateUpdateRequestModel() # CompanyCreateUpdateRequestModel | The company to create (optional)
     # example passing only required values which don't have defaults set
     try:
         # Creates a new company
-        api_response = api_instance.create_company(avalara_version, x_correlation_id)
+        api_response = api_instance.create_company(avalara_version)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->create_company: %s\n" % e)
@@ -59,7 +60,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Creates a new company
-        api_response = api_instance.create_company(avalara_version, x_correlation_id, company_create_update_request_model=company_create_update_request_model)
+        api_response = api_instance.create_company(avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, company_create_update_request_model=company_create_update_request_model)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->create_company: %s\n" % e)
@@ -70,7 +71,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **avalara_version** | **str**| API version |
- **x_correlation_id** | **str**| Unique correlation Id in a GUID format |
+ **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
+ **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
  **company_create_update_request_model** | [**CompanyCreateUpdateRequestModel**](CompanyCreateUpdateRequestModel.md)| The company to create | [optional]
 
 ### Return type
@@ -98,7 +100,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **delete_company**
-> delete_company(id, avalara_version, x_correlation_id)
+> delete_company(id, avalara_version)
 
 Deletes a company
 
@@ -130,11 +132,20 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | The company to delete
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '8f07ec41-a09d-4e15-bdcf-82b005dd9704' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '6f8fb6bb-e748-4e53-9ff4-30d8d5fd655f' # str | Unique correlation Id in a GUID format (optional)
+    x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
         # Deletes a company
-        api_instance.delete_company(id, avalara_version, x_correlation_id)
+        api_instance.delete_company(id, avalara_version)
+    except Avalara.SDK.ApiException as e:
+        print("Exception when calling CompaniesW9Api->delete_company: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # Deletes a company
+        api_instance.delete_company(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->delete_company: %s\n" % e)
 ```
@@ -145,7 +156,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| The company to delete |
  **avalara_version** | **str**| API version |
- **x_correlation_id** | **str**| Unique correlation Id in a GUID format |
+ **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
+ **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
 
 ### Return type
 
@@ -174,7 +186,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_companies**
-> PaginatedQueryResultModelCompanyResponse get_companies(avalara_version, x_correlation_id)
+> PaginatedQueryResultModelCompanyResponse get_companies(avalara_version)
 
 List companies
 
@@ -206,17 +218,18 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '5360d0c7-ed2a-4202-a709-3c1c165f35e1' # str | Unique correlation Id in a GUID format
     filter = 'filter_example' # str | A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>. (optional)
     top = 56 # int | If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets. (optional)
     skip = 56 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional)
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
+    x_correlation_id = 'd8dfd373-5f70-48e3-9047-27f5435c52af' # str | Unique correlation Id in a GUID format (optional)
+    x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
         # List companies
-        api_response = api_instance.get_companies(avalara_version, x_correlation_id)
+        api_response = api_instance.get_companies(avalara_version)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->get_companies: %s\n" % e)
@@ -225,7 +238,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # List companies
-        api_response = api_instance.get_companies(avalara_version, x_correlation_id, filter=filter, top=top, skip=skip, order_by=order_by, count=count, count_only=count_only)
+        api_response = api_instance.get_companies(avalara_version, filter=filter, top=top, skip=skip, order_by=order_by, count=count, count_only=count_only, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->get_companies: %s\n" % e)
@@ -236,13 +249,14 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **avalara_version** | **str**| API version |
- **x_correlation_id** | **str**| Unique correlation Id in a GUID format |
  **filter** | **str**| A filter statement to identify specific records to retrieve.  For more information on filtering, see &lt;a href&#x3D;\&quot;https://developer.avalara.com/avatax/filtering-in-rest/\&quot;&gt;Filtering in REST&lt;/a&gt;. | [optional]
  **top** | **int**| If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets. | [optional]
  **skip** | **int**| If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. | [optional]
  **order_by** | **str**| A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. | [optional]
  **count** | **bool**| If true, return the global count of elements in the collection. | [optional]
  **count_only** | **bool**| If true, return ONLY the global count of elements in the collection.  It only applies when count&#x3D;true. | [optional]
+ **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
+ **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
 
 ### Return type
 
@@ -271,7 +285,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_company**
-> CompanyResponse get_company(id, avalara_version, x_correlation_id)
+> CompanyResponse get_company(id, avalara_version)
 
 Retrieve a company
 
@@ -304,11 +318,21 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | Id of the company
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '384995d6-14bb-4911-97dd-f203596a6c04' # str | Unique correlation Id in a GUID format
+    x_correlation_id = '5cfdcf59-38d2-491a-b32a-7f50fa53572f' # str | Unique correlation Id in a GUID format (optional)
+    x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
         # Retrieve a company
-        api_response = api_instance.get_company(id, avalara_version, x_correlation_id)
+        api_response = api_instance.get_company(id, avalara_version)
+        pprint(api_response)
+    except Avalara.SDK.ApiException as e:
+        print("Exception when calling CompaniesW9Api->get_company: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # Retrieve a company
+        api_response = api_instance.get_company(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->get_company: %s\n" % e)
@@ -320,7 +344,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Id of the company |
  **avalara_version** | **str**| API version |
- **x_correlation_id** | **str**| Unique correlation Id in a GUID format |
+ **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
+ **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
 
 ### Return type
 
@@ -349,7 +374,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **update_company**
-> CompanyResponseModel update_company(id, avalara_version, x_correlation_id)
+> CompanyResponseModel update_company(id, avalara_version)
 
 Update a company
 
@@ -383,12 +408,13 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | The ID of the company to update
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '27feaeac-cebb-4ddd-8c60-80a1c7fd518d' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'c8237e6a-4f86-4bc1-bc4a-5dbccbc6bc7b' # str | Unique correlation Id in a GUID format (optional)
+    x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     company_create_update_request_model = Avalara.SDK.CompanyCreateUpdateRequestModel() # CompanyCreateUpdateRequestModel | The updated company data (optional)
     # example passing only required values which don't have defaults set
     try:
         # Update a company
-        api_response = api_instance.update_company(id, avalara_version, x_correlation_id)
+        api_response = api_instance.update_company(id, avalara_version)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->update_company: %s\n" % e)
@@ -397,7 +423,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Update a company
-        api_response = api_instance.update_company(id, avalara_version, x_correlation_id, company_create_update_request_model=company_create_update_request_model)
+        api_response = api_instance.update_company(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, company_create_update_request_model=company_create_update_request_model)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling CompaniesW9Api->update_company: %s\n" % e)
@@ -409,7 +435,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| The ID of the company to update |
  **avalara_version** | **str**| API version |
- **x_correlation_id** | **str**| Unique correlation Id in a GUID format |
+ **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
+ **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
  **company_create_update_request_model** | [**CompanyCreateUpdateRequestModel**](CompanyCreateUpdateRequestModel.md)| The updated company data | [optional]
 
 ### Return type

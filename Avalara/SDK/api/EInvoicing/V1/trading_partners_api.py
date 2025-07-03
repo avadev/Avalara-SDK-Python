@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.6.0
+@version    25.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,7 +40,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from pydantic import Field, StrictBool, StrictBytes, StrictStr
+from pydantic import Field, StrictBool, StrictBytes, StrictFloat, StrictInt, StrictStr
 from typing import Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.batch_search import BatchSearch
@@ -61,7 +61,7 @@ class TradingPartnersApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.6.0")
+        api_client.set_sdk_version("25.7.0")
         self.api_client = api_client
 		
         self.batch_search_participants_endpoint = _Endpoint(
@@ -336,7 +336,7 @@ class TradingPartnersApi(object):
                     'count':
                         (bool,),
                     'top':
-                        (str,),
+                        (float,),
                     'skip':
                         (str,),
                     'order_by':
@@ -429,7 +429,7 @@ class TradingPartnersApi(object):
                     'filter':
                         (str,),
                     'top':
-                        (str,),
+                        (float,),
                     'skip':
                         (str,),
                     'order_by':
@@ -718,7 +718,7 @@ class TradingPartnersApi(object):
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> .The parameters supported is <code>name</code>.    Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering. Filtering will be done over the provided parameters.. [optional]
             count (bool): When set to true, the count of the collection is included as @recordSetCount in the response body.. [optional]
-            top (str): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records.. [optional]
+            top (float): The number of items to include in the result.. [optional]
             skip (str): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
             order_by (str): The $orderBy query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space.. [optional]
             x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
@@ -794,7 +794,7 @@ class TradingPartnersApi(object):
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
             count (bool): When set to true, the count of the collection is included as @recordSetCount in the response body.. [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> .The parameters supported are <code>network</code>, <code>country</code>, <code>documentType</code>, <code>idType</code>.          Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering. Filtering will be done over the provided parameters.. [optional]
-            top (str): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records.. [optional]
+            top (float): The number of items to include in the result.. [optional]
             skip (str): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
             order_by (str): The $orderBy query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space.. [optional]
             x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]

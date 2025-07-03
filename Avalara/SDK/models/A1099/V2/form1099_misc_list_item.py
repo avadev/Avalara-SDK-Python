@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.6.0
+@version    25.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,9 +33,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from Avalara.SDK.models.A1099.V2.state_and_local_withholding import StateAndLocalWithholding
+from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -43,7 +43,6 @@ class Form1099MiscListItem(BaseModel):
     """
     Form1099MiscListItem
     """ # noqa: E501
-    state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, alias="stateAndLocalWithholding")
     second_tin_notice: Optional[StrictBool] = Field(default=None, alias="secondTinNotice")
     rents: Optional[Union[StrictFloat, StrictInt]] = None
     royalties: Optional[Union[StrictFloat, StrictInt]] = None
@@ -60,17 +59,17 @@ class Form1099MiscListItem(BaseModel):
     fatca_filing_requirement: Optional[StrictBool] = Field(default=None, alias="fatcaFilingRequirement")
     excess_golden_parachute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="excessGoldenParachutePayments")
     nonqualified_deferred_compensation: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="nonqualifiedDeferredCompensation")
-    issuer_id: Optional[StrictStr] = Field(default=None, alias="issuerId")
     issuer_reference_id: Optional[StrictStr] = Field(default=None, alias="issuerReferenceId")
     issuer_tin: Optional[StrictStr] = Field(default=None, alias="issuerTin")
     tax_year: Optional[StrictInt] = Field(default=None, alias="taxYear")
+    issuer_id: Optional[StrictStr] = Field(default=None, alias="issuerId")
     reference_id: Optional[StrictStr] = Field(default=None, alias="referenceId")
     recipient_name: Optional[StrictStr] = Field(default=None, alias="recipientName")
     recipient_tin: Optional[StrictStr] = Field(default=None, alias="recipientTin")
-    tin_type: Optional[StrictInt] = Field(default=None, alias="tinType")
+    tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
     recipient_second_name: Optional[StrictStr] = Field(default=None, alias="recipientSecondName")
-    street_address: Optional[StrictStr] = Field(default=None, alias="streetAddress")
-    street_address_line2: Optional[StrictStr] = Field(default=None, alias="streetAddressLine2")
+    address: Optional[StrictStr] = None
+    address2: Optional[StrictStr] = None
     city: Optional[StrictStr] = None
     state: Optional[StrictStr] = None
     zip: Optional[StrictStr] = None
@@ -84,7 +83,18 @@ class Form1099MiscListItem(BaseModel):
     state_e_file: Optional[StrictBool] = Field(default=None, alias="stateEFile")
     tin_match: Optional[StrictBool] = Field(default=None, alias="tinMatch")
     address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
-    __properties: ClassVar[List[str]] = ["issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "recipientName", "recipientTin", "tinType", "recipientSecondName", "streetAddress", "streetAddressLine2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification"]
+    state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, alias="stateAndLocalWithholding")
+    __properties: ClassVar[List[str]] = ["issuerReferenceId", "issuerTin", "taxYear", "issuerId", "referenceId", "recipientName", "recipientTin", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "stateAndLocalWithholding"]
+
+    @field_validator('tin_type')
+    def tin_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['EIN', 'SSN', 'ITIN', 'ATIN']):
+            raise ValueError("must be one of enum values ('EIN', 'SSN', 'ITIN', 'ATIN')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -125,6 +135,49 @@ class Form1099MiscListItem(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of state_and_local_withholding
+        if self.state_and_local_withholding:
+            _dict['stateAndLocalWithholding'] = self.state_and_local_withholding.to_dict()
+        # set to None if issuer_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.issuer_id is None and "issuer_id" in self.model_fields_set:
+            _dict['issuerId'] = None
+
+        # set to None if reference_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.reference_id is None and "reference_id" in self.model_fields_set:
+            _dict['referenceId'] = None
+
+        # set to None if recipient_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.recipient_name is None and "recipient_name" in self.model_fields_set:
+            _dict['recipientName'] = None
+
+        # set to None if address2 (nullable) is None
+        # and model_fields_set contains the field
+        if self.address2 is None and "address2" in self.model_fields_set:
+            _dict['address2'] = None
+
+        # set to None if recipient_email (nullable) is None
+        # and model_fields_set contains the field
+        if self.recipient_email is None and "recipient_email" in self.model_fields_set:
+            _dict['recipientEmail'] = None
+
+        # set to None if account_number (nullable) is None
+        # and model_fields_set contains the field
+        if self.account_number is None and "account_number" in self.model_fields_set:
+            _dict['accountNumber'] = None
+
+        # set to None if office_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.office_code is None and "office_code" in self.model_fields_set:
+            _dict['officeCode'] = None
+
+        # set to None if recipient_non_us_province (nullable) is None
+        # and model_fields_set contains the field
+        if self.recipient_non_us_province is None and "recipient_non_us_province" in self.model_fields_set:
+            _dict['recipientNonUsProvince'] = None
+
         return _dict
 
     @classmethod
@@ -137,17 +190,17 @@ class Form1099MiscListItem(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "issuerId": obj.get("issuerId"),
             "issuerReferenceId": obj.get("issuerReferenceId"),
             "issuerTin": obj.get("issuerTin"),
             "taxYear": obj.get("taxYear"),
+            "issuerId": obj.get("issuerId"),
             "referenceId": obj.get("referenceId"),
             "recipientName": obj.get("recipientName"),
             "recipientTin": obj.get("recipientTin"),
             "tinType": obj.get("tinType"),
             "recipientSecondName": obj.get("recipientSecondName"),
-            "streetAddress": obj.get("streetAddress"),
-            "streetAddressLine2": obj.get("streetAddressLine2"),
+            "address": obj.get("address"),
+            "address2": obj.get("address2"),
             "city": obj.get("city"),
             "state": obj.get("state"),
             "zip": obj.get("zip"),
@@ -160,7 +213,8 @@ class Form1099MiscListItem(BaseModel):
             "postalMail": obj.get("postalMail"),
             "stateEFile": obj.get("stateEFile"),
             "tinMatch": obj.get("tinMatch"),
-            "addressVerification": obj.get("addressVerification")
+            "addressVerification": obj.get("addressVerification"),
+            "stateAndLocalWithholding": StateAndLocalWithholdingRequest.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None
         })
         return _obj
 

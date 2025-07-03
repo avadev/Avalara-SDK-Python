@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.6.0
+@version    25.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -41,8 +41,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     validate_and_convert_types
 )
 from datetime import datetime
-from decimal import Decimal
-from pydantic import Field, StrictBytes, StrictStr
+from pydantic import Field, StrictBytes, StrictFloat, StrictInt, StrictStr
 from typing import Any, Dict, Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.document_fetch import DocumentFetch
@@ -65,7 +64,7 @@ class DocumentsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.6.0")
+        api_client.set_sdk_version("25.7.0")
         self.api_client = api_client
 		
         self.download_document_endpoint = _Endpoint(
@@ -264,7 +263,7 @@ class DocumentsApi(object):
                     'filter':
                         (str,),
                     'top':
-                        (decimal.Decimal,),
+                        (float,),
                     'skip':
                         (str,),
                 },
@@ -617,7 +616,7 @@ class DocumentsApi(object):
             count (str): When set to true, the count of the collection is also returned in the response body. [optional]
             count_only (str): When set to true, only the count of the collection is returned. [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> . Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering. Filtering will be done over the provided startDate and endDate. If no startDate or endDate is provided, defaults will be assumed.. [optional]
-            top (decimal.Decimal): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records.. [optional]
+            top (float): The number of items to include in the result.. [optional]
             skip (str): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
