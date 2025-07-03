@@ -61,6 +61,6 @@ setup(
     include_package_data=True,
     license="Apache 2.0",
     long_description="""\
-    """,  # noqa: E501
-    package_data={"Avalara.SDK": ["py.typed"]},
+    SDK for Avalara Services for client use.   # noqa: E501
+    """
 )
