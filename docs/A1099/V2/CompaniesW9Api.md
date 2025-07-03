@@ -45,7 +45,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '4c1bd3aa-3f1d-4274-852e-1a1cfaabaa55' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '25acab19-7c21-4b00-84c0-376ded0f3e95' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     company_create_update_request_model = Avalara.SDK.CompanyCreateUpdateRequestModel() # CompanyCreateUpdateRequestModel | The company to create (optional)
     # example passing only required values which don't have defaults set
@@ -132,7 +132,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | The company to delete
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '15f6ac9a-e9a1-4abe-b10a-e53c030e79d5' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '55124ac1-2398-4a89-a8c3-80318b0598b0' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -224,7 +224,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = 'e1b7fd52-5628-4460-8707-3f06d243f35b' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'bd6be5ac-f793-4dd7-9aae-b8d2482663f9' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -318,7 +318,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | Id of the company
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'ceb46347-c47a-43c7-8e6b-631129a65dc1' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '64e6674f-d459-4bc1-b82a-f7baecd188a5' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -408,7 +408,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = companies_w9_api.CompaniesW9Api(api_client)
     id = 'id_example' # str | The ID of the company to update
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '5c4069ea-58ea-460a-b213-43c353935109' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'd81f2a70-6221-4b5d-88d2-d11388dd1568' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     company_create_update_request_model = Avalara.SDK.CompanyCreateUpdateRequestModel() # CompanyCreateUpdateRequestModel | The updated company data (optional)
     # example passing only required values which don't have defaults set

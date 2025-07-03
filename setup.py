@@ -36,6 +36,9 @@ from setuptools import setup, find_packages  # noqa: H301
 #
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
+
+from setuptools import setup, find_namespace_packages 
+
 NAME = "Avalara.SDK"
 VERSION = "25.7.0"
 PYTHON_REQUIRES = ">=3.7"
