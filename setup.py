@@ -60,7 +60,6 @@ setup(
     packages=find_namespace_packages(include=["Avalara.*"], exclude=["test", "tests"]),
     include_package_data=True,
     license="Apache 2.0",
-    long_description_content_type='text/markdown',
     long_description="""\
     """,  # noqa: E501
     package_data={"Avalara.SDK": ["py.typed"]},
