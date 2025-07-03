@@ -44,7 +44,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms_w9_api.FormsW9Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '3d32efcd-6693-4279-ab47-cbff17606201' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '7fc4a19e-99ee-4511-b9dc-7cce73ea343c' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     iw9_form_data_models_one_of = Avalara.SDK.IW9FormDataModelsOneOf() # IW9FormDataModelsOneOf | Form to be created (optional)
     # example passing only required values which don't have defaults set
@@ -131,7 +131,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form to delete
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'f8a48d06-e3ba-45cb-975d-1b93ff030ab7' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '0a360e7f-07b1-4100-b506-cc0458549809' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -216,7 +216,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '72b93204-46e0-4d64-ada8-08d4f0065b2d' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '038cd108-d3f2-4561-b786-9aaf4b5e52ae' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -307,7 +307,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     skip = 0 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional) if omitted the server will use the default value of 0
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | When true, returns a @recordSetCount in the result set (optional)
-    x_correlation_id = 'a2ca2e22-ebbb-44fa-8f5b-134322cd3587' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'fd549b4b-f3c7-4045-8182-9a49bd913b55' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -396,7 +396,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | The ID of the W9/W4/W8 form.
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'a455b097-9497-4810-b255-a40a1f212328' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'e4f5c2b5-1ad2-432f-9459-a5246d6705c4' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -481,7 +481,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form to update
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'c216db6a-8c3d-4494-b2ae-a094222581bc' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '33c9180b-8a9a-47f2-9e68-5ed8395adf19' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     iw9_form_data_models_one_of = Avalara.SDK.IW9FormDataModelsOneOf() # IW9FormDataModelsOneOf | Form to be updated (optional)
     # example passing only required values which don't have defaults set
@@ -569,7 +569,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '2e07c97a-dc08-4ac7-b86b-6af6a1ff93ff' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '8456f7ff-75c7-4abf-ba94-e8d24f2a5a37' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     file = None # bytearray |  (optional)
     # example passing only required values which don't have defaults set

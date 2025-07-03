@@ -48,7 +48,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0' # str | API version
     dry_run = False # bool |  (optional) if omitted the server will use the default value of False
-    x_correlation_id = '3bd66442-d125-4a5a-98a1-8ab6bb6c68bb' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'a76f29c0-f281-44ad-a197-fa752bf78f88' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     bulk_upsert1099_forms_request = Avalara.SDK.BulkUpsert1099FormsRequest() # BulkUpsert1099FormsRequest |  (optional)
     # example passing only required values which don't have defaults set
@@ -137,7 +137,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '64087b77-e599-4a17-8488-506b034399e8' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '9ff5fe6f-a60c-40f0-a13f-5c76502c87f5' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     i_create_form1099_request = Avalara.SDK.ICreateForm1099Request() # ICreateForm1099Request |  (optional)
     # example passing only required values which don't have defaults set
@@ -223,7 +223,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | The unique identifier of the desired form to delete.
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'e363ed26-bc02-4610-9189-f7705f742418' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '5b0ef667-f7aa-4274-a5bd-f471e644e961' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -309,7 +309,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '05c9817e-44da-41ca-90d5-69585f139d80' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'b2fae459-0bf8-4208-bf4d-8416c2909cc2' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -397,7 +397,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     id = 'id_example' # str | 
     avalara_version = '2.0' # str | API version
     mark_edelivered = True # bool | The parameter for marked e-delivered (optional)
-    x_correlation_id = 'e5cec325-1aa6-4a43-8eda-29a4a2ef5ed8' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'aaeb4798-7079-4f41-a496-5672ac62c38b' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -488,7 +488,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     top = 10 # int | If nonzero, return no more than this number of results.     Used with skip to provide pagination for large datasets.     Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records. (optional) if omitted the server will use the default value of 10
     skip = 0 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional) if omitted the server will use the default value of 0
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example issuerReferenceId ASC.    Supported sorting fields are:         issuerReferenceId       taxYear       createdAt       recipientName      updatedAt (optional)
-    x_correlation_id = '2a1f6c91-a6f2-4f5e-aa72-1a3925a1680f' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '6c85913e-310a-489d-b3d1-c6b6117fbff4' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -579,7 +579,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0' # str | API version
-    x_correlation_id = '0c522e8b-152a-4b44-80ca-671bd356b0f1' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '55dc7dab-d928-416b-9d96-2a37b70b771d' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     i_update_form1099_request = Avalara.SDK.IUpdateForm1099Request() # IUpdateForm1099Request |  (optional)
     # example passing only required values which don't have defaults set
