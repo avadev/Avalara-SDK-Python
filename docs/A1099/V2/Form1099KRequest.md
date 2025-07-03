@@ -5,7 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**state_and_local_withholding** | [**StateAndLocalWithholding**](StateAndLocalWithholding.md) |  | [optional] 
 **filer_type** | **int** |  | [optional] 
 **payment_type** | **int** |  | [optional] 
 **payment_settlement_entity_name_phone_number** | **str** |  | [optional] 
@@ -26,18 +25,15 @@ Name | Type | Description | Notes
 **october** | **float** |  | [optional] 
 **november** | **float** |  | [optional] 
 **december** | **float** |  | [optional] 
-**type** | **str** |  | [optional] 
+**type** | **str** |  | [optional] [readonly] 
 **issuer_id** | **str** |  | [optional] 
-**issuer_reference_id** | **str** |  | [optional] 
-**issuer_tin** | **str** |  | [optional] 
-**tax_year** | **int** |  | [optional] 
 **reference_id** | **str** |  | [optional] 
 **recipient_name** | **str** |  | [optional] 
 **recipient_tin** | **str** |  | [optional] 
-**tin_type** | **int** |  | [optional] 
+**tin_type** | **str** |  | [optional] 
 **recipient_second_name** | **str** |  | [optional] 
-**street_address** | **str** |  | [optional] 
-**street_address_line2** | **str** |  | [optional] 
+**address** | **str** |  | [optional] 
+**address2** | **str** |  | [optional] 
 **city** | **str** |  | [optional] 
 **state** | **str** |  | [optional] 
 **zip** | **str** |  | [optional] 
@@ -51,6 +47,7 @@ Name | Type | Description | Notes
 **state_e_file** | **bool** |  | [optional] 
 **tin_match** | **bool** |  | [optional] 
 **address_verification** | **bool** |  | [optional] 
+**state_and_local_withholding** | [**StateAndLocalWithholdingRequest**](StateAndLocalWithholdingRequest.md) |  | [optional] 
 
 ## Example
 

@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.6.0
+@version    25.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -60,7 +60,7 @@ class Issuers1099Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.6.0")
+        api_client.set_sdk_version("25.7.0")
         self.api_client = api_client
 		
         self.create_issuer_endpoint = _Endpoint(
@@ -78,11 +78,11 @@ class Issuers1099Api(object):
                 'all': [
                     'avalara_version',
                     'x_correlation_id',
+                    'x_avalara_client',
                     'issuer_command',
                 ],
                 'required': [
                     'avalara_version',
-                    'x_correlation_id',
                 ],
                 'nullable': [
                 ],
@@ -101,16 +101,20 @@ class Issuers1099Api(object):
                         (str,),
                     'x_correlation_id':
                         (str,),
+                    'x_avalara_client':
+                        (str,),
                     'issuer_command':
                         (IssuerCommand,),
                 },
                 'attribute_map': {
                     'avalara_version': 'avalara-version',
                     'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
                 },
                 'location_map': {
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
                     'issuer_command': 'body',
                 },
                 'collection_format_map': {
@@ -147,11 +151,11 @@ class Issuers1099Api(object):
                     'id',
                     'avalara_version',
                     'x_correlation_id',
+                    'x_avalara_client',
                 ],
                 'required': [
                     'id',
                     'avalara_version',
-                    'x_correlation_id',
                 ],
                 'nullable': [
                 ],
@@ -172,16 +176,20 @@ class Issuers1099Api(object):
                         (str,),
                     'x_correlation_id':
                         (str,),
+                    'x_avalara_client':
+                        (str,),
                 },
                 'attribute_map': {
                     'id': 'id',
                     'avalara_version': 'avalara-version',
                     'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
                 },
                 'location_map': {
                     'id': 'path',
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -213,11 +221,11 @@ class Issuers1099Api(object):
                     'id',
                     'avalara_version',
                     'x_correlation_id',
+                    'x_avalara_client',
                 ],
                 'required': [
                     'id',
                     'avalara_version',
-                    'x_correlation_id',
                 ],
                 'nullable': [
                 ],
@@ -238,16 +246,20 @@ class Issuers1099Api(object):
                         (str,),
                     'x_correlation_id':
                         (str,),
+                    'x_avalara_client':
+                        (str,),
                 },
                 'attribute_map': {
                     'id': 'id',
                     'avalara_version': 'avalara-version',
                     'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
                 },
                 'location_map': {
                     'id': 'path',
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -277,17 +289,17 @@ class Issuers1099Api(object):
             params_map={
                 'all': [
                     'avalara_version',
-                    'x_correlation_id',
                     'filter',
                     'top',
                     'skip',
                     'order_by',
                     'count',
                     'count_only',
+                    'x_correlation_id',
+                    'x_avalara_client',
                 ],
                 'required': [
                     'avalara_version',
-                    'x_correlation_id',
                 ],
                 'nullable': [
                 ],
@@ -304,8 +316,6 @@ class Issuers1099Api(object):
                 'openapi_types': {
                     'avalara_version':
                         (str,),
-                    'x_correlation_id':
-                        (str,),
                     'filter':
                         (str,),
                     'top':
@@ -318,26 +328,32 @@ class Issuers1099Api(object):
                         (bool,),
                     'count_only':
                         (bool,),
+                    'x_correlation_id':
+                        (str,),
+                    'x_avalara_client':
+                        (str,),
                 },
                 'attribute_map': {
                     'avalara_version': 'avalara-version',
-                    'x_correlation_id': 'X-Correlation-Id',
                     'filter': '$filter',
                     'top': '$top',
                     'skip': '$skip',
                     'order_by': '$orderBy',
                     'count': 'count',
                     'count_only': 'countOnly',
+                    'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
                 },
                 'location_map': {
                     'avalara_version': 'header',
-                    'x_correlation_id': 'header',
                     'filter': 'query',
                     'top': 'query',
                     'skip': 'query',
                     'order_by': 'query',
                     'count': 'query',
                     'count_only': 'query',
+                    'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -369,12 +385,12 @@ class Issuers1099Api(object):
                     'id',
                     'avalara_version',
                     'x_correlation_id',
+                    'x_avalara_client',
                     'issuer_command',
                 ],
                 'required': [
                     'id',
                     'avalara_version',
-                    'x_correlation_id',
                 ],
                 'nullable': [
                 ],
@@ -395,6 +411,8 @@ class Issuers1099Api(object):
                         (str,),
                     'x_correlation_id':
                         (str,),
+                    'x_avalara_client':
+                        (str,),
                     'issuer_command':
                         (IssuerCommand,),
                 },
@@ -402,11 +420,13 @@ class Issuers1099Api(object):
                     'id': 'id',
                     'avalara_version': 'avalara-version',
                     'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
                 },
                 'location_map': {
                     'id': 'path',
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
                     'issuer_command': 'body',
                 },
                 'collection_format_map': {
@@ -432,7 +452,6 @@ class Issuers1099Api(object):
     def create_issuer(
         self,
         avalara_version,
-        x_correlation_id,
         **kwargs
     ):
         """Create an issuer  # noqa: E501
@@ -441,14 +460,15 @@ class Issuers1099Api(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_issuer(avalara_version, x_correlation_id, async_req=True)
+        >>> thread = api.create_issuer(avalara_version, async_req=True)
         >>> result = thread.get()
 
         Args:
             avalara_version (str): API version
-            x_correlation_id (str): Unique correlation Id in a GUID format
 
         Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             issuer_command (IssuerCommand): The issuer to create. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -496,7 +516,6 @@ class Issuers1099Api(object):
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['avalara_version'] = avalara_version
-        kwargs['x_correlation_id'] = x_correlation_id
         return self.create_issuer_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -504,7 +523,6 @@ class Issuers1099Api(object):
         self,
         id,
         avalara_version,
-        x_correlation_id,
         **kwargs
     ):
         """Delete an issuer  # noqa: E501
@@ -513,15 +531,16 @@ class Issuers1099Api(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.delete_issuer(id, avalara_version, x_correlation_id, async_req=True)
+        >>> thread = api.delete_issuer(id, avalara_version, async_req=True)
         >>> result = thread.get()
 
         Args:
             id (str): Id of the issuer to delete
             avalara_version (str): API version
-            x_correlation_id (str): Unique correlation Id in a GUID format
 
         Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -569,7 +588,6 @@ class Issuers1099Api(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['id'] = id
         kwargs['avalara_version'] = avalara_version
-        kwargs['x_correlation_id'] = x_correlation_id
         return self.delete_issuer_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -577,7 +595,6 @@ class Issuers1099Api(object):
         self,
         id,
         avalara_version,
-        x_correlation_id,
         **kwargs
     ):
         """Get an issuer  # noqa: E501
@@ -586,15 +603,16 @@ class Issuers1099Api(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_issuer(id, avalara_version, x_correlation_id, async_req=True)
+        >>> thread = api.get_issuer(id, avalara_version, async_req=True)
         >>> result = thread.get()
 
         Args:
             id (str):
             avalara_version (str): API version
-            x_correlation_id (str): Unique correlation Id in a GUID format
 
         Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -642,14 +660,12 @@ class Issuers1099Api(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['id'] = id
         kwargs['avalara_version'] = avalara_version
-        kwargs['x_correlation_id'] = x_correlation_id
         return self.get_issuer_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
     def get_issuers(
         self,
         avalara_version,
-        x_correlation_id,
         **kwargs
     ):
         """List issuers  # noqa: E501
@@ -658,12 +674,11 @@ class Issuers1099Api(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_issuers(avalara_version, x_correlation_id, async_req=True)
+        >>> thread = api.get_issuers(avalara_version, async_req=True)
         >>> result = thread.get()
 
         Args:
             avalara_version (str): API version
-            x_correlation_id (str): Unique correlation Id in a GUID format
 
         Keyword Args:
             filter (str): A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>.. [optional]
@@ -672,6 +687,8 @@ class Issuers1099Api(object):
             order_by (str): A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC.. [optional]
             count (bool): If true, return the global count of elements in the collection.. [optional]
             count_only (bool): If true, return ONLY the global count of elements in the collection.  It only applies when count=true.. [optional]
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -718,7 +735,6 @@ class Issuers1099Api(object):
         )
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['avalara_version'] = avalara_version
-        kwargs['x_correlation_id'] = x_correlation_id
         return self.get_issuers_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
@@ -726,7 +742,6 @@ class Issuers1099Api(object):
         self,
         id,
         avalara_version,
-        x_correlation_id,
         **kwargs
     ):
         """Update an issuer  # noqa: E501
@@ -735,15 +750,16 @@ class Issuers1099Api(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_issuer(id, avalara_version, x_correlation_id, async_req=True)
+        >>> thread = api.update_issuer(id, avalara_version, async_req=True)
         >>> result = thread.get()
 
         Args:
             id (str): Id of the issuer to Update
             avalara_version (str): API version
-            x_correlation_id (str): Unique correlation Id in a GUID format
 
         Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             issuer_command (IssuerCommand): The issuer to update. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -792,6 +808,5 @@ class Issuers1099Api(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['id'] = id
         kwargs['avalara_version'] = avalara_version
-        kwargs['x_correlation_id'] = x_correlation_id
         return self.update_issuer_endpoint.call_with_http_info(**kwargs)
 

@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_job**
-> JobResult get_job(id, avalara_version, x_correlation_id)
+> JobResult get_job(id, avalara_version)
 
 Retrieves information about the job
 
@@ -41,11 +41,21 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = jobs1099_api.Jobs1099Api(api_client)
     id = 'id_example' # str | Job id obtained from other API responses, like `/1099/bulk-upsert`.
     avalara_version = '2.0' # str | API version
-    x_correlation_id = 'f908d417-3983-4da2-b496-7b02100d6bb4' # str | Unique correlation Id in a GUID format
+    x_correlation_id = 'f1bd30b9-0ec4-4b53-a259-f92cb4050fec' # str | Unique correlation Id in a GUID format (optional)
+    x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
         # Retrieves information about the job
-        api_response = api_instance.get_job(id, avalara_version, x_correlation_id)
+        api_response = api_instance.get_job(id, avalara_version)
+        pprint(api_response)
+    except Avalara.SDK.ApiException as e:
+        print("Exception when calling Jobs1099Api->get_job: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # Retrieves information about the job
+        api_response = api_instance.get_job(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Jobs1099Api->get_job: %s\n" % e)
@@ -57,7 +67,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Job id obtained from other API responses, like &#x60;/1099/bulk-upsert&#x60;. |
  **avalara_version** | **str**| API version |
- **x_correlation_id** | **str**| Unique correlation Id in a GUID format |
+ **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
+ **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
 
 ### Return type
 

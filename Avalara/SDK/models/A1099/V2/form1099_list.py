@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.6.0
+@version    25.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -35,7 +35,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.form1099_list_data_inner import Form1099ListDataInner
+from Avalara.SDK.models.A1099.V2.get1099_form200_response import Get1099Form200Response
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -43,7 +43,7 @@ class Form1099List(BaseModel):
     """
     Form1099List
     """ # noqa: E501
-    data: Optional[List[Form1099ListDataInner]] = None
+    data: Optional[List[Get1099Form200Response]] = None
     __properties: ClassVar[List[str]] = ["data"]
 
     model_config = ConfigDict(
@@ -109,7 +109,7 @@ class Form1099List(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "data": [Form1099ListDataInner.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
+            "data": [Get1099Form200Response.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
         })
         return _obj
 

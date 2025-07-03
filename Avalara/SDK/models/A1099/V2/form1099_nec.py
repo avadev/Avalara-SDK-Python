@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.6.0
+@version    25.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -68,12 +68,12 @@ class Form1099Nec(BaseModel):
     address_verification_status: Optional[Form1099StatusDetail] = Field(default=None, alias="addressVerificationStatus")
     reference_id: Optional[StrictStr] = Field(default=None, alias="referenceId")
     email: Optional[StrictStr] = None
-    type_of_tin: Optional[StrictStr] = Field(default=None, alias="typeOfTin")
+    tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
     tin: Optional[StrictStr] = None
-    first_payee_name: Optional[StrictStr] = Field(default=None, alias="firstPayeeName")
-    second_payee_name: Optional[StrictStr] = Field(default=None, alias="secondPayeeName")
+    recipient_name: Optional[StrictStr] = Field(default=None, alias="recipientName")
+    recipient_second_name: Optional[StrictStr] = Field(default=None, alias="recipientSecondName")
     address: Optional[StrictStr] = None
-    address_recipient_second: Optional[StrictStr] = Field(default=None, alias="addressRecipientSecond")
+    address2: Optional[StrictStr] = None
     city: Optional[StrictStr] = None
     state: Optional[StrictStr] = None
     zip: Optional[StrictStr] = None
@@ -83,7 +83,7 @@ class Form1099Nec(BaseModel):
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
     state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, alias="stateAndLocalWithholding")
-    __properties: ClassVar[List[str]] = ["id", "type", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "federalEfile", "federalEfileStatus", "stateEfile", "stateEfileStatus", "postalMail", "postalMailStatus", "tinMatch", "tinMatchStatus", "addressVerification", "addressVerificationStatus", "referenceId", "email", "typeOfTin", "tin", "firstPayeeName", "secondPayeeName", "address", "addressRecipientSecond", "city", "state", "zip", "foreignProvince", "countryCode", "validationErrors", "createdAt", "updatedAt", "stateAndLocalWithholding"]
+    __properties: ClassVar[List[str]] = ["id", "type", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "federalEfile", "federalEfileStatus", "stateEfile", "stateEfileStatus", "postalMail", "postalMailStatus", "tinMatch", "tinMatchStatus", "addressVerification", "addressVerificationStatus", "referenceId", "email", "tinType", "tin", "recipientName", "recipientSecondName", "address", "address2", "city", "state", "zip", "foreignProvince", "countryCode", "validationErrors", "createdAt", "updatedAt", "stateAndLocalWithholding"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -193,35 +193,35 @@ class Form1099Nec(BaseModel):
         if self.email is None and "email" in self.model_fields_set:
             _dict['email'] = None
 
-        # set to None if type_of_tin (nullable) is None
+        # set to None if tin_type (nullable) is None
         # and model_fields_set contains the field
-        if self.type_of_tin is None and "type_of_tin" in self.model_fields_set:
-            _dict['typeOfTin'] = None
+        if self.tin_type is None and "tin_type" in self.model_fields_set:
+            _dict['tinType'] = None
 
         # set to None if tin (nullable) is None
         # and model_fields_set contains the field
         if self.tin is None and "tin" in self.model_fields_set:
             _dict['tin'] = None
 
-        # set to None if first_payee_name (nullable) is None
+        # set to None if recipient_name (nullable) is None
         # and model_fields_set contains the field
-        if self.first_payee_name is None and "first_payee_name" in self.model_fields_set:
-            _dict['firstPayeeName'] = None
+        if self.recipient_name is None and "recipient_name" in self.model_fields_set:
+            _dict['recipientName'] = None
 
-        # set to None if second_payee_name (nullable) is None
+        # set to None if recipient_second_name (nullable) is None
         # and model_fields_set contains the field
-        if self.second_payee_name is None and "second_payee_name" in self.model_fields_set:
-            _dict['secondPayeeName'] = None
+        if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
+            _dict['recipientSecondName'] = None
 
         # set to None if address (nullable) is None
         # and model_fields_set contains the field
         if self.address is None and "address" in self.model_fields_set:
             _dict['address'] = None
 
-        # set to None if address_recipient_second (nullable) is None
+        # set to None if address2 (nullable) is None
         # and model_fields_set contains the field
-        if self.address_recipient_second is None and "address_recipient_second" in self.model_fields_set:
-            _dict['addressRecipientSecond'] = None
+        if self.address2 is None and "address2" in self.model_fields_set:
+            _dict['address2'] = None
 
         # set to None if city (nullable) is None
         # and model_fields_set contains the field
@@ -288,12 +288,12 @@ class Form1099Nec(BaseModel):
             "addressVerificationStatus": Form1099StatusDetail.from_dict(obj["addressVerificationStatus"]) if obj.get("addressVerificationStatus") is not None else None,
             "referenceId": obj.get("referenceId"),
             "email": obj.get("email"),
-            "typeOfTin": obj.get("typeOfTin"),
+            "tinType": obj.get("tinType"),
             "tin": obj.get("tin"),
-            "firstPayeeName": obj.get("firstPayeeName"),
-            "secondPayeeName": obj.get("secondPayeeName"),
+            "recipientName": obj.get("recipientName"),
+            "recipientSecondName": obj.get("recipientSecondName"),
             "address": obj.get("address"),
-            "addressRecipientSecond": obj.get("addressRecipientSecond"),
+            "address2": obj.get("address2"),
             "city": obj.get("city"),
             "state": obj.get("state"),
             "zip": obj.get("zip"),
