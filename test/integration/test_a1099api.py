@@ -43,7 +43,7 @@ class TestA1099Api(unittest.TestCase):
         """Test the GetIssuers endpoint returns data"""
         try:
             correlation_id = str(uuid.uuid4())
-            result = self.issuers_api.get_issuers("2.0", correlation_id)
+            result = self.issuers_api.get_issuers("2.0", x_correlation_id=correlation_id)
             print(result)
             assert result is not None, "Expected non-null issuers list"
         except ApiException as e:
@@ -55,7 +55,7 @@ class TestA1099Api(unittest.TestCase):
         """Test the GetCompanies endpoint returns data"""
         try:
             correlation_id = str(uuid.uuid4())
-            result = self.companies_api.get_companies("2.0", correlation_id)
+            result = self.companies_api.get_companies("2.0", x_correlation_id=correlation_id)
             print(result)
             assert result is not None, "Expected non-null companies list"
         except ApiException as e:
@@ -67,7 +67,7 @@ class TestA1099Api(unittest.TestCase):
     #     """Test the List1099Forms endpoint returns data"""
     #     try:
     #         correlation_id = str(uuid.uuid4())
-    #         result = self.forms_api.list1099_forms("2.0", correlation_id)
+    #         result = self.forms_api.list1099_forms("2.0", x_correlation_id=correlation_id)
     #         print(result)
     #         assert result is not None, "Expected non-null 1099 forms list"
     #     except ApiException as e:
