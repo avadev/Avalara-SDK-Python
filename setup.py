@@ -43,7 +43,6 @@ REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
     "pydantic >= 2",
-    "typing-extensions >= 4.7.1",
 ]
 
 setup(
@@ -55,12 +54,11 @@ setup(
     url="",
     keywords=["OpenAPI", "OpenAPI-Generator", "Avalara 1099 & W-9 API Definition"],
     install_requires=REQUIRES,
-    packages=find_packages(exclude=["test", "tests"]),
+    packages=find_namespace_packages(include=["Avalara.*"], exclude=["test", "tests"]),
     include_package_data=True,
     license="Apache 2.0",
     long_description_content_type='text/markdown',
     long_description="""\
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API &amp; SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget)
     """,  # noqa: E501
     package_data={"Avalara.SDK": ["py.typed"]},
 )
