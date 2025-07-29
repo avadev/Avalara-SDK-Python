@@ -134,9 +134,9 @@ Name | Type | Description | Notes
 **certify_box41** | **bool** |  | [optional] 
 **certify_box43** | **bool** |  | [optional] 
 **certify_part29_signature** | **bool** |  | [optional] 
-**part19_formation_or_resolution_date** | **datetime** |  | [optional] 
-**part20_filing_date** | **datetime** |  | [optional] 
-**part21_determination_date** | **datetime** |  | [optional] 
+**part19_formation_or_resolution_date** | **date** |  | [optional] 
+**part20_filing_date** | **date** |  | [optional] 
+**part21_determination_date** | **date** |  | [optional] 
 **substantial_us_owners** | [**List[W8BenESubstantialUsOwnerDataModel]**](W8BenESubstantialUsOwnerDataModel.md) |  | [optional] 
 **birthday** | **str** | The birthday of the individual associated with the form. | [optional] 
 **foreign_tin_not_required** | **bool** | Indicates whether a foreign TIN is not required. | [optional] 
@@ -215,8 +215,8 @@ Name | Type | Description | Notes
 **certify_box40** | **bool** | Indicates certification for box 40. | [optional] 
 **box41_sponsoring_entity** | **str** | The sponsoring entity information for box 41. | [optional] 
 **certify_box42** | **bool** | Indicates certification for box 42. | [optional] 
-**box35_formed_on_date** | **datetime** |  | [optional] 
-**box36_filed_on_date** | **datetime** |  | [optional] 
+**box35_formed_on_date** | **date** |  | [optional] 
+**box36_filed_on_date** | **date** |  | [optional] 
 
 ## Example
 

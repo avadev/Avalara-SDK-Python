@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
 from typing import Optional, Set
 from typing_extensions import Self
@@ -44,50 +45,50 @@ class Form1099RRequest(BaseModel):
     """
     Form1099RRequest
     """ # noqa: E501
-    gross_distribution: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="grossDistribution")
-    taxable_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="taxableAmount")
-    taxable_amount_not_determined: Optional[StrictBool] = Field(default=None, alias="taxableAmountNotDetermined")
-    total_distribution_determined: Optional[StrictBool] = Field(default=None, alias="totalDistributionDetermined")
-    capital_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="capitalGain")
-    federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="federalIncomeTaxWithheld")
-    employee_contributions_or_designated_roth_or_insurance_premiums: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="employeeContributionsOrDesignatedRothOrInsurancePremiums")
-    net_unrealized_appreciation_in_employer_securities: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="netUnrealizedAppreciationInEmployerSecurities")
-    distribution_code: Optional[StrictStr] = Field(default=None, alias="distributionCode")
-    second_distribution_code: Optional[StrictStr] = Field(default=None, alias="secondDistributionCode")
-    ira_sep_simple: Optional[StrictBool] = Field(default=None, alias="iraSepSimple")
-    traditional_ira_sep_simple_or_roth_conversion_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="traditionalIraSepSimpleOrRothConversionAmount")
-    other_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="otherAmount")
-    other_percentage: Optional[StrictStr] = Field(default=None, alias="otherPercentage")
-    total_distribution_percentage: Optional[StrictStr] = Field(default=None, alias="totalDistributionPercentage")
-    total_employee_contributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalEmployeeContributions")
-    amount_allocable_to_irr_within5_years: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="amountAllocableToIrrWithin5Years")
-    first_year_of_designated_roth_contribution: Optional[StrictStr] = Field(default=None, alias="firstYearOfDesignatedRothContribution")
-    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, alias="fatcaFilingRequirement")
-    date_of_payment: Optional[datetime] = Field(default=None, alias="dateOfPayment")
+    gross_distribution: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Gross distribution", alias="grossDistribution")
+    taxable_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Taxable amount", alias="taxableAmount")
+    taxable_amount_not_determined: Optional[StrictBool] = Field(default=None, description="Taxable amount not determined", alias="taxableAmountNotDetermined")
+    total_distribution_determined: Optional[StrictBool] = Field(default=None, description="Total distribution", alias="totalDistributionDetermined")
+    capital_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Capital gain (included in Box 2a)", alias="capitalGain")
+    federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
+    employee_contributions_or_designated_roth_or_insurance_premiums: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Employee contributions/Designated Roth contributions or insurance premiums", alias="employeeContributionsOrDesignatedRothOrInsurancePremiums")
+    net_unrealized_appreciation_in_employer_securities: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Net unrealized appreciation in employer's securities", alias="netUnrealizedAppreciationInEmployerSecurities")
+    distribution_code: Optional[StrictStr] = Field(default=None, description="Distribution code", alias="distributionCode")
+    second_distribution_code: Optional[StrictStr] = Field(default=None, description="Second distribution code", alias="secondDistributionCode")
+    ira_sep_simple: Optional[StrictBool] = Field(default=None, description="IRA/SEP/SIMPLE", alias="iraSepSimple")
+    traditional_ira_sep_simple_or_roth_conversion_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Traditional IRA/SEP/SIMPLE or Roth conversion amount", alias="traditionalIraSepSimpleOrRothConversionAmount")
+    other_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Other amount", alias="otherAmount")
+    other_percentage: Optional[StrictStr] = Field(default=None, description="Other percentage", alias="otherPercentage")
+    total_distribution_percentage: Optional[StrictStr] = Field(default=None, description="Total distribution percentage", alias="totalDistributionPercentage")
+    total_employee_contributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total employee contributions", alias="totalEmployeeContributions")
+    amount_allocable_to_irr_within5_years: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount allocable to IRR within 5 years", alias="amountAllocableToIrrWithin5Years")
+    first_year_of_designated_roth_contribution: Optional[StrictStr] = Field(default=None, description="First year of designated Roth contribution", alias="firstYearOfDesignatedRothContribution")
+    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement", alias="fatcaFilingRequirement")
+    date_of_payment: Optional[datetime] = Field(default=None, description="Date of payment", alias="dateOfPayment")
     type: Optional[StrictStr] = None
-    issuer_id: Optional[StrictStr] = Field(default=None, alias="issuerId")
-    reference_id: Optional[StrictStr] = Field(default=None, alias="referenceId")
-    recipient_name: Optional[StrictStr] = Field(default=None, alias="recipientName")
-    recipient_tin: Optional[StrictStr] = Field(default=None, alias="recipientTin")
-    tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
-    recipient_second_name: Optional[StrictStr] = Field(default=None, alias="recipientSecondName")
-    address: Optional[StrictStr] = None
-    address2: Optional[StrictStr] = None
-    city: Optional[StrictStr] = None
-    state: Optional[StrictStr] = None
-    zip: Optional[StrictStr] = None
-    recipient_email: Optional[StrictStr] = Field(default=None, alias="recipientEmail")
-    account_number: Optional[StrictStr] = Field(default=None, alias="accountNumber")
-    office_code: Optional[StrictStr] = Field(default=None, alias="officeCode")
-    recipient_non_us_province: Optional[StrictStr] = Field(default=None, alias="recipientNonUsProvince")
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    federal_e_file: Optional[StrictBool] = Field(default=None, alias="federalEFile")
-    postal_mail: Optional[StrictBool] = Field(default=None, alias="postalMail")
-    state_e_file: Optional[StrictBool] = Field(default=None, alias="stateEFile")
-    tin_match: Optional[StrictBool] = Field(default=None, alias="tinMatch")
-    address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
-    state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, alias="stateAndLocalWithholding")
-    __properties: ClassVar[List[str]] = ["type", "issuerId", "referenceId", "recipientName", "recipientTin", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "stateAndLocalWithholding"]
+    issuer_id: Optional[StrictStr] = Field(default=None, description="Issuer ID", alias="issuerId")
+    reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID", alias="referenceId")
+    recipient_tin: Optional[StrictStr] = Field(default=None, description="Recipient Tax ID Number", alias="recipientTin")
+    recipient_name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Recipient name", alias="recipientName")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN", alias="tinType")
+    recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
+    address: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Address")
+    address2: Optional[StrictStr] = Field(default=None, description="Address line 2")
+    city: Annotated[str, Field(min_length=1, strict=True)] = Field(description="City")
+    state: Optional[StrictStr] = Field(default=None, description="US state. Required if CountryCode is \"US\".")
+    zip: Optional[StrictStr] = Field(default=None, description="Zip/postal code")
+    recipient_email: Optional[StrictStr] = Field(default=None, description="Recipient email address", alias="recipientEmail")
+    account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
+    office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
+    recipient_non_us_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="recipientNonUsProvince")
+    country_code: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
+    federal_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that federal e-filing should be scheduled for this form", alias="federalEFile")
+    postal_mail: Optional[StrictBool] = Field(default=None, description="Boolean indicating that postal mailing to the recipient should be scheduled for this form", alias="postalMail")
+    state_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that state e-filing should be scheduled for this form", alias="stateEFile")
+    tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
+    address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
+    state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
+    __properties: ClassVar[List[str]] = ["type", "issuerId", "referenceId", "recipientTin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "stateAndLocalWithholding"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -95,8 +96,8 @@ class Form1099RRequest(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B']):
-            raise ValueError("must be one of enum values ('Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B')")
+        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S']):
+            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S')")
         return value
 
     @field_validator('tin_type')
@@ -139,10 +140,8 @@ class Form1099RRequest(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "type",
         ])
 
         _dict = self.model_dump(
@@ -163,10 +162,10 @@ class Form1099RRequest(BaseModel):
         if self.reference_id is None and "reference_id" in self.model_fields_set:
             _dict['referenceId'] = None
 
-        # set to None if recipient_name (nullable) is None
+        # set to None if recipient_second_name (nullable) is None
         # and model_fields_set contains the field
-        if self.recipient_name is None and "recipient_name" in self.model_fields_set:
-            _dict['recipientName'] = None
+        if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
+            _dict['recipientSecondName'] = None
 
         # set to None if address2 (nullable) is None
         # and model_fields_set contains the field
@@ -208,8 +207,8 @@ class Form1099RRequest(BaseModel):
             "type": obj.get("type"),
             "issuerId": obj.get("issuerId"),
             "referenceId": obj.get("referenceId"),
-            "recipientName": obj.get("recipientName"),
             "recipientTin": obj.get("recipientTin"),
+            "recipientName": obj.get("recipientName"),
             "tinType": obj.get("tinType"),
             "recipientSecondName": obj.get("recipientSecondName"),
             "address": obj.get("address"),

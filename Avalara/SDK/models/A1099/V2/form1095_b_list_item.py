@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.covered_individual_request import CoveredIndividualRequest
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
 from typing import Optional, Set
@@ -45,36 +46,36 @@ class Form1095BListItem(BaseModel):
     """
     Form1095BListItem
     """ # noqa: E501
-    employee_first_name: Optional[StrictStr] = Field(default=None, alias="employeeFirstName")
-    employee_middle_name: Optional[StrictStr] = Field(default=None, alias="employeeMiddleName")
-    employee_last_name: Optional[StrictStr] = Field(default=None, alias="employeeLastName")
-    employee_name_suffix: Optional[StrictStr] = Field(default=None, alias="employeeNameSuffix")
-    employee_date_of_birth: Optional[datetime] = Field(default=None, alias="employeeDateOfBirth")
-    origin_of_health_coverage_code: Optional[StrictStr] = Field(default=None, alias="originOfHealthCoverageCode")
-    covered_individuals: Optional[List[CoveredIndividualRequest]] = Field(default=None, alias="coveredIndividuals")
-    issuer_id: Optional[StrictStr] = Field(default=None, alias="issuerId")
-    reference_id: Optional[StrictStr] = Field(default=None, alias="referenceId")
-    recipient_name: Optional[StrictStr] = Field(default=None, alias="recipientName")
-    recipient_tin: Optional[StrictStr] = Field(default=None, alias="recipientTin")
-    tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
-    recipient_second_name: Optional[StrictStr] = Field(default=None, alias="recipientSecondName")
-    address: Optional[StrictStr] = None
-    address2: Optional[StrictStr] = None
-    city: Optional[StrictStr] = None
-    state: Optional[StrictStr] = None
-    zip: Optional[StrictStr] = None
-    recipient_email: Optional[StrictStr] = Field(default=None, alias="recipientEmail")
-    account_number: Optional[StrictStr] = Field(default=None, alias="accountNumber")
-    office_code: Optional[StrictStr] = Field(default=None, alias="officeCode")
-    recipient_non_us_province: Optional[StrictStr] = Field(default=None, alias="recipientNonUsProvince")
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    federal_e_file: Optional[StrictBool] = Field(default=None, alias="federalEFile")
-    postal_mail: Optional[StrictBool] = Field(default=None, alias="postalMail")
-    state_e_file: Optional[StrictBool] = Field(default=None, alias="stateEFile")
-    tin_match: Optional[StrictBool] = Field(default=None, alias="tinMatch")
-    address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
-    state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, alias="stateAndLocalWithholding")
-    __properties: ClassVar[List[str]] = ["issuerId", "referenceId", "recipientName", "recipientTin", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "stateAndLocalWithholding"]
+    employee_first_name: Optional[StrictStr] = Field(default=None, description="Employee's first name", alias="employeeFirstName")
+    employee_middle_name: Optional[StrictStr] = Field(default=None, description="Employee's middle name", alias="employeeMiddleName")
+    employee_last_name: Optional[StrictStr] = Field(default=None, description="Employee's last name", alias="employeeLastName")
+    employee_name_suffix: Optional[StrictStr] = Field(default=None, description="Employee's name suffix", alias="employeeNameSuffix")
+    employee_date_of_birth: Optional[datetime] = Field(default=None, description="Employee's date of birth", alias="employeeDateOfBirth")
+    origin_of_health_coverage_code: Optional[StrictStr] = Field(default=None, description="Origin of health coverage code", alias="originOfHealthCoverageCode")
+    covered_individuals: Optional[List[CoveredIndividualRequest]] = Field(default=None, description="Covered individuals information", alias="coveredIndividuals")
+    issuer_id: Optional[StrictStr] = Field(default=None, description="Issuer ID", alias="issuerId")
+    reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID", alias="referenceId")
+    recipient_tin: Optional[StrictStr] = Field(default=None, description="Recipient Tax ID Number", alias="recipientTin")
+    recipient_name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Recipient name", alias="recipientName")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN", alias="tinType")
+    recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
+    address: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Address")
+    address2: Optional[StrictStr] = Field(default=None, description="Address line 2")
+    city: Annotated[str, Field(min_length=1, strict=True)] = Field(description="City")
+    state: Optional[StrictStr] = Field(default=None, description="US state. Required if CountryCode is \"US\".")
+    zip: Optional[StrictStr] = Field(default=None, description="Zip/postal code")
+    recipient_email: Optional[StrictStr] = Field(default=None, description="Recipient email address", alias="recipientEmail")
+    account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
+    office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
+    recipient_non_us_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="recipientNonUsProvince")
+    country_code: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
+    federal_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that federal e-filing should be scheduled for this form", alias="federalEFile")
+    postal_mail: Optional[StrictBool] = Field(default=None, description="Boolean indicating that postal mailing to the recipient should be scheduled for this form", alias="postalMail")
+    state_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that state e-filing should be scheduled for this form", alias="stateEFile")
+    tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
+    address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
+    state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
+    __properties: ClassVar[List[str]] = ["issuerId", "referenceId", "recipientTin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "stateAndLocalWithholding"]
 
     @field_validator('origin_of_health_coverage_code')
     def origin_of_health_coverage_code_validate_enum(cls, value):
@@ -82,8 +83,8 @@ class Form1095BListItem(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['SmallBusinessHealthOptionsProgram', 'EmployerSponsored', 'GovernmentSponsored', 'IndividualMarket', 'MultiemployerPlan', 'OtherDesignatedMinimumEssentialCoverage', 'EmployerSponsoredIndividualHra']):
-            raise ValueError("must be one of enum values ('SmallBusinessHealthOptionsProgram', 'EmployerSponsored', 'GovernmentSponsored', 'IndividualMarket', 'MultiemployerPlan', 'OtherDesignatedMinimumEssentialCoverage', 'EmployerSponsoredIndividualHra')")
+        if value not in set(['A', 'B', 'C', 'D', 'E', 'F', 'G']):
+            raise ValueError("must be one of enum values ('A', 'B', 'C', 'D', 'E', 'F', 'G')")
         return value
 
     @field_validator('tin_type')
@@ -148,10 +149,10 @@ class Form1095BListItem(BaseModel):
         if self.reference_id is None and "reference_id" in self.model_fields_set:
             _dict['referenceId'] = None
 
-        # set to None if recipient_name (nullable) is None
+        # set to None if recipient_second_name (nullable) is None
         # and model_fields_set contains the field
-        if self.recipient_name is None and "recipient_name" in self.model_fields_set:
-            _dict['recipientName'] = None
+        if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
+            _dict['recipientSecondName'] = None
 
         # set to None if address2 (nullable) is None
         # and model_fields_set contains the field
@@ -192,8 +193,8 @@ class Form1095BListItem(BaseModel):
         _obj = cls.model_validate({
             "issuerId": obj.get("issuerId"),
             "referenceId": obj.get("referenceId"),
-            "recipientName": obj.get("recipientName"),
             "recipientTin": obj.get("recipientTin"),
+            "recipientName": obj.get("recipientName"),
             "tinType": obj.get("tinType"),
             "recipientSecondName": obj.get("recipientSecondName"),
             "address": obj.get("address"),

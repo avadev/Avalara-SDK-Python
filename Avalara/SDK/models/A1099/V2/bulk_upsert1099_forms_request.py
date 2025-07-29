@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,6 +33,7 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
+from Avalara.SDK.models.A1099.V2.form1042_s_list import Form1042SList
 from Avalara.SDK.models.A1099.V2.form1095_b_list import Form1095BList
 from Avalara.SDK.models.A1099.V2.form1099_div_list import Form1099DivList
 from Avalara.SDK.models.A1099.V2.form1099_k_list import Form1099KList
@@ -43,26 +44,28 @@ from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-BULKUPSERT1099FORMSREQUEST_ONE_OF_SCHEMAS = ["Form1095BList", "Form1099DivList", "Form1099KList", "Form1099MiscList", "Form1099NecList", "Form1099RList"]
+BULKUPSERT1099FORMSREQUEST_ONE_OF_SCHEMAS = ["Form1042SList", "Form1095BList", "Form1099DivList", "Form1099KList", "Form1099MiscList", "Form1099NecList", "Form1099RList"]
 
 class BulkUpsert1099FormsRequest(BaseModel):
     """
     BulkUpsert1099FormsRequest
     """
+    # data type: Form1042SList
+    oneof_schema_1_validator: Optional[Form1042SList] = None
     # data type: Form1095BList
-    oneof_schema_1_validator: Optional[Form1095BList] = None
+    oneof_schema_2_validator: Optional[Form1095BList] = None
     # data type: Form1099DivList
-    oneof_schema_2_validator: Optional[Form1099DivList] = None
+    oneof_schema_3_validator: Optional[Form1099DivList] = None
     # data type: Form1099KList
-    oneof_schema_3_validator: Optional[Form1099KList] = None
+    oneof_schema_4_validator: Optional[Form1099KList] = None
     # data type: Form1099MiscList
-    oneof_schema_4_validator: Optional[Form1099MiscList] = None
+    oneof_schema_5_validator: Optional[Form1099MiscList] = None
     # data type: Form1099NecList
-    oneof_schema_5_validator: Optional[Form1099NecList] = None
+    oneof_schema_6_validator: Optional[Form1099NecList] = None
     # data type: Form1099RList
-    oneof_schema_6_validator: Optional[Form1099RList] = None
-    actual_instance: Optional[Union[Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList]] = None
-    one_of_schemas: Set[str] = { "Form1095BList", "Form1099DivList", "Form1099KList", "Form1099MiscList", "Form1099NecList", "Form1099RList" }
+    oneof_schema_7_validator: Optional[Form1099RList] = None
+    actual_instance: Optional[Union[Form1042SList, Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList]] = None
+    one_of_schemas: Set[str] = { "Form1042SList", "Form1095BList", "Form1099DivList", "Form1099KList", "Form1099MiscList", "Form1099NecList", "Form1099RList" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -85,6 +88,11 @@ class BulkUpsert1099FormsRequest(BaseModel):
         instance = BulkUpsert1099FormsRequest.model_construct()
         error_messages = []
         match = 0
+        # validate data type: Form1042SList
+        if not isinstance(v, Form1042SList):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1042SList`")
+        else:
+            match += 1
         # validate data type: Form1095BList
         if not isinstance(v, Form1095BList):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1095BList`")
@@ -117,10 +125,10 @@ class BulkUpsert1099FormsRequest(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in BulkUpsert1099FormsRequest with oneOf schemas: Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in BulkUpsert1099FormsRequest with oneOf schemas: Form1042SList, Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in BulkUpsert1099FormsRequest with oneOf schemas: Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in BulkUpsert1099FormsRequest with oneOf schemas: Form1042SList, Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -135,6 +143,12 @@ class BulkUpsert1099FormsRequest(BaseModel):
         error_messages = []
         match = 0
 
+        # deserialize data into Form1042SList
+        try:
+            instance.actual_instance = Form1042SList.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into Form1095BList
         try:
             instance.actual_instance = Form1095BList.from_json(json_str)
@@ -174,10 +188,10 @@ class BulkUpsert1099FormsRequest(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into BulkUpsert1099FormsRequest with oneOf schemas: Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into BulkUpsert1099FormsRequest with oneOf schemas: Form1042SList, Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into BulkUpsert1099FormsRequest with oneOf schemas: Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into BulkUpsert1099FormsRequest with oneOf schemas: Form1042SList, Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -191,7 +205,7 @@ class BulkUpsert1099FormsRequest(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042SList, Form1095BList, Form1099DivList, Form1099KList, Form1099MiscList, Form1099NecList, Form1099RList]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

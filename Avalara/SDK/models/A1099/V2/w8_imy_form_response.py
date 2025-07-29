@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,7 +33,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -140,9 +140,9 @@ class W8ImyFormResponse(BaseModel):
     exempt_beneficial_owner_sponsored_retirement_fund_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is established and sponsored by a qualifying exempt beneficial owner to provide retirement, disability,  or death benefits to individuals based on services performed for the sponsor.", alias="exemptBeneficialOwnerSponsoredRetirementFundCertification")
     excepted_nonfinancial_group_entity_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is a holding company, treasury center, or captive finance company operating within a nonfinancial group  and not functioning as an investment or financial institution.", alias="exceptedNonfinancialGroupEntityCertification")
     excepted_nonfinancial_start_up_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is a recently formed startup NFFE investing in a non-financial business  and is not operating as or presenting itself as an investment fund.", alias="exceptedNonfinancialStartUpCertification")
-    startup_formation_or_resolution_date: Optional[datetime] = Field(default=None, description="The date the start-up company was formed on (or, in case of new line of business, the date of board resolution approving the  new line of business).", alias="startupFormationOrResolutionDate")
+    startup_formation_or_resolution_date: Optional[date] = Field(default=None, description="The date the start-up company was formed on (or, in case of new line of business, the date of board resolution approving the  new line of business).", alias="startupFormationOrResolutionDate")
     excepted_nonfinancial_entity_in_liquidation_or_bankruptcy_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is in liquidation, reorganization, or bankruptcy and intends to operate as a nonfinancial entity,  with supporting documentation available if the process exceeds three years.", alias="exceptedNonfinancialEntityInLiquidationOrBankruptcyCertification")
-    nonfinancial_entity_filing_date: Optional[datetime] = Field(default=None, description="The filed date for a plan of reorganization, liquidation or bankruptcy.", alias="nonfinancialEntityFilingDate")
+    nonfinancial_entity_filing_date: Optional[date] = Field(default=None, description="The filed date for a plan of reorganization, liquidation or bankruptcy.", alias="nonfinancialEntityFilingDate")
     publicly_traded_nffe_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is a foreign corporation that is not a financial institution  and whose stock is regularly traded on an established securities market.", alias="publiclyTradedNffeCertification")
     publicly_traded_nffe_securities_market: Optional[StrictStr] = Field(default=None, description="The name of the securities market where the corporation's stock is regularly traded.", alias="publiclyTradedNffeSecuritiesMarket")
     nffe_affiliate_of_publicly_traded_entity_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is a foreign corporation that is not a financial institution  and is affiliated with a publicly traded entity within the same expanded affiliated group.", alias="nffeAffiliateOfPubliclyTradedEntityCertification")

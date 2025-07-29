@@ -16,13 +16,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,11 +40,12 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from pydantic import Field, StrictBool, StrictInt, StrictStr
-from typing import Optional
+from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
+from typing import Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.bulk_upsert1099_forms_request import BulkUpsert1099FormsRequest
-from Avalara.SDK.models.A1099.V2.form1099_list import Form1099List
+from Avalara.SDK.models.A1099.V2.create1099_form201_response import Create1099Form201Response
+from Avalara.SDK.models.A1099.V2.form1099_list_response import Form1099ListResponse
 from Avalara.SDK.models.A1099.V2.form1099_proccess_result import Form1099ProccessResult
 from Avalara.SDK.models.A1099.V2.get1099_form200_response import Get1099Form200Response
 from Avalara.SDK.models.A1099.V2.i_create_form1099_request import ICreateForm1099Request
@@ -64,7 +65,7 @@ class Forms1099Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.7.2")
+        api_client.set_sdk_version("25.8.0")
         self.api_client = api_client
 		
         self.bulk_upsert1099_forms_endpoint = _Endpoint(
@@ -146,7 +147,7 @@ class Forms1099Api(object):
         )
         self.create1099_form_endpoint = _Endpoint(
             settings={
-                'response_type': (Get1099Form200Response,),
+                'response_type': (Create1099Form201Response,),
                 'auth': [
                     'bearer'
                 ],
@@ -358,7 +359,7 @@ class Forms1099Api(object):
         )
         self.get1099_form_pdf_endpoint = _Endpoint(
             settings={
-                'response_type': (Update1099Form200Response,),
+                'response_type': (bytearray,),
                 'auth': [
                     'bearer'
                 ],
@@ -423,6 +424,7 @@ class Forms1099Api(object):
             headers_map={
                 'avalara-version': '2.0',
                 'accept': [
+                    'application/pdf',
                     'application/json'
                 ],
                 'content_type': [],
@@ -433,7 +435,7 @@ class Forms1099Api(object):
         )
         self.list1099_forms_endpoint = _Endpoint(
             settings={
-                'response_type': (Form1099List,),
+                'response_type': (Form1099ListResponse,),
                 'auth': [
                     'bearer'
                 ],
@@ -600,9 +602,9 @@ class Forms1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Creates or updates multiple 1099 forms.  # noqa: E501
+        """Create or update multiple 1099/1095/W2/1042S forms  # noqa: E501
 
-        This endpoint allows you to create or update multiple 1099 forms.  You can use one of the following payload structures:                **Form 1099-MISC:**  ```json  {     \"formType\": \"1099-MISC\",     \"forms\": [         {             \"IssuerId\": \"123456\",             \"IssuerReferenceId\": \"REF123\",             \"IssuerTin\": \"12-3456789\",             \"TaxYear\": 2023,             \"ReferenceId\": \"FORM123456\",             \"RecipientName\": \"John Doe\",             \"RecipientTin\": \"987-65-4321\",             \"TinType\": \"IEN\",             \"RecipientSecondName\": \"Jane Doe\",             \"Address\": \"123 Main Street\",             \"Address2\": \"Apt 4B\",             \"City\": \"New York\",             \"State\": \"NY\",             \"Zip\": \"10001\",             \"RecipientEmail\": \"john.doe@email.com\",             \"AccountNumber\": \"ACC123456\",             \"OfficeCode\": \"NYC01\",             \"SecondTinNotice\": false,             \"RecipientNonUsProvince\": \"\",             \"CountryCode\": \"US\",             \"Rents\": 12000.00,             \"Royalties\": 5000.00,             \"OtherIncome\": 3000.00,             \"FishingBoatProceeds\": 0.00,             \"MedicalHealthCarePayments\": 15000.00,             \"SubstitutePayments\": 1000.00,             \"CropInsuranceProceeds\": 0.00,             \"GrossProceedsPaidToAttorney\": 7500.00,             \"FishPurchasedForResale\": 0.00,             \"FedIncomeTaxWithheld\": 5000.00,             \"Section409ADeferrals\": 0.00,             \"ExcessGoldenParachutePayments\": 0.00,             \"NonqualifiedDeferredCompensation\": 0.00,             \"PayerMadeDirectSales\": false,             \"FatcaFilingRequirement\": false,             \"StateAndLocalWithholding\": {               \"StateTaxWithheld\": 2500.00,               \"LocalTaxWithheld\": 1000.00,               \"State\": \"NY\",               \"StateIdNumber\": \"NY123456\",               \"Locality\": \"New York City\",               \"StateIncome\": 35000.00,               \"LocalIncome\": 35000.00             }         }     ]  }  ```                **Form 1099-NEC:**  ```json  {    \"formType\": \"1099-NEC\",    \"forms\": [      {        \"issuerID\": \"180337282\",        \"issuerReferenceId\": \"ISS123\",        \"issuerTin\": \"12-3000000\",        \"taxYear\": 2024,        \"referenceID\": \"REF-002\",        \"recipientName\": \"Jane Smith\",        \"recipientSecondName\": \"\",        \"recipientTin\": \"987-65-4321\",        \"tinType\": \"IEN\",        \"address\": \"123 Center St\",        \"address2\": \"\",        \"city\": \"Santa Monica\",        \"state\": \"CA\",        \"zip\": \"90401\",        \"countryCode\": \"US\",        \"recipientNonUsProvince\": \"\",        \"recipientEmail\": \"\",        \"accountNumber\": \"\",        \"officeCode\": \"\",        \"secondTinNotice\": false,        \"nonemployeeCompensation\": 123.45,        \"payerMadeDirectSales\": false,        \"federalIncomeTaxWithheld\": 12.34,        \"stateAndLocalWithholding\": {          \"state\": \"CA\",          \"stateIdNumber\": \"123123123\"          \"stateIncome\": 123.45,          \"stateTaxWithheld\": 12.34,          \"locality\": \"Santa Monica\",          \"localityIdNumber\": \"456456\",          \"localTaxWithheld\": 12.34          \"localIncome\": 50000.00         },        \"federalEFile\": true,        \"postalMail\": true,        \"stateEFile\": true,        \"tinMatch\": true,        \"addressVerification\": true       }     ]   }  ```  For the full version of the payload and its schema details, refer to the Swagger schemas section.  # noqa: E501
+        This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms.  You can use one of the following payload structures:                **Form 1099-MISC:**  ```json  {     \"formType\": \"1099-MISC\",     \"forms\": [         {             \"IssuerId\": \"123456\",             \"IssuerReferenceId\": \"REF123\",             \"IssuerTin\": \"12-3456789\",             \"TaxYear\": 2023,             \"ReferenceId\": \"FORM123456\",             \"RecipientName\": \"John Doe\",             \"RecipientTin\": \"587-65-4321\",             \"TinType\": \"SSN\",             \"RecipientSecondName\": \"Jane Doe\",             \"Address\": \"123 Main Street\",             \"Address2\": \"Apt 4B\",             \"City\": \"New York\",             \"State\": \"NY\",             \"Zip\": \"10001\",             \"RecipientEmail\": \"john.doe@email.com\",             \"AccountNumber\": \"ACC123456\",             \"OfficeCode\": \"NYC01\",             \"SecondTinNotice\": false,             \"RecipientNonUsProvince\": \"\",             \"CountryCode\": \"US\",             \"Rents\": 12000.00,             \"Royalties\": 5000.00,             \"OtherIncome\": 3000.00,             \"FishingBoatProceeds\": 0.00,             \"MedicalHealthCarePayments\": 15000.00,             \"SubstitutePayments\": 1000.00,             \"CropInsuranceProceeds\": 0.00,             \"GrossProceedsPaidToAttorney\": 7500.00,             \"FishPurchasedForResale\": 0.00,             \"FedIncomeTaxWithheld\": 5000.00,             \"Section409ADeferrals\": 0.00,             \"ExcessGoldenParachutePayments\": 0.00,             \"NonqualifiedDeferredCompensation\": 0.00,             \"DirectSalesIndicator\": false,             \"FatcaFilingRequirement\": false,             \"StateAndLocalWithholding\": {               \"StateTaxWithheld\": 2500.00,               \"LocalTaxWithheld\": 1000.00,               \"State\": \"NY\",               \"StateIdNumber\": \"NY123456\",               \"Locality\": \"New York City\",               \"StateIncome\": 35000.00,               \"LocalIncome\": 35000.00             }         }     ]  }  ```                **Form 1099-NEC:**  ```json  {    \"formType\": \"1099-NEC\",    \"forms\": [      {        \"issuerID\": \"180337282\",        \"issuerReferenceId\": \"ISS123\",        \"issuerTin\": \"12-3000000\",        \"taxYear\": 2024,        \"referenceID\": \"REF-002\",        \"recipientName\": \"Jane Smith\",        \"recipientSecondName\": \"\",        \"recipientTin\": \"587-65-4321\",        \"tinType\": \"SSN\",        \"address\": \"123 Center St\",        \"address2\": \"\",        \"city\": \"Santa Monica\",        \"state\": \"CA\",        \"zip\": \"90401\",        \"countryCode\": \"US\",        \"recipientNonUsProvince\": \"\",        \"recipientEmail\": \"\",        \"accountNumber\": \"\",        \"officeCode\": \"\",        \"secondTinNotice\": false,        \"nonemployeeCompensation\": 123.45,        \"directSalesIndicator\": false,        \"federalIncomeTaxWithheld\": 12.34,        \"stateAndLocalWithholding\": {          \"state\": \"CA\",          \"stateIdNumber\": \"123123123\",          \"stateIncome\": 123.45,          \"stateTaxWithheld\": 12.34,          \"locality\": \"Santa Monica\",          \"localityIdNumber\": \"456456\",          \"localTaxWithheld\": 12.34,          \"localIncome\": 50000.00         },        \"federalEFile\": true,        \"postalMail\": true,        \"stateEFile\": true,        \"tinMatch\": true,        \"addressVerification\": true       }     ]   }  ```  For the full version of the payload and its schema details, refer to the Swagger schemas section.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -671,8 +673,9 @@ class Forms1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Creates a 1099 form.  # noqa: E501
+        """Create a 1099/1095/W2/1042S form  # noqa: E501
 
+        Create a 1099/1095/W2/1042S form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -707,7 +710,7 @@ class Forms1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Get1099Form200Response
+            Create1099Form201Response
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -741,8 +744,9 @@ class Forms1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Deletes a 1099 form.  # noqa: E501
+        """Delete a 1099/1095/W2/1042S form  # noqa: E501
 
+        Delete a 1099/1095/W2/1042S form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -812,8 +816,9 @@ class Forms1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Retrieves a 1099 form.  # noqa: E501
+        """Retrieve a 1099/1095/W2/1042S form  # noqa: E501
 
+        Retrieve a 1099/1095/W2/1042S form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -883,8 +888,9 @@ class Forms1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Retrieves the PDF file for a single 1099 by form id.  # noqa: E501
+        """Retrieve the PDF file for a 1099/1095/W2/1042S form  # noqa: E501
 
+        Retrieve the PDF file for a 1099/1095/W2/1042S form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -892,11 +898,11 @@ class Forms1099Api(object):
         >>> result = thread.get()
 
         Args:
-            id (str): 
+            id (str): The ID of the form
             avalara_version (str): API version
 
         Keyword Args:
-            mark_edelivered (bool): The parameter for marked e-delivered. [optional]
+            mark_edelivered (bool): Optional boolean that if set indicates that the form should be marked as having been successfully edelivered. [optional]
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             _return_http_data_only (bool): response data without head status
@@ -920,7 +926,7 @@ class Forms1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Update1099Form200Response
+            bytearray
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -954,8 +960,9 @@ class Forms1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Retrieves a list of 1099 forms based on query parameters.  # noqa: E501
+        """List 1099/1095/W2/1042S forms  # noqa: E501
 
+        List 1099/1095/W2/1042S forms. Filterable fields are name, referenceId and taxYear.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -993,7 +1000,7 @@ class Forms1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Form1099List
+            Form1099ListResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1027,8 +1034,9 @@ class Forms1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Updates a 1099 form.  # noqa: E501
+        """Update a 1099/1095/W2/1042S form  # noqa: E501
 
+        Update a 1099/1095/W2/1042S form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

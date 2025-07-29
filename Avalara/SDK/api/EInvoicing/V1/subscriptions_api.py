@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,8 +40,8 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr
-from typing import Optional, Union
+from pydantic import Field, StrictBool, StrictInt, StrictStr
+from typing import Optional
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.subscription_detail import SubscriptionDetail
 from Avalara.SDK.models.EInvoicing.V1.subscription_list_response import SubscriptionListResponse
@@ -61,7 +61,7 @@ class SubscriptionsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.7.2")
+        api_client.set_sdk_version("25.8.0")
         self.api_client = api_client
 		
         self.create_webhook_subscription_endpoint = _Endpoint(
@@ -123,7 +123,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.3',
+                'avalara-version': '1.4',
                 'accept': [
                     'application/json'
                 ],
@@ -195,7 +195,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.3',
+                'avalara-version': '1.4',
                 'accept': [
                     'application/json'
                 ],
@@ -265,7 +265,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.3',
+                'avalara-version': '1.4',
                 'accept': [
                     'application/json'
                 ],
@@ -319,9 +319,9 @@ class SubscriptionsApi(object):
                     'x_avalara_client':
                         (str,),
                     'top':
-                        (float,),
+                        (int,),
                     'skip':
-                        (float,),
+                        (int,),
                     'count':
                         (bool,),
                     'count_only':
@@ -349,7 +349,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.3',
+                'avalara-version': '1.4',
                 'accept': [
                     'application/json'
                 ],
@@ -377,7 +377,7 @@ class SubscriptionsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The version of the API to use, e.g., \"1.3\".
+            avalara_version (str): The version of the API to use, e.g., \"1.4\".
             subscription_registration (SubscriptionRegistration):
 
         Keyword Args:
@@ -450,7 +450,7 @@ class SubscriptionsApi(object):
 
         Args:
             subscription_id (str):
-            avalara_version (str): The version of the API to use, e.g., \"1.3\".
+            avalara_version (str): The version of the API to use, e.g., \"1.4\".
 
         Keyword Args:
             x_correlation_id (str): A unique identifier for tracking the request and its response. [optional]
@@ -522,7 +522,7 @@ class SubscriptionsApi(object):
 
         Args:
             subscription_id (str):
-            avalara_version (str): The version of the API to use, e.g., \"1.3\".
+            avalara_version (str): The version of the API to use, e.g., \"1.4\".
 
         Keyword Args:
             x_correlation_id (str): A unique identifier for tracking the request and its response. [optional]
@@ -592,13 +592,13 @@ class SubscriptionsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The version of the API to use, e.g., \"1.3\".
+            avalara_version (str): The version of the API to use, e.g., \"1.4\".
 
         Keyword Args:
             x_correlation_id (str): A unique identifier for tracking the request and its response. [optional]
             x_avalara_client (str): Client application identification. [optional]
-            top (float): The number of items to include in the result.. [optional]
-            skip (float): The number of items to skip in the result.. [optional]
+            top (int): The number of items to include in the result.. [optional]
+            skip (int): The number of items to skip in the result.. [optional]
             count (bool): Whether to include the total count of records in the result.. [optional]
             count_only (bool): Whether to return only the count of records, without the list of records.. [optional]
             _return_http_data_only (bool): response data without head status

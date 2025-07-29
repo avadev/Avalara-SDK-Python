@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -41,7 +41,7 @@ from typing_extensions import Self
 
 class Signature(BaseModel):
     """
-    Defines the signature configuration, specifying whether and how messages are signed for webhook delivery.
+    Signature
     """ # noqa: E501
     signature: SignatureSignature
     __properties: ClassVar[List[str]] = ["signature"]

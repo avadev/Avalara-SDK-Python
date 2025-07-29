@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -35,6 +35,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
 from typing import Optional, Set
 from typing_extensions import Self
@@ -43,51 +44,51 @@ class Form1099DivListItem(BaseModel):
     """
     Form1099DivListItem
     """ # noqa: E501
-    total_ordinary_dividends: Optional[StrictStr] = Field(default=None, alias="totalOrdinaryDividends")
-    qualified_dividends: Optional[StrictStr] = Field(default=None, alias="qualifiedDividends")
-    total_capital_gain_distr: Optional[StrictStr] = Field(default=None, alias="totalCapitalGainDistr")
-    unrecap_sec1250_gain: Optional[StrictStr] = Field(default=None, alias="unrecapSec1250Gain")
-    section1202_gain: Optional[StrictStr] = Field(default=None, alias="section1202Gain")
-    collectibles_gain: Optional[StrictStr] = Field(default=None, alias="collectiblesGain")
-    section897_ordinary_dividends: Optional[StrictStr] = Field(default=None, alias="section897OrdinaryDividends")
-    section897_capital_gain: Optional[StrictStr] = Field(default=None, alias="section897CapitalGain")
-    nondividend_distributions: Optional[StrictStr] = Field(default=None, alias="nondividendDistributions")
-    federal_income_tax_withheld: Optional[StrictStr] = Field(default=None, alias="federalIncomeTaxWithheld")
-    section199_a_dividends: Optional[StrictStr] = Field(default=None, alias="section199ADividends")
-    investment_expenses: Optional[StrictStr] = Field(default=None, alias="investmentExpenses")
-    foreign_tax_paid: Optional[StrictStr] = Field(default=None, alias="foreignTaxPaid")
-    foreign_country_or_us_possession: Optional[StrictStr] = Field(default=None, alias="foreignCountryOrUSPossession")
-    cash_liquidation_distributions: Optional[StrictStr] = Field(default=None, alias="cashLiquidationDistributions")
-    noncash_liquidation_distributions: Optional[StrictStr] = Field(default=None, alias="noncashLiquidationDistributions")
-    exempt_interest_dividends: Optional[StrictStr] = Field(default=None, alias="exemptInterestDividends")
-    specified_private_activity_bond_interest_dividends: Optional[StrictStr] = Field(default=None, alias="specifiedPrivateActivityBondInterestDividends")
-    fatca_filing_requirement: Optional[StrictStr] = Field(default=None, alias="fatcaFilingRequirement")
-    issuer_reference_id: Optional[StrictStr] = Field(default=None, alias="issuerReferenceId")
-    issuer_tin: Optional[StrictStr] = Field(default=None, alias="issuerTin")
-    tax_year: Optional[StrictInt] = Field(default=None, alias="taxYear")
-    issuer_id: Optional[StrictStr] = Field(default=None, alias="issuerId")
-    reference_id: Optional[StrictStr] = Field(default=None, alias="referenceId")
-    recipient_name: Optional[StrictStr] = Field(default=None, alias="recipientName")
-    recipient_tin: Optional[StrictStr] = Field(default=None, alias="recipientTin")
-    tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
-    recipient_second_name: Optional[StrictStr] = Field(default=None, alias="recipientSecondName")
-    address: Optional[StrictStr] = None
-    address2: Optional[StrictStr] = None
-    city: Optional[StrictStr] = None
-    state: Optional[StrictStr] = None
-    zip: Optional[StrictStr] = None
-    recipient_email: Optional[StrictStr] = Field(default=None, alias="recipientEmail")
-    account_number: Optional[StrictStr] = Field(default=None, alias="accountNumber")
-    office_code: Optional[StrictStr] = Field(default=None, alias="officeCode")
-    recipient_non_us_province: Optional[StrictStr] = Field(default=None, alias="recipientNonUsProvince")
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    federal_e_file: Optional[StrictBool] = Field(default=None, alias="federalEFile")
-    postal_mail: Optional[StrictBool] = Field(default=None, alias="postalMail")
-    state_e_file: Optional[StrictBool] = Field(default=None, alias="stateEFile")
-    tin_match: Optional[StrictBool] = Field(default=None, alias="tinMatch")
-    address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
-    state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, alias="stateAndLocalWithholding")
-    __properties: ClassVar[List[str]] = ["issuerReferenceId", "issuerTin", "taxYear", "issuerId", "referenceId", "recipientName", "recipientTin", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "stateAndLocalWithholding"]
+    total_ordinary_dividends: Optional[StrictStr] = Field(default=None, description="Total ordinary dividends", alias="totalOrdinaryDividends")
+    qualified_dividends: Optional[StrictStr] = Field(default=None, description="Qualified dividends", alias="qualifiedDividends")
+    total_capital_gain_distr: Optional[StrictStr] = Field(default=None, description="Total capital gain distributions", alias="totalCapitalGainDistr")
+    unrecap_sec1250_gain: Optional[StrictStr] = Field(default=None, description="Unrecaptured Section 1250 gain", alias="unrecapSec1250Gain")
+    section1202_gain: Optional[StrictStr] = Field(default=None, description="Section 1202 gain", alias="section1202Gain")
+    collectibles_gain: Optional[StrictStr] = Field(default=None, description="Collectibles (28%) gain", alias="collectiblesGain")
+    section897_ordinary_dividends: Optional[StrictStr] = Field(default=None, description="Section 897 ordinary dividends", alias="section897OrdinaryDividends")
+    section897_capital_gain: Optional[StrictStr] = Field(default=None, description="Section 897 capital gain", alias="section897CapitalGain")
+    nondividend_distributions: Optional[StrictStr] = Field(default=None, description="Nondividend distributions", alias="nondividendDistributions")
+    federal_income_tax_withheld: Optional[StrictStr] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
+    section199_a_dividends: Optional[StrictStr] = Field(default=None, description="Section 199A dividends", alias="section199ADividends")
+    investment_expenses: Optional[StrictStr] = Field(default=None, description="Investment expenses", alias="investmentExpenses")
+    foreign_tax_paid: Optional[StrictStr] = Field(default=None, description="Foreign tax paid", alias="foreignTaxPaid")
+    foreign_country_or_us_possession: Optional[StrictStr] = Field(default=None, description="Foreign country or U.S. possession", alias="foreignCountryOrUSPossession")
+    cash_liquidation_distributions: Optional[StrictStr] = Field(default=None, description="Cash liquidation distributions", alias="cashLiquidationDistributions")
+    noncash_liquidation_distributions: Optional[StrictStr] = Field(default=None, description="Noncash liquidation distributions", alias="noncashLiquidationDistributions")
+    exempt_interest_dividends: Optional[StrictStr] = Field(default=None, description="Exempt-interest dividends", alias="exemptInterestDividends")
+    specified_private_activity_bond_interest_dividends: Optional[StrictStr] = Field(default=None, description="Specified private activity bond interest dividends", alias="specifiedPrivateActivityBondInterestDividends")
+    fatca_filing_requirement: Optional[StrictStr] = Field(default=None, description="FATCA filing requirement", alias="fatcaFilingRequirement")
+    issuer_reference_id: Optional[StrictStr] = Field(default=None, description="Issuer Reference ID. One of `issuerReferenceId` or `issuerTin` is required.", alias="issuerReferenceId")
+    issuer_tin: Optional[StrictStr] = Field(default=None, description="Issuer TIN. One of `issuerReferenceId` or `issuerTin` is required.", alias="issuerTin")
+    tax_year: StrictInt = Field(description="Tax year", alias="taxYear")
+    issuer_id: Optional[StrictStr] = Field(default=None, description="Issuer ID", alias="issuerId")
+    reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID", alias="referenceId")
+    recipient_tin: Optional[StrictStr] = Field(default=None, description="Recipient Tax ID Number", alias="recipientTin")
+    recipient_name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Recipient name", alias="recipientName")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN", alias="tinType")
+    recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
+    address: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Address")
+    address2: Optional[StrictStr] = Field(default=None, description="Address line 2")
+    city: Annotated[str, Field(min_length=1, strict=True)] = Field(description="City")
+    state: Optional[StrictStr] = Field(default=None, description="US state. Required if CountryCode is \"US\".")
+    zip: Optional[StrictStr] = Field(default=None, description="Zip/postal code")
+    recipient_email: Optional[StrictStr] = Field(default=None, description="Recipient email address", alias="recipientEmail")
+    account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
+    office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
+    recipient_non_us_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="recipientNonUsProvince")
+    country_code: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
+    federal_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that federal e-filing should be scheduled for this form", alias="federalEFile")
+    postal_mail: Optional[StrictBool] = Field(default=None, description="Boolean indicating that postal mailing to the recipient should be scheduled for this form", alias="postalMail")
+    state_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that state e-filing should be scheduled for this form", alias="stateEFile")
+    tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
+    address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
+    state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
+    __properties: ClassVar[List[str]] = ["issuerReferenceId", "issuerTin", "taxYear", "issuerId", "referenceId", "recipientTin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "stateAndLocalWithholding"]
 
     @field_validator('tin_type')
     def tin_type_validate_enum(cls, value):
@@ -151,10 +152,10 @@ class Form1099DivListItem(BaseModel):
         if self.reference_id is None and "reference_id" in self.model_fields_set:
             _dict['referenceId'] = None
 
-        # set to None if recipient_name (nullable) is None
+        # set to None if recipient_second_name (nullable) is None
         # and model_fields_set contains the field
-        if self.recipient_name is None and "recipient_name" in self.model_fields_set:
-            _dict['recipientName'] = None
+        if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
+            _dict['recipientSecondName'] = None
 
         # set to None if address2 (nullable) is None
         # and model_fields_set contains the field
@@ -198,8 +199,8 @@ class Form1099DivListItem(BaseModel):
             "taxYear": obj.get("taxYear"),
             "issuerId": obj.get("issuerId"),
             "referenceId": obj.get("referenceId"),
-            "recipientName": obj.get("recipientName"),
             "recipientTin": obj.get("recipientTin"),
+            "recipientName": obj.get("recipientName"),
             "tinType": obj.get("tinType"),
             "recipientSecondName": obj.get("recipientSecondName"),
             "address": obj.get("address"),

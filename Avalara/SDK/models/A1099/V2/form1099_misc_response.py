@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -37,9 +37,9 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
-from Avalara.SDK.models.A1099.V2.state_efile_status_detail_app import StateEfileStatusDetailApp
+from Avalara.SDK.models.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
 from Avalara.SDK.models.A1099.V2.status_detail import StatusDetail
-from Avalara.SDK.models.A1099.V2.validation_error_app import ValidationErrorApp
+from Avalara.SDK.models.A1099.V2.validation_error_response import ValidationErrorResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -54,7 +54,7 @@ class Form1099MiscResponse(BaseModel):
     fed_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="fedIncomeTaxWithheld")
     fishing_boat_proceeds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="fishingBoatProceeds")
     medical_health_care_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="medicalHealthCarePayments")
-    payer_made_direct_sales: Optional[StrictBool] = Field(default=None, alias="payerMadeDirectSales")
+    direct_sales_indicator: Optional[StrictBool] = Field(default=None, alias="directSalesIndicator")
     substitute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="substitutePayments")
     crop_insurance_proceeds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="cropInsuranceProceeds")
     gross_proceeds_paid_to_attorney: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="grossProceedsPaidToAttorney")
@@ -94,11 +94,11 @@ class Form1099MiscResponse(BaseModel):
     tin_match: Optional[StrictBool] = Field(default=None, alias="tinMatch")
     address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
     federal_efile_status: Optional[StatusDetail] = Field(default=None, alias="federalEfileStatus")
-    state_efile_status: Optional[List[StateEfileStatusDetailApp]] = Field(default=None, alias="stateEfileStatus")
+    state_efile_status: Optional[List[StateEfileStatusDetailResponse]] = Field(default=None, alias="stateEfileStatus")
     postal_mail_status: Optional[StatusDetail] = Field(default=None, alias="postalMailStatus")
     tin_match_status: Optional[StatusDetail] = Field(default=None, alias="tinMatchStatus")
     address_verification_status: Optional[StatusDetail] = Field(default=None, alias="addressVerificationStatus")
-    validation_errors: Optional[List[ValidationErrorApp]] = Field(default=None, alias="validationErrors")
+    validation_errors: Optional[List[ValidationErrorResponse]] = Field(default=None, alias="validationErrors")
     __properties: ClassVar[List[str]] = ["type", "createdAt", "updatedAt", "userId", "stateAndLocalWithholding", "tinType", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "recipientName", "recipientTin", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "federalEfileStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "validationErrors"]
 
     @field_validator('type')
@@ -107,8 +107,8 @@ class Form1099MiscResponse(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B']):
-            raise ValueError("must be one of enum values ('Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B')")
+        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S']):
+            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S')")
         return value
 
     @field_validator('tin_type')
@@ -264,11 +264,11 @@ class Form1099MiscResponse(BaseModel):
             "tinMatch": obj.get("tinMatch"),
             "addressVerification": obj.get("addressVerification"),
             "federalEfileStatus": StatusDetail.from_dict(obj["federalEfileStatus"]) if obj.get("federalEfileStatus") is not None else None,
-            "stateEfileStatus": [StateEfileStatusDetailApp.from_dict(_item) for _item in obj["stateEfileStatus"]] if obj.get("stateEfileStatus") is not None else None,
+            "stateEfileStatus": [StateEfileStatusDetailResponse.from_dict(_item) for _item in obj["stateEfileStatus"]] if obj.get("stateEfileStatus") is not None else None,
             "postalMailStatus": StatusDetail.from_dict(obj["postalMailStatus"]) if obj.get("postalMailStatus") is not None else None,
             "tinMatchStatus": StatusDetail.from_dict(obj["tinMatchStatus"]) if obj.get("tinMatchStatus") is not None else None,
             "addressVerificationStatus": StatusDetail.from_dict(obj["addressVerificationStatus"]) if obj.get("addressVerificationStatus") is not None else None,
-            "validationErrors": [ValidationErrorApp.from_dict(_item) for _item in obj["validationErrors"]] if obj.get("validationErrors") is not None else None
+            "validationErrors": [ValidationErrorResponse.from_dict(_item) for _item in obj["validationErrors"]] if obj.get("validationErrors") is not None else None
         })
         return _obj
 
