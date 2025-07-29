@@ -591,8 +591,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     x_avalara_client = 'John's E-Invoicing-API Client' # str | You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". (optional)
     filter = 'name eq 'Batch_Search_Import_V4'' # str | Filters the results by field name. Only the <code>eq</code> operator and the name field is supported. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/). (optional)
     count = true # bool | When set to <code>true</code>, returns the total count of matching records included as <code>@recordSetCount</code> in the response body. (optional)
-    top = '10' # str | If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. (optional)
-    skip = '10' # str | If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets. (optional)
+    top = 56 # int | The number of items to include in the result. (optional)
+    skip = 56 # int | The number of items to skip in the result. (optional)
     order_by = 'name desc' # str | The <code>$orderBy</code> query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space. (optional)
     x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | The caller can use this as an identifier to use as a correlation id to trace the call. (optional)
     # example passing only required values which don't have defaults set
@@ -621,8 +621,8 @@ Name | Type | Description  | Notes
  **x_avalara_client** | **str**| You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \&quot;Fingerprint\&quot;. | [optional]
  **filter** | **str**| Filters the results by field name. Only the &lt;code&gt;eq&lt;/code&gt; operator and the name field is supported. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/). | [optional]
  **count** | **bool**| When set to &lt;code&gt;true&lt;/code&gt;, returns the total count of matching records included as &lt;code&gt;@recordSetCount&lt;/code&gt; in the response body. | [optional]
- **top** | **str**| If nonzero, return no more than this number of results. Used with &lt;code&gt;$skip&lt;/code&gt; to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. | [optional]
- **skip** | **str**| If nonzero, skip this number of results before returning data. Used with &lt;code&gt;$top&lt;/code&gt; to provide pagination for large datasets. | [optional]
+ **top** | **int**| The number of items to include in the result. | [optional]
+ **skip** | **int**| The number of items to skip in the result. | [optional]
  **order_by** | **str**| The &lt;code&gt;$orderBy&lt;/code&gt; query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space. | [optional]
  **x_correlation_id** | **str**| The caller can use this as an identifier to use as a correlation id to trace the call. | [optional]
 
@@ -689,8 +689,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     x_avalara_client = 'John's E-Invoicing-API Client' # str | You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". (optional)
     count = true # bool | When set to <code>true</code>, returns the total count of matching records included as <code>@recordSetCount</code> in the response body. (optional)
     filter = 'network eq 'Peppol' and country eq 'Australia'' # str | Filters the results using the <code>eq</code> operator. Supported fields: <code>network</code>, <code>country</code>, <code>documentType</code>, <code>idType</code>. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/). (optional)
-    top = '10' # str | If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. (optional)
-    skip = '10' # str | If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets. (optional)
+    top = 56 # int | The number of items to include in the result. (optional)
+    skip = 56 # int | The number of items to skip in the result. (optional)
     order_by = 'name desc' # str | The <code>$orderBy</code> query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space. (optional)
     x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | The caller can use this as an identifier to use as a correlation id to trace the call. (optional)
     # example passing only required values which don't have defaults set
@@ -720,8 +720,8 @@ Name | Type | Description  | Notes
  **x_avalara_client** | **str**| You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \&quot;Fingerprint\&quot;. | [optional]
  **count** | **bool**| When set to &lt;code&gt;true&lt;/code&gt;, returns the total count of matching records included as &lt;code&gt;@recordSetCount&lt;/code&gt; in the response body. | [optional]
  **filter** | **str**| Filters the results using the &lt;code&gt;eq&lt;/code&gt; operator. Supported fields: &lt;code&gt;network&lt;/code&gt;, &lt;code&gt;country&lt;/code&gt;, &lt;code&gt;documentType&lt;/code&gt;, &lt;code&gt;idType&lt;/code&gt;. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/). | [optional]
- **top** | **str**| If nonzero, return no more than this number of results. Used with &lt;code&gt;$skip&lt;/code&gt; to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records. | [optional]
- **skip** | **str**| If nonzero, skip this number of results before returning data. Used with &lt;code&gt;$top&lt;/code&gt; to provide pagination for large datasets. | [optional]
+ **top** | **int**| The number of items to include in the result. | [optional]
+ **skip** | **int**| The number of items to skip in the result. | [optional]
  **order_by** | **str**| The &lt;code&gt;$orderBy&lt;/code&gt; query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space. | [optional]
  **x_correlation_id** | **str**| The caller can use this as an identifier to use as a correlation id to trace the call. | [optional]
 
