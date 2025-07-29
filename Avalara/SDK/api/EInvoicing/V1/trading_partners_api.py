@@ -40,7 +40,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from pydantic import Field, StrictBool, StrictBytes, StrictStr
+from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.batch_search import BatchSearch
@@ -553,9 +553,9 @@ class TradingPartnersApi(object):
                     'count':
                         (bool,),
                     'top':
-                        (str,),
+                        (int,),
                     'skip':
-                        (str,),
+                        (int,),
                     'order_by':
                         (str,),
                     'x_correlation_id':
@@ -646,9 +646,9 @@ class TradingPartnersApi(object):
                     'filter':
                         (str,),
                     'top':
-                        (str,),
+                        (int,),
                     'skip':
-                        (str,),
+                        (int,),
                     'order_by':
                         (str,),
                     'x_correlation_id':
@@ -1228,8 +1228,8 @@ class TradingPartnersApi(object):
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
             filter (str): Filters the results by field name. Only the <code>eq</code> operator and the name field is supported. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/).. [optional]
             count (bool): When set to <code>true</code>, returns the total count of matching records included as <code>@recordSetCount</code> in the response body.. [optional]
-            top (str): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records.. [optional]
-            skip (str): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
+            top (int): The number of items to include in the result.. [optional]
+            skip (int): The number of items to skip in the result.. [optional]
             order_by (str): The <code>$orderBy</code> query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space.. [optional]
             x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
             _return_http_data_only (bool): response data without head status
@@ -1304,8 +1304,8 @@ class TradingPartnersApi(object):
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
             count (bool): When set to <code>true</code>, returns the total count of matching records included as <code>@recordSetCount</code> in the response body.. [optional]
             filter (str): Filters the results using the <code>eq</code> operator. Supported fields: <code>network</code>, <code>country</code>, <code>documentType</code>, <code>idType</code>. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/).. [optional]
-            top (str): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 200 records.. [optional]
-            skip (str): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
+            top (int): The number of items to include in the result.. [optional]
+            skip (int): The number of items to skip in the result.. [optional]
             order_by (str): The <code>$orderBy</code> query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space.. [optional]
             x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
             _return_http_data_only (bool): response data without head status

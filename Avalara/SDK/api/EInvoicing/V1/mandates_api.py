@@ -40,8 +40,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from decimal import Decimal
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from Avalara.SDK.models.EInvoicing.V1.mandate_data_input_field import MandateDataInputField
@@ -184,9 +183,9 @@ class MandatesApi(object):
                     'filter':
                         (str,),
                     'top':
-                        (decimal.Decimal,),
+                        (int,),
                     'skip':
-                        (decimal.Decimal,),
+                        (int,),
                     'count':
                         (bool,),
                     'count_only':
@@ -323,8 +322,8 @@ class MandatesApi(object):
         Keyword Args:
             x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
             filter (str): Filter by field name and value. This filter only supports <code>eq</code> and <code>contains</code>. Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering.. [optional]
-            top (decimal.Decimal): If nonzero, return no more than this number of results. Used with <code>$skip</code> to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.. [optional]
-            skip (decimal.Decimal): If nonzero, skip this number of results before returning data. Used with <code>$top</code> to provide pagination for large datasets.. [optional]
+            top (int): The number of items to include in the result.. [optional]
+            skip (int): The number of items to skip in the result.. [optional]
             count (bool): When set to true, the count of the collection is also returned in the response body.. [optional]
             count_only (bool): When set to true, only the count of the collection is returned. [optional]
             _return_http_data_only (bool): response data without head status
