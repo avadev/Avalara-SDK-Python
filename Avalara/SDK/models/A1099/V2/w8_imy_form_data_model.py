@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,7 +33,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from Avalara.SDK.models.A1099.V2.w8_ben_e_substantial_us_owner_data_model import W8BenESubstantialUsOwnerDataModel
@@ -162,8 +162,8 @@ class W8ImyFormDataModel(BaseModel):
     certify_box42: Optional[StrictBool] = Field(default=None, description="Indicates certification for box 42.", alias="certifyBox42")
     signer_name: Optional[StrictStr] = Field(default=None, description="The name of the signer of the form.", alias="signerName")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
-    box35_formed_on_date: Optional[datetime] = Field(default=None, alias="box35FormedOnDate")
-    box36_filed_on_date: Optional[datetime] = Field(default=None, alias="box36FiledOnDate")
+    box35_formed_on_date: Optional[date] = Field(default=None, alias="box35FormedOnDate")
+    box36_filed_on_date: Optional[date] = Field(default=None, alias="box36FiledOnDate")
     employee_first_name: Optional[StrictStr] = Field(default=None, description="The first name of the employee.", alias="employeeFirstName")
     employee_middle_name: Optional[StrictStr] = Field(default=None, description="The middle name of the employee.", alias="employeeMiddleName")
     employee_last_name: Optional[StrictStr] = Field(default=None, description="The last name of the employee.", alias="employeeLastName")
@@ -233,9 +233,9 @@ class W8ImyFormDataModel(BaseModel):
     certify_box41: Optional[StrictBool] = Field(default=None, alias="certifyBox41")
     certify_box43: Optional[StrictBool] = Field(default=None, alias="certifyBox43")
     certify_part29_signature: Optional[StrictBool] = Field(default=None, alias="certifyPart29Signature")
-    part19_formation_or_resolution_date: Optional[datetime] = Field(default=None, alias="part19FormationOrResolutionDate")
-    part20_filing_date: Optional[datetime] = Field(default=None, alias="part20FilingDate")
-    part21_determination_date: Optional[datetime] = Field(default=None, alias="part21DeterminationDate")
+    part19_formation_or_resolution_date: Optional[date] = Field(default=None, alias="part19FormationOrResolutionDate")
+    part20_filing_date: Optional[date] = Field(default=None, alias="part20FilingDate")
+    part21_determination_date: Optional[date] = Field(default=None, alias="part21DeterminationDate")
     substantial_us_owners: Optional[List[W8BenESubstantialUsOwnerDataModel]] = Field(default=None, alias="substantialUsOwners")
     birthday: Optional[StrictStr] = Field(default=None, description="The birthday of the individual associated with the form.")
     foreign_tin_not_required: Optional[StrictBool] = Field(default=None, description="Indicates whether a foreign TIN is not required.", alias="foreignTinNotRequired")

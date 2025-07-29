@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,25 +43,25 @@ class CoveredIndividualRequest(BaseModel):
     """
     CoveredIndividualRequest
     """ # noqa: E501
-    first_name: Optional[StrictStr] = Field(default=None, alias="firstName")
-    middle_name: Optional[StrictStr] = Field(default=None, alias="middleName")
-    last_name: Optional[StrictStr] = Field(default=None, alias="lastName")
-    name_suffix: Optional[StrictStr] = Field(default=None, alias="nameSuffix")
-    tin: Optional[StrictStr] = None
-    birth_date: Optional[datetime] = Field(default=None, alias="birthDate")
-    covered_month_indicator0: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator0")
-    covered_month_indicator1: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator1")
-    covered_month_indicator2: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator2")
-    covered_month_indicator3: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator3")
-    covered_month_indicator4: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator4")
-    covered_month_indicator5: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator5")
-    covered_month_indicator6: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator6")
-    covered_month_indicator7: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator7")
-    covered_month_indicator8: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator8")
-    covered_month_indicator9: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator9")
-    covered_month_indicator10: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator10")
-    covered_month_indicator11: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator11")
-    covered_month_indicator12: Optional[StrictBool] = Field(default=None, alias="coveredMonthIndicator12")
+    first_name: Optional[StrictStr] = Field(default=None, description="Covered individual's first name", alias="firstName")
+    middle_name: Optional[StrictStr] = Field(default=None, description="Covered individual's middle name", alias="middleName")
+    last_name: Optional[StrictStr] = Field(default=None, description="Covered individual's last name", alias="lastName")
+    name_suffix: Optional[StrictStr] = Field(default=None, description="Covered individual's name suffix", alias="nameSuffix")
+    tin: Optional[StrictStr] = Field(default=None, description="Covered individual's TIN (SSN or ITIN)")
+    birth_date: Optional[datetime] = Field(default=None, description="Covered individual's date of birth", alias="birthDate")
+    covered_month_indicator0: Optional[StrictBool] = Field(default=None, description="Coverage indicator for all 12 months", alias="coveredMonthIndicator0")
+    covered_month_indicator1: Optional[StrictBool] = Field(default=None, description="Coverage indicator for January", alias="coveredMonthIndicator1")
+    covered_month_indicator2: Optional[StrictBool] = Field(default=None, description="Coverage indicator for February", alias="coveredMonthIndicator2")
+    covered_month_indicator3: Optional[StrictBool] = Field(default=None, description="Coverage indicator for March", alias="coveredMonthIndicator3")
+    covered_month_indicator4: Optional[StrictBool] = Field(default=None, description="Coverage indicator for April", alias="coveredMonthIndicator4")
+    covered_month_indicator5: Optional[StrictBool] = Field(default=None, description="Coverage indicator for May", alias="coveredMonthIndicator5")
+    covered_month_indicator6: Optional[StrictBool] = Field(default=None, description="Coverage indicator for June", alias="coveredMonthIndicator6")
+    covered_month_indicator7: Optional[StrictBool] = Field(default=None, description="Coverage indicator for July", alias="coveredMonthIndicator7")
+    covered_month_indicator8: Optional[StrictBool] = Field(default=None, description="Coverage indicator for August", alias="coveredMonthIndicator8")
+    covered_month_indicator9: Optional[StrictBool] = Field(default=None, description="Coverage indicator for September", alias="coveredMonthIndicator9")
+    covered_month_indicator10: Optional[StrictBool] = Field(default=None, description="Coverage indicator for October", alias="coveredMonthIndicator10")
+    covered_month_indicator11: Optional[StrictBool] = Field(default=None, description="Coverage indicator for November", alias="coveredMonthIndicator11")
+    covered_month_indicator12: Optional[StrictBool] = Field(default=None, description="Coverage indicator for December", alias="coveredMonthIndicator12")
     __properties: ClassVar[List[str]] = ["firstName", "middleName", "lastName", "nameSuffix", "tin", "birthDate", "coveredMonthIndicator0", "coveredMonthIndicator1", "coveredMonthIndicator2", "coveredMonthIndicator3", "coveredMonthIndicator4", "coveredMonthIndicator5", "coveredMonthIndicator6", "coveredMonthIndicator7", "coveredMonthIndicator8", "coveredMonthIndicator9", "coveredMonthIndicator10", "coveredMonthIndicator11", "coveredMonthIndicator12"]
 
     model_config = ConfigDict(

@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -41,11 +41,11 @@ from typing_extensions import Self
 
 class BatchSearchListResponse(BaseModel):
     """
-    Schema for batch search list
+    Response schema for listing batch search details.
     """ # noqa: E501
-    record_set_count: Optional[StrictInt] = Field(default=None, description="The count of records in the result set", alias="@recordSetCount")
+    record_set_count: Optional[StrictInt] = Field(default=None, description="The count of records in the result set.", alias="@recordSetCount")
     next_link: Optional[StrictStr] = Field(default=None, description="Next Link", alias="@nextLink")
-    value: Optional[List[BatchSearch]] = None
+    value: Optional[List[BatchSearch]] = Field(default=None, description="List of batch search records.")
     __properties: ClassVar[List[str]] = ["@recordSetCount", "@nextLink", "value"]
 
     model_config = ConfigDict(

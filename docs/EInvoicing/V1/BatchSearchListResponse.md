@@ -1,14 +1,14 @@
 # BatchSearchListResponse
 
-Schema for batch search list
+Response schema for listing batch search details.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**record_set_count** | **int** | The count of records in the result set | [optional] 
+**record_set_count** | **int** | The count of records in the result set. | [optional] 
 **next_link** | **str** | Next Link | [optional] 
-**value** | [**List[BatchSearch]**](BatchSearch.md) |  | [optional] 
+**value** | [**List[BatchSearch]**](BatchSearch.md) | List of batch search records. | [optional] 
 
 ## Example
 

@@ -1,6 +1,5 @@
 # SignatureValue
 
-Includes the actual signature applied to a webhook message along with the algorithm used.
 
 ## Properties
 

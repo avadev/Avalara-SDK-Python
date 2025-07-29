@@ -16,13 +16,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -60,7 +60,7 @@ class Issuers1099Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.7.2")
+        api_client.set_sdk_version("25.8.0")
         self.api_client = api_client
 		
         self.create_issuer_endpoint = _Endpoint(
@@ -456,7 +456,7 @@ class Issuers1099Api(object):
     ):
         """Create an issuer  # noqa: E501
 
-        Create a new issuer  # noqa: E501
+        Create an issuer (also known as a Payer).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -527,7 +527,7 @@ class Issuers1099Api(object):
     ):
         """Delete an issuer  # noqa: E501
 
-        Delete an issuer  # noqa: E501
+        Delete an issuer (also known as a Payer).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -597,9 +597,9 @@ class Issuers1099Api(object):
         avalara_version,
         **kwargs
     ):
-        """Get an issuer  # noqa: E501
+        """Retrieve an issuer  # noqa: E501
 
-        Get an issuer  # noqa: E501
+        Retrieve an issuer (also known as a Payer).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -607,7 +607,7 @@ class Issuers1099Api(object):
         >>> result = thread.get()
 
         Args:
-            id (str):
+            id (str): Id of the issuer to retrieve
             avalara_version (str): API version
 
         Keyword Args:
@@ -670,7 +670,7 @@ class Issuers1099Api(object):
     ):
         """List issuers  # noqa: E501
 
-        List issuers for a given tax year. Filterable fields are name, referenceId and taxYear  # noqa: E501
+        List issuers (also known as Payers). Filterable fields are name, referenceId and taxYear.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -746,7 +746,7 @@ class Issuers1099Api(object):
     ):
         """Update an issuer  # noqa: E501
 
-        Update an existing issuer  # noqa: E501
+        Update an issuer (also known as a Payer).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -754,7 +754,7 @@ class Issuers1099Api(object):
         >>> result = thread.get()
 
         Args:
-            id (str): Id of the issuer to Update
+            id (str): Id of the issuer to update
             avalara_version (str): API version
 
         Keyword Args:

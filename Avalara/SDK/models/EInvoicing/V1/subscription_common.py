@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,7 +40,7 @@ from typing_extensions import Self
 
 class SubscriptionCommon(BaseModel):
     """
-    Basic configuration for a webhook subscription, including description and target notification URL.
+    SubscriptionCommon
     """ # noqa: E501
     description: Optional[StrictStr] = Field(default=None, description="Description of the subscription")
     notification_url: StrictStr = Field(description="The URL of the webhook endpoint to which event messages will be delivered", alias="notificationUrl")

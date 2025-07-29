@@ -16,13 +16,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,6 +43,8 @@ from Avalara.SDK.model_utils import (  # noqa: F401
 from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import Optional, Union
 from typing_extensions import Annotated
+from Avalara.SDK.models.A1099.V2.create_w9_form201_response import CreateW9Form201Response
+from Avalara.SDK.models.A1099.V2.create_w9_form_request import CreateW9FormRequest
 from Avalara.SDK.models.A1099.V2.iw9_form_data_models_one_of import IW9FormDataModelsOneOf
 from Avalara.SDK.models.A1099.V2.paginated_w9_forms_model import PaginatedW9FormsModel
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
@@ -59,12 +61,12 @@ class FormsW9Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.7.2")
+        api_client.set_sdk_version("25.8.0")
         self.api_client = api_client
 		
         self.create_w9_form_endpoint = _Endpoint(
             settings={
-                'response_type': (IW9FormDataModelsOneOf,),
+                'response_type': (CreateW9Form201Response,),
                 'auth': [
                     'bearer'
                 ],
@@ -78,7 +80,7 @@ class FormsW9Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'iw9_form_data_models_one_of',
+                    'create_w9_form_request',
                 ],
                 'required': [
                     'avalara_version',
@@ -102,8 +104,8 @@ class FormsW9Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'iw9_form_data_models_one_of':
-                        (IW9FormDataModelsOneOf,),
+                    'create_w9_form_request':
+                        (CreateW9FormRequest,),
                 },
                 'attribute_map': {
                     'avalara_version': 'avalara-version',
@@ -114,7 +116,7 @@ class FormsW9Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'iw9_form_data_models_one_of': 'body',
+                    'create_w9_form_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -206,7 +208,7 @@ class FormsW9Api(object):
         )
         self.get_w9_form_endpoint = _Endpoint(
             settings={
-                'response_type': (IW9FormDataModelsOneOf,),
+                'response_type': (CreateW9Form201Response,),
                 'auth': [
                     'bearer'
                 ],
@@ -513,13 +515,13 @@ class FormsW9Api(object):
         )
         self.upload_w9_files_endpoint = _Endpoint(
             settings={
-                'response_type': (str,),
+                'response_type': None,
                 'auth': [
                     'bearer'
                 ],
                 'endpoint_path': '/w9/forms/{id}/attachment',
                 'operation_id': 'upload_w9_files',
-                'http_method': 'PUT',
+                'http_method': 'POST',
                 'servers': None,
             },
             params_map={
@@ -597,6 +599,7 @@ class FormsW9Api(object):
     ):
         """Create a W9/W4/W8 form  # noqa: E501
 
+        Create a W9/W4/W8 form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -609,7 +612,7 @@ class FormsW9Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            iw9_form_data_models_one_of (IW9FormDataModelsOneOf): Form to be created. [optional]
+            create_w9_form_request (CreateW9FormRequest): Form to be created. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -631,7 +634,7 @@ class FormsW9Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            IW9FormDataModelsOneOf
+            CreateW9Form201Response
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -665,9 +668,9 @@ class FormsW9Api(object):
         avalara_version,
         **kwargs
     ):
-        """Delete a form  # noqa: E501
+        """Delete a W9/W4/W8 form  # noqa: E501
 
-        Delete a form  # noqa: E501
+        Delete a W9/W4/W8 form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -675,7 +678,7 @@ class FormsW9Api(object):
         >>> result = thread.get()
 
         Args:
-            id (str): Id of the form to delete
+            id (str): ID of the form to delete
             avalara_version (str): API version
 
         Keyword Args:
@@ -739,7 +742,7 @@ class FormsW9Api(object):
     ):
         """Retrieve a W9/W4/W8 form  # noqa: E501
 
-        Retrieve a W9/W4/W8 form  # noqa: E501
+        Retrieve a W9/W4/W8 form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -747,7 +750,7 @@ class FormsW9Api(object):
         >>> result = thread.get()
 
         Args:
-            id (str): Id of the form
+            id (str): ID of the form
             avalara_version (str): API version
 
         Keyword Args:
@@ -774,7 +777,7 @@ class FormsW9Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            IW9FormDataModelsOneOf
+            CreateW9Form201Response
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -808,7 +811,7 @@ class FormsW9Api(object):
         avalara_version,
         **kwargs
     ):
-        """List W9/W4/W8 forms.  # noqa: E501
+        """List W9/W4/W8 forms  # noqa: E501
 
         List W9/W4/W8 forms.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -883,8 +886,9 @@ class FormsW9Api(object):
         avalara_version,
         **kwargs
     ):
-        """Sends a W9 email request to a vendor/payee  # noqa: E501
+        """Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form  # noqa: E501
 
+        Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -956,6 +960,7 @@ class FormsW9Api(object):
     ):
         """Update a W9/W4/W8 form  # noqa: E501
 
+        Update a W9/W4/W8 form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -963,7 +968,7 @@ class FormsW9Api(object):
         >>> result = thread.get()
 
         Args:
-            id (str): Id of the form to update
+            id (str): ID of the form to update
             avalara_version (str): API version
 
         Keyword Args:
@@ -1026,9 +1031,9 @@ class FormsW9Api(object):
         avalara_version,
         **kwargs
     ):
-        """Upload files for a W9/W4/W8 form  # noqa: E501
+        """Replace the PDF file for a W9/W4/W8 form  # noqa: E501
 
-        Upload files for a W9/W4/W8 form  # noqa: E501
+        Replaces the PDF file for a W9/W4/W8 form.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1064,7 +1069,7 @@ class FormsW9Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            str
+            None
                 If the method is called asynchronously, returns the request
                 thread.
         """

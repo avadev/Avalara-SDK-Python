@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,7 +40,7 @@ from typing_extensions import Self
 
 class SuccessResponse(BaseModel):
     """
-    Indicates a successful outcome of an API operation, including a generated ID and success message.
+    SuccessResponse
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique identifier for the new or updated entity.")
     message: Optional[StrictStr] = Field(default=None, description="Success message")

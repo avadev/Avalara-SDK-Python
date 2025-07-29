@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,7 +33,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from Avalara.SDK.models.A1099.V2.w8_ben_e_substantial_us_owner_data_model import W8BenESubstantialUsOwnerDataModel
@@ -173,9 +173,9 @@ class W9FormDataModel(BaseModel):
     certify_box41: Optional[StrictBool] = Field(default=None, alias="certifyBox41")
     certify_box43: Optional[StrictBool] = Field(default=None, alias="certifyBox43")
     certify_part29_signature: Optional[StrictBool] = Field(default=None, alias="certifyPart29Signature")
-    part19_formation_or_resolution_date: Optional[datetime] = Field(default=None, alias="part19FormationOrResolutionDate")
-    part20_filing_date: Optional[datetime] = Field(default=None, alias="part20FilingDate")
-    part21_determination_date: Optional[datetime] = Field(default=None, alias="part21DeterminationDate")
+    part19_formation_or_resolution_date: Optional[date] = Field(default=None, alias="part19FormationOrResolutionDate")
+    part20_filing_date: Optional[date] = Field(default=None, alias="part20FilingDate")
+    part21_determination_date: Optional[date] = Field(default=None, alias="part21DeterminationDate")
     substantial_us_owners: Optional[List[W8BenESubstantialUsOwnerDataModel]] = Field(default=None, alias="substantialUsOwners")
     birthday: Optional[StrictStr] = Field(default=None, description="The birthday of the individual associated with the form.")
     foreign_tin_not_required: Optional[StrictBool] = Field(default=None, description="Indicates whether a foreign TIN is not required.", alias="foreignTinNotRequired")
@@ -254,8 +254,8 @@ class W9FormDataModel(BaseModel):
     certify_box40: Optional[StrictBool] = Field(default=None, description="Indicates certification for box 40.", alias="certifyBox40")
     box41_sponsoring_entity: Optional[StrictStr] = Field(default=None, description="The sponsoring entity information for box 41.", alias="box41SponsoringEntity")
     certify_box42: Optional[StrictBool] = Field(default=None, description="Indicates certification for box 42.", alias="certifyBox42")
-    box35_formed_on_date: Optional[datetime] = Field(default=None, alias="box35FormedOnDate")
-    box36_filed_on_date: Optional[datetime] = Field(default=None, alias="box36FiledOnDate")
+    box35_formed_on_date: Optional[date] = Field(default=None, alias="box35FormedOnDate")
+    box36_filed_on_date: Optional[date] = Field(default=None, alias="box36FiledOnDate")
     __properties: ClassVar[List[str]] = ["type", "signedDate", "createdAt", "employeeFirstName", "employeeMiddleName", "employeeLastName", "employeeNameSuffix", "address", "city", "state", "zip", "typeOfTin", "tin", "box3MaritalStatus", "box4LastNameDiffers", "box5NumAllowances", "otherDependents", "nonJobIncome", "deductions", "box6AdditionalWithheld", "box7ExemptFromWithholding", "officeCode", "eDeliveryConsentedAt", "disregardedEntityChapter4FatcaStatus", "name", "residenceAddress", "residenceCity", "residenceState", "residencePostalCode", "residenceCountry", "mailingAddress", "mailingCity", "mailingState", "mailingPostalCode", "mailingCountry", "disregardedAddress", "disregardedCity", "disregardedState", "disregardedPostalCode", "disregardedCountry", "foreignTin", "ftinNotRequired", "referenceNumber", "giin", "chapter3EntityType", "chapter4FatcaStatus", "disregardedEntity", "disregardedEntityGiin", "benefitLimitation", "part4SponsoringEntity", "part4SponsoringEntityGiin", "part7SponsoringEntity", "part12IgaCountry", "part12IgaType", "part12FatcaStatusUnderIgaAnnexIi", "part12TrusteeName", "part12TrusteeIsForeign", "part12Model2IgaGiin", "box37AExchange", "box37BExchange", "box37BEntity", "part28SponsoringEntity", "part28SponsoringEntityGiin", "signerName", "residenceIsMailing", "citizenshipCountry", "makingTreatyClaim", "treatyCountry", "treatyArticle", "withholdingRate", "incomeType", "treatyReasons", "certifyBox14A", "certifyBox14B", "certifyBox14C", "certifyBox17_1", "certifyBox17_2", "certifyBox18", "certifyBox19", "certifyBox21", "certifyBox22", "certifyBox23", "certifyBox24A", "certifyBox24B", "certifyBox24C", "certifyBox24D", "certifyBox25A", "certifyBox25B", "certifyBox25C", "certifyBox26", "certifyBox27", "certifyBox28A", "certifyBox28B", "certifyBox29A", "certifyBox29B", "certifyBox29C", "certifyBox29D", "certifyBox29E", "certifyBox29F", "certifyBox30", "certifyBox31", "certifyBox32", "certifyBox33", "certifyBox34", "certifyBox35", "certifyBox36", "certifyBox37A", "certifyBox37B", "certifyBox38", "certifyBox39", "certifyBox40A", "certifyBox40B", "certifyBox40C", "certifyBox41", "certifyBox43", "certifyPart29Signature", "part19FormationOrResolutionDate", "part20FilingDate", "part21DeterminationDate", "substantialUsOwners", "birthday", "foreignTinNotRequired", "archived", "referenceId", "companyId", "displayName", "email", "signerCapacity", "updatedAt", "ein", "einType", "certifyBox14", "certifyBox15A", "certifyBox15B", "certifyBox15C", "certifyBox15D", "certifyBox15E", "certifyBox15F", "certifyBox15G", "certifyBox15H", "certifyBox15I", "certifyBox16A", "box16BQddCorporate", "box16BQddPartnership", "box16BQddDisregardedEntity", "certifyBox17A", "certifyBox17B", "certifyBox17C", "certifyBox17D", "certifyBox17E", "certifyBox18A", "certifyBox18B", "certifyBox18C", "certifyBox18D", "certifyBox18E", "certifyBox18F", "certifyBox19A", "certifyBox19B", "certifyBox19C", "certifyBox19D", "certifyBox19E", "certifyBox19F", "certifyBox20", "certifyBox21A", "certifyBox21B", "certifyBox21C", "certifyBox21D", "certifyBox21E", "certifyBox21F", "box23ANameSponsoringEntity", "certifyBox23B", "certifyBox23C", "certifyBox25", "box27ANameSponsoringEntity", "certifyBox27B", "certifyBox28", "certifyBox29", "certifyBox30A", "certifyBox30B", "certifyBox30C", "box32IgaCountry", "box32IgaType", "box32IgaTreatedAs", "box32TrusteeOrSponsor", "box32TrusteeIsForeign", "certifyBox33A", "certifyBox33B", "certifyBox33C", "certifyBox33D", "certifyBox33E", "certifyBox33F", "box37ASecuritiesMarket", "box37BNameOfEntity", "box37BSecuritiesMarket", "certifyBox40", "box41SponsoringEntity", "certifyBox42", "box35FormedOnDate", "box36FiledOnDate", "tinMatchStatus", "signature", "businessClassification", "businessName", "businessOther", "exemptPayeeCode", "exemptFatcaCode", "accountNumber", "foreignCountryIndicator", "foreignAddress", "backupWithholding", "is1099able", "foreignPartnerOwnerOrBeneficiary"]
 
     @field_validator('type')

@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -44,22 +44,22 @@ class JobResult(BaseModel):
     """ # noqa: E501
     id: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    dry_run: Optional[StrictBool] = Field(default=None, alias="dryRun")
-    upsert: Optional[StrictBool] = None
-    status: Optional[StrictStr] = None
+    dry_run: Optional[StrictBool] = Field(default=None, description="Dry run. If `true`, this job only simulates the changes but doesn't actually persist them.", alias="dryRun")
+    upsert: Optional[StrictBool] = Field(default=None, description="Upsert. If `true`, this job will first attempt to update existing records if matches can be found. Matches are done in the following order:  * Form ID  * Form Reference ID and tax year  * Form TIN and tax year")
+    status: Optional[StrictStr] = Field(default=None, description="Status of the job")
     error_message: Optional[StrictStr] = Field(default=None, alias="errorMessage")
-    total_processed: Optional[StrictInt] = Field(default=None, alias="totalProcessed")
-    total_rows: Optional[StrictInt] = Field(default=None, alias="totalRows")
-    updated_valid: Optional[StrictInt] = Field(default=None, alias="updatedValid")
-    updated_no_email: Optional[StrictInt] = Field(default=None, alias="updatedNoEmail")
-    updated_invalid: Optional[StrictInt] = Field(default=None, alias="updatedInvalid")
-    skipped_duplicate: Optional[StrictInt] = Field(default=None, alias="skippedDuplicate")
-    skipped_invalid: Optional[StrictInt] = Field(default=None, alias="skippedInvalid")
-    skipped_multiple_matches: Optional[StrictInt] = Field(default=None, alias="skippedMultipleMatches")
-    not_found: Optional[StrictInt] = Field(default=None, alias="notFound")
-    created_invalid: Optional[StrictInt] = Field(default=None, alias="createdInvalid")
-    created_no_email: Optional[StrictInt] = Field(default=None, alias="createdNoEmail")
-    created_valid: Optional[StrictInt] = Field(default=None, alias="createdValid")
+    total_processed: Optional[StrictInt] = Field(default=None, description="Total number of forms processed", alias="totalProcessed")
+    total_rows: Optional[StrictInt] = Field(default=None, description="Total number of forms in the request", alias="totalRows")
+    updated_valid: Optional[StrictInt] = Field(default=None, description="Number of forms updated and valid for e-filing and e-delivery", alias="updatedValid")
+    updated_no_email: Optional[StrictInt] = Field(default=None, description="Number of forms updated and valid for e-filing but missing email or email is undeliverable", alias="updatedNoEmail")
+    updated_invalid: Optional[StrictInt] = Field(default=None, description="Number of forms updated but invalid for e-filing", alias="updatedInvalid")
+    skipped_duplicate: Optional[StrictInt] = Field(default=None, description="Number of forms skipped because they would have updated a record already updated once in the request", alias="skippedDuplicate")
+    skipped_invalid: Optional[StrictInt] = Field(default=None, description="Number of forms skipped because they would have made a form invalid and the form is already e-filed or scheduled for e-filing", alias="skippedInvalid")
+    skipped_multiple_matches: Optional[StrictInt] = Field(default=None, description="Number of forms skipped because they matched multiple forms", alias="skippedMultipleMatches")
+    not_found: Optional[StrictInt] = Field(default=None, description="Number of forms skipped because no matching form or issuer could be found", alias="notFound")
+    created_invalid: Optional[StrictInt] = Field(default=None, description="Number of new forms created because no matching form could be found (and `upsert` was true) - with errors", alias="createdInvalid")
+    created_no_email: Optional[StrictInt] = Field(default=None, description="Number of new forms created because no matching form could be found (and `upsert` was true) - valid for e-filing but missing email or email is undeliverable", alias="createdNoEmail")
+    created_valid: Optional[StrictInt] = Field(default=None, description="Number of new forms created because no matching form could be found (and `upsert` was true) - valid for e-filing and e-delivery", alias="createdValid")
     __properties: ClassVar[List[str]] = ["id", "type", "dryRun", "upsert", "status", "errorMessage", "totalProcessed", "totalRows", "updatedValid", "updatedNoEmail", "updatedInvalid", "skippedDuplicate", "skippedInvalid", "skippedMultipleMatches", "notFound", "createdInvalid", "createdNoEmail", "createdValid"]
 
     model_config = ConfigDict(
