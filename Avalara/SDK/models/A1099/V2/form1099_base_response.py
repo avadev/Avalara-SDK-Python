@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.0
+@version    25.8.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -37,9 +37,9 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from Avalara.SDK.models.A1099.V2.form1099_status_detail_response import Form1099StatusDetailResponse
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
 from Avalara.SDK.models.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
+from Avalara.SDK.models.A1099.V2.status_detail import StatusDetail
 from Avalara.SDK.models.A1099.V2.validation_error_response import ValidationErrorResponse
 from typing import Optional, Set
 from typing_extensions import Self
@@ -55,19 +55,22 @@ class Form1099BaseResponse(BaseModel):
     issuer_tin: Optional[StrictStr] = Field(default=None, description="Issuer TIN", alias="issuerTin")
     tax_year: Optional[StrictInt] = Field(default=None, description="Tax year", alias="taxYear")
     federal_efile: StrictBool = Field(description="Boolean indicating that federal e-filing has been scheduled for this form", alias="federalEfile")
-    federal_efile_status: Optional[Form1099StatusDetailResponse] = Field(default=None, description="Federal e-file status", alias="federalEfileStatus")
+    federal_efile_status: Optional[StatusDetail] = Field(default=None, description="Federal e-file status", alias="federalEfileStatus")
     state_efile: StrictBool = Field(description="Boolean indicating that state e-filing has been scheduled for this form", alias="stateEfile")
     state_efile_status: Optional[List[StateEfileStatusDetailResponse]] = Field(default=None, description="State e-file status", alias="stateEfileStatus")
     postal_mail: StrictBool = Field(description="Boolean indicating that postal mailing to the recipient has been scheduled for this form", alias="postalMail")
-    postal_mail_status: Optional[Form1099StatusDetailResponse] = Field(default=None, description="Postal mail to recipient status", alias="postalMailStatus")
+    postal_mail_status: Optional[StatusDetail] = Field(default=None, description="Postal mail to recipient status", alias="postalMailStatus")
     tin_match: StrictBool = Field(description="Boolean indicating that TIN Matching has been scheduled for this form", alias="tinMatch")
-    tin_match_status: Optional[Form1099StatusDetailResponse] = Field(default=None, description="TIN Match status", alias="tinMatchStatus")
+    tin_match_status: Optional[StatusDetail] = Field(default=None, description="TIN Match status", alias="tinMatchStatus")
     address_verification: StrictBool = Field(description="Boolean indicating that address verification has been scheduled for this form", alias="addressVerification")
-    address_verification_status: Optional[Form1099StatusDetailResponse] = Field(default=None, description="Address verification status", alias="addressVerificationStatus")
+    address_verification_status: Optional[StatusDetail] = Field(default=None, description="Address verification status", alias="addressVerificationStatus")
+    e_delivery_status: Optional[StatusDetail] = Field(default=None, description="EDelivery status", alias="eDeliveryStatus")
     reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID", alias="referenceId")
     email: Optional[StrictStr] = Field(default=None, description="Recipient email address")
     tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN", alias="tinType")
     tin: Optional[StrictStr] = Field(default=None, description="Recipient Tax ID Number")
+    no_tin: Optional[StrictBool] = Field(default=None, description="Indicates whether the recipient has no TIN", alias="noTin")
+    second_tin_notice: Optional[StrictBool] = Field(default=None, description="Second Tin Notice", alias="secondTinNotice")
     recipient_name: Optional[StrictStr] = Field(default=None, description="Recipient name", alias="recipientName")
     recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
     address: Optional[StrictStr] = Field(default=None, description="Address")
@@ -75,8 +78,11 @@ class Form1099BaseResponse(BaseModel):
     city: Optional[StrictStr] = Field(default=None, description="City")
     state: Optional[StrictStr] = Field(default=None, description="US state")
     zip: Optional[StrictStr] = Field(default=None, description="Zip/postal code")
-    foreign_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="foreignProvince")
+    non_us_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="nonUsProvince")
     country_code: Optional[StrictStr] = Field(default=None, description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
+    account_number: Optional[StrictStr] = Field(default=None, description="Account Number", alias="accountNumber")
+    office_code: Optional[StrictStr] = Field(default=None, description="Office Code", alias="officeCode")
+    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement", alias="fatcaFilingRequirement")
     validation_errors: Optional[List[ValidationErrorResponse]] = Field(default=None, description="Validation errors", alias="validationErrors")
     created_at: Optional[datetime] = Field(default=None, description="Creation time", alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, description="Update time", alias="updatedAt")
@@ -122,6 +128,7 @@ class Form1099BaseResponse(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -130,6 +137,7 @@ class Form1099BaseResponse(BaseModel):
             "postal_mail_status",
             "tin_match_status",
             "address_verification_status",
+            "e_delivery_status",
             "validation_errors",
             "created_at",
             "updated_at",

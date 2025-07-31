@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.0
+@version    25.8.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from Avalara.SDK.models.A1099.V2.tin_match_status_response import TinMatchStatusResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -61,6 +62,7 @@ class W9FormResponse(BaseModel):
     tin: Optional[StrictStr] = Field(default=None, description="The taxpayer identification number (TIN).")
     backup_withholding: Optional[StrictBool] = Field(default=None, description="Indicates whether backup withholding applies.", alias="backupWithholding")
     is1099able: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual or entity should be issued a 1099 form.")
+    tin_match_status: Optional[TinMatchStatusResponse] = Field(default=None, description="The TIN Match status from IRS.", alias="tinMatchStatus")
     id: Optional[StrictStr] = Field(default=None, description="The unique identifier for the form.")
     type: Optional[StrictStr] = Field(default=None, description="The form type.")
     entry_status: Optional[StrictStr] = Field(default=None, description="The form status.", alias="entryStatus")

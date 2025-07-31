@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.0
+@version    25.8.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -50,7 +50,6 @@ class Form1099DivResponse(BaseModel):
     type: Optional[StrictStr] = None
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
-    user_id: Optional[StrictStr] = Field(default=None, alias="userId")
     state_and_local_withholding: Optional[StateAndLocalWithholdingResponse] = Field(default=None, alias="stateAndLocalWithholding")
     tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
     id: Optional[StrictStr] = None
@@ -67,23 +66,26 @@ class Form1099DivResponse(BaseModel):
     city: Optional[StrictStr] = None
     state: Optional[StrictStr] = None
     zip: Optional[StrictStr] = None
-    recipient_email: Optional[StrictStr] = Field(default=None, alias="recipientEmail")
+    email: Optional[StrictStr] = None
     account_number: Optional[StrictStr] = Field(default=None, alias="accountNumber")
     office_code: Optional[StrictStr] = Field(default=None, alias="officeCode")
-    recipient_non_us_province: Optional[StrictStr] = Field(default=None, alias="recipientNonUsProvince")
+    non_us_province: Optional[StrictStr] = Field(default=None, alias="nonUsProvince")
     country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
     federal_e_file: Optional[StrictBool] = Field(default=None, alias="federalEFile")
     postal_mail: Optional[StrictBool] = Field(default=None, alias="postalMail")
     state_e_file: Optional[StrictBool] = Field(default=None, alias="stateEFile")
     tin_match: Optional[StrictBool] = Field(default=None, alias="tinMatch")
+    no_tin: Optional[StrictBool] = Field(default=None, alias="noTin")
+    second_tin_notice: Optional[StrictBool] = Field(default=None, alias="secondTinNotice")
     address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
     federal_efile_status: Optional[StatusDetail] = Field(default=None, alias="federalEfileStatus")
+    e_delivery_status: Optional[StatusDetail] = Field(default=None, alias="eDeliveryStatus")
     state_efile_status: Optional[List[StateEfileStatusDetailResponse]] = Field(default=None, alias="stateEfileStatus")
     postal_mail_status: Optional[StatusDetail] = Field(default=None, alias="postalMailStatus")
     tin_match_status: Optional[StatusDetail] = Field(default=None, alias="tinMatchStatus")
     address_verification_status: Optional[StatusDetail] = Field(default=None, alias="addressVerificationStatus")
     validation_errors: Optional[List[ValidationErrorResponse]] = Field(default=None, alias="validationErrors")
-    __properties: ClassVar[List[str]] = ["type", "createdAt", "updatedAt", "userId", "stateAndLocalWithholding", "tinType", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "recipientName", "recipientTin", "recipientSecondName", "address", "address2", "city", "state", "zip", "recipientEmail", "accountNumber", "officeCode", "recipientNonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "addressVerification", "federalEfileStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "validationErrors"]
+    __properties: ClassVar[List[str]] = ["type", "createdAt", "updatedAt", "stateAndLocalWithholding", "tinType", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "recipientName", "recipientTin", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "noTin", "secondTinNotice", "addressVerification", "federalEfileStatus", "eDeliveryStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "validationErrors"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -91,8 +93,8 @@ class Form1099DivResponse(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S']):
-            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S')")
+        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C']):
+            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C')")
         return value
 
     @field_validator('tin_type')
@@ -152,6 +154,9 @@ class Form1099DivResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of federal_efile_status
         if self.federal_efile_status:
             _dict['federalEfileStatus'] = self.federal_efile_status.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of e_delivery_status
+        if self.e_delivery_status:
+            _dict['eDeliveryStatus'] = self.e_delivery_status.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in state_efile_status (list)
         _items = []
         if self.state_efile_status:
@@ -179,6 +184,11 @@ class Form1099DivResponse(BaseModel):
         # and model_fields_set contains the field
         if self.federal_efile_status is None and "federal_efile_status" in self.model_fields_set:
             _dict['federalEfileStatus'] = None
+
+        # set to None if e_delivery_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.e_delivery_status is None and "e_delivery_status" in self.model_fields_set:
+            _dict['eDeliveryStatus'] = None
 
         # set to None if state_efile_status (nullable) is None
         # and model_fields_set contains the field
@@ -220,7 +230,6 @@ class Form1099DivResponse(BaseModel):
             "type": obj.get("type"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),
-            "userId": obj.get("userId"),
             "stateAndLocalWithholding": StateAndLocalWithholdingResponse.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None,
             "tinType": obj.get("tinType"),
             "id": obj.get("id"),
@@ -237,17 +246,20 @@ class Form1099DivResponse(BaseModel):
             "city": obj.get("city"),
             "state": obj.get("state"),
             "zip": obj.get("zip"),
-            "recipientEmail": obj.get("recipientEmail"),
+            "email": obj.get("email"),
             "accountNumber": obj.get("accountNumber"),
             "officeCode": obj.get("officeCode"),
-            "recipientNonUsProvince": obj.get("recipientNonUsProvince"),
+            "nonUsProvince": obj.get("nonUsProvince"),
             "countryCode": obj.get("countryCode"),
             "federalEFile": obj.get("federalEFile"),
             "postalMail": obj.get("postalMail"),
             "stateEFile": obj.get("stateEFile"),
             "tinMatch": obj.get("tinMatch"),
+            "noTin": obj.get("noTin"),
+            "secondTinNotice": obj.get("secondTinNotice"),
             "addressVerification": obj.get("addressVerification"),
             "federalEfileStatus": StatusDetail.from_dict(obj["federalEfileStatus"]) if obj.get("federalEfileStatus") is not None else None,
+            "eDeliveryStatus": StatusDetail.from_dict(obj["eDeliveryStatus"]) if obj.get("eDeliveryStatus") is not None else None,
             "stateEfileStatus": [StateEfileStatusDetailResponse.from_dict(_item) for _item in obj["stateEfileStatus"]] if obj.get("stateEfileStatus") is not None else None,
             "postalMailStatus": StatusDetail.from_dict(obj["postalMailStatus"]) if obj.get("postalMailStatus") is not None else None,
             "tinMatchStatus": StatusDetail.from_dict(obj["tinMatchStatus"]) if obj.get("tinMatchStatus") is not None else None,

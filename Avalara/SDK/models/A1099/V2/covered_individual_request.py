@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.0
+@version    25.8.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -49,20 +49,20 @@ class CoveredIndividualRequest(BaseModel):
     name_suffix: Optional[StrictStr] = Field(default=None, description="Covered individual's name suffix", alias="nameSuffix")
     tin: Optional[StrictStr] = Field(default=None, description="Covered individual's TIN (SSN or ITIN)")
     birth_date: Optional[datetime] = Field(default=None, description="Covered individual's date of birth", alias="birthDate")
-    covered_month_indicator0: Optional[StrictBool] = Field(default=None, description="Coverage indicator for all 12 months", alias="coveredMonthIndicator0")
-    covered_month_indicator1: Optional[StrictBool] = Field(default=None, description="Coverage indicator for January", alias="coveredMonthIndicator1")
-    covered_month_indicator2: Optional[StrictBool] = Field(default=None, description="Coverage indicator for February", alias="coveredMonthIndicator2")
-    covered_month_indicator3: Optional[StrictBool] = Field(default=None, description="Coverage indicator for March", alias="coveredMonthIndicator3")
-    covered_month_indicator4: Optional[StrictBool] = Field(default=None, description="Coverage indicator for April", alias="coveredMonthIndicator4")
-    covered_month_indicator5: Optional[StrictBool] = Field(default=None, description="Coverage indicator for May", alias="coveredMonthIndicator5")
-    covered_month_indicator6: Optional[StrictBool] = Field(default=None, description="Coverage indicator for June", alias="coveredMonthIndicator6")
-    covered_month_indicator7: Optional[StrictBool] = Field(default=None, description="Coverage indicator for July", alias="coveredMonthIndicator7")
-    covered_month_indicator8: Optional[StrictBool] = Field(default=None, description="Coverage indicator for August", alias="coveredMonthIndicator8")
-    covered_month_indicator9: Optional[StrictBool] = Field(default=None, description="Coverage indicator for September", alias="coveredMonthIndicator9")
-    covered_month_indicator10: Optional[StrictBool] = Field(default=None, description="Coverage indicator for October", alias="coveredMonthIndicator10")
-    covered_month_indicator11: Optional[StrictBool] = Field(default=None, description="Coverage indicator for November", alias="coveredMonthIndicator11")
-    covered_month_indicator12: Optional[StrictBool] = Field(default=None, description="Coverage indicator for December", alias="coveredMonthIndicator12")
-    __properties: ClassVar[List[str]] = ["firstName", "middleName", "lastName", "nameSuffix", "tin", "birthDate", "coveredMonthIndicator0", "coveredMonthIndicator1", "coveredMonthIndicator2", "coveredMonthIndicator3", "coveredMonthIndicator4", "coveredMonthIndicator5", "coveredMonthIndicator6", "coveredMonthIndicator7", "coveredMonthIndicator8", "coveredMonthIndicator9", "coveredMonthIndicator10", "coveredMonthIndicator11", "coveredMonthIndicator12"]
+    covered_all_months: Optional[StrictBool] = Field(default=None, description="Coverage indicator for all 12 months", alias="coveredAllMonths")
+    covered_january: Optional[StrictBool] = Field(default=None, description="Coverage indicator for January", alias="coveredJanuary")
+    covered_february: Optional[StrictBool] = Field(default=None, description="Coverage indicator for February", alias="coveredFebruary")
+    covered_march: Optional[StrictBool] = Field(default=None, description="Coverage indicator for March", alias="coveredMarch")
+    covered_april: Optional[StrictBool] = Field(default=None, description="Coverage indicator for April", alias="coveredApril")
+    covered_may: Optional[StrictBool] = Field(default=None, description="Coverage indicator for May", alias="coveredMay")
+    covered_june: Optional[StrictBool] = Field(default=None, description="Coverage indicator for June", alias="coveredJune")
+    covered_july: Optional[StrictBool] = Field(default=None, description="Coverage indicator for July", alias="coveredJuly")
+    covered_august: Optional[StrictBool] = Field(default=None, description="Coverage indicator for August", alias="coveredAugust")
+    covered_september: Optional[StrictBool] = Field(default=None, description="Coverage indicator for September", alias="coveredSeptember")
+    covered_october: Optional[StrictBool] = Field(default=None, description="Coverage indicator for October", alias="coveredOctober")
+    covered_november: Optional[StrictBool] = Field(default=None, description="Coverage indicator for November", alias="coveredNovember")
+    covered_december: Optional[StrictBool] = Field(default=None, description="Coverage indicator for December", alias="coveredDecember")
+    __properties: ClassVar[List[str]] = ["firstName", "middleName", "lastName", "nameSuffix", "tin", "birthDate", "coveredAllMonths", "coveredJanuary", "coveredFebruary", "coveredMarch", "coveredApril", "coveredMay", "coveredJune", "coveredJuly", "coveredAugust", "coveredSeptember", "coveredOctober", "coveredNovember", "coveredDecember"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -151,19 +151,19 @@ class CoveredIndividualRequest(BaseModel):
             "nameSuffix": obj.get("nameSuffix"),
             "tin": obj.get("tin"),
             "birthDate": obj.get("birthDate"),
-            "coveredMonthIndicator0": obj.get("coveredMonthIndicator0"),
-            "coveredMonthIndicator1": obj.get("coveredMonthIndicator1"),
-            "coveredMonthIndicator2": obj.get("coveredMonthIndicator2"),
-            "coveredMonthIndicator3": obj.get("coveredMonthIndicator3"),
-            "coveredMonthIndicator4": obj.get("coveredMonthIndicator4"),
-            "coveredMonthIndicator5": obj.get("coveredMonthIndicator5"),
-            "coveredMonthIndicator6": obj.get("coveredMonthIndicator6"),
-            "coveredMonthIndicator7": obj.get("coveredMonthIndicator7"),
-            "coveredMonthIndicator8": obj.get("coveredMonthIndicator8"),
-            "coveredMonthIndicator9": obj.get("coveredMonthIndicator9"),
-            "coveredMonthIndicator10": obj.get("coveredMonthIndicator10"),
-            "coveredMonthIndicator11": obj.get("coveredMonthIndicator11"),
-            "coveredMonthIndicator12": obj.get("coveredMonthIndicator12")
+            "coveredAllMonths": obj.get("coveredAllMonths"),
+            "coveredJanuary": obj.get("coveredJanuary"),
+            "coveredFebruary": obj.get("coveredFebruary"),
+            "coveredMarch": obj.get("coveredMarch"),
+            "coveredApril": obj.get("coveredApril"),
+            "coveredMay": obj.get("coveredMay"),
+            "coveredJune": obj.get("coveredJune"),
+            "coveredJuly": obj.get("coveredJuly"),
+            "coveredAugust": obj.get("coveredAugust"),
+            "coveredSeptember": obj.get("coveredSeptember"),
+            "coveredOctober": obj.get("coveredOctober"),
+            "coveredNovember": obj.get("coveredNovember"),
+            "coveredDecember": obj.get("coveredDecember")
         })
         return _obj
 
