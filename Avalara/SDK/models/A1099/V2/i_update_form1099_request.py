@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.0
+@version    25.8.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -34,13 +34,14 @@ import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
 from Avalara.SDK.models.A1099.V2.form1099_div_request import Form1099DivRequest
+from Avalara.SDK.models.A1099.V2.form1099_k_request import Form1099KRequest
 from Avalara.SDK.models.A1099.V2.form1099_misc_request import Form1099MiscRequest
 from Avalara.SDK.models.A1099.V2.form1099_nec_request import Form1099NecRequest
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-IUPDATEFORM1099REQUEST_ONE_OF_SCHEMAS = ["Form1099DivRequest", "Form1099MiscRequest", "Form1099NecRequest"]
+IUPDATEFORM1099REQUEST_ONE_OF_SCHEMAS = ["Form1099DivRequest", "Form1099KRequest", "Form1099MiscRequest", "Form1099NecRequest"]
 
 class IUpdateForm1099Request(BaseModel):
     """
@@ -50,10 +51,12 @@ class IUpdateForm1099Request(BaseModel):
     oneof_schema_1_validator: Optional[Form1099DivRequest] = None
     # data type: Form1099MiscRequest
     oneof_schema_2_validator: Optional[Form1099MiscRequest] = None
+    # data type: Form1099KRequest
+    oneof_schema_3_validator: Optional[Form1099KRequest] = None
     # data type: Form1099NecRequest
-    oneof_schema_3_validator: Optional[Form1099NecRequest] = None
-    actual_instance: Optional[Union[Form1099DivRequest, Form1099MiscRequest, Form1099NecRequest]] = None
-    one_of_schemas: Set[str] = { "Form1099DivRequest", "Form1099MiscRequest", "Form1099NecRequest" }
+    oneof_schema_4_validator: Optional[Form1099NecRequest] = None
+    actual_instance: Optional[Union[Form1099DivRequest, Form1099KRequest, Form1099MiscRequest, Form1099NecRequest]] = None
+    one_of_schemas: Set[str] = { "Form1099DivRequest", "Form1099KRequest", "Form1099MiscRequest", "Form1099NecRequest" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -86,6 +89,11 @@ class IUpdateForm1099Request(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099MiscRequest`")
         else:
             match += 1
+        # validate data type: Form1099KRequest
+        if not isinstance(v, Form1099KRequest):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099KRequest`")
+        else:
+            match += 1
         # validate data type: Form1099NecRequest
         if not isinstance(v, Form1099NecRequest):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099NecRequest`")
@@ -93,10 +101,10 @@ class IUpdateForm1099Request(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099KRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099KRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -123,6 +131,12 @@ class IUpdateForm1099Request(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Form1099KRequest
+        try:
+            instance.actual_instance = Form1099KRequest.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into Form1099NecRequest
         try:
             instance.actual_instance = Form1099NecRequest.from_json(json_str)
@@ -132,10 +146,10 @@ class IUpdateForm1099Request(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099KRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into IUpdateForm1099Request with oneOf schemas: Form1099DivRequest, Form1099KRequest, Form1099MiscRequest, Form1099NecRequest. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -149,7 +163,7 @@ class IUpdateForm1099Request(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1099DivRequest, Form1099MiscRequest, Form1099NecRequest]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1099DivRequest, Form1099KRequest, Form1099MiscRequest, Form1099NecRequest]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

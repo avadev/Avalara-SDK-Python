@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.0
+@version    25.8.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ from typing import Any, List, Optional
 from Avalara.SDK.models.A1099.V2.form1042_s_list_item_response import Form1042SListItemResponse
 from Avalara.SDK.models.A1099.V2.form1095_b_list_item_response import Form1095BListItemResponse
 from Avalara.SDK.models.A1099.V2.form1099_base_response import Form1099BaseResponse
+from Avalara.SDK.models.A1099.V2.form1099_div_list_item_response import Form1099DivListItemResponse
 from Avalara.SDK.models.A1099.V2.form1099_k_list_item_response import Form1099KListItemResponse
 from Avalara.SDK.models.A1099.V2.form1099_misc_list_item_response import Form1099MiscListItemResponse
 from Avalara.SDK.models.A1099.V2.form1099_nec_list_item_response import Form1099NecListItemResponse
@@ -44,7 +45,7 @@ from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CREATE1099FORM201RESPONSE_ONE_OF_SCHEMAS = ["Form1042SListItemResponse", "Form1095BListItemResponse", "Form1099BaseResponse", "Form1099KListItemResponse", "Form1099MiscListItemResponse", "Form1099NecListItemResponse", "Form1099RListItemResponse"]
+CREATE1099FORM201RESPONSE_ONE_OF_SCHEMAS = ["Form1042SListItemResponse", "Form1095BListItemResponse", "Form1099BaseResponse", "Form1099DivListItemResponse", "Form1099KListItemResponse", "Form1099MiscListItemResponse", "Form1099NecListItemResponse", "Form1099RListItemResponse"]
 
 class Create1099Form201Response(BaseModel):
     """
@@ -56,16 +57,18 @@ class Create1099Form201Response(BaseModel):
     oneof_schema_2_validator: Optional[Form1042SListItemResponse] = None
     # data type: Form1095BListItemResponse
     oneof_schema_3_validator: Optional[Form1095BListItemResponse] = None
+    # data type: Form1099DivListItemResponse
+    oneof_schema_4_validator: Optional[Form1099DivListItemResponse] = None
     # data type: Form1099KListItemResponse
-    oneof_schema_4_validator: Optional[Form1099KListItemResponse] = None
+    oneof_schema_5_validator: Optional[Form1099KListItemResponse] = None
     # data type: Form1099MiscListItemResponse
-    oneof_schema_5_validator: Optional[Form1099MiscListItemResponse] = None
+    oneof_schema_6_validator: Optional[Form1099MiscListItemResponse] = None
     # data type: Form1099NecListItemResponse
-    oneof_schema_6_validator: Optional[Form1099NecListItemResponse] = None
+    oneof_schema_7_validator: Optional[Form1099NecListItemResponse] = None
     # data type: Form1099RListItemResponse
-    oneof_schema_7_validator: Optional[Form1099RListItemResponse] = None
-    actual_instance: Optional[Union[Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse]] = None
-    one_of_schemas: Set[str] = { "Form1042SListItemResponse", "Form1095BListItemResponse", "Form1099BaseResponse", "Form1099KListItemResponse", "Form1099MiscListItemResponse", "Form1099NecListItemResponse", "Form1099RListItemResponse" }
+    oneof_schema_8_validator: Optional[Form1099RListItemResponse] = None
+    actual_instance: Optional[Union[Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099DivListItemResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse]] = None
+    one_of_schemas: Set[str] = { "Form1042SListItemResponse", "Form1095BListItemResponse", "Form1099BaseResponse", "Form1099DivListItemResponse", "Form1099KListItemResponse", "Form1099MiscListItemResponse", "Form1099NecListItemResponse", "Form1099RListItemResponse" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -103,6 +106,11 @@ class Create1099Form201Response(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1095BListItemResponse`")
         else:
             match += 1
+        # validate data type: Form1099DivListItemResponse
+        if not isinstance(v, Form1099DivListItemResponse):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099DivListItemResponse`")
+        else:
+            match += 1
         # validate data type: Form1099KListItemResponse
         if not isinstance(v, Form1099KListItemResponse):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099KListItemResponse`")
@@ -125,10 +133,10 @@ class Create1099Form201Response(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099DivListItemResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099DivListItemResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -161,6 +169,12 @@ class Create1099Form201Response(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Form1099DivListItemResponse
+        try:
+            instance.actual_instance = Form1099DivListItemResponse.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into Form1099KListItemResponse
         try:
             instance.actual_instance = Form1099KListItemResponse.from_json(json_str)
@@ -188,10 +202,10 @@ class Create1099Form201Response(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099DivListItemResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into Create1099Form201Response with oneOf schemas: Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099DivListItemResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -205,7 +219,7 @@ class Create1099Form201Response(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042SListItemResponse, Form1095BListItemResponse, Form1099BaseResponse, Form1099DivListItemResponse, Form1099KListItemResponse, Form1099MiscListItemResponse, Form1099NecListItemResponse, Form1099RListItemResponse]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

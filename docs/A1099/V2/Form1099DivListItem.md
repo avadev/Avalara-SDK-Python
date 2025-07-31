@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_ordinary_dividends** | **str** | Total ordinary dividends | [optional] 
 **qualified_dividends** | **str** | Qualified dividends | [optional] 
-**total_capital_gain_distr** | **str** | Total capital gain distributions | [optional] 
-**unrecap_sec1250_gain** | **str** | Unrecaptured Section 1250 gain | [optional] 
+**total_capital_gain_distributions** | **str** | Total capital gain distributions | [optional] 
+**unrecaptured_section1250_gain** | **str** | Unrecaptured Section 1250 gain | [optional] 
 **section1202_gain** | **str** | Section 1202 gain | [optional] 
 **collectibles_gain** | **str** | Collectibles (28%) gain | [optional] 
 **section897_ordinary_dividends** | **str** | Section 897 ordinary dividends | [optional] 
@@ -23,14 +23,14 @@ Name | Type | Description | Notes
 **noncash_liquidation_distributions** | **str** | Noncash liquidation distributions | [optional] 
 **exempt_interest_dividends** | **str** | Exempt-interest dividends | [optional] 
 **specified_private_activity_bond_interest_dividends** | **str** | Specified private activity bond interest dividends | [optional] 
-**fatca_filing_requirement** | **str** | FATCA filing requirement | [optional] 
+**fatca_filing_requirement** | **bool** | FATCA filing requirement | [optional] 
 **issuer_reference_id** | **str** | Issuer Reference ID. One of &#x60;issuerReferenceId&#x60; or &#x60;issuerTin&#x60; is required. | [optional] 
 **issuer_tin** | **str** | Issuer TIN. One of &#x60;issuerReferenceId&#x60; or &#x60;issuerTin&#x60; is required. | [optional] 
 **tax_year** | **int** | Tax year | 
 **issuer_id** | **str** | Issuer ID | [optional] 
 **reference_id** | **str** | Reference ID | [optional] 
 **recipient_tin** | **str** | Recipient Tax ID Number | [optional] 
-**recipient_name** | **str** | Recipient name | 
+**recipient_name** | **str** | Recipient name | [optional] 
 **tin_type** | **str** | Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN | [optional] 
 **recipient_second_name** | **str** | Recipient second name | [optional] 
 **address** | **str** | Address | 
@@ -38,15 +38,17 @@ Name | Type | Description | Notes
 **city** | **str** | City | 
 **state** | **str** | US state. Required if CountryCode is \&quot;US\&quot;. | [optional] 
 **zip** | **str** | Zip/postal code | [optional] 
-**recipient_email** | **str** | Recipient email address | [optional] 
+**email** | **str** | Recipient email address | [optional] 
 **account_number** | **str** | Account number | [optional] 
 **office_code** | **str** | Office code | [optional] 
-**recipient_non_us_province** | **str** | Foreign province | [optional] 
+**non_us_province** | **str** | Foreign province | [optional] 
 **country_code** | **str** | Country code, as defined at https://www.irs.gov/e-file-providers/country-codes | 
 **federal_e_file** | **bool** | Boolean indicating that federal e-filing should be scheduled for this form | [optional] 
 **postal_mail** | **bool** | Boolean indicating that postal mailing to the recipient should be scheduled for this form | [optional] 
 **state_e_file** | **bool** | Boolean indicating that state e-filing should be scheduled for this form | [optional] 
 **tin_match** | **bool** | Boolean indicating that TIN Matching should be scheduled for this form | [optional] 
+**no_tin** | **bool** | Indicates whether the recipient has no TIN | [optional] 
+**second_tin_notice** | **bool** | Second TIN notice in three years | [optional] 
 **address_verification** | **bool** | Boolean indicating that address verification should be scheduled for this form | [optional] 
 **state_and_local_withholding** | [**StateAndLocalWithholdingRequest**](StateAndLocalWithholdingRequest.md) | State and local withholding information | [optional] 
 

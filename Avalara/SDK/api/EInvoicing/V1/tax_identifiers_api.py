@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.0
+@version    25.8.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -60,7 +60,7 @@ class TaxIdentifiersApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.8.0")
+        api_client.set_sdk_version("25.8.1")
         self.api_client = api_client
 		
         self.tax_identifier_schema_by_country_endpoint = _Endpoint(
