@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,13 +33,14 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import date, datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from datetime import date
+from pydantic import ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from Avalara.SDK.models.A1099.V2.w9_form_base_response import W9FormBaseResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
-class W8ImyFormResponse(BaseModel):
+class W8ImyFormResponse(W9FormBaseResponse):
     """
     W8ImyFormResponse
     """ # noqa: E501
@@ -154,21 +155,7 @@ class W8ImyFormResponse(BaseModel):
     sponsored_direct_reporting_nffe_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is a sponsored direct reporting NFFE.", alias="sponsoredDirectReportingNffeCertification")
     direct_reporting_nffe_sponsoring_entity: Optional[StrictStr] = Field(default=None, description="The name of the entity that sponsors the direct reporting NFFE.", alias="directReportingNffeSponsoringEntity")
     signer_name: Optional[StrictStr] = Field(default=None, description="The name of the signer.", alias="signerName")
-    id: Optional[StrictStr] = Field(default=None, description="The unique identifier for the form.")
-    type: Optional[StrictStr] = Field(default=None, description="The form type.")
-    entry_status: Optional[StrictStr] = Field(default=None, description="The form status.", alias="entryStatus")
-    entry_status_date: Optional[datetime] = Field(default=None, description="The timestamp for the latest status update.", alias="entryStatusDate")
-    reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
-    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company.", alias="companyId")
-    display_name: Optional[StrictStr] = Field(default=None, description="The display name associated with the form.", alias="displayName")
-    email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
-    archived: Optional[StrictBool] = Field(default=None, description="Indicates whether the form is archived.")
-    signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
-    signed_date: Optional[datetime] = Field(default=None, description="The date the form was signed.", alias="signedDate")
-    e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
-    created_at: Optional[datetime] = Field(default=None, description="The creation date of the form.", alias="createdAt")
-    updated_at: Optional[datetime] = Field(default=None, description="The last updated date of the form.", alias="updatedAt")
-    __properties: ClassVar[List[str]] = ["id", "type", "entryStatus", "entryStatusDate", "referenceId", "companyId", "displayName", "email", "archived", "signature", "signedDate", "eDeliveryConsentedAt", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "entryStatus", "entryStatusDate", "referenceId", "companyId", "displayName", "email", "archived", "signature", "signedDate", "eDeliveryConsentedAt", "createdAt", "updatedAt", "type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -252,7 +239,6 @@ class W8ImyFormResponse(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "type": obj.get("type"),
             "entryStatus": obj.get("entryStatus"),
             "entryStatusDate": obj.get("entryStatusDate"),
             "referenceId": obj.get("referenceId"),
@@ -264,7 +250,8 @@ class W8ImyFormResponse(BaseModel):
             "signedDate": obj.get("signedDate"),
             "eDeliveryConsentedAt": obj.get("eDeliveryConsentedAt"),
             "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt")
+            "updatedAt": obj.get("updatedAt"),
+            "type": obj.get("type")
         })
         return _obj
 

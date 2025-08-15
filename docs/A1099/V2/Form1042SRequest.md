@@ -36,22 +36,23 @@ Name | Type | Description | Notes
 **recipient_name** | **str** | Recipient name | [optional] 
 **tin_type** | **str** | Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN | [optional] 
 **recipient_second_name** | **str** | Recipient second name | [optional] 
-**address** | **str** | Address | 
+**address** | **str** | Address | [optional] 
 **address2** | **str** | Address line 2 | [optional] 
-**city** | **str** | City | 
+**city** | **str** | City | [optional] 
 **state** | **str** | US state. Required if CountryCode is \&quot;US\&quot;. | [optional] 
 **zip** | **str** | Zip/postal code | [optional] 
 **email** | **str** | Recipient email address | [optional] 
 **account_number** | **str** | Account number | [optional] 
 **office_code** | **str** | Office code | [optional] 
 **non_us_province** | **str** | Foreign province | [optional] 
-**country_code** | **str** | Country code, as defined at https://www.irs.gov/e-file-providers/country-codes | 
+**country_code** | **str** | Country code, as defined at https://www.irs.gov/e-file-providers/country-codes | [optional] 
 **federal_e_file** | **bool** | Boolean indicating that federal e-filing should be scheduled for this form | [optional] 
 **postal_mail** | **bool** | Boolean indicating that postal mailing to the recipient should be scheduled for this form | [optional] 
 **state_e_file** | **bool** | Boolean indicating that state e-filing should be scheduled for this form | [optional] 
 **tin_match** | **bool** | Boolean indicating that TIN Matching should be scheduled for this form | [optional] 
 **no_tin** | **bool** | Indicates whether the recipient has no TIN | [optional] 
 **second_tin_notice** | **bool** | Second TIN notice in three years | [optional] 
+**fatca_filing_requirement** | **bool** | Fatca filing requirement | [optional] 
 **address_verification** | **bool** | Boolean indicating that address verification should be scheduled for this form | [optional] 
 
 ## Example

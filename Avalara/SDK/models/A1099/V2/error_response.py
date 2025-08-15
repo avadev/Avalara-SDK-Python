@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -35,7 +35,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.error_response_errors_inner import ErrorResponseErrorsInner
+from Avalara.SDK.models.A1099.V2.error_response_item import ErrorResponseItem
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -44,7 +44,7 @@ class ErrorResponse(BaseModel):
     ErrorResponse
     """ # noqa: E501
     title: Optional[StrictStr] = None
-    errors: Optional[List[ErrorResponseErrorsInner]] = None
+    errors: Optional[List[ErrorResponseItem]] = None
     __properties: ClassVar[List[str]] = ["title", "errors"]
 
     model_config = ConfigDict(
@@ -116,7 +116,7 @@ class ErrorResponse(BaseModel):
 
         _obj = cls.model_validate({
             "title": obj.get("title"),
-            "errors": [ErrorResponseErrorsInner.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
+            "errors": [ErrorResponseItem.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         return _obj
 

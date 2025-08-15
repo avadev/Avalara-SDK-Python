@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -46,7 +46,7 @@ from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.create_w9_form201_response import CreateW9Form201Response
 from Avalara.SDK.models.A1099.V2.create_w9_form_request import CreateW9FormRequest
 from Avalara.SDK.models.A1099.V2.iw9_form_data_models_one_of import IW9FormDataModelsOneOf
-from Avalara.SDK.models.A1099.V2.paginated_w9_forms_model import PaginatedW9FormsModel
+from Avalara.SDK.models.A1099.V2.paginated_query_result_model_w9_form_base_response import PaginatedQueryResultModelW9FormBaseResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
 
@@ -61,7 +61,7 @@ class FormsW9Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.8.1")
+        api_client.set_sdk_version("25.8.2")
         self.api_client = api_client
 		
         self.create_w9_form_endpoint = _Endpoint(
@@ -278,7 +278,7 @@ class FormsW9Api(object):
         )
         self.list_w9_forms_endpoint = _Endpoint(
             settings={
-                'response_type': (PaginatedW9FormsModel,),
+                'response_type': (PaginatedQueryResultModelW9FormBaseResponse,),
                 'auth': [
                     'bearer'
                 ],
@@ -295,6 +295,7 @@ class FormsW9Api(object):
                     'skip',
                     'order_by',
                     'count',
+                    'count_only',
                     'x_correlation_id',
                     'x_avalara_client',
                 ],
@@ -326,6 +327,8 @@ class FormsW9Api(object):
                         (str,),
                     'count':
                         (bool,),
+                    'count_only':
+                        (bool,),
                     'x_correlation_id':
                         (str,),
                     'x_avalara_client':
@@ -338,6 +341,7 @@ class FormsW9Api(object):
                     'skip': '$skip',
                     'order_by': '$orderBy',
                     'count': 'count',
+                    'count_only': 'countOnly',
                     'x_correlation_id': 'X-Correlation-Id',
                     'x_avalara_client': 'X-Avalara-Client',
                 },
@@ -348,6 +352,7 @@ class FormsW9Api(object):
                     'skip': 'query',
                     'order_by': 'query',
                     'count': 'query',
+                    'count_only': 'query',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
                 },
@@ -813,7 +818,7 @@ class FormsW9Api(object):
     ):
         """List W9/W4/W8 forms  # noqa: E501
 
-        List W9/W4/W8 forms.  # noqa: E501
+        List W9/W4/W8 forms. Filterable/Sortable fields are: \"companyId\", \"type\", \"displayName\", \"entryStatus\", \"email\", \"archived\" and \"referenceId\".  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -824,11 +829,12 @@ class FormsW9Api(object):
             avalara_version (str): API version
 
         Keyword Args:
-            filter (str): A filter statement to identify specific records to retrieve. For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>.. [optional]
-            top (int): If nonzero, return no more than this number of results. Used with skip to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.. [optional] if omitted the server will use the default value of 10
-            skip (int): If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets.. [optional] if omitted the server will use the default value of 0
+            filter (str): A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>.. [optional]
+            top (int): If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets.. [optional]
+            skip (int): If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets.. [optional]
             order_by (str): A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC.. [optional]
-            count (bool): When true, returns a @recordSetCount in the result set. [optional]
+            count (bool): If true, return the global count of elements in the collection.. [optional]
+            count_only (bool): If true, return ONLY the global count of elements in the collection.  It only applies when count=true.. [optional]
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             _return_http_data_only (bool): response data without head status
@@ -852,7 +858,7 @@ class FormsW9Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            PaginatedW9FormsModel
+            PaginatedQueryResultModelW9FormBaseResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """

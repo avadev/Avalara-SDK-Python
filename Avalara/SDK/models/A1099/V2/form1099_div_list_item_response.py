@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -34,8 +34,8 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
 from Avalara.SDK.models.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
@@ -48,24 +48,24 @@ class Form1099DivListItemResponse(BaseModel):
     """
     Form1099DivListItemResponse
     """ # noqa: E501
-    total_ordinary_dividends: Optional[StrictStr] = Field(default=None, description="Total ordinary dividends", alias="totalOrdinaryDividends")
-    qualified_dividends: Optional[StrictStr] = Field(default=None, description="Qualified dividends", alias="qualifiedDividends")
-    total_capital_gain_distributions: Optional[StrictStr] = Field(default=None, description="Total capital gain distributions", alias="totalCapitalGainDistributions")
-    unrecaptured_section1250_gain: Optional[StrictStr] = Field(default=None, description="Unrecaptured Section 1250 gain", alias="unrecapturedSection1250Gain")
-    section1202_gain: Optional[StrictStr] = Field(default=None, description="Section 1202 gain", alias="section1202Gain")
-    collectibles_gain: Optional[StrictStr] = Field(default=None, description="Collectibles (28%) gain", alias="collectiblesGain")
-    section897_ordinary_dividends: Optional[StrictStr] = Field(default=None, description="Section 897 ordinary dividends", alias="section897OrdinaryDividends")
-    section897_capital_gain: Optional[StrictStr] = Field(default=None, description="Section 897 capital gain", alias="section897CapitalGain")
-    nondividend_distributions: Optional[StrictStr] = Field(default=None, description="Nondividend distributions", alias="nondividendDistributions")
-    federal_income_tax_withheld: Optional[StrictStr] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
-    section199_a_dividends: Optional[StrictStr] = Field(default=None, description="Section 199A dividends", alias="section199ADividends")
-    investment_expenses: Optional[StrictStr] = Field(default=None, description="Investment expenses", alias="investmentExpenses")
-    foreign_tax_paid: Optional[StrictStr] = Field(default=None, description="Foreign tax paid", alias="foreignTaxPaid")
+    total_ordinary_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total ordinary dividends", alias="totalOrdinaryDividends")
+    qualified_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Qualified dividends", alias="qualifiedDividends")
+    total_capital_gain_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total capital gain distributions", alias="totalCapitalGainDistributions")
+    unrecaptured_section1250_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Unrecaptured Section 1250 gain", alias="unrecapturedSection1250Gain")
+    section1202_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 1202 gain", alias="section1202Gain")
+    collectibles_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Collectibles (28%) gain", alias="collectiblesGain")
+    section897_ordinary_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 897 ordinary dividends", alias="section897OrdinaryDividends")
+    section897_capital_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 897 capital gain", alias="section897CapitalGain")
+    nondividend_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Nondividend distributions", alias="nondividendDistributions")
+    federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
+    section199_a_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 199A dividends", alias="section199ADividends")
+    investment_expenses: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Investment expenses", alias="investmentExpenses")
+    foreign_tax_paid: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Foreign tax paid", alias="foreignTaxPaid")
     foreign_country_or_us_possession: Optional[StrictStr] = Field(default=None, description="Foreign country or U.S. possession", alias="foreignCountryOrUSPossession")
-    cash_liquidation_distributions: Optional[StrictStr] = Field(default=None, description="Cash liquidation distributions", alias="cashLiquidationDistributions")
-    noncash_liquidation_distributions: Optional[StrictStr] = Field(default=None, description="Noncash liquidation distributions", alias="noncashLiquidationDistributions")
-    exempt_interest_dividends: Optional[StrictStr] = Field(default=None, description="Exempt-interest dividends", alias="exemptInterestDividends")
-    specified_private_activity_bond_interest_dividends: Optional[StrictStr] = Field(default=None, description="Specified private activity bond interest dividends", alias="specifiedPrivateActivityBondInterestDividends")
+    cash_liquidation_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Cash liquidation distributions", alias="cashLiquidationDistributions")
+    noncash_liquidation_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Noncash liquidation distributions", alias="noncashLiquidationDistributions")
+    exempt_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Exempt-interest dividends", alias="exemptInterestDividends")
+    specified_private_activity_bond_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Specified private activity bond interest dividends", alias="specifiedPrivateActivityBondInterestDividends")
     fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement", alias="fatcaFilingRequirement")
     id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="ID of the form")
     type: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Type of the form. Will be one of:  * 940  * 941  * 943  * 944  * 945  * 1042  * 1042-S  * 1095-B  * 1095-C  * 1097-BTC  * 1098  * 1098-C  * 1098-E  * 1098-Q  * 1098-T  * 3921  * 3922  * 5498  * 5498-ESA  * 5498-SA  * 1099-MISC  * 1099-A  * 1099-B  * 1099-C  * 1099-CAP  * 1099-DIV  * 1099-G  * 1099-INT  * 1099-K  * 1099-LS  * 1099-LTC  * 1099-NEC  * 1099-OID  * 1099-PATR  * 1099-Q  * 1099-R  * 1099-S  * 1099-SA  * T4A  * W-2  * W-2G  * 1099-HC")

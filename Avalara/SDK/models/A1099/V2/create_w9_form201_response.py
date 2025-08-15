@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -66,6 +66,9 @@ class CreateW9Form201Response(BaseModel):
         protected_namespaces=(),
     )
 
+
+    discriminator_value_class_map: Dict[str, str] = {
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:

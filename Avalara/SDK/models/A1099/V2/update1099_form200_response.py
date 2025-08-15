@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -34,16 +34,19 @@ import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
 from Avalara.SDK.models.A1099.V2.form1042_s_response import Form1042SResponse
+from Avalara.SDK.models.A1099.V2.form1095_b_response import Form1095BResponse
 from Avalara.SDK.models.A1099.V2.form1099_div_response import Form1099DivResponse
+from Avalara.SDK.models.A1099.V2.form1099_int_response import Form1099IntResponse
 from Avalara.SDK.models.A1099.V2.form1099_k_response import Form1099KResponse
 from Avalara.SDK.models.A1099.V2.form1099_misc_response import Form1099MiscResponse
 from Avalara.SDK.models.A1099.V2.form1099_nec_response import Form1099NecResponse
+from Avalara.SDK.models.A1099.V2.form1099_r_response import Form1099RResponse
 from Avalara.SDK.models.A1099.V2.form_response_base import FormResponseBase
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-UPDATE1099FORM200RESPONSE_ONE_OF_SCHEMAS = ["Form1042SResponse", "Form1099DivResponse", "Form1099KResponse", "Form1099MiscResponse", "Form1099NecResponse", "FormResponseBase"]
+UPDATE1099FORM200RESPONSE_ONE_OF_SCHEMAS = ["Form1042SResponse", "Form1095BResponse", "Form1099DivResponse", "Form1099IntResponse", "Form1099KResponse", "Form1099MiscResponse", "Form1099NecResponse", "Form1099RResponse", "FormResponseBase"]
 
 class Update1099Form200Response(BaseModel):
     """
@@ -53,16 +56,22 @@ class Update1099Form200Response(BaseModel):
     oneof_schema_1_validator: Optional[FormResponseBase] = None
     # data type: Form1042SResponse
     oneof_schema_2_validator: Optional[Form1042SResponse] = None
+    # data type: Form1095BResponse
+    oneof_schema_3_validator: Optional[Form1095BResponse] = None
     # data type: Form1099DivResponse
-    oneof_schema_3_validator: Optional[Form1099DivResponse] = None
+    oneof_schema_4_validator: Optional[Form1099DivResponse] = None
+    # data type: Form1099IntResponse
+    oneof_schema_5_validator: Optional[Form1099IntResponse] = None
     # data type: Form1099KResponse
-    oneof_schema_4_validator: Optional[Form1099KResponse] = None
+    oneof_schema_6_validator: Optional[Form1099KResponse] = None
     # data type: Form1099MiscResponse
-    oneof_schema_5_validator: Optional[Form1099MiscResponse] = None
+    oneof_schema_7_validator: Optional[Form1099MiscResponse] = None
     # data type: Form1099NecResponse
-    oneof_schema_6_validator: Optional[Form1099NecResponse] = None
-    actual_instance: Optional[Union[Form1042SResponse, Form1099DivResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, FormResponseBase]] = None
-    one_of_schemas: Set[str] = { "Form1042SResponse", "Form1099DivResponse", "Form1099KResponse", "Form1099MiscResponse", "Form1099NecResponse", "FormResponseBase" }
+    oneof_schema_8_validator: Optional[Form1099NecResponse] = None
+    # data type: Form1099RResponse
+    oneof_schema_9_validator: Optional[Form1099RResponse] = None
+    actual_instance: Optional[Union[Form1042SResponse, Form1095BResponse, Form1099DivResponse, Form1099IntResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, Form1099RResponse, FormResponseBase]] = None
+    one_of_schemas: Set[str] = { "Form1042SResponse", "Form1095BResponse", "Form1099DivResponse", "Form1099IntResponse", "Form1099KResponse", "Form1099MiscResponse", "Form1099NecResponse", "Form1099RResponse", "FormResponseBase" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -95,9 +104,19 @@ class Update1099Form200Response(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1042SResponse`")
         else:
             match += 1
+        # validate data type: Form1095BResponse
+        if not isinstance(v, Form1095BResponse):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1095BResponse`")
+        else:
+            match += 1
         # validate data type: Form1099DivResponse
         if not isinstance(v, Form1099DivResponse):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099DivResponse`")
+        else:
+            match += 1
+        # validate data type: Form1099IntResponse
+        if not isinstance(v, Form1099IntResponse):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099IntResponse`")
         else:
             match += 1
         # validate data type: Form1099KResponse
@@ -115,12 +134,17 @@ class Update1099Form200Response(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099NecResponse`")
         else:
             match += 1
+        # validate data type: Form1099RResponse
+        if not isinstance(v, Form1099RResponse):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099RResponse`")
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1099DivResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, FormResponseBase. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1095BResponse, Form1099DivResponse, Form1099IntResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, Form1099RResponse, FormResponseBase. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1099DivResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, FormResponseBase. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1095BResponse, Form1099DivResponse, Form1099IntResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, Form1099RResponse, FormResponseBase. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -147,9 +171,21 @@ class Update1099Form200Response(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Form1095BResponse
+        try:
+            instance.actual_instance = Form1095BResponse.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into Form1099DivResponse
         try:
             instance.actual_instance = Form1099DivResponse.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into Form1099IntResponse
+        try:
+            instance.actual_instance = Form1099IntResponse.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -171,13 +207,19 @@ class Update1099Form200Response(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Form1099RResponse
+        try:
+            instance.actual_instance = Form1099RResponse.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1099DivResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, FormResponseBase. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1095BResponse, Form1099DivResponse, Form1099IntResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, Form1099RResponse, FormResponseBase. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1099DivResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, FormResponseBase. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into Update1099Form200Response with oneOf schemas: Form1042SResponse, Form1095BResponse, Form1099DivResponse, Form1099IntResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, Form1099RResponse, FormResponseBase. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -191,7 +233,7 @@ class Update1099Form200Response(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042SResponse, Form1099DivResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, FormResponseBase]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042SResponse, Form1095BResponse, Form1099DivResponse, Form1099IntResponse, Form1099KResponse, Form1099MiscResponse, Form1099NecResponse, Form1099RResponse, FormResponseBase]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

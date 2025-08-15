@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,9 +33,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
 from typing import Optional, Set
 from typing_extensions import Self
@@ -44,24 +43,24 @@ class Form1099DivListItem(BaseModel):
     """
     Form1099DivListItem
     """ # noqa: E501
-    total_ordinary_dividends: Optional[StrictStr] = Field(default=None, description="Total ordinary dividends", alias="totalOrdinaryDividends")
-    qualified_dividends: Optional[StrictStr] = Field(default=None, description="Qualified dividends", alias="qualifiedDividends")
-    total_capital_gain_distributions: Optional[StrictStr] = Field(default=None, description="Total capital gain distributions", alias="totalCapitalGainDistributions")
-    unrecaptured_section1250_gain: Optional[StrictStr] = Field(default=None, description="Unrecaptured Section 1250 gain", alias="unrecapturedSection1250Gain")
-    section1202_gain: Optional[StrictStr] = Field(default=None, description="Section 1202 gain", alias="section1202Gain")
-    collectibles_gain: Optional[StrictStr] = Field(default=None, description="Collectibles (28%) gain", alias="collectiblesGain")
-    section897_ordinary_dividends: Optional[StrictStr] = Field(default=None, description="Section 897 ordinary dividends", alias="section897OrdinaryDividends")
-    section897_capital_gain: Optional[StrictStr] = Field(default=None, description="Section 897 capital gain", alias="section897CapitalGain")
-    nondividend_distributions: Optional[StrictStr] = Field(default=None, description="Nondividend distributions", alias="nondividendDistributions")
-    federal_income_tax_withheld: Optional[StrictStr] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
-    section199_a_dividends: Optional[StrictStr] = Field(default=None, description="Section 199A dividends", alias="section199ADividends")
-    investment_expenses: Optional[StrictStr] = Field(default=None, description="Investment expenses", alias="investmentExpenses")
-    foreign_tax_paid: Optional[StrictStr] = Field(default=None, description="Foreign tax paid", alias="foreignTaxPaid")
+    total_ordinary_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total ordinary dividends", alias="totalOrdinaryDividends")
+    qualified_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Qualified dividends", alias="qualifiedDividends")
+    total_capital_gain_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total capital gain distributions", alias="totalCapitalGainDistributions")
+    unrecaptured_section1250_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Unrecaptured Section 1250 gain", alias="unrecapturedSection1250Gain")
+    section1202_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 1202 gain", alias="section1202Gain")
+    collectibles_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Collectibles (28%) gain", alias="collectiblesGain")
+    section897_ordinary_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 897 ordinary dividends", alias="section897OrdinaryDividends")
+    section897_capital_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 897 capital gain", alias="section897CapitalGain")
+    nondividend_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Nondividend distributions", alias="nondividendDistributions")
+    federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
+    section199_a_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 199A dividends", alias="section199ADividends")
+    investment_expenses: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Investment expenses", alias="investmentExpenses")
+    foreign_tax_paid: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Foreign tax paid", alias="foreignTaxPaid")
     foreign_country_or_us_possession: Optional[StrictStr] = Field(default=None, description="Foreign country or U.S. possession", alias="foreignCountryOrUSPossession")
-    cash_liquidation_distributions: Optional[StrictStr] = Field(default=None, description="Cash liquidation distributions", alias="cashLiquidationDistributions")
-    noncash_liquidation_distributions: Optional[StrictStr] = Field(default=None, description="Noncash liquidation distributions", alias="noncashLiquidationDistributions")
-    exempt_interest_dividends: Optional[StrictStr] = Field(default=None, description="Exempt-interest dividends", alias="exemptInterestDividends")
-    specified_private_activity_bond_interest_dividends: Optional[StrictStr] = Field(default=None, description="Specified private activity bond interest dividends", alias="specifiedPrivateActivityBondInterestDividends")
+    cash_liquidation_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Cash liquidation distributions", alias="cashLiquidationDistributions")
+    noncash_liquidation_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Noncash liquidation distributions", alias="noncashLiquidationDistributions")
+    exempt_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Exempt-interest dividends", alias="exemptInterestDividends")
+    specified_private_activity_bond_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Specified private activity bond interest dividends", alias="specifiedPrivateActivityBondInterestDividends")
     fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement", alias="fatcaFilingRequirement")
     issuer_reference_id: Optional[StrictStr] = Field(default=None, description="Issuer Reference ID. One of `issuerReferenceId` or `issuerTin` is required.", alias="issuerReferenceId")
     issuer_tin: Optional[StrictStr] = Field(default=None, description="Issuer TIN. One of `issuerReferenceId` or `issuerTin` is required.", alias="issuerTin")
@@ -72,16 +71,16 @@ class Form1099DivListItem(BaseModel):
     recipient_name: Optional[StrictStr] = Field(default=None, description="Recipient name", alias="recipientName")
     tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN", alias="tinType")
     recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
-    address: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Address")
+    address: Optional[StrictStr] = Field(default=None, description="Address")
     address2: Optional[StrictStr] = Field(default=None, description="Address line 2")
-    city: Annotated[str, Field(min_length=1, strict=True)] = Field(description="City")
+    city: Optional[StrictStr] = Field(default=None, description="City")
     state: Optional[StrictStr] = Field(default=None, description="US state. Required if CountryCode is \"US\".")
     zip: Optional[StrictStr] = Field(default=None, description="Zip/postal code")
     email: Optional[StrictStr] = Field(default=None, description="Recipient email address")
     account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
     office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
     non_us_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="nonUsProvince")
-    country_code: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
+    country_code: Optional[StrictStr] = Field(default=None, description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
     federal_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that federal e-filing should be scheduled for this form", alias="federalEFile")
     postal_mail: Optional[StrictBool] = Field(default=None, description="Boolean indicating that postal mailing to the recipient should be scheduled for this form", alias="postalMail")
     state_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that state e-filing should be scheduled for this form", alias="stateEFile")
@@ -90,7 +89,7 @@ class Form1099DivListItem(BaseModel):
     second_tin_notice: Optional[StrictBool] = Field(default=None, description="Second TIN notice in three years", alias="secondTinNotice")
     address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
     state_and_local_withholding: Optional[StateAndLocalWithholdingRequest] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
-    __properties: ClassVar[List[str]] = ["issuerReferenceId", "issuerTin", "taxYear", "issuerId", "referenceId", "recipientTin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "noTin", "secondTinNotice", "addressVerification", "stateAndLocalWithholding"]
+    __properties: ClassVar[List[str]] = ["issuerReferenceId", "issuerTin", "taxYear", "issuerId", "referenceId", "recipientTin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "noTin", "secondTinNotice", "fatcaFilingRequirement", "addressVerification", "stateAndLocalWithholding"]
 
     @field_validator('tin_type')
     def tin_type_validate_enum(cls, value):
@@ -144,6 +143,16 @@ class Form1099DivListItem(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of state_and_local_withholding
         if self.state_and_local_withholding:
             _dict['stateAndLocalWithholding'] = self.state_and_local_withholding.to_dict()
+        # set to None if issuer_reference_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.issuer_reference_id is None and "issuer_reference_id" in self.model_fields_set:
+            _dict['issuerReferenceId'] = None
+
+        # set to None if issuer_tin (nullable) is None
+        # and model_fields_set contains the field
+        if self.issuer_tin is None and "issuer_tin" in self.model_fields_set:
+            _dict['issuerTin'] = None
+
         # set to None if issuer_id (nullable) is None
         # and model_fields_set contains the field
         if self.issuer_id is None and "issuer_id" in self.model_fields_set:
@@ -153,6 +162,11 @@ class Form1099DivListItem(BaseModel):
         # and model_fields_set contains the field
         if self.reference_id is None and "reference_id" in self.model_fields_set:
             _dict['referenceId'] = None
+
+        # set to None if recipient_tin (nullable) is None
+        # and model_fields_set contains the field
+        if self.recipient_tin is None and "recipient_tin" in self.model_fields_set:
+            _dict['recipientTin'] = None
 
         # set to None if recipient_name (nullable) is None
         # and model_fields_set contains the field
@@ -164,10 +178,30 @@ class Form1099DivListItem(BaseModel):
         if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
             _dict['recipientSecondName'] = None
 
+        # set to None if address (nullable) is None
+        # and model_fields_set contains the field
+        if self.address is None and "address" in self.model_fields_set:
+            _dict['address'] = None
+
         # set to None if address2 (nullable) is None
         # and model_fields_set contains the field
         if self.address2 is None and "address2" in self.model_fields_set:
             _dict['address2'] = None
+
+        # set to None if city (nullable) is None
+        # and model_fields_set contains the field
+        if self.city is None and "city" in self.model_fields_set:
+            _dict['city'] = None
+
+        # set to None if state (nullable) is None
+        # and model_fields_set contains the field
+        if self.state is None and "state" in self.model_fields_set:
+            _dict['state'] = None
+
+        # set to None if zip (nullable) is None
+        # and model_fields_set contains the field
+        if self.zip is None and "zip" in self.model_fields_set:
+            _dict['zip'] = None
 
         # set to None if email (nullable) is None
         # and model_fields_set contains the field
@@ -188,6 +222,11 @@ class Form1099DivListItem(BaseModel):
         # and model_fields_set contains the field
         if self.non_us_province is None and "non_us_province" in self.model_fields_set:
             _dict['nonUsProvince'] = None
+
+        # set to None if country_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.country_code is None and "country_code" in self.model_fields_set:
+            _dict['countryCode'] = None
 
         # set to None if second_tin_notice (nullable) is None
         # and model_fields_set contains the field
@@ -236,6 +275,7 @@ class Form1099DivListItem(BaseModel):
             "tinMatch": obj.get("tinMatch"),
             "noTin": obj.get("noTin"),
             "secondTinNotice": obj.get("secondTinNotice"),
+            "fatcaFilingRequirement": obj.get("fatcaFilingRequirement"),
             "addressVerification": obj.get("addressVerification"),
             "stateAndLocalWithholding": StateAndLocalWithholdingRequest.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None
         })
