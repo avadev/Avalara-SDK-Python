@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **job_data** | [**Data**](Data.md) |  | [optional] 
+**processed_forms** | [**List[Form1099ProccessResultProcessedFormsInner]**](Form1099ProccessResultProcessedFormsInner.md) |  | [optional] 
 
 ## Example
 

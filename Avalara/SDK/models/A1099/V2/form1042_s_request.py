@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,7 +36,6 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.intermediary_or_flow_through_request import IntermediaryOrFlowThroughRequest
 from Avalara.SDK.models.A1099.V2.primary_withholding_agent_request import PrimaryWithholdingAgentRequest
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
@@ -78,24 +77,25 @@ class Form1042SRequest(BaseModel):
     recipient_name: Optional[StrictStr] = Field(default=None, description="Recipient name", alias="recipientName")
     tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN", alias="tinType")
     recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
-    address: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Address")
+    address: Optional[StrictStr] = Field(default=None, description="Address")
     address2: Optional[StrictStr] = Field(default=None, description="Address line 2")
-    city: Annotated[str, Field(min_length=1, strict=True)] = Field(description="City")
+    city: Optional[StrictStr] = Field(default=None, description="City")
     state: Optional[StrictStr] = Field(default=None, description="US state. Required if CountryCode is \"US\".")
     zip: Optional[StrictStr] = Field(default=None, description="Zip/postal code")
     email: Optional[StrictStr] = Field(default=None, description="Recipient email address")
     account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
     office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
     non_us_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="nonUsProvince")
-    country_code: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
+    country_code: Optional[StrictStr] = Field(default=None, description="Country code, as defined at https://www.irs.gov/e-file-providers/country-codes", alias="countryCode")
     federal_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that federal e-filing should be scheduled for this form", alias="federalEFile")
     postal_mail: Optional[StrictBool] = Field(default=None, description="Boolean indicating that postal mailing to the recipient should be scheduled for this form", alias="postalMail")
     state_e_file: Optional[StrictBool] = Field(default=None, description="Boolean indicating that state e-filing should be scheduled for this form", alias="stateEFile")
     tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
     no_tin: Optional[StrictBool] = Field(default=None, description="Indicates whether the recipient has no TIN", alias="noTin")
     second_tin_notice: Optional[StrictBool] = Field(default=None, description="Second TIN notice in three years", alias="secondTinNotice")
+    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="Fatca filing requirement", alias="fatcaFilingRequirement")
     address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
-    __properties: ClassVar[List[str]] = ["type", "issuerId", "referenceId", "recipientTin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "noTin", "secondTinNotice", "addressVerification", "stateAndLocalWithholding"]
+    __properties: ClassVar[List[str]] = ["type", "issuerId", "referenceId", "recipientTin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEFile", "postalMail", "stateEFile", "tinMatch", "noTin", "secondTinNotice", "fatcaFilingRequirement", "addressVerification", "stateAndLocalWithholding"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -103,8 +103,8 @@ class Form1042SRequest(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C']):
-            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C')")
+        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT']):
+            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT')")
         return value
 
     @field_validator('tin_type')
@@ -169,6 +169,11 @@ class Form1042SRequest(BaseModel):
         if self.reference_id is None and "reference_id" in self.model_fields_set:
             _dict['referenceId'] = None
 
+        # set to None if recipient_tin (nullable) is None
+        # and model_fields_set contains the field
+        if self.recipient_tin is None and "recipient_tin" in self.model_fields_set:
+            _dict['recipientTin'] = None
+
         # set to None if recipient_name (nullable) is None
         # and model_fields_set contains the field
         if self.recipient_name is None and "recipient_name" in self.model_fields_set:
@@ -179,10 +184,30 @@ class Form1042SRequest(BaseModel):
         if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
             _dict['recipientSecondName'] = None
 
+        # set to None if address (nullable) is None
+        # and model_fields_set contains the field
+        if self.address is None and "address" in self.model_fields_set:
+            _dict['address'] = None
+
         # set to None if address2 (nullable) is None
         # and model_fields_set contains the field
         if self.address2 is None and "address2" in self.model_fields_set:
             _dict['address2'] = None
+
+        # set to None if city (nullable) is None
+        # and model_fields_set contains the field
+        if self.city is None and "city" in self.model_fields_set:
+            _dict['city'] = None
+
+        # set to None if state (nullable) is None
+        # and model_fields_set contains the field
+        if self.state is None and "state" in self.model_fields_set:
+            _dict['state'] = None
+
+        # set to None if zip (nullable) is None
+        # and model_fields_set contains the field
+        if self.zip is None and "zip" in self.model_fields_set:
+            _dict['zip'] = None
 
         # set to None if email (nullable) is None
         # and model_fields_set contains the field
@@ -203,6 +228,11 @@ class Form1042SRequest(BaseModel):
         # and model_fields_set contains the field
         if self.non_us_province is None and "non_us_province" in self.model_fields_set:
             _dict['nonUsProvince'] = None
+
+        # set to None if country_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.country_code is None and "country_code" in self.model_fields_set:
+            _dict['countryCode'] = None
 
         # set to None if second_tin_notice (nullable) is None
         # and model_fields_set contains the field
@@ -249,6 +279,7 @@ class Form1042SRequest(BaseModel):
             "tinMatch": obj.get("tinMatch"),
             "noTin": obj.get("noTin"),
             "secondTinNotice": obj.get("secondTinNotice"),
+            "fatcaFilingRequirement": obj.get("fatcaFilingRequirement"),
             "addressVerification": obj.get("addressVerification"),
             "stateAndLocalWithholding": StateAndLocalWithholdingRequest.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None
         })

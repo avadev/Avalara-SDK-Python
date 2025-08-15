@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from Avalara.SDK.models.A1099.V2.data import Data
+from Avalara.SDK.models.A1099.V2.form1099_proccess_result_processed_forms_inner import Form1099ProccessResultProcessedFormsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -44,7 +45,8 @@ class Form1099ProccessResult(BaseModel):
     Form1099ProccessResult
     """ # noqa: E501
     job_data: Optional[Data] = Field(default=None, alias="jobData")
-    __properties: ClassVar[List[str]] = ["jobData"]
+    processed_forms: Optional[List[Form1099ProccessResultProcessedFormsInner]] = Field(default=None, alias="processedForms")
+    __properties: ClassVar[List[str]] = ["jobData", "processedForms"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,6 +90,18 @@ class Form1099ProccessResult(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of job_data
         if self.job_data:
             _dict['jobData'] = self.job_data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in processed_forms (list)
+        _items = []
+        if self.processed_forms:
+            for _item in self.processed_forms:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['processedForms'] = _items
+        # set to None if processed_forms (nullable) is None
+        # and model_fields_set contains the field
+        if self.processed_forms is None and "processed_forms" in self.model_fields_set:
+            _dict['processedForms'] = None
+
         return _dict
 
     @classmethod
@@ -100,7 +114,8 @@ class Form1099ProccessResult(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "jobData": Data.from_dict(obj["jobData"]) if obj.get("jobData") is not None else None
+            "jobData": Data.from_dict(obj["jobData"]) if obj.get("jobData") is not None else None,
+            "processedForms": [Form1099ProccessResultProcessedFormsInner.from_dict(_item) for _item in obj["processedForms"]] if obj.get("processedForms") is not None else None
         })
         return _obj
 

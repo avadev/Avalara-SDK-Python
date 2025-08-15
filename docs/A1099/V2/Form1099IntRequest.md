@@ -1,0 +1,68 @@
+# Form1099IntRequest
+
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**interest_income** | **float** | Interest Income | [optional] 
+**early_withdrawal_penalty** | **float** | Early Withdrawl Penalty | [optional] 
+**us_savings_bonds_interest** | **float** | Interest on U.S. Savings Bonds and Treasury obligations | [optional] 
+**federal_income_tax_withheld** | **float** | Federal income tax withheld | [optional] 
+**investment_expenses** | **float** | Investment Expenses | [optional] 
+**foreign_tax_paid** | **float** | Foreign tax paid | [optional] 
+**foreign_country** | **str** | Foreign country or U.S. possession | [optional] 
+**tax_exempt_interest** | **float** | Tax-Exempt Interest | [optional] 
+**specified_private_activity_bond_interest** | **float** | Specified Private activity | [optional] 
+**market_discount** | **float** | Market Discount | [optional] 
+**bond_premium** | **float** | Bond Premium | [optional] 
+**bond_premium_on_treasury_obligations** | **float** | Bond Premium on Treasury obligations | [optional] 
+**bond_premium_on_tax_exempt_bond** | **float** | Bond Premium on tax exempt bond | [optional] 
+**tax_exempt_bond_cusip_number** | **str** | Tax exempt bond CUSIP no. | [optional] 
+**type** | **str** |  | [optional] 
+**issuer_id** | **str** | Issuer ID | [optional] 
+**reference_id** | **str** | Reference ID | [optional] 
+**recipient_tin** | **str** | Recipient Tax ID Number | [optional] 
+**recipient_name** | **str** | Recipient name | [optional] 
+**tin_type** | **str** | Type of TIN (Tax ID Number). Will be one of:  * SSN  * EIN  * ITIN  * ATIN | [optional] 
+**recipient_second_name** | **str** | Recipient second name | [optional] 
+**address** | **str** | Address | [optional] 
+**address2** | **str** | Address line 2 | [optional] 
+**city** | **str** | City | [optional] 
+**state** | **str** | US state. Required if CountryCode is \&quot;US\&quot;. | [optional] 
+**zip** | **str** | Zip/postal code | [optional] 
+**email** | **str** | Recipient email address | [optional] 
+**account_number** | **str** | Account number | [optional] 
+**office_code** | **str** | Office code | [optional] 
+**non_us_province** | **str** | Foreign province | [optional] 
+**country_code** | **str** | Country code, as defined at https://www.irs.gov/e-file-providers/country-codes | [optional] 
+**federal_e_file** | **bool** | Boolean indicating that federal e-filing should be scheduled for this form | [optional] 
+**postal_mail** | **bool** | Boolean indicating that postal mailing to the recipient should be scheduled for this form | [optional] 
+**state_e_file** | **bool** | Boolean indicating that state e-filing should be scheduled for this form | [optional] 
+**tin_match** | **bool** | Boolean indicating that TIN Matching should be scheduled for this form | [optional] 
+**no_tin** | **bool** | Indicates whether the recipient has no TIN | [optional] 
+**second_tin_notice** | **bool** | Second TIN notice in three years | [optional] 
+**fatca_filing_requirement** | **bool** | Fatca filing requirement | [optional] 
+**address_verification** | **bool** | Boolean indicating that address verification should be scheduled for this form | [optional] 
+**state_and_local_withholding** | [**StateAndLocalWithholdingRequest**](StateAndLocalWithholdingRequest.md) | State and local withholding information | [optional] 
+
+## Example
+
+```python
+from Avalara.SDK.models.A1099.V2.form1099_int_request import Form1099IntRequest
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of Form1099IntRequest from a JSON string
+form1099_int_request_instance = Form1099IntRequest.from_json(json)
+# print the JSON string representation of the object
+print(Form1099IntRequest.to_json())
+
+# convert the object into a dict
+form1099_int_request_dict = form1099_int_request_instance.to_dict()
+# create an instance of Form1099IntRequest from a dict
+form1099_int_request_from_dict = Form1099IntRequest.from_dict(form1099_int_request_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

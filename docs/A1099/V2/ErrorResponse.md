@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **title** | **str** |  | [optional] 
-**errors** | [**List[ErrorResponseErrorsInner]**](ErrorResponseErrorsInner.md) |  | [optional] 
+**errors** | [**List[ErrorResponseItem]**](ErrorResponseItem.md) |  | [optional] 
 
 ## Example
 

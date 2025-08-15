@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Use **username/password** or generate a **license key** from: *Avalara Portal → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.7.2
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -65,7 +65,6 @@ class Form1099R(BaseModel):
     total_employee_contributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalEmployeeContributions")
     amount_allocable_to_irr: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="amountAllocableToIrr")
     first_year_designated_roth_contrib: Optional[StrictStr] = Field(default=None, alias="firstYearDesignatedRothContrib")
-    fatca_requirement_indicator: Optional[StrictBool] = Field(default=None, alias="fatcaRequirementIndicator")
     date_of_payment: Optional[StrictStr] = Field(default=None, alias="dateOfPayment")
     id: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
@@ -83,10 +82,14 @@ class Form1099R(BaseModel):
     tin_match_status: Optional[Form1099StatusDetail] = Field(default=None, alias="tinMatchStatus")
     address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
     address_verification_status: Optional[Form1099StatusDetail] = Field(default=None, alias="addressVerificationStatus")
+    e_delivery_status: Optional[Form1099StatusDetail] = Field(default=None, alias="eDeliveryStatus")
     reference_id: Optional[StrictStr] = Field(default=None, alias="referenceId")
     email: Optional[StrictStr] = None
     tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
+    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, alias="fatcaFilingRequirement")
     tin: Optional[StrictStr] = None
+    no_tin: Optional[StrictBool] = Field(default=None, alias="noTin")
+    second_tin_notice: Optional[StrictBool] = Field(default=None, alias="secondTinNotice")
     recipient_name: Optional[StrictStr] = Field(default=None, alias="recipientName")
     recipient_second_name: Optional[StrictStr] = Field(default=None, alias="recipientSecondName")
     address: Optional[StrictStr] = None
@@ -94,13 +97,15 @@ class Form1099R(BaseModel):
     city: Optional[StrictStr] = None
     state: Optional[StrictStr] = None
     zip: Optional[StrictStr] = None
-    foreign_province: Optional[StrictStr] = Field(default=None, alias="foreignProvince")
+    non_us_province: Optional[StrictStr] = Field(default=None, alias="nonUsProvince")
     country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
+    account_number: Optional[StrictStr] = Field(default=None, alias="accountNumber")
+    office_code: Optional[StrictStr] = Field(default=None, alias="officeCode")
     validation_errors: Optional[List[ValidationError]] = Field(default=None, alias="validationErrors")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
     state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, alias="stateAndLocalWithholding")
-    __properties: ClassVar[List[str]] = ["id", "type", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "federalEfile", "federalEfileStatus", "stateEfile", "stateEfileStatus", "postalMail", "postalMailStatus", "tinMatch", "tinMatchStatus", "addressVerification", "addressVerificationStatus", "referenceId", "email", "tinType", "tin", "recipientName", "recipientSecondName", "address", "address2", "city", "state", "zip", "foreignProvince", "countryCode", "validationErrors", "createdAt", "updatedAt", "stateAndLocalWithholding"]
+    __properties: ClassVar[List[str]] = ["id", "type", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "federalEfile", "federalEfileStatus", "stateEfile", "stateEfileStatus", "postalMail", "postalMailStatus", "tinMatch", "tinMatchStatus", "addressVerification", "addressVerificationStatus", "eDeliveryStatus", "referenceId", "email", "tinType", "fatcaFilingRequirement", "tin", "noTin", "secondTinNotice", "recipientName", "recipientSecondName", "address", "address2", "city", "state", "zip", "nonUsProvince", "countryCode", "accountNumber", "officeCode", "validationErrors", "createdAt", "updatedAt", "stateAndLocalWithholding"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -160,6 +165,9 @@ class Form1099R(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address_verification_status
         if self.address_verification_status:
             _dict['addressVerificationStatus'] = self.address_verification_status.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of e_delivery_status
+        if self.e_delivery_status:
+            _dict['eDeliveryStatus'] = self.e_delivery_status.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in validation_errors (list)
         _items = []
         if self.validation_errors:
@@ -200,6 +208,11 @@ class Form1099R(BaseModel):
         if self.address_verification_status is None and "address_verification_status" in self.model_fields_set:
             _dict['addressVerificationStatus'] = None
 
+        # set to None if e_delivery_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.e_delivery_status is None and "e_delivery_status" in self.model_fields_set:
+            _dict['eDeliveryStatus'] = None
+
         # set to None if reference_id (nullable) is None
         # and model_fields_set contains the field
         if self.reference_id is None and "reference_id" in self.model_fields_set:
@@ -215,10 +228,20 @@ class Form1099R(BaseModel):
         if self.tin_type is None and "tin_type" in self.model_fields_set:
             _dict['tinType'] = None
 
+        # set to None if fatca_filing_requirement (nullable) is None
+        # and model_fields_set contains the field
+        if self.fatca_filing_requirement is None and "fatca_filing_requirement" in self.model_fields_set:
+            _dict['fatcaFilingRequirement'] = None
+
         # set to None if tin (nullable) is None
         # and model_fields_set contains the field
         if self.tin is None and "tin" in self.model_fields_set:
             _dict['tin'] = None
+
+        # set to None if second_tin_notice (nullable) is None
+        # and model_fields_set contains the field
+        if self.second_tin_notice is None and "second_tin_notice" in self.model_fields_set:
+            _dict['secondTinNotice'] = None
 
         # set to None if recipient_name (nullable) is None
         # and model_fields_set contains the field
@@ -255,15 +278,25 @@ class Form1099R(BaseModel):
         if self.zip is None and "zip" in self.model_fields_set:
             _dict['zip'] = None
 
-        # set to None if foreign_province (nullable) is None
+        # set to None if non_us_province (nullable) is None
         # and model_fields_set contains the field
-        if self.foreign_province is None and "foreign_province" in self.model_fields_set:
-            _dict['foreignProvince'] = None
+        if self.non_us_province is None and "non_us_province" in self.model_fields_set:
+            _dict['nonUsProvince'] = None
 
         # set to None if country_code (nullable) is None
         # and model_fields_set contains the field
         if self.country_code is None and "country_code" in self.model_fields_set:
             _dict['countryCode'] = None
+
+        # set to None if account_number (nullable) is None
+        # and model_fields_set contains the field
+        if self.account_number is None and "account_number" in self.model_fields_set:
+            _dict['accountNumber'] = None
+
+        # set to None if office_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.office_code is None and "office_code" in self.model_fields_set:
+            _dict['officeCode'] = None
 
         # set to None if validation_errors (nullable) is None
         # and model_fields_set contains the field
@@ -303,10 +336,14 @@ class Form1099R(BaseModel):
             "tinMatchStatus": Form1099StatusDetail.from_dict(obj["tinMatchStatus"]) if obj.get("tinMatchStatus") is not None else None,
             "addressVerification": obj.get("addressVerification"),
             "addressVerificationStatus": Form1099StatusDetail.from_dict(obj["addressVerificationStatus"]) if obj.get("addressVerificationStatus") is not None else None,
+            "eDeliveryStatus": Form1099StatusDetail.from_dict(obj["eDeliveryStatus"]) if obj.get("eDeliveryStatus") is not None else None,
             "referenceId": obj.get("referenceId"),
             "email": obj.get("email"),
             "tinType": obj.get("tinType"),
+            "fatcaFilingRequirement": obj.get("fatcaFilingRequirement"),
             "tin": obj.get("tin"),
+            "noTin": obj.get("noTin"),
+            "secondTinNotice": obj.get("secondTinNotice"),
             "recipientName": obj.get("recipientName"),
             "recipientSecondName": obj.get("recipientSecondName"),
             "address": obj.get("address"),
@@ -314,8 +351,10 @@ class Form1099R(BaseModel):
             "city": obj.get("city"),
             "state": obj.get("state"),
             "zip": obj.get("zip"),
-            "foreignProvince": obj.get("foreignProvince"),
+            "nonUsProvince": obj.get("nonUsProvince"),
             "countryCode": obj.get("countryCode"),
+            "accountNumber": obj.get("accountNumber"),
+            "officeCode": obj.get("officeCode"),
             "validationErrors": [ValidationError.from_dict(_item) for _item in obj["validationErrors"]] if obj.get("validationErrors") is not None else None,
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),

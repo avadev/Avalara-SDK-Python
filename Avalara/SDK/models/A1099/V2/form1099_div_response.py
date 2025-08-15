@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.1
+@version    25.8.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -34,8 +34,8 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
 from Avalara.SDK.models.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
 from Avalara.SDK.models.A1099.V2.status_detail import StatusDetail
@@ -47,6 +47,25 @@ class Form1099DivResponse(BaseModel):
     """
     Form1099DivResponse
     """ # noqa: E501
+    total_ordinary_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalOrdinaryDividends")
+    qualified_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="qualifiedDividends")
+    total_capital_gain_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalCapitalGainDistributions")
+    unrecaptured_section1250_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="unrecapturedSection1250Gain")
+    section1202_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="section1202Gain")
+    collectibles_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="collectiblesGain")
+    section897_ordinary_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="section897OrdinaryDividends")
+    section897_capital_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="section897CapitalGain")
+    nondividend_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="nondividendDistributions")
+    federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="federalIncomeTaxWithheld")
+    section199_a_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="section199ADividends")
+    investment_expenses: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="investmentExpenses")
+    foreign_tax_paid: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="foreignTaxPaid")
+    foreign_country_or_us_possession: Optional[StrictStr] = Field(default=None, alias="foreignCountryOrUSPossession")
+    cash_liquidation_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="cashLiquidationDistributions")
+    noncash_liquidation_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="noncashLiquidationDistributions")
+    exempt_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="exemptInterestDividends")
+    specified_private_activity_bond_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="specifiedPrivateActivityBondInterestDividends")
+    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, alias="fatcaFilingRequirement")
     type: Optional[StrictStr] = None
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
@@ -93,8 +112,8 @@ class Form1099DivResponse(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C']):
-            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C')")
+        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT']):
+            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT')")
         return value
 
     @field_validator('tin_type')
