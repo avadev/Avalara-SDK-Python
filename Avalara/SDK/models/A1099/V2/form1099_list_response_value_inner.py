@@ -33,15 +33,15 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1042_s_list_item_response import Form1042SListItemResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1095_b_list_item_response import Form1095BListItemResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_base_response import Form1099BaseResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_div_list_item_response import Form1099DivListItemResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_int_list_item_response import Form1099IntListItemResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_k_list_item_response import Form1099KListItemResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_misc_list_item_response import Form1099MiscListItemResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_nec_list_item_response import Form1099NecListItemResponse
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_r_list_item_response import Form1099RListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1042_s_list_item_response import Form1042SListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1095_b_list_item_response import Form1095BListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_base_response import Form1099BaseResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_div_list_item_response import Form1099DivListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_int_list_item_response import Form1099IntListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_k_list_item_response import Form1099KListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_misc_list_item_response import Form1099MiscListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_nec_list_item_response import Form1099NecListItemResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_r_list_item_response import Form1099RListItemResponse
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self

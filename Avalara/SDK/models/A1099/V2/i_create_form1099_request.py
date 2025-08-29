@@ -33,10 +33,10 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_div_request import Form1099DivRequest
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_k_request import Form1099KRequest
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_misc_request import Form1099MiscRequest
-from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_nec_request import Form1099NecRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_div_request import Form1099DivRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_k_request import Form1099KRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_misc_request import Form1099MiscRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.form1099_nec_request import Form1099NecRequest
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self

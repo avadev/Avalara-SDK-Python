@@ -35,8 +35,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.A1099.V2.attribute import Attribute
-from Avalara.SDK.models.A1099.V2.A1099.V2.link import Link
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.attribute import Attribute
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.link import Link
 from typing import Optional, Set
 from typing_extensions import Self
 

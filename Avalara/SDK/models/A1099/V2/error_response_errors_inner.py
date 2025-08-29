@@ -33,8 +33,8 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.http_validation_problem_details import HttpValidationProblemDetails
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.problem_details import ProblemDetails
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.http_validation_problem_details import HttpValidationProblemDetails
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.problem_details import ProblemDetails
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self

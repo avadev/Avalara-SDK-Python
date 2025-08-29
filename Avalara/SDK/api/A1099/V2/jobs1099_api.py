@@ -43,7 +43,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
 from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from Avalara.SDK.models.A1099.V2.A1099.V2.job_result import JobResult
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.job_result import JobResult
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
 
