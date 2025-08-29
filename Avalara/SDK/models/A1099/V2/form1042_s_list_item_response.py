@@ -37,12 +37,12 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from Avalara.SDK.models.A1099.V2.intermediary_or_flow_through_response import IntermediaryOrFlowThroughResponse
-from Avalara.SDK.models.A1099.V2.primary_withholding_agent_response import PrimaryWithholdingAgentResponse
-from Avalara.SDK.models.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
-from Avalara.SDK.models.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
-from Avalara.SDK.models.A1099.V2.status_detail import StatusDetail
-from Avalara.SDK.models.A1099.V2.validation_error_response import ValidationErrorResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.intermediary_or_flow_through_response import IntermediaryOrFlowThroughResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.primary_withholding_agent_response import PrimaryWithholdingAgentResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.status_detail import StatusDetail
+from Avalara.SDK.models.A1099.V2.A1099.V2.validation_error_response import ValidationErrorResponse
 from typing import Optional, Set
 from typing_extensions import Self
 

@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,6 +43,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
 from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import Optional, Union
 from typing_extensions import Annotated
+from Avalara.SDK.models.A1099.V2.create_and_send_w9_form_email_request import CreateAndSendW9FormEmailRequest
 from Avalara.SDK.models.A1099.V2.create_w9_form201_response import CreateW9Form201Response
 from Avalara.SDK.models.A1099.V2.create_w9_form_request import CreateW9FormRequest
 from Avalara.SDK.models.A1099.V2.iw9_form_data_models_one_of import IW9FormDataModelsOneOf
@@ -61,9 +62,81 @@ class FormsW9Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.8.2")
+        api_client.set_sdk_version("25.8.3")
         self.api_client = api_client
 		
+        self.create_and_send_w9_form_email_endpoint = _Endpoint(
+            settings={
+                'response_type': (CreateW9Form201Response,),
+                'auth': [
+                    'bearer'
+                ],
+                'endpoint_path': '/w9/forms/$create-and-send-email',
+                'operation_id': 'create_and_send_w9_form_email',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'avalara_version',
+                    'x_correlation_id',
+                    'x_avalara_client',
+                    'create_and_send_w9_form_email_request',
+                ],
+                'required': [
+                    'avalara_version',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'avalara_version':
+                        (str,),
+                    'x_correlation_id':
+                        (str,),
+                    'x_avalara_client':
+                        (str,),
+                    'create_and_send_w9_form_email_request':
+                        (CreateAndSendW9FormEmailRequest,),
+                },
+                'attribute_map': {
+                    'avalara_version': 'avalara-version',
+                    'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
+                },
+                'location_map': {
+                    'avalara_version': 'header',
+                    'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
+                    'create_and_send_w9_form_email_request': 'body',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'avalara-version': '2.0',
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json',
+                    'text/json',
+                    'application/*+json'
+                ]
+            },
+            api_client=api_client,
+            required_scopes='',
+            microservice='A1099'
+        )
         self.create_w9_form_endpoint = _Endpoint(
             settings={
                 'response_type': (CreateW9Form201Response,),
@@ -372,7 +445,7 @@ class FormsW9Api(object):
         )
         self.send_w9_form_email_endpoint = _Endpoint(
             settings={
-                'response_type': (IW9FormDataModelsOneOf,),
+                'response_type': (CreateW9Form201Response,),
                 'auth': [
                     'bearer'
                 ],
@@ -595,6 +668,76 @@ class FormsW9Api(object):
             required_scopes='',
             microservice='A1099'
         )
+
+    @avalara_retry_oauth(max_retry_attempts=2)
+    def create_and_send_w9_form_email(
+        self,
+        avalara_version,
+        **kwargs
+    ):
+        """Create a minimal W9/W4/W8 form and sends the e-mail request  # noqa: E501
+
+        Create a minimal W9/W4/W8 form and sends the e-mail request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_and_send_w9_form_email(avalara_version, async_req=True)
+        >>> result = thread.get()
+
+        Args:
+            avalara_version (str): API version
+
+        Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
+            create_and_send_w9_form_email_request (CreateAndSendW9FormEmailRequest): Form to be created. [optional]
+            _return_http_data_only (bool): response data without head status
+                code and headers. Default is True.
+            _preload_content (bool): if False, the urllib3.HTTPResponse object
+                will be returned without reading/decoding response data.
+                Default is True.
+            _request_timeout (int/float/tuple): timeout setting for this request. If
+                one number provided, it will be total request timeout. It can also
+                be a pair (tuple) of (connection, read) timeouts.
+                Default is None.
+            _check_input_type (bool): specifies if type checking
+                should be done one the data sent to the server.
+                Default is True.
+            _check_return_type (bool): specifies if type checking
+                should be done one the data received from the server.
+                Default is True.
+            _host_index (int/None): specifies the index of the server
+                that we want to use.
+                Default is read from the configuration.
+            async_req (bool): execute request asynchronously
+
+        Returns:
+            CreateW9Form201Response
+                If the method is called asynchronously, returns the request
+                thread.
+        """
+        self.__verify_api_client(self.api_client)
+        kwargs['async_req'] = kwargs.get(
+            'async_req', False
+        )
+        kwargs['_return_http_data_only'] = kwargs.get(
+            '_return_http_data_only', True
+        )
+        kwargs['_preload_content'] = kwargs.get(
+            '_preload_content', True
+        )
+        kwargs['_request_timeout'] = kwargs.get(
+            '_request_timeout', None
+        )
+        kwargs['_check_input_type'] = kwargs.get(
+            '_check_input_type', True
+        )
+        kwargs['_check_return_type'] = kwargs.get(
+            '_check_return_type', True
+        )
+        kwargs['_host_index'] = kwargs.get('_host_index')
+        kwargs['avalara_version'] = avalara_version
+        return self.create_and_send_w9_form_email_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
     def create_w9_form(
@@ -894,7 +1037,7 @@ class FormsW9Api(object):
     ):
         """Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form  # noqa: E501
 
-        Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form.  # noqa: E501
+        Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form.   If the form is not in 'Requested' status, it will either use an existing descendant form   in 'Requested' status or create a new minimal form and send the email request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -929,7 +1072,7 @@ class FormsW9Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            IW9FormDataModelsOneOf
+            CreateW9Form201Response
                 If the method is called asynchronously, returns the request
                 thread.
         """

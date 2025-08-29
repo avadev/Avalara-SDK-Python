@@ -1,51 +1,57 @@
 # Form1095B
 
+Form 1095-B: Health Coverage
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**origin_of_health_coverage_code** | **str** |  | [optional] 
-**covered_individuals** | [**List[CoveredIndividualReference]**](CoveredIndividualReference.md) |  | [optional] 
-**id** | **str** |  | [optional] 
-**type** | **str** |  | [optional] 
-**issuer_id** | **int** |  | [optional] 
-**issuer_reference_id** | **str** |  | [optional] 
-**issuer_tin** | **str** |  | [optional] 
-**tax_year** | **int** |  | [optional] 
-**federal_efile** | **bool** |  | [optional] 
-**federal_efile_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) |  | [optional] 
-**state_efile** | **bool** |  | [optional] 
-**state_efile_status** | [**List[StateEfileStatusDetail]**](StateEfileStatusDetail.md) |  | [optional] 
-**postal_mail** | **bool** |  | [optional] 
-**postal_mail_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) |  | [optional] 
-**tin_match** | **bool** |  | [optional] 
-**tin_match_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) |  | [optional] 
-**address_verification** | **bool** |  | [optional] 
-**address_verification_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) |  | [optional] 
-**e_delivery_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) |  | [optional] 
-**reference_id** | **str** |  | [optional] 
-**email** | **str** |  | [optional] 
-**tin_type** | **str** |  | [optional] 
-**fatca_filing_requirement** | **bool** |  | [optional] 
-**tin** | **str** |  | [optional] 
-**no_tin** | **bool** |  | [optional] 
-**second_tin_notice** | **bool** |  | [optional] 
-**recipient_name** | **str** |  | [optional] 
-**recipient_second_name** | **str** |  | [optional] 
-**address** | **str** |  | [optional] 
-**address2** | **str** |  | [optional] 
-**city** | **str** |  | [optional] 
-**state** | **str** |  | [optional] 
-**zip** | **str** |  | [optional] 
-**non_us_province** | **str** |  | [optional] 
-**country_code** | **str** |  | [optional] 
-**account_number** | **str** |  | [optional] 
-**office_code** | **str** |  | [optional] 
-**validation_errors** | [**List[ValidationError]**](ValidationError.md) |  | [optional] 
-**created_at** | **datetime** |  | [optional] 
-**updated_at** | **datetime** |  | [optional] 
-**state_and_local_withholding** | [**StateAndLocalWithholding**](StateAndLocalWithholding.md) |  | [optional] 
+**employee_first_name** | **str** | Employee&#39;s first name | 
+**employee_middle_name** | **str** | Employee&#39;s middle name | [optional] 
+**employee_last_name** | **str** | Employee&#39;s last name | 
+**employee_name_suffix** | **str** | Employee&#39;s name suffix | [optional] 
+**employee_date_of_birth** | **date** | Employee&#39;s date of birth | [optional] 
+**origin_of_health_coverage_code** | **str** | Origin of health coverage code  Available values:  - A: Small Business Health Options Program (SHOP)  - B: Employer-sponsored coverage  - C: Government-sponsored program  - D: Individual market insurance  - E: Multiemployer plan  - F: Other designated minimum essential coverage  - G: Employer-sponsored coverage that is an individual coverage HRA (valid for tax years 2020 and later) | 
+**covered_individuals** | [**List[CoveredIndividual]**](CoveredIndividual.md) | Covered individuals information - At least one month of coverage must be entered if it&#39;s not a correction. | [optional] 
+**type** | **str** | Form type | 
+**id** | **str** | Form ID. Unique identifier set when the record is created. | [optional] [readonly] 
+**issuer_id** | **str** | Issuer ID - only required when creating forms | [optional] 
+**issuer_reference_id** | **str** | Issuer Reference ID - only required when creating forms | [optional] 
+**issuer_tin** | **str** | Issuer TIN - readonly | [optional] 
+**tax_year** | **int** | Tax Year - only required when creating forms | [optional] 
+**reference_id** | **str** | Internal reference ID. Never shown to any agency or recipient. | [optional] 
+**tin** | **str** | Recipient&#39;s Federal Tax Identification Number (TIN). | [optional] 
+**recipient_name** | **str** | Recipient name | 
+**tin_type** | **str** | Type of TIN (Tax ID Number) | [optional] 
+**recipient_second_name** | **str** | Recipient second name | [optional] 
+**address** | **str** | Address. | 
+**address2** | **str** | Address line 2. | [optional] 
+**city** | **str** | City. | 
+**state** | **str** | Two-letter US state or Canadian province code (required for US/CA addresses). | [optional] 
+**zip** | **str** | ZIP/postal code. | [optional] 
+**email** | **str** | Recipient&#39;s Contact email address. | [optional] 
+**account_number** | **str** | Account number | [optional] 
+**office_code** | **str** | Office code | [optional] 
+**non_us_province** | **str** | Province or region for non-US/CA addresses. | [optional] 
+**country_code** | **str** | Two-letter IRS country code (e.g., &#39;US&#39;, &#39;CA&#39;), as defined at https://www.irs.gov/e-file-providers/country-codes. | 
+**federal_efile_date** | **date** | Date when federal e-filing should be scheduled for this form | [optional] 
+**postal_mail** | **bool** | Boolean indicating that postal mailing to the recipient should be scheduled for this form | [optional] 
+**state_efile_date** | **date** | Date when state e-filing should be scheduled for this form | [optional] 
+**recipient_edelivery_date** | **date** | Date when recipient e-delivery should be scheduled for this form | [optional] 
+**tin_match** | **bool** | Boolean indicating that TIN Matching should be scheduled for this form | [optional] 
+**no_tin** | **bool** | No TIN indicator | [optional] 
+**address_verification** | **bool** | Boolean indicating that address verification should be scheduled for this form | [optional] 
+**state_and_local_withholding** | [**StateAndLocalWithholding**](StateAndLocalWithholding.md) | State and local withholding information | [optional] 
+**second_tin_notice** | **bool** | Second TIN notice | [optional] 
+**federal_efile_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) | Federal e-file status | [optional] [readonly] 
+**state_efile_status** | [**List[StateEfileStatusDetail]**](StateEfileStatusDetail.md) | State e-file status | [optional] [readonly] 
+**postal_mail_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) | Postal mail to recipient status | [optional] [readonly] 
+**tin_match_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) | TIN Match status | [optional] [readonly] 
+**address_verification_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) | Address verification status | [optional] [readonly] 
+**e_delivery_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) | EDelivery status | [optional] [readonly] 
+**validation_errors** | [**List[ValidationError]**](ValidationError.md) | Validation errors | [optional] [readonly] 
+**created_at** | **datetime** | Date time when the record was created. | [optional] [readonly] 
+**updated_at** | **datetime** | Date time when the record was last updated. | [optional] [readonly] 
 
 ## Example
 

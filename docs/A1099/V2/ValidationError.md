@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**var_field** | **str** |  | [optional] 
-**errors** | **List[str]** |  | [optional] 
+**var_field** | **str** | The field containing the error | [optional] 
+**errors** | **List[str]** | The list of error messages | [optional] 
 
 ## Example
 

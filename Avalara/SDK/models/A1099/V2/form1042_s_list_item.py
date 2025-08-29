@@ -36,9 +36,9 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from Avalara.SDK.models.A1099.V2.intermediary_or_flow_through import IntermediaryOrFlowThrough
-from Avalara.SDK.models.A1099.V2.primary_withholding_agent import PrimaryWithholdingAgent
-from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.intermediary_or_flow_through import IntermediaryOrFlowThrough
+from Avalara.SDK.models.A1099.V2.A1099.V2.primary_withholding_agent import PrimaryWithholdingAgent
+from Avalara.SDK.models.A1099.V2.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
 from typing import Optional, Set
 from typing_extensions import Self
 

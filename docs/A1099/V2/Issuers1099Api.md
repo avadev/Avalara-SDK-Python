@@ -1,6 +1,6 @@
 # Avalara.SDK.Issuers1099Api
 
-All URIs are relative to *https://api-ava1099.eta.sbx.us-east-1.aws.avalara.io/avalara1099*
+All URIs are relative to *https://api.sbx.avalara.com/avalara1099*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -26,7 +26,7 @@ Create an issuer (also known as a Payer).
 import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import issuers1099_api
-IssuerCommand
+CreateIssuerRequest
 IssuerResponse
 ErrorResponse
 from pprint import pprint
@@ -45,9 +45,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'd2b38090-a4c9-4170-bc1d-6cc2778b0bd0' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '44b5fa45-dc8f-4939-9259-55c44e371c83' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    issuer_command = Avalara.SDK.IssuerCommand() # IssuerCommand | The issuer to create (optional)
+    create_issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2024,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # CreateIssuerRequest | The issuer to create (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create an issuer
@@ -60,7 +60,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Create an issuer
-        api_response = api_instance.create_issuer(avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, issuer_command=issuer_command)
+        api_response = api_instance.create_issuer(avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, create_issuer_request=create_issuer_request)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Issuers1099Api->create_issuer: %s\n" % e)
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
  **avalara_version** | **str**| API version |
  **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
  **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
- **issuer_command** | [**IssuerCommand**](IssuerCommand.md)| The issuer to create | [optional]
+ **create_issuer_request** | [**CreateIssuerRequest**](CreateIssuerRequest.md)| The issuer to create | [optional]
 
 ### Return type
 
@@ -132,7 +132,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to delete
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '22e9dc96-0041-4e27-ab37-038dc9d6c215' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '18937e11-5cfa-4f80-b4ff-a8fdee349cf1' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -217,7 +217,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to retrieve
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '86c9eff5-1ed3-49b1-be09-a117b235f3e2' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '8e5147e0-a97c-47f5-9791-3ea7d3bf7f16' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -309,7 +309,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = '0983f292-e1e0-4415-9cdc-b70482da76b0' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'da351fbb-2f00-42a7-8c6f-e3864f4bbf0c' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -384,7 +384,7 @@ Update an issuer (also known as a Payer).
 import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import issuers1099_api
-IssuerCommand
+CreateIssuerRequest
 ErrorResponse
 from pprint import pprint
     
@@ -403,9 +403,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to update
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'f43f2c52-c35e-4e50-b1ad-2923b624e5a0' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '07298ef1-41b1-4610-9275-331b7ae88439' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    issuer_command = Avalara.SDK.IssuerCommand() # IssuerCommand | The issuer to update (optional)
+    create_issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2024,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # CreateIssuerRequest | The issuer to update (optional)
     # example passing only required values which don't have defaults set
     try:
         # Update an issuer
@@ -417,7 +417,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Update an issuer
-        api_instance.update_issuer(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, issuer_command=issuer_command)
+        api_instance.update_issuer(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, create_issuer_request=create_issuer_request)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Issuers1099Api->update_issuer: %s\n" % e)
 ```
@@ -430,7 +430,7 @@ Name | Type | Description  | Notes
  **avalara_version** | **str**| API version |
  **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
  **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
- **issuer_command** | [**IssuerCommand**](IssuerCommand.md)| The issuer to update | [optional]
+ **create_issuer_request** | [**CreateIssuerRequest**](CreateIssuerRequest.md)| The issuer to update | [optional]
 
 ### Return type
 

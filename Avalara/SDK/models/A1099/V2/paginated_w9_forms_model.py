@@ -35,7 +35,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.A1099.V2.iw9_form_data_models_one_of import IW9FormDataModelsOneOf
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.iw9_form_data_models_one_of import IW9FormDataModelsOneOf
 from typing import Optional, Set
 from typing_extensions import Self
 

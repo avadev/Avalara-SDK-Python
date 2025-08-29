@@ -36,9 +36,9 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.covered_individual_request import CoveredIndividualRequest
-from Avalara.SDK.models.A1099.V2.offer_and_coverage_request import OfferAndCoverageRequest
-from Avalara.SDK.models.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.covered_individual_request import CoveredIndividualRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.offer_and_coverage_request import OfferAndCoverageRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.state_and_local_withholding_request import StateAndLocalWithholdingRequest
 from typing import Optional, Set
 from typing_extensions import Self
 

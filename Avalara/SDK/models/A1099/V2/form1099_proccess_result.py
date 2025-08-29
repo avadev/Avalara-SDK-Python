@@ -35,8 +35,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.data import Data
-from Avalara.SDK.models.A1099.V2.form1099_proccess_result_processed_forms_inner import Form1099ProccessResultProcessedFormsInner
+from Avalara.SDK.models.A1099.V2.A1099.V2.data import Data
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_proccess_result_processed_forms_inner import Form1099ProccessResultProcessedFormsInner
 from typing import Optional, Set
 from typing_extensions import Self
 

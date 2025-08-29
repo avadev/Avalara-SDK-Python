@@ -36,11 +36,11 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.covered_individual_request import CoveredIndividualRequest
-from Avalara.SDK.models.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
-from Avalara.SDK.models.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
-from Avalara.SDK.models.A1099.V2.status_detail import StatusDetail
-from Avalara.SDK.models.A1099.V2.validation_error_response import ValidationErrorResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.covered_individual_request import CoveredIndividualRequest
+from Avalara.SDK.models.A1099.V2.A1099.V2.state_and_local_withholding_response import StateAndLocalWithholdingResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.state_efile_status_detail_response import StateEfileStatusDetailResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.status_detail import StatusDetail
+from Avalara.SDK.models.A1099.V2.A1099.V2.validation_error_response import ValidationErrorResponse
 from typing import Optional, Set
 from typing_extensions import Self
 

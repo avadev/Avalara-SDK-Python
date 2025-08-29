@@ -33,15 +33,15 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from Avalara.SDK.models.A1099.V2.form1042_s_response import Form1042SResponse
-from Avalara.SDK.models.A1099.V2.form1095_b_response import Form1095BResponse
-from Avalara.SDK.models.A1099.V2.form1099_div_response import Form1099DivResponse
-from Avalara.SDK.models.A1099.V2.form1099_int_response import Form1099IntResponse
-from Avalara.SDK.models.A1099.V2.form1099_k_response import Form1099KResponse
-from Avalara.SDK.models.A1099.V2.form1099_misc_response import Form1099MiscResponse
-from Avalara.SDK.models.A1099.V2.form1099_nec_response import Form1099NecResponse
-from Avalara.SDK.models.A1099.V2.form1099_r_response import Form1099RResponse
-from Avalara.SDK.models.A1099.V2.form_response_base import FormResponseBase
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1042_s_response import Form1042SResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1095_b_response import Form1095BResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_div_response import Form1099DivResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_int_response import Form1099IntResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_k_response import Form1099KResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_misc_response import Form1099MiscResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_nec_response import Form1099NecResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_r_response import Form1099RResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.form_response_base import FormResponseBase
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self

@@ -30,11 +30,11 @@ Name | Type | Description | Notes
 **withholding_rate** | **str** | The withholding rate applied as per the treaty. | [optional] 
 **income_type** | **str** | The type of income covered by the treaty. | [optional] 
 **signer_name** | **str** | The name of the signer of the form. | [optional] 
-**company_id** | **str** | The ID of the associated company. | [optional] 
-**reference_id** | **str** | A reference identifier for the form. | [optional] 
-**email** | **str** | The email address of the individual associated with the form. | [optional] 
 **e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
 **signature** | **str** | The signature of the form. | [optional] 
+**company_id** | **str** | The ID of the associated company. | 
+**reference_id** | **str** | A reference identifier for the form. | [optional] 
+**email** | **str** | The email address of the individual associated with the form. | [optional] 
 
 ## Example
 

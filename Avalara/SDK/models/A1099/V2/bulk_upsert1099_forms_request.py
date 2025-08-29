@@ -33,15 +33,15 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from Avalara.SDK.models.A1099.V2.form1042_s_list import Form1042SList
-from Avalara.SDK.models.A1099.V2.form1095_b_list import Form1095BList
-from Avalara.SDK.models.A1099.V2.form1095_c_list import Form1095CList
-from Avalara.SDK.models.A1099.V2.form1099_div_list import Form1099DivList
-from Avalara.SDK.models.A1099.V2.form1099_int_list import Form1099IntList
-from Avalara.SDK.models.A1099.V2.form1099_k_list import Form1099KList
-from Avalara.SDK.models.A1099.V2.form1099_misc_list import Form1099MiscList
-from Avalara.SDK.models.A1099.V2.form1099_nec_list import Form1099NecList
-from Avalara.SDK.models.A1099.V2.form1099_r_list import Form1099RList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1042_s_list import Form1042SList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1095_b_list import Form1095BList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1095_c_list import Form1095CList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_div_list import Form1099DivList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_int_list import Form1099IntList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_k_list import Form1099KList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_misc_list import Form1099MiscList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_nec_list import Form1099NecList
+from Avalara.SDK.models.A1099.V2.A1099.V2.form1099_r_list import Form1099RList
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
