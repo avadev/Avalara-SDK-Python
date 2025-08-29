@@ -1,21 +1,22 @@
 # IntermediaryOrFlowThrough
 
+Intermediary or flow-through entity information for tax forms
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ein** | **str** |  | [optional] 
-**chap3_status_code** | **str** |  | [optional] 
-**chap4_status_code** | **str** |  | [optional] 
-**name** | **str** |  | [optional] 
-**giin** | **str** |  | [optional] 
-**country_code** | **str** |  | [optional] 
-**foreign_tin** | **str** |  | [optional] 
-**address** | **str** |  | [optional] 
-**city** | **str** |  | [optional] 
-**state** | **str** |  | [optional] 
-**zip** | **str** |  | [optional] 
+**ein** | **str** | EIN (Employer Identification Number) of the intermediary or flow-through entity | [optional] 
+**chap3_status_code** | **str** | Chapter 3 status code for the intermediary or flow-through entity | [optional] 
+**chap4_status_code** | **str** | Chapter 4 status code for the intermediary or flow-through entity | [optional] 
+**name** | **str** | Name of the intermediary or flow-through entity | [optional] 
+**giin** | **str** | GIIN (Global Intermediary Identification Number) of the intermediary or flow-through entity | [optional] 
+**country_code** | **str** | Country code for the intermediary or flow-through entity | [optional] 
+**foreign_tin** | **str** | Foreign TIN of the intermediary or flow-through entity | [optional] 
+**address** | **str** | Address of the intermediary or flow-through entity | [optional] 
+**city** | **str** | City of the intermediary or flow-through entity | [optional] 
+**state** | **str** | State of the intermediary or flow-through entity | [optional] 
+**zip** | **str** | Zip code of the intermediary or flow-through entity | [optional] 
 
 ## Example
 

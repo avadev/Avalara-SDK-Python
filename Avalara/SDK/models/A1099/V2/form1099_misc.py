@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,8 +33,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from datetime import date, datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from Avalara.SDK.models.A1099.V2.form1099_status_detail import Form1099StatusDetail
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding import StateAndLocalWithholding
@@ -45,62 +45,80 @@ from typing_extensions import Self
 
 class Form1099Misc(BaseModel):
     """
-    Form1099Misc
+    Form 1099-MISC: Miscellaneous Income
     """ # noqa: E501
-    rents: Optional[Union[StrictFloat, StrictInt]] = None
-    royalties: Optional[Union[StrictFloat, StrictInt]] = None
-    other_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="otherIncome")
-    fed_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="fedIncomeTaxWithheld")
-    fishing_boat_proceeds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="fishingBoatProceeds")
-    medical_and_health_care_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="medicalAndHealthCarePayments")
-    substitute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="substitutePayments")
-    direct_sales_indicator: Optional[StrictBool] = Field(default=None, alias="directSalesIndicator")
-    crop_insurance_proceeds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="cropInsuranceProceeds")
-    excess_golden_parachute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="excessGoldenParachutePayments")
-    gross_proceeds_paid_to_attorney: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="grossProceedsPaidToAttorney")
-    fish_purchased_for_resale: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="fishPurchasedForResale")
-    section409_a_deferrals: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="section409ADeferrals")
-    nonqualified_deferred_compensation: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="nonqualifiedDeferredCompensation")
-    id: Optional[StrictStr] = None
-    type: Optional[StrictStr] = None
-    issuer_id: Optional[StrictInt] = Field(default=None, alias="issuerId")
-    issuer_reference_id: Optional[StrictStr] = Field(default=None, alias="issuerReferenceId")
-    issuer_tin: Optional[StrictStr] = Field(default=None, alias="issuerTin")
-    tax_year: Optional[StrictInt] = Field(default=None, alias="taxYear")
-    federal_efile: Optional[StrictBool] = Field(default=None, alias="federalEfile")
-    federal_efile_status: Optional[Form1099StatusDetail] = Field(default=None, alias="federalEfileStatus")
-    state_efile: Optional[StrictBool] = Field(default=None, alias="stateEfile")
-    state_efile_status: Optional[List[StateEfileStatusDetail]] = Field(default=None, alias="stateEfileStatus")
-    postal_mail: Optional[StrictBool] = Field(default=None, alias="postalMail")
-    postal_mail_status: Optional[Form1099StatusDetail] = Field(default=None, alias="postalMailStatus")
-    tin_match: Optional[StrictBool] = Field(default=None, alias="tinMatch")
-    tin_match_status: Optional[Form1099StatusDetail] = Field(default=None, alias="tinMatchStatus")
-    address_verification: Optional[StrictBool] = Field(default=None, alias="addressVerification")
-    address_verification_status: Optional[Form1099StatusDetail] = Field(default=None, alias="addressVerificationStatus")
-    e_delivery_status: Optional[Form1099StatusDetail] = Field(default=None, alias="eDeliveryStatus")
-    reference_id: Optional[StrictStr] = Field(default=None, alias="referenceId")
-    email: Optional[StrictStr] = None
-    tin_type: Optional[StrictStr] = Field(default=None, alias="tinType")
-    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, alias="fatcaFilingRequirement")
-    tin: Optional[StrictStr] = None
-    no_tin: Optional[StrictBool] = Field(default=None, alias="noTin")
-    second_tin_notice: Optional[StrictBool] = Field(default=None, alias="secondTinNotice")
-    recipient_name: Optional[StrictStr] = Field(default=None, alias="recipientName")
-    recipient_second_name: Optional[StrictStr] = Field(default=None, alias="recipientSecondName")
-    address: Optional[StrictStr] = None
-    address2: Optional[StrictStr] = None
-    city: Optional[StrictStr] = None
-    state: Optional[StrictStr] = None
-    zip: Optional[StrictStr] = None
-    non_us_province: Optional[StrictStr] = Field(default=None, alias="nonUsProvince")
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    account_number: Optional[StrictStr] = Field(default=None, alias="accountNumber")
-    office_code: Optional[StrictStr] = Field(default=None, alias="officeCode")
-    validation_errors: Optional[List[ValidationError]] = Field(default=None, alias="validationErrors")
-    created_at: Optional[datetime] = Field(default=None, alias="createdAt")
-    updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
-    state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, alias="stateAndLocalWithholding")
-    __properties: ClassVar[List[str]] = ["id", "type", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "federalEfile", "federalEfileStatus", "stateEfile", "stateEfileStatus", "postalMail", "postalMailStatus", "tinMatch", "tinMatchStatus", "addressVerification", "addressVerificationStatus", "eDeliveryStatus", "referenceId", "email", "tinType", "fatcaFilingRequirement", "tin", "noTin", "secondTinNotice", "recipientName", "recipientSecondName", "address", "address2", "city", "state", "zip", "nonUsProvince", "countryCode", "accountNumber", "officeCode", "validationErrors", "createdAt", "updatedAt", "stateAndLocalWithholding"]
+    rents: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Rents")
+    royalties: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Royalties")
+    other_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Other income", alias="otherIncome")
+    federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
+    fishing_boat_proceeds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Fishing boat proceeds", alias="fishingBoatProceeds")
+    medical_and_health_care_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Medical and health care payments", alias="medicalAndHealthCarePayments")
+    direct_sales_indicator: Optional[StrictBool] = Field(default=None, description="Payer made direct sales totaling $5,000 or more of consumer products to recipient for resale", alias="directSalesIndicator")
+    substitute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Substitute payments in lieu of dividends or interest", alias="substitutePayments")
+    crop_insurance_proceeds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Crop insurance proceeds", alias="cropInsuranceProceeds")
+    gross_proceeds_paid_to_attorney: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Gross proceeds paid to an attorney", alias="grossProceedsPaidToAttorney")
+    fish_purchased_for_resale: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Fish purchased for resale", alias="fishPurchasedForResale")
+    section409_a_deferrals: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 409A deferrals", alias="section409ADeferrals")
+    excess_golden_parachute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="(Legacy field) Excess golden parachute payments", alias="excessGoldenParachutePayments")
+    nonqualified_deferred_compensation: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Nonqualified deferred compensation", alias="nonqualifiedDeferredCompensation")
+    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement", alias="fatcaFilingRequirement")
+    type: StrictStr = Field(description="Form type")
+    id: Optional[StrictStr] = Field(default=None, description="Form ID. Unique identifier set when the record is created.")
+    issuer_id: Optional[StrictStr] = Field(default=None, description="Issuer ID - only required when creating forms", alias="issuerId")
+    issuer_reference_id: Optional[StrictStr] = Field(default=None, description="Issuer Reference ID - only required when creating forms", alias="issuerReferenceId")
+    issuer_tin: Optional[StrictStr] = Field(default=None, description="Issuer TIN - readonly", alias="issuerTin")
+    tax_year: Optional[StrictInt] = Field(default=None, description="Tax Year - only required when creating forms", alias="taxYear")
+    reference_id: Optional[StrictStr] = Field(default=None, description="Internal reference ID. Never shown to any agency or recipient.", alias="referenceId")
+    tin: Optional[StrictStr] = Field(default=None, description="Recipient's Federal Tax Identification Number (TIN).")
+    recipient_name: Optional[StrictStr] = Field(description="Recipient name", alias="recipientName")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number)", alias="tinType")
+    recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
+    address: Optional[StrictStr] = Field(description="Address.")
+    address2: Optional[StrictStr] = Field(default=None, description="Address line 2.")
+    city: Optional[StrictStr] = Field(description="City.")
+    state: Optional[StrictStr] = Field(default=None, description="Two-letter US state or Canadian province code (required for US/CA addresses).")
+    zip: Optional[StrictStr] = Field(default=None, description="ZIP/postal code.")
+    email: Optional[StrictStr] = Field(default=None, description="Recipient's Contact email address.")
+    account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
+    office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
+    non_us_province: Optional[StrictStr] = Field(default=None, description="Province or region for non-US/CA addresses.", alias="nonUsProvince")
+    country_code: Optional[StrictStr] = Field(description="Two-letter IRS country code (e.g., 'US', 'CA'), as defined at https://www.irs.gov/e-file-providers/country-codes.", alias="countryCode")
+    federal_efile_date: Optional[date] = Field(default=None, description="Date when federal e-filing should be scheduled for this form", alias="federalEfileDate")
+    postal_mail: Optional[StrictBool] = Field(default=None, description="Boolean indicating that postal mailing to the recipient should be scheduled for this form", alias="postalMail")
+    state_efile_date: Optional[date] = Field(default=None, description="Date when state e-filing should be scheduled for this form", alias="stateEfileDate")
+    recipient_edelivery_date: Optional[date] = Field(default=None, description="Date when recipient e-delivery should be scheduled for this form", alias="recipientEdeliveryDate")
+    tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
+    no_tin: Optional[StrictBool] = Field(default=None, description="No TIN indicator", alias="noTin")
+    address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
+    state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
+    second_tin_notice: Optional[StrictBool] = Field(default=None, description="Second TIN notice", alias="secondTinNotice")
+    federal_efile_status: Optional[Form1099StatusDetail] = Field(default=None, description="Federal e-file status", alias="federalEfileStatus")
+    state_efile_status: Optional[List[StateEfileStatusDetail]] = Field(default=None, description="State e-file status", alias="stateEfileStatus")
+    postal_mail_status: Optional[Form1099StatusDetail] = Field(default=None, description="Postal mail to recipient status", alias="postalMailStatus")
+    tin_match_status: Optional[Form1099StatusDetail] = Field(default=None, description="TIN Match status", alias="tinMatchStatus")
+    address_verification_status: Optional[Form1099StatusDetail] = Field(default=None, description="Address verification status", alias="addressVerificationStatus")
+    e_delivery_status: Optional[Form1099StatusDetail] = Field(default=None, description="EDelivery status", alias="eDeliveryStatus")
+    validation_errors: Optional[List[ValidationError]] = Field(default=None, description="Validation errors", alias="validationErrors")
+    created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
+    updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
+    __properties: ClassVar[List[str]] = ["type", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "tin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEfileDate", "postalMail", "stateEfileDate", "recipientEdeliveryDate", "tinMatch", "noTin", "addressVerification", "stateAndLocalWithholding", "secondTinNotice", "federalEfileStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "eDeliveryStatus", "validationErrors", "createdAt", "updatedAt"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT']):
+            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT')")
+        return value
+
+    @field_validator('tin_type')
+    def tin_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['Empty', 'EIN', 'SSN', 'ITIN', 'ATIN']):
+            raise ValueError("must be one of enum values ('Empty', 'EIN', 'SSN', 'ITIN', 'ATIN')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -132,8 +150,28 @@ class Form1099Misc(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
+            "federal_efile_status",
+            "state_efile_status",
+            "postal_mail_status",
+            "tin_match_status",
+            "address_verification_status",
+            "e_delivery_status",
+            "validation_errors",
+            "created_at",
+            "updated_at",
         ])
 
         _dict = self.model_dump(
@@ -141,6 +179,9 @@ class Form1099Misc(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of state_and_local_withholding
+        if self.state_and_local_withholding:
+            _dict['stateAndLocalWithholding'] = self.state_and_local_withholding.to_dict()
         # override the default output from pydantic by calling `to_dict()` of federal_efile_status
         if self.federal_efile_status:
             _dict['federalEfileStatus'] = self.federal_efile_status.to_dict()
@@ -170,9 +211,16 @@ class Form1099Misc(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['validationErrors'] = _items
-        # override the default output from pydantic by calling `to_dict()` of state_and_local_withholding
-        if self.state_and_local_withholding:
-            _dict['stateAndLocalWithholding'] = self.state_and_local_withholding.to_dict()
+        # set to None if id (nullable) is None
+        # and model_fields_set contains the field
+        if self.id is None and "id" in self.model_fields_set:
+            _dict['id'] = None
+
+        # set to None if issuer_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.issuer_id is None and "issuer_id" in self.model_fields_set:
+            _dict['issuerId'] = None
+
         # set to None if issuer_reference_id (nullable) is None
         # and model_fields_set contains the field
         if self.issuer_reference_id is None and "issuer_reference_id" in self.model_fields_set:
@@ -183,65 +231,30 @@ class Form1099Misc(BaseModel):
         if self.issuer_tin is None and "issuer_tin" in self.model_fields_set:
             _dict['issuerTin'] = None
 
-        # set to None if state_efile_status (nullable) is None
+        # set to None if tax_year (nullable) is None
         # and model_fields_set contains the field
-        if self.state_efile_status is None and "state_efile_status" in self.model_fields_set:
-            _dict['stateEfileStatus'] = None
-
-        # set to None if postal_mail_status (nullable) is None
-        # and model_fields_set contains the field
-        if self.postal_mail_status is None and "postal_mail_status" in self.model_fields_set:
-            _dict['postalMailStatus'] = None
-
-        # set to None if tin_match_status (nullable) is None
-        # and model_fields_set contains the field
-        if self.tin_match_status is None and "tin_match_status" in self.model_fields_set:
-            _dict['tinMatchStatus'] = None
-
-        # set to None if address_verification_status (nullable) is None
-        # and model_fields_set contains the field
-        if self.address_verification_status is None and "address_verification_status" in self.model_fields_set:
-            _dict['addressVerificationStatus'] = None
-
-        # set to None if e_delivery_status (nullable) is None
-        # and model_fields_set contains the field
-        if self.e_delivery_status is None and "e_delivery_status" in self.model_fields_set:
-            _dict['eDeliveryStatus'] = None
+        if self.tax_year is None and "tax_year" in self.model_fields_set:
+            _dict['taxYear'] = None
 
         # set to None if reference_id (nullable) is None
         # and model_fields_set contains the field
         if self.reference_id is None and "reference_id" in self.model_fields_set:
             _dict['referenceId'] = None
 
-        # set to None if email (nullable) is None
-        # and model_fields_set contains the field
-        if self.email is None and "email" in self.model_fields_set:
-            _dict['email'] = None
-
-        # set to None if tin_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.tin_type is None and "tin_type" in self.model_fields_set:
-            _dict['tinType'] = None
-
-        # set to None if fatca_filing_requirement (nullable) is None
-        # and model_fields_set contains the field
-        if self.fatca_filing_requirement is None and "fatca_filing_requirement" in self.model_fields_set:
-            _dict['fatcaFilingRequirement'] = None
-
         # set to None if tin (nullable) is None
         # and model_fields_set contains the field
         if self.tin is None and "tin" in self.model_fields_set:
             _dict['tin'] = None
 
-        # set to None if second_tin_notice (nullable) is None
-        # and model_fields_set contains the field
-        if self.second_tin_notice is None and "second_tin_notice" in self.model_fields_set:
-            _dict['secondTinNotice'] = None
-
         # set to None if recipient_name (nullable) is None
         # and model_fields_set contains the field
         if self.recipient_name is None and "recipient_name" in self.model_fields_set:
             _dict['recipientName'] = None
+
+        # set to None if tin_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.tin_type is None and "tin_type" in self.model_fields_set:
+            _dict['tinType'] = None
 
         # set to None if recipient_second_name (nullable) is None
         # and model_fields_set contains the field
@@ -273,15 +286,10 @@ class Form1099Misc(BaseModel):
         if self.zip is None and "zip" in self.model_fields_set:
             _dict['zip'] = None
 
-        # set to None if non_us_province (nullable) is None
+        # set to None if email (nullable) is None
         # and model_fields_set contains the field
-        if self.non_us_province is None and "non_us_province" in self.model_fields_set:
-            _dict['nonUsProvince'] = None
-
-        # set to None if country_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.country_code is None and "country_code" in self.model_fields_set:
-            _dict['countryCode'] = None
+        if self.email is None and "email" in self.model_fields_set:
+            _dict['email'] = None
 
         # set to None if account_number (nullable) is None
         # and model_fields_set contains the field
@@ -293,15 +301,90 @@ class Form1099Misc(BaseModel):
         if self.office_code is None and "office_code" in self.model_fields_set:
             _dict['officeCode'] = None
 
-        # set to None if validation_errors (nullable) is None
+        # set to None if non_us_province (nullable) is None
         # and model_fields_set contains the field
-        if self.validation_errors is None and "validation_errors" in self.model_fields_set:
-            _dict['validationErrors'] = None
+        if self.non_us_province is None and "non_us_province" in self.model_fields_set:
+            _dict['nonUsProvince'] = None
+
+        # set to None if country_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.country_code is None and "country_code" in self.model_fields_set:
+            _dict['countryCode'] = None
+
+        # set to None if federal_efile_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.federal_efile_date is None and "federal_efile_date" in self.model_fields_set:
+            _dict['federalEfileDate'] = None
+
+        # set to None if postal_mail (nullable) is None
+        # and model_fields_set contains the field
+        if self.postal_mail is None and "postal_mail" in self.model_fields_set:
+            _dict['postalMail'] = None
+
+        # set to None if state_efile_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.state_efile_date is None and "state_efile_date" in self.model_fields_set:
+            _dict['stateEfileDate'] = None
+
+        # set to None if recipient_edelivery_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.recipient_edelivery_date is None and "recipient_edelivery_date" in self.model_fields_set:
+            _dict['recipientEdeliveryDate'] = None
+
+        # set to None if tin_match (nullable) is None
+        # and model_fields_set contains the field
+        if self.tin_match is None and "tin_match" in self.model_fields_set:
+            _dict['tinMatch'] = None
+
+        # set to None if no_tin (nullable) is None
+        # and model_fields_set contains the field
+        if self.no_tin is None and "no_tin" in self.model_fields_set:
+            _dict['noTin'] = None
+
+        # set to None if address_verification (nullable) is None
+        # and model_fields_set contains the field
+        if self.address_verification is None and "address_verification" in self.model_fields_set:
+            _dict['addressVerification'] = None
 
         # set to None if state_and_local_withholding (nullable) is None
         # and model_fields_set contains the field
         if self.state_and_local_withholding is None and "state_and_local_withholding" in self.model_fields_set:
             _dict['stateAndLocalWithholding'] = None
+
+        # set to None if federal_efile_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.federal_efile_status is None and "federal_efile_status" in self.model_fields_set:
+            _dict['federalEfileStatus'] = None
+
+        # set to None if state_efile_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.state_efile_status is None and "state_efile_status" in self.model_fields_set:
+            _dict['stateEfileStatus'] = None
+
+        # set to None if postal_mail_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.postal_mail_status is None and "postal_mail_status" in self.model_fields_set:
+            _dict['postalMailStatus'] = None
+
+        # set to None if tin_match_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.tin_match_status is None and "tin_match_status" in self.model_fields_set:
+            _dict['tinMatchStatus'] = None
+
+        # set to None if address_verification_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.address_verification_status is None and "address_verification_status" in self.model_fields_set:
+            _dict['addressVerificationStatus'] = None
+
+        # set to None if e_delivery_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.e_delivery_status is None and "e_delivery_status" in self.model_fields_set:
+            _dict['eDeliveryStatus'] = None
+
+        # set to None if validation_errors (nullable) is None
+        # and model_fields_set contains the field
+        if self.validation_errors is None and "validation_errors" in self.model_fields_set:
+            _dict['validationErrors'] = None
 
         return _dict
 
@@ -315,45 +398,45 @@ class Form1099Misc(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
             "type": obj.get("type"),
+            "id": obj.get("id"),
             "issuerId": obj.get("issuerId"),
             "issuerReferenceId": obj.get("issuerReferenceId"),
             "issuerTin": obj.get("issuerTin"),
             "taxYear": obj.get("taxYear"),
-            "federalEfile": obj.get("federalEfile"),
-            "federalEfileStatus": Form1099StatusDetail.from_dict(obj["federalEfileStatus"]) if obj.get("federalEfileStatus") is not None else None,
-            "stateEfile": obj.get("stateEfile"),
-            "stateEfileStatus": [StateEfileStatusDetail.from_dict(_item) for _item in obj["stateEfileStatus"]] if obj.get("stateEfileStatus") is not None else None,
-            "postalMail": obj.get("postalMail"),
-            "postalMailStatus": Form1099StatusDetail.from_dict(obj["postalMailStatus"]) if obj.get("postalMailStatus") is not None else None,
-            "tinMatch": obj.get("tinMatch"),
-            "tinMatchStatus": Form1099StatusDetail.from_dict(obj["tinMatchStatus"]) if obj.get("tinMatchStatus") is not None else None,
-            "addressVerification": obj.get("addressVerification"),
-            "addressVerificationStatus": Form1099StatusDetail.from_dict(obj["addressVerificationStatus"]) if obj.get("addressVerificationStatus") is not None else None,
-            "eDeliveryStatus": Form1099StatusDetail.from_dict(obj["eDeliveryStatus"]) if obj.get("eDeliveryStatus") is not None else None,
             "referenceId": obj.get("referenceId"),
-            "email": obj.get("email"),
-            "tinType": obj.get("tinType"),
-            "fatcaFilingRequirement": obj.get("fatcaFilingRequirement"),
             "tin": obj.get("tin"),
-            "noTin": obj.get("noTin"),
-            "secondTinNotice": obj.get("secondTinNotice"),
             "recipientName": obj.get("recipientName"),
+            "tinType": obj.get("tinType"),
             "recipientSecondName": obj.get("recipientSecondName"),
             "address": obj.get("address"),
             "address2": obj.get("address2"),
             "city": obj.get("city"),
             "state": obj.get("state"),
             "zip": obj.get("zip"),
-            "nonUsProvince": obj.get("nonUsProvince"),
-            "countryCode": obj.get("countryCode"),
+            "email": obj.get("email"),
             "accountNumber": obj.get("accountNumber"),
             "officeCode": obj.get("officeCode"),
+            "nonUsProvince": obj.get("nonUsProvince"),
+            "countryCode": obj.get("countryCode"),
+            "federalEfileDate": obj.get("federalEfileDate"),
+            "postalMail": obj.get("postalMail"),
+            "stateEfileDate": obj.get("stateEfileDate"),
+            "recipientEdeliveryDate": obj.get("recipientEdeliveryDate"),
+            "tinMatch": obj.get("tinMatch"),
+            "noTin": obj.get("noTin"),
+            "addressVerification": obj.get("addressVerification"),
+            "stateAndLocalWithholding": StateAndLocalWithholding.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None,
+            "secondTinNotice": obj.get("secondTinNotice"),
+            "federalEfileStatus": Form1099StatusDetail.from_dict(obj["federalEfileStatus"]) if obj.get("federalEfileStatus") is not None else None,
+            "stateEfileStatus": [StateEfileStatusDetail.from_dict(_item) for _item in obj["stateEfileStatus"]] if obj.get("stateEfileStatus") is not None else None,
+            "postalMailStatus": Form1099StatusDetail.from_dict(obj["postalMailStatus"]) if obj.get("postalMailStatus") is not None else None,
+            "tinMatchStatus": Form1099StatusDetail.from_dict(obj["tinMatchStatus"]) if obj.get("tinMatchStatus") is not None else None,
+            "addressVerificationStatus": Form1099StatusDetail.from_dict(obj["addressVerificationStatus"]) if obj.get("addressVerificationStatus") is not None else None,
+            "eDeliveryStatus": Form1099StatusDetail.from_dict(obj["eDeliveryStatus"]) if obj.get("eDeliveryStatus") is not None else None,
             "validationErrors": [ValidationError.from_dict(_item) for _item in obj["validationErrors"]] if obj.get("validationErrors") is not None else None,
             "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt"),
-            "stateAndLocalWithholding": StateAndLocalWithholding.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None
+            "updatedAt": obj.get("updatedAt")
         })
         return _obj
 

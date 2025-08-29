@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,7 +43,7 @@ from Avalara.SDK.model_utils import (  # noqa: F401
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from Avalara.SDK.models.A1099.V2.issuer_command import IssuerCommand
+from Avalara.SDK.models.A1099.V2.create_issuer_request import CreateIssuerRequest
 from Avalara.SDK.models.A1099.V2.issuer_response import IssuerResponse
 from Avalara.SDK.models.A1099.V2.paginated_query_result_model_issuer_response import PaginatedQueryResultModelIssuerResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
@@ -60,7 +60,7 @@ class Issuers1099Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.8.2")
+        api_client.set_sdk_version("25.8.3")
         self.api_client = api_client
 		
         self.create_issuer_endpoint = _Endpoint(
@@ -79,7 +79,7 @@ class Issuers1099Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'issuer_command',
+                    'create_issuer_request',
                 ],
                 'required': [
                     'avalara_version',
@@ -103,8 +103,8 @@ class Issuers1099Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'issuer_command':
-                        (IssuerCommand,),
+                    'create_issuer_request':
+                        (CreateIssuerRequest,),
                 },
                 'attribute_map': {
                     'avalara_version': 'avalara-version',
@@ -115,7 +115,7 @@ class Issuers1099Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'issuer_command': 'body',
+                    'create_issuer_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -386,7 +386,7 @@ class Issuers1099Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'issuer_command',
+                    'create_issuer_request',
                 ],
                 'required': [
                     'id',
@@ -413,8 +413,8 @@ class Issuers1099Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'issuer_command':
-                        (IssuerCommand,),
+                    'create_issuer_request':
+                        (CreateIssuerRequest,),
                 },
                 'attribute_map': {
                     'id': 'id',
@@ -427,7 +427,7 @@ class Issuers1099Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'issuer_command': 'body',
+                    'create_issuer_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -469,7 +469,7 @@ class Issuers1099Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            issuer_command (IssuerCommand): The issuer to create. [optional]
+            create_issuer_request (CreateIssuerRequest): The issuer to create. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -760,7 +760,7 @@ class Issuers1099Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            issuer_command (IssuerCommand): The issuer to update. [optional]
+            create_issuer_request (CreateIssuerRequest): The issuer to update. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

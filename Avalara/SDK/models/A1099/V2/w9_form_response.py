@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -35,6 +35,7 @@ import json
 
 from pydantic import ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from Avalara.SDK.models.A1099.V2.entry_status_response import EntryStatusResponse
 from Avalara.SDK.models.A1099.V2.tin_match_status_response import TinMatchStatusResponse
 from Avalara.SDK.models.A1099.V2.w9_form_base_response import W9FormBaseResponse
 from typing import Optional, Set
@@ -63,7 +64,7 @@ class W9FormResponse(W9FormBaseResponse):
     backup_withholding: Optional[StrictBool] = Field(default=None, description="Indicates whether backup withholding applies.", alias="backupWithholding")
     is1099able: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual or entity should be issued a 1099 form.")
     tin_match_status: Optional[TinMatchStatusResponse] = Field(default=None, description="The TIN Match status from IRS.", alias="tinMatchStatus")
-    __properties: ClassVar[List[str]] = ["id", "entryStatus", "entryStatusDate", "referenceId", "companyId", "displayName", "email", "archived", "signature", "signedDate", "eDeliveryConsentedAt", "createdAt", "updatedAt", "type"]
+    __properties: ClassVar[List[str]] = ["id", "entryStatus", "referenceId", "companyId", "displayName", "email", "archived", "ancestorId", "signature", "signedDate", "eDeliveryConsentedAt", "createdAt", "updatedAt", "type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -104,11 +105,9 @@ class W9FormResponse(W9FormBaseResponse):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if entry_status_date (nullable) is None
-        # and model_fields_set contains the field
-        if self.entry_status_date is None and "entry_status_date" in self.model_fields_set:
-            _dict['entryStatusDate'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of entry_status
+        if self.entry_status:
+            _dict['entryStatus'] = self.entry_status.to_dict()
         # set to None if reference_id (nullable) is None
         # and model_fields_set contains the field
         if self.reference_id is None and "reference_id" in self.model_fields_set:
@@ -118,6 +117,11 @@ class W9FormResponse(W9FormBaseResponse):
         # and model_fields_set contains the field
         if self.email is None and "email" in self.model_fields_set:
             _dict['email'] = None
+
+        # set to None if ancestor_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.ancestor_id is None and "ancestor_id" in self.model_fields_set:
+            _dict['ancestorId'] = None
 
         # set to None if signature (nullable) is None
         # and model_fields_set contains the field
@@ -147,13 +151,13 @@ class W9FormResponse(W9FormBaseResponse):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "entryStatus": obj.get("entryStatus"),
-            "entryStatusDate": obj.get("entryStatusDate"),
+            "entryStatus": EntryStatusResponse.from_dict(obj["entryStatus"]) if obj.get("entryStatus") is not None else None,
             "referenceId": obj.get("referenceId"),
             "companyId": obj.get("companyId"),
             "displayName": obj.get("displayName"),
             "email": obj.get("email"),
             "archived": obj.get("archived"),
+            "ancestorId": obj.get("ancestorId"),
             "signature": obj.get("signature"),
             "signedDate": obj.get("signedDate"),
             "eDeliveryConsentedAt": obj.get("eDeliveryConsentedAt"),

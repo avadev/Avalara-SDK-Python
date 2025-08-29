@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -37,6 +37,7 @@ from datetime import datetime
 from importlib import import_module
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from Avalara.SDK.models.A1099.V2.entry_status_response import EntryStatusResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -53,13 +54,13 @@ class W9FormBaseResponse(BaseModel):
     W9FormBaseResponse
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="The unique identifier for the form.")
-    entry_status: Optional[StrictStr] = Field(default=None, description="The form status.", alias="entryStatus")
-    entry_status_date: Optional[datetime] = Field(default=None, description="The timestamp for the latest status update.", alias="entryStatusDate")
+    entry_status: Optional[EntryStatusResponse] = Field(default=None, description="The entry status information for the form.", alias="entryStatus")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company.", alias="companyId")
     display_name: Optional[StrictStr] = Field(default=None, description="The display name associated with the form.", alias="displayName")
     email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     archived: Optional[StrictBool] = Field(default=None, description="Indicates whether the form is archived.")
+    ancestor_id: Optional[StrictStr] = Field(default=None, description="Form ID of previous version.", alias="ancestorId")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
     signed_date: Optional[datetime] = Field(default=None, description="The date the form was signed.", alias="signedDate")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")

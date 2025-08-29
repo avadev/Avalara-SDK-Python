@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,11 +40,11 @@ from typing_extensions import Self
 
 class PrimaryWithholdingAgent(BaseModel):
     """
-    PrimaryWithholdingAgent
+    Primary withholding agent information for tax forms
     """ # noqa: E501
-    primary_withholding_agent_name: Optional[StrictStr] = Field(default=None, alias="primaryWithholdingAgentName")
-    primary_withholding_agent_ein: Optional[StrictStr] = Field(default=None, alias="primaryWithholdingAgentEin")
-    __properties: ClassVar[List[str]] = ["primaryWithholdingAgentName", "primaryWithholdingAgentEin"]
+    name: Optional[StrictStr] = Field(description="Name of the primary withholding agent")
+    ein: Optional[StrictStr] = Field(description="EIN (Employer Identification Number) of the primary withholding agent.")
+    __properties: ClassVar[List[str]] = ["name", "ein"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,15 +85,15 @@ class PrimaryWithholdingAgent(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if primary_withholding_agent_name (nullable) is None
+        # set to None if name (nullable) is None
         # and model_fields_set contains the field
-        if self.primary_withholding_agent_name is None and "primary_withholding_agent_name" in self.model_fields_set:
-            _dict['primaryWithholdingAgentName'] = None
+        if self.name is None and "name" in self.model_fields_set:
+            _dict['name'] = None
 
-        # set to None if primary_withholding_agent_ein (nullable) is None
+        # set to None if ein (nullable) is None
         # and model_fields_set contains the field
-        if self.primary_withholding_agent_ein is None and "primary_withholding_agent_ein" in self.model_fields_set:
-            _dict['primaryWithholdingAgentEin'] = None
+        if self.ein is None and "ein" in self.model_fields_set:
+            _dict['ein'] = None
 
         return _dict
 
@@ -107,8 +107,8 @@ class PrimaryWithholdingAgent(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "primaryWithholdingAgentName": obj.get("primaryWithholdingAgentName"),
-            "primaryWithholdingAgentEin": obj.get("primaryWithholdingAgentEin")
+            "name": obj.get("name"),
+            "ein": obj.get("ein")
         })
         return _obj
 
