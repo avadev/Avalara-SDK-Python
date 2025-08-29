@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -42,14 +42,14 @@ class StateAndLocalWithholding(BaseModel):
     """
     StateAndLocalWithholding
     """ # noqa: E501
-    state_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="stateTaxWithheld")
-    state: Optional[StrictStr] = None
-    state_id_number: Optional[StrictStr] = Field(default=None, alias="stateIdNumber")
-    state_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="stateIncome")
-    local_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="localTaxWithheld")
-    locality: Optional[StrictStr] = None
-    locality_id_number: Optional[StrictStr] = Field(default=None, alias="localityIdNumber")
-    local_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="localIncome")
+    state_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of state tax that was withheld", alias="stateTaxWithheld")
+    state: Optional[StrictStr] = Field(default=None, description="US state")
+    state_id_number: Optional[StrictStr] = Field(default=None, description="State ID number of the entity issuing the form", alias="stateIdNumber")
+    state_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of state income", alias="stateIncome")
+    local_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of local tax that was withheld", alias="localTaxWithheld")
+    locality: Optional[StrictStr] = Field(default=None, description="Locality name")
+    locality_id_number: Optional[StrictStr] = Field(default=None, description="Locality ID number of the entity issuing the form", alias="localityIdNumber")
+    local_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of local income", alias="localIncome")
     __properties: ClassVar[List[str]] = ["stateTaxWithheld", "state", "stateIdNumber", "stateIncome", "localTaxWithheld", "locality", "localityIdNumber", "localIncome"]
 
     model_config = ConfigDict(

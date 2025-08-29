@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | **str** | The form type. | [optional] [readonly] 
-**company_id** | **str** | The ID of the associated company. | [optional] 
-**reference_id** | **str** | A reference identifier for the form. | [optional] 
-**email** | **str** | The email address of the individual associated with the form. | [optional] 
 **e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
 **signature** | **str** | The signature of the form. | [optional] 
+**type** | **str** | The form type. | [optional] [readonly] 
+**company_id** | **str** | The ID of the associated company. | 
+**reference_id** | **str** | A reference identifier for the form. | [optional] 
+**email** | **str** | The email address of the individual associated with the form. | [optional] 
 
 ## Example
 

@@ -1,6 +1,6 @@
 # Avalara.SDK.Forms1099Api
 
-All URIs are relative to *https://api-ava1099.eta.sbx.us-east-1.aws.avalara.io/avalara1099*
+All URIs are relative to *https://api.sbx.avalara.com/avalara1099*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,11 +14,11 @@ Method | HTTP request | Description
 
 
 # **bulk_upsert1099_forms**
-> Form1099ProccessResult bulk_upsert1099_forms(avalara_version)
+> JobResponse bulk_upsert1099_forms(avalara_version)
 
 Create or update multiple 1099/1095/W2/1042S forms
 
-This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms.  You can use one of the following payload structures:                **Form 1099-MISC:**  ```json  {     \"formType\": \"1099-MISC\",     \"forms\": [         {             \"IssuerId\": \"123456\",             \"IssuerReferenceId\": \"REF123\",             \"IssuerTin\": \"12-3456789\",             \"TaxYear\": 2023,             \"ReferenceId\": \"FORM123456\",             \"RecipientName\": \"John Doe\",             \"RecipientTin\": \"587-65-4321\",             \"TinType\": \"SSN\",             \"RecipientSecondName\": \"Jane Doe\",             \"Address\": \"123 Main Street\",             \"Address2\": \"Apt 4B\",             \"City\": \"New York\",             \"State\": \"NY\",             \"Zip\": \"10001\",             \"Email\": \"john.doe@email.com\",             \"AccountNumber\": \"ACC123456\",             \"OfficeCode\": \"NYC01\",             \"SecondTinNotice\": false,             \"NonUsProvince\": \"\",             \"CountryCode\": \"US\",             \"Rents\": 12000.00,             \"Royalties\": 5000.00,             \"OtherIncome\": 3000.00,             \"FishingBoatProceeds\": 0.00,             \"MedicalAndHealthCarePayments\": 15000.00,             \"SubstitutePayments\": 1000.00,             \"CropInsuranceProceeds\": 0.00,             \"GrossProceedsPaidToAttorney\": 7500.00,             \"FishPurchasedForResale\": 0.00,             \"FedIncomeTaxWithheld\": 5000.00,             \"Section409ADeferrals\": 0.00,             \"ExcessGoldenParachutePayments\": 0.00,             \"NonqualifiedDeferredCompensation\": 0.00,             \"DirectSalesIndicator\": false,             \"FatcaFilingRequirement\": false,             \"StateAndLocalWithholding\": {               \"StateTaxWithheld\": 2500.00,               \"LocalTaxWithheld\": 1000.00,               \"State\": \"NY\",               \"StateIdNumber\": \"NY123456\",               \"Locality\": \"New York City\",               \"StateIncome\": 35000.00,               \"LocalIncome\": 35000.00             }         }     ]  }  ```                **Form 1099-NEC:**  ```json  {    \"formType\": \"1099-NEC\",    \"forms\": [      {        \"issuerID\": \"180337282\",        \"issuerReferenceId\": \"ISS123\",        \"issuerTin\": \"12-3000000\",        \"taxYear\": 2024,        \"referenceID\": \"REF-002\",        \"recipientName\": \"Jane Smith\",        \"recipientSecondName\": \"\",        \"recipientTin\": \"587-65-4321\",        \"tinType\": \"SSN\",        \"address\": \"123 Center St\",        \"address2\": \"\",        \"city\": \"Santa Monica\",        \"state\": \"CA\",        \"zip\": \"90401\",        \"countryCode\": \"US\",        \"nonUsProvince\": \"\",        \"email\": \"\",        \"accountNumber\": \"\",        \"officeCode\": \"\",        \"secondTinNotice\": false,        \"nonemployeeCompensation\": 123.45,        \"directSalesIndicator\": false,        \"federalIncomeTaxWithheld\": 12.34,        \"stateAndLocalWithholding\": {          \"state\": \"CA\",          \"stateIdNumber\": \"123123123\",          \"stateIncome\": 123.45,          \"stateTaxWithheld\": 12.34,          \"locality\": \"Santa Monica\",          \"localityIdNumber\": \"456456\",          \"localTaxWithheld\": 12.34,          \"localIncome\": 50000.00         },        \"federalEFile\": true,        \"postalMail\": true,        \"stateEFile\": true,        \"tinMatch\": true,        \"addressVerification\": true       }     ]   }  ```  For the full version of the payload and its schema details, refer to the Swagger schemas section.
+This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms.  Maximum of 5000 forms can be processed in a single bulk request.
 
 ### Example
 
@@ -28,8 +28,8 @@ This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms. 
 import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import forms1099_api
-Form1099ProccessResult
-BulkUpsert1099FormsRequest
+Form1099ListRequest
+JobResponse
 ErrorResponse
 from pprint import pprint
     
@@ -47,10 +47,10 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    dry_run = False # bool |  (optional) if omitted the server will use the default value of False
-    x_correlation_id = 'fc005c04-52f7-44d6-bf16-6551603a8324' # str | Unique correlation Id in a GUID format (optional)
+    dry_run = False # bool | defaults to false. If true, it will NOT change the DB. It will just return a report of what would've have been changed in the DB (optional) if omitted the server will use the default value of False
+    x_correlation_id = '16e56e1f-e623-4f23-9904-21c29b5b4545' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    bulk_upsert1099_forms_request = Avalara.SDK.BulkUpsert1099FormsRequest() # BulkUpsert1099FormsRequest |  (optional)
+    form1099_list_request = {"type":"1099-NEC","forms":[{"type":"1099-NEC","issuerId":"12345","issuerReferenceId":"ISSUER-REF-2024","taxYear":2024,"referenceId":"NEC-REF-001","tin":"123456789","recipientName":"John Doe","tinType":"SSN","recipientSecondName":"Doe Enterprises","address":"123 Main Street","address2":"Suite 100","city":"New York","state":"NY","zip":"10001","email":"john.doe@example.com","accountNumber":"ACC123456","officeCode":"NYC01","countryCode":"US","nonemployeeCompensation":15000.0,"directSalesIndicator":true,"federalIncomeTaxWithheld":3000.0,"secondTinNotice":false,"federalEfileDate":"2024-03-15","stateEfileDate":"2024-03-20","recipientEdeliveryDate":"2024-03-25","postalMail":false,"tinMatch":true,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":500.0,"state":"NY","stateIdNumber":"NY123456","stateIncome":15000.0,"localTaxWithheld":250.0,"locality":"New York City","localityIdNumber":"NYC789","localIncome":15000.0}}]} # Form1099ListRequest |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create or update multiple 1099/1095/W2/1042S forms
@@ -63,7 +63,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Create or update multiple 1099/1095/W2/1042S forms
-        api_response = api_instance.bulk_upsert1099_forms(avalara_version, dry_run=dry_run, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, bulk_upsert1099_forms_request=bulk_upsert1099_forms_request)
+        api_response = api_instance.bulk_upsert1099_forms(avalara_version, dry_run=dry_run, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, form1099_list_request=form1099_list_request)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Forms1099Api->bulk_upsert1099_forms: %s\n" % e)
@@ -74,14 +74,14 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **avalara_version** | **str**| API version |
- **dry_run** | **bool**|  | [optional] if omitted the server will use the default value of False
+ **dry_run** | **bool**| defaults to false. If true, it will NOT change the DB. It will just return a report of what would&#39;ve have been changed in the DB | [optional] if omitted the server will use the default value of False
  **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
  **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
- **bulk_upsert1099_forms_request** | [**BulkUpsert1099FormsRequest**](BulkUpsert1099FormsRequest.md)|  | [optional]
+ **form1099_list_request** | [**Form1099ListRequest**](Form1099ListRequest.md)|  | [optional]
 
 ### Return type
 
-[**Form1099ProccessResult**](Form1099ProccessResult.md)
+[**JobResponse**](JobResponse.md)
 
 ### Authorization
 
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **create1099_form**
-> Create1099Form201Response create1099_form(avalara_version)
+> Get1099Form200Response create1099_form(avalara_version)
 
 Create a 1099/1095/W2/1042S form
 
@@ -120,9 +120,8 @@ Create a 1099/1095/W2/1042S form.
 import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import forms1099_api
-Create1099Form201Response
+Get1099Form200Response
 ErrorResponse
-ICreateForm1099Request
 from pprint import pprint
     
 # Define configuration object with parameters specified to your application.
@@ -139,9 +138,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '13eb4eb0-0e7d-41e3-adf3-61b131c1a92c' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'e4a7bf40-da9f-452a-b2db-c8b64721610b' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    i_create_form1099_request = Avalara.SDK.ICreateForm1099Request() # ICreateForm1099Request |  (optional)
+    get1099_form200_response = {"type":"1099-NEC","issuerId":"12345","issuerReferenceId":"ISSUER-REF-2024","taxYear":2024,"referenceId":"NEC-REF-001","tin":"123456789","recipientName":"John Doe","tinType":"SSN","recipientSecondName":"Doe Enterprises","address":"123 Main Street","address2":"Suite 100","city":"New York","state":"NY","zip":"10001","email":"john.doe@example.com","accountNumber":"ACC123456","officeCode":"NYC01","countryCode":"US","nonemployeeCompensation":15000.0,"directSalesIndicator":true,"federalIncomeTaxWithheld":3000.0,"secondTinNotice":false,"federalEfileDate":"2024-03-15","stateEfileDate":"2024-03-20","recipientEdeliveryDate":"2024-03-25","postalMail":false,"tinMatch":true,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":500.0,"state":"NY","stateIdNumber":"NY123456","stateIncome":15000.0,"localTaxWithheld":250.0,"locality":"New York City","localityIdNumber":"NYC789","localIncome":15000.0}} # Get1099Form200Response |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create a 1099/1095/W2/1042S form
@@ -154,7 +153,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Create a 1099/1095/W2/1042S form
-        api_response = api_instance.create1099_form(avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, i_create_form1099_request=i_create_form1099_request)
+        api_response = api_instance.create1099_form(avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, get1099_form200_response=get1099_form200_response)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Forms1099Api->create1099_form: %s\n" % e)
@@ -167,11 +166,11 @@ Name | Type | Description  | Notes
  **avalara_version** | **str**| API version |
  **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
  **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
- **i_create_form1099_request** | [**ICreateForm1099Request**](ICreateForm1099Request.md)|  | [optional]
+ **get1099_form200_response** | [**Get1099Form200Response**](Get1099Form200Response.md)|  | [optional]
 
 ### Return type
 
-[**Create1099Form201Response**](Create1099Form201Response.md)
+[**Get1099Form200Response**](Get1099Form200Response.md)
 
 ### Authorization
 
@@ -227,7 +226,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | The unique identifier of the desired form to delete.
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '2bcc9cf0-9638-46d5-a792-be61566e0651' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '8e01e950-8e1c-4b1b-9120-2e2452c6d590' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -315,7 +314,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '6e842a03-8b64-4b02-8c5e-7073bf4e8a8c' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '7b8174a3-a873-4a05-a619-f362955f4608' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -404,7 +403,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     id = 'id_example' # str | The ID of the form
     avalara_version = '2.0.0' # str | API version
     mark_edelivered = True # bool | Optional boolean that if set indicates that the form should be marked as having been successfully edelivered (optional)
-    x_correlation_id = '7b4aa70b-3a10-4fa0-bf19-7592170409b7' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'a4dd3a23-ae45-45a5-8612-75e2fe4c1f36' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -461,11 +460,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **list1099_forms**
-> Form1099ListResponse list1099_forms(avalara_version)
+> PaginatedQueryResultModelForm1099Base list1099_forms(avalara_version)
 
 List 1099/1095/W2/1042S forms
 
-List 1099/1095/W2/1042S forms. Filterable fields are name, referenceId and taxYear.
+List 1099/1095/W2/1042S forms.                Collections support filtering only on certain fields. An attempt to filter on an unsupported field will receive a 400 Bad Request response.                Supported filtering fields are as follows:                - issuerId  - issuerReferenceId  - taxYear  - addressVerificationStatus - possible values are: unknown, pending, failed, incomplete, unchanged, verified  - createdAt  - edeliveryStatus - possible values are: sent, unscheduled, bad_verify, bad_verify_limit, scheduled, bounced, accepted  - email  - federalEfileStatus - possible values are: unscheduled, scheduled, sent, corrected_scheduled, accepted, corrected, corrected_accepted, held  - recipientName  - mailStatus - possible values are: sent, unscheduled, pending, delivered  - referenceId  - tinMatchStatus - possible values are: none, pending, matched, failed  - type - possible values are: 940, 941, 943, 944, 945, 1042, 1042-S, 1095-B, 1095-C, 1097-BTC, 1098, 1098-C, 1098-E, 1098-Q, 1098-T, 3921, 3922, 5498, 5498-ESA, 5498-SA, 1099-MISC, 1099-A, 1099-B, 1099-C, 1099-CAP, 1099-DIV, 1099-G, 1099-INT, 1099-K, 1099-LS, 1099-LTC, 1099-NEC, 1099-OID, 1099-PATR, 1099-Q, 1099-R, 1099-S, 1099-SA, T4A, W-2, W-2G, 1099-HC  - updatedAt  - validity - possible values are: true, false                For more information on filtering, see <see href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</see>.
 
 ### Example
 
@@ -475,7 +474,7 @@ List 1099/1095/W2/1042S forms. Filterable fields are name, referenceId and taxYe
 import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import forms1099_api
-Form1099ListResponse
+PaginatedQueryResultModelForm1099Base
 ErrorResponse
 from pprint import pprint
     
@@ -493,11 +492,13 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    filter = 'issuerId eq 884781823' # str | A filter statement to identify specific records to retrieve. For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>.    Collections support filtering only on certain fields. An attempt to filter on an unsupported field will receive a 400 Bad Request response.    Supported filtering fields are as follows:        issuerId      issuerReferenceId      taxYear      addressVerificationStatus - possible values are: unknown, pending, failed, incomplete, unchanged, verified      createdAt      edeliveryStatus - possible values are: sent, unscheduled, bad_verify, bad_verify_limit, scheduled, bounced, accepted      email      federalEfileStatus - possible values are: unscheduled, scheduled, sent, corrected_scheduled, accepted, corrected, corrected_accepted, held      recipientName      mailStatus - possible values are: sent, unscheduled, pending, delivered      referenceId      tinMatchStatus - possible values are: none, pending, matched, failed      type - possible values are: 940, 941, 943, 944, 945, 1042, 1042-S, 1095-B, 1095-C, 1097-BTC, 1098, 1098-C, 1098-E, 1098-Q, 1098-T, 3921, 3922, 5498, 5498-ESA, 5498-SA, 1099-MISC, 1099-A, 1099-B, 1099-C, 1099-CAP, 1099-DIV, 1099-G, 1099-INT, 1099-K, 1099-LS, 1099-LTC, 1099-NEC, 1099-OID, 1099-PATR, 1099-Q, 1099-R, 1099-S, 1099-SA, T4A, W-2, W-2G, 1099-HC      updatedAt      validity - possible values are: true, false (optional)
-    top = 10 # int | If nonzero, return no more than this number of results.     Used with skip to provide pagination for large datasets.     Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records. (optional) if omitted the server will use the default value of 10
-    skip = 0 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional) if omitted the server will use the default value of 0
-    order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example issuerReferenceId ASC.    Supported sorting fields are:         issuerReferenceId       taxYear       createdAt       recipientName      updatedAt (optional)
-    x_correlation_id = '7766bce5-4834-4907-81e9-dd0fd6c13079' # str | Unique correlation Id in a GUID format (optional)
+    filter = 'issuerId eq 884781823' # str | A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>. (optional)
+    top = 56 # int | If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets. (optional)
+    skip = 56 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional)
+    order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
+    count = True # bool | If true, return the global count of elements in the collection. (optional)
+    count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
+    x_correlation_id = 'f808e46a-fc55-4dd7-960d-13c6ba8176f2' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -511,7 +512,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # List 1099/1095/W2/1042S forms
-        api_response = api_instance.list1099_forms(avalara_version, filter=filter, top=top, skip=skip, order_by=order_by, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
+        api_response = api_instance.list1099_forms(avalara_version, filter=filter, top=top, skip=skip, order_by=order_by, count=count, count_only=count_only, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Forms1099Api->list1099_forms: %s\n" % e)
@@ -522,16 +523,18 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **avalara_version** | **str**| API version |
- **filter** | **str**| A filter statement to identify specific records to retrieve. For more information on filtering, see &lt;a href&#x3D;\&quot;https://developer.avalara.com/avatax/filtering-in-rest/\&quot;&gt;Filtering in REST&lt;/a&gt;.    Collections support filtering only on certain fields. An attempt to filter on an unsupported field will receive a 400 Bad Request response.    Supported filtering fields are as follows:        issuerId      issuerReferenceId      taxYear      addressVerificationStatus - possible values are: unknown, pending, failed, incomplete, unchanged, verified      createdAt      edeliveryStatus - possible values are: sent, unscheduled, bad_verify, bad_verify_limit, scheduled, bounced, accepted      email      federalEfileStatus - possible values are: unscheduled, scheduled, sent, corrected_scheduled, accepted, corrected, corrected_accepted, held      recipientName      mailStatus - possible values are: sent, unscheduled, pending, delivered      referenceId      tinMatchStatus - possible values are: none, pending, matched, failed      type - possible values are: 940, 941, 943, 944, 945, 1042, 1042-S, 1095-B, 1095-C, 1097-BTC, 1098, 1098-C, 1098-E, 1098-Q, 1098-T, 3921, 3922, 5498, 5498-ESA, 5498-SA, 1099-MISC, 1099-A, 1099-B, 1099-C, 1099-CAP, 1099-DIV, 1099-G, 1099-INT, 1099-K, 1099-LS, 1099-LTC, 1099-NEC, 1099-OID, 1099-PATR, 1099-Q, 1099-R, 1099-S, 1099-SA, T4A, W-2, W-2G, 1099-HC      updatedAt      validity - possible values are: true, false | [optional]
- **top** | **int**| If nonzero, return no more than this number of results.     Used with skip to provide pagination for large datasets.     Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records. | [optional] if omitted the server will use the default value of 10
- **skip** | **int**| If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. | [optional] if omitted the server will use the default value of 0
- **order_by** | **str**| A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example issuerReferenceId ASC.    Supported sorting fields are:         issuerReferenceId       taxYear       createdAt       recipientName      updatedAt | [optional]
+ **filter** | **str**| A filter statement to identify specific records to retrieve.  For more information on filtering, see &lt;a href&#x3D;\&quot;https://developer.avalara.com/avatax/filtering-in-rest/\&quot;&gt;Filtering in REST&lt;/a&gt;. | [optional]
+ **top** | **int**| If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets. | [optional]
+ **skip** | **int**| If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. | [optional]
+ **order_by** | **str**| A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. | [optional]
+ **count** | **bool**| If true, return the global count of elements in the collection. | [optional]
+ **count_only** | **bool**| If true, return ONLY the global count of elements in the collection.  It only applies when count&#x3D;true. | [optional]
  **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
  **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
 
 ### Return type
 
-[**Form1099ListResponse**](Form1099ListResponse.md)
+[**PaginatedQueryResultModelForm1099Base**](PaginatedQueryResultModelForm1099Base.md)
 
 ### Authorization
 
@@ -556,7 +559,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **update1099_form**
-> Update1099Form200Response update1099_form(id, avalara_version)
+> Get1099Form200Response update1099_form(id, avalara_version)
 
 Update a 1099/1095/W2/1042S form
 
@@ -570,8 +573,7 @@ Update a 1099/1095/W2/1042S form.
 import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import forms1099_api
-IUpdateForm1099Request
-Update1099Form200Response
+Get1099Form200Response
 ErrorResponse
 from pprint import pprint
     
@@ -590,9 +592,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '9f622e4f-7992-4e4f-8e24-e628c5339402' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '944ee583-b810-471c-852c-d3c6f8b93a4b' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    i_update_form1099_request = Avalara.SDK.IUpdateForm1099Request() # IUpdateForm1099Request |  (optional)
+    get1099_form200_response = {"type":"1099-NEC","issuerId":"12345","issuerReferenceId":"ISSUER-REF-2024","taxYear":2024,"referenceId":"NEC-REF-001","tin":"123456789","recipientName":"John Doe","tinType":"SSN","recipientSecondName":"Doe Enterprises","address":"123 Main Street","address2":"Suite 100","city":"New York","state":"NY","zip":"10001","email":"john.doe@example.com","accountNumber":"ACC123456","officeCode":"NYC01","countryCode":"US","nonemployeeCompensation":15000.0,"directSalesIndicator":true,"federalIncomeTaxWithheld":3000.0,"secondTinNotice":false,"federalEfileDate":"2024-03-15","stateEfileDate":"2024-03-20","recipientEdeliveryDate":"2024-03-25","postalMail":false,"tinMatch":true,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":500.0,"state":"NY","stateIdNumber":"NY123456","stateIncome":15000.0,"localTaxWithheld":250.0,"locality":"New York City","localityIdNumber":"NYC789","localIncome":15000.0}} # Get1099Form200Response |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Update a 1099/1095/W2/1042S form
@@ -605,7 +607,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Update a 1099/1095/W2/1042S form
-        api_response = api_instance.update1099_form(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, i_update_form1099_request=i_update_form1099_request)
+        api_response = api_instance.update1099_form(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, get1099_form200_response=get1099_form200_response)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Forms1099Api->update1099_form: %s\n" % e)
@@ -619,11 +621,11 @@ Name | Type | Description  | Notes
  **avalara_version** | **str**| API version |
  **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
  **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
- **i_update_form1099_request** | [**IUpdateForm1099Request**](IUpdateForm1099Request.md)|  | [optional]
+ **get1099_form200_response** | [**Get1099Form200Response**](Get1099Form200Response.md)|  | [optional]
 
 ### Return type
 
-[**Update1099Form200Response**](Update1099Form200Response.md)
+[**Get1099Form200Response**](Get1099Form200Response.md)
 
 ### Authorization
 

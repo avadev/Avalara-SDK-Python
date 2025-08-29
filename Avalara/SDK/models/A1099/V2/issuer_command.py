@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -42,22 +42,22 @@ class IssuerCommand(BaseModel):
     """
     IssuerCommand
     """ # noqa: E501
-    name: Optional[StrictStr] = Field(default=None, description="Legal name, not DBA")
-    name_dba: Optional[StrictStr] = Field(default=None, description="Optional DBA name or continuation of a long legal name", alias="nameDba")
-    tin: Optional[StrictStr] = Field(default=None, description="Tax identification number")
-    reference_id: Optional[StrictStr] = Field(default=None, description="Optional identifier for your reference, never shown to any agency or recipient.  We will also prefix download filenames with this value, if present.  Can only include letters, numbers, dashes, underscores and spaces.", alias="referenceId")
-    telephone: Optional[StrictStr] = Field(default=None, description="Telephone number")
-    tax_year: Optional[StrictInt] = Field(default=None, description="Tax year", alias="taxYear")
-    country_code: Optional[StrictStr] = Field(default=None, description="If there is a transfer agent, use the shipping address of the transfer agent.", alias="countryCode")
-    email: Optional[StrictStr] = Field(default=None, description="Email address")
-    address: Optional[StrictStr] = Field(default=None, description="Address")
-    city: Optional[StrictStr] = Field(default=None, description="City")
-    state: Optional[StrictStr] = Field(default=None, description="State")
-    zip: Optional[StrictStr] = Field(default=None, description="Zip code")
-    foreign_province: Optional[StrictStr] = Field(default=None, description="Foreign province", alias="foreignProvince")
-    transfer_agent_name: Optional[StrictStr] = Field(default=None, description="Transfer Agent's Name", alias="transferAgentName")
-    last_filing: Optional[StrictBool] = Field(default=None, description="Last year of filing for this payer", alias="lastFiling")
-    __properties: ClassVar[List[str]] = ["name", "nameDba", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling"]
+    name: Optional[StrictStr] = Field(description="Legal name. Not the DBA name.")
+    dba_name: Optional[StrictStr] = Field(default=None, description="Doing Business As (DBA) name or continuation of a long legal name. Use either this or 'transferAgentName'.", alias="dbaName")
+    tin: Optional[StrictStr] = Field(default=None, description="Federal Tax Identification Number (TIN).")
+    reference_id: Optional[StrictStr] = Field(default=None, description="Internal reference ID. Never shown to any agency or recipient. If present, it will prefix download filenames. Allowed characters: letters, numbers, dashes, underscores, and spaces.", alias="referenceId")
+    telephone: Optional[StrictStr] = Field(description="Contact phone number (must contain at least 10 digits, max 15 characters). For recipient inquiries.")
+    tax_year: Optional[StrictInt] = Field(description="Tax year for which the forms are being filed (e.g., 2024). Must be within current tax year and current tax year - 4.", alias="taxYear")
+    country_code: Optional[StrictStr] = Field(default=None, description="Two-letter IRS country code (e.g., 'US', 'CA'), as defined at https://www.irs.gov/e-file-providers/country-codes. If there is a transfer agent, use the transfer agent's shipping address.", alias="countryCode")
+    email: Optional[StrictStr] = Field(description="Contact email address. For recipient inquiries.")
+    address: Optional[StrictStr] = Field(description="Address.")
+    city: Optional[StrictStr] = Field(description="City.")
+    state: Optional[StrictStr] = Field(description="Two-letter US state or Canadian province code (required for US/CA addresses).")
+    zip: Optional[StrictStr] = Field(description="ZIP/postal code.")
+    foreign_province: Optional[StrictStr] = Field(default=None, description="Province or region for non-US/CA addresses.", alias="foreignProvince")
+    transfer_agent_name: Optional[StrictStr] = Field(default=None, description="Name of the transfer agent, if applicable — optional; use either this or 'dbaName'.", alias="transferAgentName")
+    last_filing: Optional[StrictBool] = Field(description="Indicates if this is the issuer's final year filing.", alias="lastFiling")
+    __properties: ClassVar[List[str]] = ["name", "dbaName", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -103,10 +103,10 @@ class IssuerCommand(BaseModel):
         if self.name is None and "name" in self.model_fields_set:
             _dict['name'] = None
 
-        # set to None if name_dba (nullable) is None
+        # set to None if dba_name (nullable) is None
         # and model_fields_set contains the field
-        if self.name_dba is None and "name_dba" in self.model_fields_set:
-            _dict['nameDba'] = None
+        if self.dba_name is None and "dba_name" in self.model_fields_set:
+            _dict['dbaName'] = None
 
         # set to None if tin (nullable) is None
         # and model_fields_set contains the field
@@ -122,6 +122,11 @@ class IssuerCommand(BaseModel):
         # and model_fields_set contains the field
         if self.telephone is None and "telephone" in self.model_fields_set:
             _dict['telephone'] = None
+
+        # set to None if tax_year (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_year is None and "tax_year" in self.model_fields_set:
+            _dict['taxYear'] = None
 
         # set to None if country_code (nullable) is None
         # and model_fields_set contains the field
@@ -181,7 +186,7 @@ class IssuerCommand(BaseModel):
 
         _obj = cls.model_validate({
             "name": obj.get("name"),
-            "nameDba": obj.get("nameDba"),
+            "dbaName": obj.get("dbaName"),
             "tin": obj.get("tin"),
             "referenceId": obj.get("referenceId"),
             "telephone": obj.get("telephone"),

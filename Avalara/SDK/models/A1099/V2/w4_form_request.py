@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -63,12 +64,12 @@ class W4FormRequest(BaseModel):
     additional_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The additional amount withheld.", alias="additionalWithheld")
     exempt_from_withholding: Optional[StrictBool] = Field(default=None, description="Indicates whether the employee is exempt from withholding.", alias="exemptFromWithholding")
     office_code: Optional[StrictStr] = Field(default=None, description="The office code associated with the form.", alias="officeCode")
-    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company.", alias="companyId")
-    reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
-    email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
-    __properties: ClassVar[List[str]] = ["type", "companyId", "referenceId", "email", "eDeliveryConsentedAt", "signature"]
+    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
+    email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
+    __properties: ClassVar[List[str]] = ["eDeliveryConsentedAt", "signature", "type", "companyId", "referenceId", "email"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -121,16 +122,6 @@ class W4FormRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if reference_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.reference_id is None and "reference_id" in self.model_fields_set:
-            _dict['referenceId'] = None
-
-        # set to None if email (nullable) is None
-        # and model_fields_set contains the field
-        if self.email is None and "email" in self.model_fields_set:
-            _dict['email'] = None
-
         # set to None if e_delivery_consented_at (nullable) is None
         # and model_fields_set contains the field
         if self.e_delivery_consented_at is None and "e_delivery_consented_at" in self.model_fields_set:
@@ -140,6 +131,16 @@ class W4FormRequest(BaseModel):
         # and model_fields_set contains the field
         if self.signature is None and "signature" in self.model_fields_set:
             _dict['signature'] = None
+
+        # set to None if reference_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.reference_id is None and "reference_id" in self.model_fields_set:
+            _dict['referenceId'] = None
+
+        # set to None if email (nullable) is None
+        # and model_fields_set contains the field
+        if self.email is None and "email" in self.model_fields_set:
+            _dict['email'] = None
 
         return _dict
 
@@ -153,12 +154,12 @@ class W4FormRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "eDeliveryConsentedAt": obj.get("eDeliveryConsentedAt"),
+            "signature": obj.get("signature"),
             "type": obj.get("type"),
             "companyId": obj.get("companyId"),
             "referenceId": obj.get("referenceId"),
-            "email": obj.get("email"),
-            "eDeliveryConsentedAt": obj.get("eDeliveryConsentedAt"),
-            "signature": obj.get("signature")
+            "email": obj.get("email")
         })
         return _obj
 

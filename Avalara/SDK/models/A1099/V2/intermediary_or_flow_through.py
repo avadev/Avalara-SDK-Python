@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,19 +40,19 @@ from typing_extensions import Self
 
 class IntermediaryOrFlowThrough(BaseModel):
     """
-    IntermediaryOrFlowThrough
+    Intermediary or flow-through entity information for tax forms
     """ # noqa: E501
-    ein: Optional[StrictStr] = None
-    chap3_status_code: Optional[StrictStr] = Field(default=None, alias="chap3StatusCode")
-    chap4_status_code: Optional[StrictStr] = Field(default=None, alias="chap4StatusCode")
-    name: Optional[StrictStr] = None
-    giin: Optional[StrictStr] = None
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    foreign_tin: Optional[StrictStr] = Field(default=None, alias="foreignTin")
-    address: Optional[StrictStr] = None
-    city: Optional[StrictStr] = None
-    state: Optional[StrictStr] = None
-    zip: Optional[StrictStr] = None
+    ein: Optional[StrictStr] = Field(default=None, description="EIN (Employer Identification Number) of the intermediary or flow-through entity")
+    chap3_status_code: Optional[StrictStr] = Field(default=None, description="Chapter 3 status code for the intermediary or flow-through entity", alias="chap3StatusCode")
+    chap4_status_code: Optional[StrictStr] = Field(default=None, description="Chapter 4 status code for the intermediary or flow-through entity", alias="chap4StatusCode")
+    name: Optional[StrictStr] = Field(default=None, description="Name of the intermediary or flow-through entity")
+    giin: Optional[StrictStr] = Field(default=None, description="GIIN (Global Intermediary Identification Number) of the intermediary or flow-through entity")
+    country_code: Optional[StrictStr] = Field(default=None, description="Country code for the intermediary or flow-through entity", alias="countryCode")
+    foreign_tin: Optional[StrictStr] = Field(default=None, description="Foreign TIN of the intermediary or flow-through entity", alias="foreignTin")
+    address: Optional[StrictStr] = Field(default=None, description="Address of the intermediary or flow-through entity")
+    city: Optional[StrictStr] = Field(default=None, description="City of the intermediary or flow-through entity")
+    state: Optional[StrictStr] = Field(default=None, description="State of the intermediary or flow-through entity")
+    zip: Optional[StrictStr] = Field(default=None, description="Zip code of the intermediary or flow-through entity")
     __properties: ClassVar[List[str]] = ["ein", "chap3StatusCode", "chap4StatusCode", "name", "giin", "countryCode", "foreignTin", "address", "city", "state", "zip"]
 
     model_config = ConfigDict(

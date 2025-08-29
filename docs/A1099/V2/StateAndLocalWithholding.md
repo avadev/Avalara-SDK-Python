@@ -5,14 +5,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**state_tax_withheld** | **float** |  | [optional] 
-**state** | **str** |  | [optional] 
-**state_id_number** | **str** |  | [optional] 
-**state_income** | **float** |  | [optional] 
-**local_tax_withheld** | **float** |  | [optional] 
-**locality** | **str** |  | [optional] 
-**locality_id_number** | **str** |  | [optional] 
-**local_income** | **float** |  | [optional] 
+**state_tax_withheld** | **float** | Amount of state tax that was withheld | [optional] 
+**state** | **str** | US state | [optional] 
+**state_id_number** | **str** | State ID number of the entity issuing the form | [optional] 
+**state_income** | **float** | Amount of state income | [optional] 
+**local_tax_withheld** | **float** | Amount of local tax that was withheld | [optional] 
+**locality** | **str** | Locality name | [optional] 
+**locality_id_number** | **str** | Locality ID number of the entity issuing the form | [optional] 
+**local_income** | **float** | Amount of local income | [optional] 
 
 ## Example
 

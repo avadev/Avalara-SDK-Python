@@ -1,12 +1,13 @@
 # PrimaryWithholdingAgent
 
+Primary withholding agent information for tax forms
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**primary_withholding_agent_name** | **str** |  | [optional] 
-**primary_withholding_agent_ein** | **str** |  | [optional] 
+**name** | **str** | Name of the primary withholding agent | 
+**ein** | **str** | EIN (Employer Identification Number) of the primary withholding agent. | 
 
 ## Example
 

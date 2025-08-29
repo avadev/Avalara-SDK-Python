@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -42,8 +42,8 @@ class ValidationError(BaseModel):
     """
     ValidationError
     """ # noqa: E501
-    var_field: Optional[StrictStr] = Field(default=None, alias="field")
-    errors: Optional[List[StrictStr]] = None
+    var_field: Optional[StrictStr] = Field(default=None, description="The field containing the error", alias="field")
+    errors: Optional[List[StrictStr]] = Field(default=None, description="The list of error messages")
     __properties: ClassVar[List[str]] = ["field", "errors"]
 
     model_config = ConfigDict(

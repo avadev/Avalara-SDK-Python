@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.2
+@version    25.8.3
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,14 +43,10 @@ from Avalara.SDK.model_utils import (  # noqa: F401
 from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import Optional, Union
 from typing_extensions import Annotated
-from Avalara.SDK.models.A1099.V2.bulk_upsert1099_forms_request import BulkUpsert1099FormsRequest
-from Avalara.SDK.models.A1099.V2.create1099_form201_response import Create1099Form201Response
-from Avalara.SDK.models.A1099.V2.form1099_list_response import Form1099ListResponse
-from Avalara.SDK.models.A1099.V2.form1099_proccess_result import Form1099ProccessResult
+from Avalara.SDK.models.A1099.V2.form1099_list_request import Form1099ListRequest
 from Avalara.SDK.models.A1099.V2.get1099_form200_response import Get1099Form200Response
-from Avalara.SDK.models.A1099.V2.i_create_form1099_request import ICreateForm1099Request
-from Avalara.SDK.models.A1099.V2.i_update_form1099_request import IUpdateForm1099Request
-from Avalara.SDK.models.A1099.V2.update1099_form200_response import Update1099Form200Response
+from Avalara.SDK.models.A1099.V2.job_response import JobResponse
+from Avalara.SDK.models.A1099.V2.paginated_query_result_model_form1099_base import PaginatedQueryResultModelForm1099Base
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
 
@@ -65,12 +61,12 @@ class Forms1099Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.8.2")
+        api_client.set_sdk_version("25.8.3")
         self.api_client = api_client
 		
         self.bulk_upsert1099_forms_endpoint = _Endpoint(
             settings={
-                'response_type': (Form1099ProccessResult,),
+                'response_type': (JobResponse,),
                 'auth': [
                     'bearer'
                 ],
@@ -85,7 +81,7 @@ class Forms1099Api(object):
                     'dry_run',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'bulk_upsert1099_forms_request',
+                    'form1099_list_request',
                 ],
                 'required': [
                     'avalara_version',
@@ -111,8 +107,8 @@ class Forms1099Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'bulk_upsert1099_forms_request':
-                        (BulkUpsert1099FormsRequest,),
+                    'form1099_list_request':
+                        (Form1099ListRequest,),
                 },
                 'attribute_map': {
                     'avalara_version': 'avalara-version',
@@ -125,7 +121,7 @@ class Forms1099Api(object):
                     'dry_run': 'query',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'bulk_upsert1099_forms_request': 'body',
+                    'form1099_list_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -147,7 +143,7 @@ class Forms1099Api(object):
         )
         self.create1099_form_endpoint = _Endpoint(
             settings={
-                'response_type': (Create1099Form201Response,),
+                'response_type': (Get1099Form200Response,),
                 'auth': [
                     'bearer'
                 ],
@@ -161,7 +157,7 @@ class Forms1099Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'i_create_form1099_request',
+                    'get1099_form200_response',
                 ],
                 'required': [
                     'avalara_version',
@@ -185,8 +181,8 @@ class Forms1099Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'i_create_form1099_request':
-                        (ICreateForm1099Request,),
+                    'get1099_form200_response':
+                        (Get1099Form200Response,),
                 },
                 'attribute_map': {
                     'avalara_version': 'avalara-version',
@@ -197,7 +193,7 @@ class Forms1099Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'i_create_form1099_request': 'body',
+                    'get1099_form200_response': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -435,7 +431,7 @@ class Forms1099Api(object):
         )
         self.list1099_forms_endpoint = _Endpoint(
             settings={
-                'response_type': (Form1099ListResponse,),
+                'response_type': (PaginatedQueryResultModelForm1099Base,),
                 'auth': [
                     'bearer'
                 ],
@@ -451,6 +447,8 @@ class Forms1099Api(object):
                     'top',
                     'skip',
                     'order_by',
+                    'count',
+                    'count_only',
                     'x_correlation_id',
                     'x_avalara_client',
                 ],
@@ -480,6 +478,10 @@ class Forms1099Api(object):
                         (int,),
                     'order_by':
                         (str,),
+                    'count':
+                        (bool,),
+                    'count_only':
+                        (bool,),
                     'x_correlation_id':
                         (str,),
                     'x_avalara_client':
@@ -491,6 +493,8 @@ class Forms1099Api(object):
                     'top': '$top',
                     'skip': '$skip',
                     'order_by': '$orderBy',
+                    'count': 'count',
+                    'count_only': 'countOnly',
                     'x_correlation_id': 'X-Correlation-Id',
                     'x_avalara_client': 'X-Avalara-Client',
                 },
@@ -500,6 +504,8 @@ class Forms1099Api(object):
                     'top': 'query',
                     'skip': 'query',
                     'order_by': 'query',
+                    'count': 'query',
+                    'count_only': 'query',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
                 },
@@ -519,7 +525,7 @@ class Forms1099Api(object):
         )
         self.update1099_form_endpoint = _Endpoint(
             settings={
-                'response_type': (Update1099Form200Response,),
+                'response_type': (Get1099Form200Response,),
                 'auth': [
                     'bearer'
                 ],
@@ -534,7 +540,7 @@ class Forms1099Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'i_update_form1099_request',
+                    'get1099_form200_response',
                 ],
                 'required': [
                     'id',
@@ -561,8 +567,8 @@ class Forms1099Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'i_update_form1099_request':
-                        (IUpdateForm1099Request,),
+                    'get1099_form200_response':
+                        (Get1099Form200Response,),
                 },
                 'attribute_map': {
                     'id': 'id',
@@ -575,7 +581,7 @@ class Forms1099Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'i_update_form1099_request': 'body',
+                    'get1099_form200_response': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -604,7 +610,7 @@ class Forms1099Api(object):
     ):
         """Create or update multiple 1099/1095/W2/1042S forms  # noqa: E501
 
-        This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms.  You can use one of the following payload structures:                **Form 1099-MISC:**  ```json  {     \"formType\": \"1099-MISC\",     \"forms\": [         {             \"IssuerId\": \"123456\",             \"IssuerReferenceId\": \"REF123\",             \"IssuerTin\": \"12-3456789\",             \"TaxYear\": 2023,             \"ReferenceId\": \"FORM123456\",             \"RecipientName\": \"John Doe\",             \"RecipientTin\": \"587-65-4321\",             \"TinType\": \"SSN\",             \"RecipientSecondName\": \"Jane Doe\",             \"Address\": \"123 Main Street\",             \"Address2\": \"Apt 4B\",             \"City\": \"New York\",             \"State\": \"NY\",             \"Zip\": \"10001\",             \"Email\": \"john.doe@email.com\",             \"AccountNumber\": \"ACC123456\",             \"OfficeCode\": \"NYC01\",             \"SecondTinNotice\": false,             \"NonUsProvince\": \"\",             \"CountryCode\": \"US\",             \"Rents\": 12000.00,             \"Royalties\": 5000.00,             \"OtherIncome\": 3000.00,             \"FishingBoatProceeds\": 0.00,             \"MedicalAndHealthCarePayments\": 15000.00,             \"SubstitutePayments\": 1000.00,             \"CropInsuranceProceeds\": 0.00,             \"GrossProceedsPaidToAttorney\": 7500.00,             \"FishPurchasedForResale\": 0.00,             \"FedIncomeTaxWithheld\": 5000.00,             \"Section409ADeferrals\": 0.00,             \"ExcessGoldenParachutePayments\": 0.00,             \"NonqualifiedDeferredCompensation\": 0.00,             \"DirectSalesIndicator\": false,             \"FatcaFilingRequirement\": false,             \"StateAndLocalWithholding\": {               \"StateTaxWithheld\": 2500.00,               \"LocalTaxWithheld\": 1000.00,               \"State\": \"NY\",               \"StateIdNumber\": \"NY123456\",               \"Locality\": \"New York City\",               \"StateIncome\": 35000.00,               \"LocalIncome\": 35000.00             }         }     ]  }  ```                **Form 1099-NEC:**  ```json  {    \"formType\": \"1099-NEC\",    \"forms\": [      {        \"issuerID\": \"180337282\",        \"issuerReferenceId\": \"ISS123\",        \"issuerTin\": \"12-3000000\",        \"taxYear\": 2024,        \"referenceID\": \"REF-002\",        \"recipientName\": \"Jane Smith\",        \"recipientSecondName\": \"\",        \"recipientTin\": \"587-65-4321\",        \"tinType\": \"SSN\",        \"address\": \"123 Center St\",        \"address2\": \"\",        \"city\": \"Santa Monica\",        \"state\": \"CA\",        \"zip\": \"90401\",        \"countryCode\": \"US\",        \"nonUsProvince\": \"\",        \"email\": \"\",        \"accountNumber\": \"\",        \"officeCode\": \"\",        \"secondTinNotice\": false,        \"nonemployeeCompensation\": 123.45,        \"directSalesIndicator\": false,        \"federalIncomeTaxWithheld\": 12.34,        \"stateAndLocalWithholding\": {          \"state\": \"CA\",          \"stateIdNumber\": \"123123123\",          \"stateIncome\": 123.45,          \"stateTaxWithheld\": 12.34,          \"locality\": \"Santa Monica\",          \"localityIdNumber\": \"456456\",          \"localTaxWithheld\": 12.34,          \"localIncome\": 50000.00         },        \"federalEFile\": true,        \"postalMail\": true,        \"stateEFile\": true,        \"tinMatch\": true,        \"addressVerification\": true       }     ]   }  ```  For the full version of the payload and its schema details, refer to the Swagger schemas section.  # noqa: E501
+        This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms.  Maximum of 5000 forms can be processed in a single bulk request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -615,10 +621,10 @@ class Forms1099Api(object):
             avalara_version (str): API version
 
         Keyword Args:
-            dry_run (bool): . [optional] if omitted the server will use the default value of False
+            dry_run (bool): defaults to false. If true, it will NOT change the DB. It will just return a report of what would've have been changed in the DB. [optional] if omitted the server will use the default value of False
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            bulk_upsert1099_forms_request (BulkUpsert1099FormsRequest): . [optional]
+            form1099_list_request (Form1099ListRequest): . [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -640,7 +646,7 @@ class Forms1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Form1099ProccessResult
+            JobResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -688,7 +694,7 @@ class Forms1099Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            i_create_form1099_request (ICreateForm1099Request): [optional]
+            get1099_form200_response (Get1099Form200Response): [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -710,7 +716,7 @@ class Forms1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Create1099Form201Response
+            Get1099Form200Response
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -962,7 +968,7 @@ class Forms1099Api(object):
     ):
         """List 1099/1095/W2/1042S forms  # noqa: E501
 
-        List 1099/1095/W2/1042S forms. Filterable fields are name, referenceId and taxYear.  # noqa: E501
+        List 1099/1095/W2/1042S forms.                Collections support filtering only on certain fields. An attempt to filter on an unsupported field will receive a 400 Bad Request response.                Supported filtering fields are as follows:                - issuerId  - issuerReferenceId  - taxYear  - addressVerificationStatus - possible values are: unknown, pending, failed, incomplete, unchanged, verified  - createdAt  - edeliveryStatus - possible values are: sent, unscheduled, bad_verify, bad_verify_limit, scheduled, bounced, accepted  - email  - federalEfileStatus - possible values are: unscheduled, scheduled, sent, corrected_scheduled, accepted, corrected, corrected_accepted, held  - recipientName  - mailStatus - possible values are: sent, unscheduled, pending, delivered  - referenceId  - tinMatchStatus - possible values are: none, pending, matched, failed  - type - possible values are: 940, 941, 943, 944, 945, 1042, 1042-S, 1095-B, 1095-C, 1097-BTC, 1098, 1098-C, 1098-E, 1098-Q, 1098-T, 3921, 3922, 5498, 5498-ESA, 5498-SA, 1099-MISC, 1099-A, 1099-B, 1099-C, 1099-CAP, 1099-DIV, 1099-G, 1099-INT, 1099-K, 1099-LS, 1099-LTC, 1099-NEC, 1099-OID, 1099-PATR, 1099-Q, 1099-R, 1099-S, 1099-SA, T4A, W-2, W-2G, 1099-HC  - updatedAt  - validity - possible values are: true, false                For more information on filtering, see <see href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</see>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -973,10 +979,12 @@ class Forms1099Api(object):
             avalara_version (str): API version
 
         Keyword Args:
-            filter (str): A filter statement to identify specific records to retrieve. For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>.    Collections support filtering only on certain fields. An attempt to filter on an unsupported field will receive a 400 Bad Request response.    Supported filtering fields are as follows:        issuerId      issuerReferenceId      taxYear      addressVerificationStatus - possible values are: unknown, pending, failed, incomplete, unchanged, verified      createdAt      edeliveryStatus - possible values are: sent, unscheduled, bad_verify, bad_verify_limit, scheduled, bounced, accepted      email      federalEfileStatus - possible values are: unscheduled, scheduled, sent, corrected_scheduled, accepted, corrected, corrected_accepted, held      recipientName      mailStatus - possible values are: sent, unscheduled, pending, delivered      referenceId      tinMatchStatus - possible values are: none, pending, matched, failed      type - possible values are: 940, 941, 943, 944, 945, 1042, 1042-S, 1095-B, 1095-C, 1097-BTC, 1098, 1098-C, 1098-E, 1098-Q, 1098-T, 3921, 3922, 5498, 5498-ESA, 5498-SA, 1099-MISC, 1099-A, 1099-B, 1099-C, 1099-CAP, 1099-DIV, 1099-G, 1099-INT, 1099-K, 1099-LS, 1099-LTC, 1099-NEC, 1099-OID, 1099-PATR, 1099-Q, 1099-R, 1099-S, 1099-SA, T4A, W-2, W-2G, 1099-HC      updatedAt      validity - possible values are: true, false. [optional]
-            top (int): If nonzero, return no more than this number of results.     Used with skip to provide pagination for large datasets.     Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.. [optional] if omitted the server will use the default value of 10
-            skip (int): If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets.. [optional] if omitted the server will use the default value of 0
-            order_by (str): A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example issuerReferenceId ASC.    Supported sorting fields are:         issuerReferenceId       taxYear       createdAt       recipientName      updatedAt. [optional]
+            filter (str): A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>.. [optional]
+            top (int): If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets.. [optional]
+            skip (int): If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets.. [optional]
+            order_by (str): A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC.. [optional]
+            count (bool): If true, return the global count of elements in the collection.. [optional]
+            count_only (bool): If true, return ONLY the global count of elements in the collection.  It only applies when count=true.. [optional]
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
             _return_http_data_only (bool): response data without head status
@@ -1000,7 +1008,7 @@ class Forms1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Form1099ListResponse
+            PaginatedQueryResultModelForm1099Base
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1050,7 +1058,7 @@ class Forms1099Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            i_update_form1099_request (IUpdateForm1099Request): [optional]
+            get1099_form200_response (Get1099Form200Response): [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1072,7 +1080,7 @@ class Forms1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Update1099Form200Response
+            Get1099Form200Response
                 If the method is called asynchronously, returns the request
                 thread.
         """
