@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -34,25 +34,17 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from importlib import import_module
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from Avalara.SDK.models.A1099.V2.entry_status_response import EntryStatusResponse
 from typing import Optional, Set
 from typing_extensions import Self
-
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from Avalara.SDK.models.A1099.V2.w4_form_response import W4FormResponse
-    from Avalara.SDK.models.A1099.V2.w8_ben_e_form_response import W8BenEFormResponse
-    from Avalara.SDK.models.A1099.V2.w8_ben_form_response import W8BenFormResponse
-    from Avalara.SDK.models.A1099.V2.w8_imy_form_response import W8ImyFormResponse
-    from Avalara.SDK.models.A1099.V2.w9_form_response import W9FormResponse
 
 class W9FormBaseResponse(BaseModel):
     """
     W9FormBaseResponse
     """ # noqa: E501
+    type: Optional[StrictStr] = Field(default=None, description="The form type.")
     id: Optional[StrictStr] = Field(default=None, description="The unique identifier for the form.")
     entry_status: Optional[EntryStatusResponse] = Field(default=None, description="The entry status information for the form.", alias="entryStatus")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
@@ -66,8 +58,17 @@ class W9FormBaseResponse(BaseModel):
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     created_at: Optional[datetime] = Field(default=None, description="The creation date of the form.", alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, description="The last updated date of the form.", alias="updatedAt")
-    type: Optional[StrictStr] = Field(default=None, description="The type of the response object.")
-    __properties: ClassVar[List[str]] = []
+    __properties: ClassVar[List[str]] = ["type", "id", "entryStatus", "referenceId", "companyId", "displayName", "email", "archived", "ancestorId", "signature", "signedDate", "eDeliveryConsentedAt", "createdAt", "updatedAt"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9']):
+            raise ValueError("must be one of enum values ('W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -75,23 +76,6 @@ class W9FormBaseResponse(BaseModel):
         protected_namespaces=(),
     )
 
-
-    # JSON field name that stores the object type
-    __discriminator_property_name: ClassVar[str] = 'type'
-
-    # discriminator mappings
-    __discriminator_value_class_map: ClassVar[Dict[str, str]] = {
-        'W4FormResponse': 'W4FormResponse','W8BenEFormResponse': 'W8BenEFormResponse','W8BenFormResponse': 'W8BenFormResponse','W8ImyFormResponse': 'W8ImyFormResponse','W9FormResponse': 'W9FormResponse'
-    }
-
-    @classmethod
-    def get_discriminator_value(cls, obj: Dict[str, Any]) -> Optional[str]:
-        """Returns the discriminator value (object type) of the data"""
-        discriminator_value = obj[cls.__discriminator_property_name]
-        if discriminator_value:
-            return cls.__discriminator_value_class_map.get(discriminator_value)
-        else:
-            return None
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -103,7 +87,7 @@ class W9FormBaseResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Union[W4FormResponse, W8BenEFormResponse, W8BenFormResponse, W8ImyFormResponse, W9FormResponse]]:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of W9FormBaseResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -116,8 +100,10 @@ class W9FormBaseResponse(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "type",
         ])
 
         _dict = self.model_dump(
@@ -125,26 +111,66 @@ class W9FormBaseResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of entry_status
+        if self.entry_status:
+            _dict['entryStatus'] = self.entry_status.to_dict()
+        # set to None if reference_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.reference_id is None and "reference_id" in self.model_fields_set:
+            _dict['referenceId'] = None
+
+        # set to None if email (nullable) is None
+        # and model_fields_set contains the field
+        if self.email is None and "email" in self.model_fields_set:
+            _dict['email'] = None
+
+        # set to None if ancestor_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.ancestor_id is None and "ancestor_id" in self.model_fields_set:
+            _dict['ancestorId'] = None
+
+        # set to None if signature (nullable) is None
+        # and model_fields_set contains the field
+        if self.signature is None and "signature" in self.model_fields_set:
+            _dict['signature'] = None
+
+        # set to None if signed_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.signed_date is None and "signed_date" in self.model_fields_set:
+            _dict['signedDate'] = None
+
+        # set to None if e_delivery_consented_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.e_delivery_consented_at is None and "e_delivery_consented_at" in self.model_fields_set:
+            _dict['eDeliveryConsentedAt'] = None
+
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict[str, Any]) -> Optional[Union[W4FormResponse, W8BenEFormResponse, W8BenFormResponse, W8ImyFormResponse, W9FormResponse]]:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of W9FormBaseResponse from a dict"""
-        # look up the object type based on discriminator mapping
-        object_type = cls.get_discriminator_value(obj)
-        if object_type ==  'W4FormResponse':
-            return import_module("Avalara.SDK.models.A1099.V2.w4_form_response").W4FormResponse.from_dict(obj)
-        if object_type ==  'W8BenEFormResponse':
-            return import_module("Avalara.SDK.models.A1099.V2.w8_ben_e_form_response").W8BenEFormResponse.from_dict(obj)
-        if object_type ==  'W8BenFormResponse':
-            return import_module("Avalara.SDK.models.A1099.V2.w8_ben_form_response").W8BenFormResponse.from_dict(obj)
-        if object_type ==  'W8ImyFormResponse':
-            return import_module("Avalara.SDK.models.A1099.V2.w8_imy_form_response").W8ImyFormResponse.from_dict(obj)
-        if object_type ==  'W9FormResponse':
-            return import_module("Avalara.SDK.models.A1099.V2.w9_form_response").W9FormResponse.from_dict(obj)
+        if obj is None:
+            return None
 
-        raise ValueError("W9FormBaseResponse failed to lookup discriminator value from " +
-                            json.dumps(obj) + ". Discriminator property name: " + cls.__discriminator_property_name +
-                            ", mapping: " + json.dumps(cls.__discriminator_value_class_map))
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "type": obj.get("type"),
+            "id": obj.get("id"),
+            "entryStatus": EntryStatusResponse.from_dict(obj["entryStatus"]) if obj.get("entryStatus") is not None else None,
+            "referenceId": obj.get("referenceId"),
+            "companyId": obj.get("companyId"),
+            "displayName": obj.get("displayName"),
+            "email": obj.get("email"),
+            "archived": obj.get("archived"),
+            "ancestorId": obj.get("ancestorId"),
+            "signature": obj.get("signature"),
+            "signedDate": obj.get("signedDate"),
+            "eDeliveryConsentedAt": obj.get("eDeliveryConsentedAt"),
+            "createdAt": obj.get("createdAt"),
+            "updatedAt": obj.get("updatedAt")
+        })
+        return _obj
 
 

@@ -6,19 +6,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | The form type (always \&quot;w8ben\&quot; for this model). | [optional] [readonly] 
-**name** | **str** | The name of the individual or entity associated with the form. | [optional] 
-**citizenship_country** | **str** | The country of citizenship. | [optional] 
+**name** | **str** | The name of the individual or entity associated with the form. | 
+**citizenship_country** | **str** | The country of citizenship. | 
 **residence_address** | **str** | The residential address of the individual or entity. | [optional] 
 **residence_city** | **str** | The city of residence. | [optional] 
 **residence_state** | **str** | The state of residence. | [optional] 
 **residence_zip** | **str** | The ZIP code of the residence. | [optional] 
-**residence_country** | **str** | The country of residence. | [optional] 
+**residence_country** | **str** | The country of residence. | 
 **residence_is_mailing** | **bool** | Indicates whether the residence address is the mailing address. | [optional] 
 **mailing_address** | **str** | The mailing address. | [optional] 
 **mailing_city** | **str** | The city of the mailing address. | [optional] 
 **mailing_state** | **str** | The state of the mailing address. | [optional] 
 **mailing_zip** | **str** | The ZIP code of the mailing address. | [optional] 
-**mailing_country** | **str** | The country of the mailing address. | [optional] 
+**mailing_country** | **str** | The country of the mailing address. | 
 **tin** | **str** | The taxpayer identification number (TIN). | [optional] 
 **foreign_tin_not_required** | **bool** | Indicates whether a foreign TIN is not legally required. | [optional] 
 **foreign_tin** | **str** | The foreign taxpayer identification number (TIN). | [optional] 
@@ -32,7 +32,7 @@ Name | Type | Description | Notes
 **signer_name** | **str** | The name of the signer of the form. | [optional] 
 **e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
 **signature** | **str** | The signature of the form. | [optional] 
-**company_id** | **str** | The ID of the associated company. | 
+**company_id** | **str** | The ID of the associated company. Required when creating a form. | [optional] 
 **reference_id** | **str** | A reference identifier for the form. | [optional] 
 **email** | **str** | The email address of the individual associated with the form. | [optional] 
 

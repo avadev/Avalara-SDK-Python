@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,7 +36,6 @@ import json
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.substantial_us_owner_request import SubstantialUsOwnerRequest
 from typing import Optional, Set
 from typing_extensions import Self
@@ -46,17 +45,17 @@ class W8BenEFormRequest(BaseModel):
     W8BenEFormRequest
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The form type (always \"w8bene\" for this model).")
-    name: Optional[StrictStr] = Field(default=None, description="The name of the individual or entity associated with the form.")
-    citizenship_country: Optional[StrictStr] = Field(default=None, description="The country of citizenship.", alias="citizenshipCountry")
+    name: StrictStr = Field(description="The name of the individual or entity associated with the form.")
+    citizenship_country: StrictStr = Field(description="The country of citizenship.", alias="citizenshipCountry")
     disregarded_entity: Optional[StrictStr] = Field(default=None, description="The name of the disregarded entity receiving the payment (if applicable).", alias="disregardedEntity")
-    entity_type: Optional[StrictStr] = Field(default=None, description="The entity type.", alias="entityType")
+    entity_type: StrictStr = Field(description="The entity type.  Available values:  - 1: Corporation  - 2: Disregarded entity  - 3: Partnership  - 4: Simple trust  - 5: Grantor trust  - 6: Complex trust  - 7: Estate  - 8: Foreign Government - Controlled Entity  - 9: Central Bank of Issue  - 10: Tax-exempt organization  - 11: Private foundation  - 12: International organization  - 13: Foreign Government - Controlled Integral Part", alias="entityType")
     making_treaty_claim: Optional[StrictBool] = Field(default=None, description="Indicates whether the entity is making a treaty claim.", alias="makingTreatyClaim")
-    fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status.", alias="fatcaStatus")
+    fatca_status: StrictStr = Field(description="The FATCA status.  Available values:  - 1: Nonparticipating FFI (including a limited FFI or an FFI related to a Reporting IGA FFI other than a deemed-compliant FFI, participating FFI, or exempt beneficial owner)  - 2: Participating FFI  - 3: Reporting Model 1 FFI  - 4: Reporting Model 2 FFI  - 5: Registered deemed-compliant FFI (other than a reporting Model 1 FFI, sponsored FFI, or nonreporting IGA FFI covered in Part XII)  - 6: Sponsored FFI that has not obtained a GIIN  - 7: Certified deemed-compliant nonregistering local bank  - 8: Certified deemed-compliant FFI with only low-value accounts  - 9: Certified deemed-compliant sponsored, closely held investment vehicle  - 10: Certified deemed-compliant limited life debt investment entity  - 11: Certified deemed-compliant investment advisors and investment managers  - 12: Owner-documented FFI  - 13: Restricted distributor  - 14: Nonreporting IGA FFI  - 15: Foreign government, government of a U.S. possession, or foreign central bank of issue  - 16: International organization  - 17: Exempt retirement plans  - 18: Entity wholly owned by exempt beneficial owners  - 19: Territory financial institution  - 20: Nonfinancial group entity  - 21: Excepted nonfinancial start-up company  - 22: Excepted nonfinancial entity in liquidation or bankruptcy  - 23: 501(c) organization  - 24: Nonprofit organization  - 25: Publicly traded NFFE or NFFE affiliate of a publicly traded corporation  - 26: Excepted territory NFFE  - 27: Active NFFE  - 28: Passive NFFE  - 29: Excepted inter-affiliate FFI  - 30: Direct reporting NFFE  - 31: Sponsored direct reporting NFFE  - 32: Account that is not a financial account", alias="fatcaStatus")
     residence_address: Optional[StrictStr] = Field(default=None, description="The residential address of the individual or entity.", alias="residenceAddress")
     residence_city: Optional[StrictStr] = Field(default=None, description="The city of residence.", alias="residenceCity")
     residence_state: Optional[StrictStr] = Field(default=None, description="The state of residence.", alias="residenceState")
     residence_zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of the residence.", alias="residenceZip")
-    residence_country: Optional[StrictStr] = Field(default=None, description="The country of residence.", alias="residenceCountry")
+    residence_country: StrictStr = Field(description="The country of residence.", alias="residenceCountry")
     residence_is_mailing: Optional[StrictBool] = Field(default=None, description="Indicates whether the residence address is also the mailing address.", alias="residenceIsMailing")
     mailing_address: Optional[StrictStr] = Field(default=None, description="The mailing address.", alias="mailingAddress")
     mailing_city: Optional[StrictStr] = Field(default=None, description="The city of the mailing address.", alias="mailingCity")
@@ -68,7 +67,7 @@ class W8BenEFormRequest(BaseModel):
     foreign_tin_not_required: Optional[StrictBool] = Field(default=None, description="Indicates whether a foreign TIN is not required.", alias="foreignTinNotRequired")
     foreign_tin: Optional[StrictStr] = Field(default=None, description="The foreign taxpayer identification number (TIN).", alias="foreignTin")
     reference_number: Optional[StrictStr] = Field(default=None, description="A reference number for the form.", alias="referenceNumber")
-    disregarded_entity_fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status of disregarded entity or branch receiving payment.", alias="disregardedEntityFatcaStatus")
+    disregarded_entity_fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status of disregarded entity or branch receiving payment.  Available values:  - 1: Limited Branch  - 2: U.S. Branch  - 3: Participating FFI  - 4: Reporting Model 1 FFI  - 5: Reporting Model 2 FFI", alias="disregardedEntityFatcaStatus")
     disregarded_address: Optional[StrictStr] = Field(default=None, description="The address for disregarded entities.", alias="disregardedAddress")
     disregarded_city: Optional[StrictStr] = Field(default=None, description="The city for disregarded entities.", alias="disregardedCity")
     disregarded_state: Optional[StrictStr] = Field(default=None, description="The state for disregarded entities.", alias="disregardedState")
@@ -78,7 +77,7 @@ class W8BenEFormRequest(BaseModel):
     treaty_country_certification: Optional[StrictBool] = Field(default=None, description="Certifies the beneficial owner's country under the U.S. tax treaty.", alias="treatyCountryCertification")
     treaty_country: Optional[StrictStr] = Field(default=None, description="The treaty country of the beneficial owner.", alias="treatyCountry")
     benefit_limitation_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the beneficial owner is eligible for treaty benefits and meets any limitation on benefits requirements.", alias="benefitLimitationCertification")
-    benefit_limitation: Optional[StrictStr] = Field(default=None, description="The benefit limitation for tax treaty claims.", alias="benefitLimitation")
+    benefit_limitation: Optional[StrictStr] = Field(default=None, description="The benefit limitation for tax treaty claims.  Available values:  - 1: Government  - 2: Tax exempt pension trust or pension fund  - 3: Other tax exempt organization  - 4: Publicly traded corporation  - 5: Subsidiary of a publicly traded corporation  - 6: Company that meets the ownership and base erosion test  - 7: Company that meets the derivative benefits test  - 8: Company with an item of income that meets active trade or business test  - 9: Favorable discretionary determination by the U.S. competent authority received  - 10: Other", alias="benefitLimitation")
     qualified_resident_status_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the beneficial owner claims treaty benefits and meets the qualified resident status for specific U.S. source income.", alias="qualifiedResidentStatusCertification")
     treaty_article: Optional[StrictStr] = Field(default=None, description="Indicates the specific article and paragraph of the tax treaty under which the beneficial owner is claiming benefits.", alias="treatyArticle")
     withholding_rate: Optional[StrictStr] = Field(default=None, description="Specifies the reduced withholding rate claimed under the applicable tax treaty.", alias="withholdingRate")
@@ -102,7 +101,7 @@ class W8BenEFormRequest(BaseModel):
     restricted_distributor_preexisting_sales_compliance_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity complies with distribution restrictions for U.S.-linked investors  and has addressed any preexisting sales in accordance with FATCA regulations.", alias="restrictedDistributorPreexistingSalesComplianceCertification")
     nonreporting_iga_ffi_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity meets the requirements to be considered a nonreporting financial institution to an applicable IGA.", alias="nonreportingIgaFfiCertification")
     iga_country: Optional[StrictStr] = Field(default=None, description="The country for the applicable IGA with the United States.", alias="igaCountry")
-    iga_model: Optional[StrictStr] = Field(default=None, description="The applicable IGA model.", alias="igaModel")
+    iga_model: Optional[StrictStr] = Field(default=None, description="The applicable IGA model.  Available values:  - 1: Model 1 IGA  - 2: Model 2 IGA", alias="igaModel")
     iga_legal_status_treatment: Optional[StrictStr] = Field(default=None, description="Specifies how the applicable IGA is treated under the IGA provisions or Treasury regulations.", alias="igaLegalStatusTreatment")
     iga_ffi_trustee_or_sponsor: Optional[StrictStr] = Field(default=None, description="The trustee or sponsor name for the nonreporting IGA FFI.", alias="igaFfiTrusteeOrSponsor")
     iga_ffi_trustee_is_foreign: Optional[StrictBool] = Field(default=None, description="Indicates whether the trustee for the nonreporting IGA FFI is foreign.", alias="igaFfiTrusteeIsForeign")
@@ -143,7 +142,7 @@ class W8BenEFormRequest(BaseModel):
     capacity_to_sign_certification: Optional[StrictBool] = Field(default=None, description="Certifies signer has the capacity to sign for the beneficial owner.", alias="capacityToSignCertification")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
-    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company. Required when creating a form.", alias="companyId")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     __properties: ClassVar[List[str]] = ["eDeliveryConsentedAt", "signature", "type", "companyId", "referenceId", "email"]

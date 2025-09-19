@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -46,7 +46,6 @@ from typing_extensions import Annotated
 from Avalara.SDK.models.A1099.V2.create_and_send_w9_form_email_request import CreateAndSendW9FormEmailRequest
 from Avalara.SDK.models.A1099.V2.create_w9_form201_response import CreateW9Form201Response
 from Avalara.SDK.models.A1099.V2.create_w9_form_request import CreateW9FormRequest
-from Avalara.SDK.models.A1099.V2.iw9_form_data_models_one_of import IW9FormDataModelsOneOf
 from Avalara.SDK.models.A1099.V2.paginated_query_result_model_w9_form_base_response import PaginatedQueryResultModelW9FormBaseResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
@@ -62,7 +61,7 @@ class FormsW9Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.8.3")
+        api_client.set_sdk_version("25.9.0")
         self.api_client = api_client
 		
         self.create_and_send_w9_form_email_endpoint = _Endpoint(
@@ -515,7 +514,7 @@ class FormsW9Api(object):
         )
         self.update_w9_form_endpoint = _Endpoint(
             settings={
-                'response_type': (IW9FormDataModelsOneOf,),
+                'response_type': (CreateW9Form201Response,),
                 'auth': [
                     'bearer'
                 ],
@@ -530,7 +529,7 @@ class FormsW9Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'iw9_form_data_models_one_of',
+                    'create_w9_form_request',
                 ],
                 'required': [
                     'id',
@@ -557,8 +556,8 @@ class FormsW9Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'iw9_form_data_models_one_of':
-                        (IW9FormDataModelsOneOf,),
+                    'create_w9_form_request':
+                        (CreateW9FormRequest,),
                 },
                 'attribute_map': {
                     'id': 'id',
@@ -571,7 +570,7 @@ class FormsW9Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'iw9_form_data_models_one_of': 'body',
+                    'create_w9_form_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -1037,7 +1036,7 @@ class FormsW9Api(object):
     ):
         """Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form  # noqa: E501
 
-        Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form.   If the form is not in 'Requested' status, it will either use an existing descendant form   in 'Requested' status or create a new minimal form and send the email request.  # noqa: E501
+        Send an email to the vendor/payee requesting they fill out a W9/W4/W8 form.  If the form is not in 'Requested' status, it will either use an existing descendant form  in 'Requested' status or create a new minimal form and send the email request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1123,7 +1122,7 @@ class FormsW9Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            iw9_form_data_models_one_of (IW9FormDataModelsOneOf): Form to be updated. [optional]
+            create_w9_form_request (CreateW9FormRequest): Form to be updated. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1145,7 +1144,7 @@ class FormsW9Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            IW9FormDataModelsOneOf
+            CreateW9Form201Response
                 If the method is called asynchronously, returns the request
                 thread.
         """

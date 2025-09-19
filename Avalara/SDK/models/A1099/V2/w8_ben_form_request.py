@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,7 +36,6 @@ import json
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -45,19 +44,19 @@ class W8BenFormRequest(BaseModel):
     W8BenFormRequest
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The form type (always \"w8ben\" for this model).")
-    name: Optional[StrictStr] = Field(default=None, description="The name of the individual or entity associated with the form.")
-    citizenship_country: Optional[StrictStr] = Field(default=None, description="The country of citizenship.", alias="citizenshipCountry")
+    name: StrictStr = Field(description="The name of the individual or entity associated with the form.")
+    citizenship_country: StrictStr = Field(description="The country of citizenship.", alias="citizenshipCountry")
     residence_address: Optional[StrictStr] = Field(default=None, description="The residential address of the individual or entity.", alias="residenceAddress")
     residence_city: Optional[StrictStr] = Field(default=None, description="The city of residence.", alias="residenceCity")
     residence_state: Optional[StrictStr] = Field(default=None, description="The state of residence.", alias="residenceState")
     residence_zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of the residence.", alias="residenceZip")
-    residence_country: Optional[StrictStr] = Field(default=None, description="The country of residence.", alias="residenceCountry")
+    residence_country: StrictStr = Field(description="The country of residence.", alias="residenceCountry")
     residence_is_mailing: Optional[StrictBool] = Field(default=None, description="Indicates whether the residence address is the mailing address.", alias="residenceIsMailing")
     mailing_address: Optional[StrictStr] = Field(default=None, description="The mailing address.", alias="mailingAddress")
     mailing_city: Optional[StrictStr] = Field(default=None, description="The city of the mailing address.", alias="mailingCity")
     mailing_state: Optional[StrictStr] = Field(default=None, description="The state of the mailing address.", alias="mailingState")
     mailing_zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of the mailing address.", alias="mailingZip")
-    mailing_country: Optional[StrictStr] = Field(default=None, description="The country of the mailing address.", alias="mailingCountry")
+    mailing_country: Optional[StrictStr] = Field(description="The country of the mailing address.", alias="mailingCountry")
     tin: Optional[StrictStr] = Field(default=None, description="The taxpayer identification number (TIN).")
     foreign_tin_not_required: Optional[StrictBool] = Field(default=None, description="Indicates whether a foreign TIN is not legally required.", alias="foreignTinNotRequired")
     foreign_tin: Optional[StrictStr] = Field(default=None, description="The foreign taxpayer identification number (TIN).", alias="foreignTin")
@@ -71,7 +70,7 @@ class W8BenFormRequest(BaseModel):
     signer_name: Optional[StrictStr] = Field(default=None, description="The name of the signer of the form.", alias="signerName")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
-    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company. Required when creating a form.", alias="companyId")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     __properties: ClassVar[List[str]] = ["eDeliveryConsentedAt", "signature", "type", "companyId", "referenceId", "email"]
