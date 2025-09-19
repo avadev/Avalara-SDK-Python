@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**type** | **str** | The form type. | [optional] [readonly] 
 **id** | **str** | The unique identifier for the form. | [optional] 
 **entry_status** | [**EntryStatusResponse**](EntryStatusResponse.md) | The entry status information for the form. | [optional] 
 **reference_id** | **str** | A reference identifier for the form. | [optional] 
@@ -18,7 +19,6 @@ Name | Type | Description | Notes
 **e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
 **created_at** | **datetime** | The creation date of the form. | [optional] 
 **updated_at** | **datetime** | The last updated date of the form. | [optional] 
-**type** | **str** | The type of the response object. | [optional] 
 
 ## Example
 

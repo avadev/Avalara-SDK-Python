@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -45,7 +45,7 @@ from typing_extensions import Self
 
 class Form1099Div(BaseModel):
     """
-    Form 1099-DIV: Dividends and Distributions
+    Form 1099-DIV: Dividends and Distributions                *At least one of the following dividend or distribution amounts must be provided:*   Total ordinary dividends, Total capital gain distributions, Nondividend distributions,   Cash liquidation distributions, Noncash liquidation distributions, or Exempt-interest dividends.
     """ # noqa: E501
     total_ordinary_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total ordinary dividends", alias="totalOrdinaryDividends")
     qualified_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Qualified dividends", alias="qualifiedDividends")
@@ -65,17 +65,17 @@ class Form1099Div(BaseModel):
     noncash_liquidation_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Noncash liquidation distributions", alias="noncashLiquidationDistributions")
     exempt_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Exempt-interest dividends", alias="exemptInterestDividends")
     specified_private_activity_bond_interest_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Specified private activity bond interest dividends", alias="specifiedPrivateActivityBondInterestDividends")
-    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement", alias="fatcaFilingRequirement")
-    type: StrictStr = Field(description="Form type")
+    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement.", alias="fatcaFilingRequirement")
+    type: StrictStr = Field(description="Form type.")
     id: Optional[StrictStr] = Field(default=None, description="Form ID. Unique identifier set when the record is created.")
     issuer_id: Optional[StrictStr] = Field(default=None, description="Issuer ID - only required when creating forms", alias="issuerId")
-    issuer_reference_id: Optional[StrictStr] = Field(default=None, description="Issuer Reference ID - only required when creating forms", alias="issuerReferenceId")
+    issuer_reference_id: Optional[StrictStr] = Field(default=None, description="Issuer Reference ID - only required when creating forms via $bulk-upsert", alias="issuerReferenceId")
     issuer_tin: Optional[StrictStr] = Field(default=None, description="Issuer TIN - readonly", alias="issuerTin")
-    tax_year: Optional[StrictInt] = Field(default=None, description="Tax Year - only required when creating forms", alias="taxYear")
+    tax_year: Optional[StrictInt] = Field(default=None, description="Tax Year - only required when creating forms via $bulk-upsert", alias="taxYear")
     reference_id: Optional[StrictStr] = Field(default=None, description="Internal reference ID. Never shown to any agency or recipient.", alias="referenceId")
     tin: Optional[StrictStr] = Field(default=None, description="Recipient's Federal Tax Identification Number (TIN).")
     recipient_name: Optional[StrictStr] = Field(description="Recipient name", alias="recipientName")
-    tin_type: Optional[StrictStr] = Field(default=None, description="Type of TIN (Tax ID Number)", alias="tinType")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Tax Identification Number (TIN) type.  Available values: - EIN: Employer Identification Number - SSN: Social Security Number - ITIN: Individual Taxpayer Identification Number - ATIN: Adoption Taxpayer Identification Number", alias="tinType")
     recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
     address: Optional[StrictStr] = Field(description="Address.")
     address2: Optional[StrictStr] = Field(default=None, description="Address line 2.")
@@ -87,21 +87,21 @@ class Form1099Div(BaseModel):
     office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
     non_us_province: Optional[StrictStr] = Field(default=None, description="Province or region for non-US/CA addresses.", alias="nonUsProvince")
     country_code: Optional[StrictStr] = Field(description="Two-letter IRS country code (e.g., 'US', 'CA'), as defined at https://www.irs.gov/e-file-providers/country-codes.", alias="countryCode")
-    federal_efile_date: Optional[date] = Field(default=None, description="Date when federal e-filing should be scheduled for this form", alias="federalEfileDate")
+    federal_efile_date: Optional[date] = Field(default=None, description="Date when federal e-filing should be scheduled. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled.", alias="federalEfileDate")
     postal_mail: Optional[StrictBool] = Field(default=None, description="Boolean indicating that postal mailing to the recipient should be scheduled for this form", alias="postalMail")
-    state_efile_date: Optional[date] = Field(default=None, description="Date when state e-filing should be scheduled for this form", alias="stateEfileDate")
-    recipient_edelivery_date: Optional[date] = Field(default=None, description="Date when recipient e-delivery should be scheduled for this form", alias="recipientEdeliveryDate")
+    state_efile_date: Optional[date] = Field(default=None, description="Date when state e-filing should be scheduled. Must be on or after federalEfileDate. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled.", alias="stateEfileDate")
+    recipient_edelivery_date: Optional[date] = Field(default=None, description="Date when recipient e-delivery should be scheduled. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled.", alias="recipientEdeliveryDate")
     tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
     no_tin: Optional[StrictBool] = Field(default=None, description="No TIN indicator", alias="noTin")
     address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
     state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
     second_tin_notice: Optional[StrictBool] = Field(default=None, description="Second TIN notice", alias="secondTinNotice")
-    federal_efile_status: Optional[Form1099StatusDetail] = Field(default=None, description="Federal e-file status", alias="federalEfileStatus")
-    state_efile_status: Optional[List[StateEfileStatusDetail]] = Field(default=None, description="State e-file status", alias="stateEfileStatus")
-    postal_mail_status: Optional[Form1099StatusDetail] = Field(default=None, description="Postal mail to recipient status", alias="postalMailStatus")
-    tin_match_status: Optional[Form1099StatusDetail] = Field(default=None, description="TIN Match status", alias="tinMatchStatus")
-    address_verification_status: Optional[Form1099StatusDetail] = Field(default=None, description="Address verification status", alias="addressVerificationStatus")
-    e_delivery_status: Optional[Form1099StatusDetail] = Field(default=None, description="EDelivery status", alias="eDeliveryStatus")
+    federal_efile_status: Optional[Form1099StatusDetail] = Field(default=None, description="Federal e-file status.  Available values:  - unscheduled: Form has not been scheduled for federal e-filing  - scheduled: Form is scheduled for federal e-filing  - airlock: Form is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - sent: Form has been sent to the IRS  - accepted: Form was accepted by the IRS  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlock: Correction is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - corrected: A correction has been sent to the IRS  - corrected_accepted: Correction was accepted by the IRS  - rejected: Form was rejected by the IRS  - corrected_rejected: Correction was rejected by the IRS  - held: Form is held and will not be submitted to IRS (used for certain forms submitted only to states)", alias="federalEfileStatus")
+    state_efile_status: Optional[List[StateEfileStatusDetail]] = Field(default=None, description="State e-file status.  Available values:  - unscheduled: Form has not been scheduled for state e-filing  - scheduled: Form is scheduled for state e-filing  - airlocked: Form is in process of being uploaded to the state  - sent: Form has been sent to the state  - rejected: Form was rejected by the state  - accepted: Form was accepted by the state  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlocked: Correction is in process of being uploaded to the state  - corrected_sent: Correction has been sent to the state  - corrected_rejected: Correction was rejected by the state  - corrected_accepted: Correction was accepted by the state", alias="stateEfileStatus")
+    postal_mail_status: Optional[Form1099StatusDetail] = Field(default=None, description="Postal mail to recipient status.  Available values:  - unscheduled: Postal mail has not been scheduled  - pending: Postal mail is pending to be sent  - sent: Postal mail has been sent  - delivered: Postal mail has been delivered", alias="postalMailStatus")
+    tin_match_status: Optional[Form1099StatusDetail] = Field(default=None, description="TIN Match status.  Available values:  - none: TIN matching has not been performed  - pending: TIN matching request is pending  - matched: Name/TIN combination matches IRS records  - unknown: TIN is missing, invalid, or request contains errors  - rejected: Name/TIN combination does not match IRS records or TIN not currently issued", alias="tinMatchStatus")
+    address_verification_status: Optional[Form1099StatusDetail] = Field(default=None, description="Address verification status.  Available values:  - unknown: Address verification has not been checked  - pending: Address verification is in progress  - failed: Address verification failed  - incomplete: Address verification is incomplete  - unchanged: User declined address changes  - verified: Address has been verified and accepted", alias="addressVerificationStatus")
+    e_delivery_status: Optional[Form1099StatusDetail] = Field(default=None, description="EDelivery status.  Available values:  - unscheduled: E-delivery has not been scheduled  - scheduled: E-delivery is scheduled to be sent  - sent: E-delivery has been sent to recipient  - bounced: E-delivery bounced back (invalid email)  - refused: E-delivery was refused by recipient  - bad_verify: E-delivery failed verification  - accepted: E-delivery was accepted by recipient  - bad_verify_limit: E-delivery failed verification limit reached  - second_delivery: Second e-delivery attempt  - undelivered: E-delivery is undelivered (temporary state allowing resend)", alias="eDeliveryStatus")
     validation_errors: Optional[List[ValidationError]] = Field(default=None, description="Validation errors", alias="validationErrors")
     created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
@@ -110,8 +110,8 @@ class Form1099Div(BaseModel):
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT']):
-            raise ValueError("must be one of enum values ('1099-NEC', '1099-MISC', '1099-DIV', '1099-R', '1099-K', '1095-B', '1042-S', '1095-C', '1099-INT')")
+        if value not in set(['Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B', 'Form1042S', 'Form1095C', 'Form1099Int']):
+            raise ValueError("must be one of enum values ('Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B', 'Form1042S', 'Form1095C', 'Form1099Int')")
         return value
 
     @field_validator('tin_type')
@@ -120,8 +120,8 @@ class Form1099Div(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['Empty', 'EIN', 'SSN', 'ITIN', 'ATIN']):
-            raise ValueError("must be one of enum values ('Empty', 'EIN', 'SSN', 'ITIN', 'ATIN')")
+        if value not in set(['EIN', 'SSN', 'ITIN', 'ATIN']):
+            raise ValueError("must be one of enum values ('EIN', 'SSN', 'ITIN', 'ATIN')")
         return value
 
     model_config = ConfigDict(
@@ -354,6 +354,11 @@ class Form1099Div(BaseModel):
         # and model_fields_set contains the field
         if self.state_and_local_withholding is None and "state_and_local_withholding" in self.model_fields_set:
             _dict['stateAndLocalWithholding'] = None
+
+        # set to None if second_tin_notice (nullable) is None
+        # and model_fields_set contains the field
+        if self.second_tin_notice is None and "second_tin_notice" in self.model_fields_set:
+            _dict['secondTinNotice'] = None
 
         # set to None if federal_efile_status (nullable) is None
         # and model_fields_set contains the field

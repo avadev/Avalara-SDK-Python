@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **email** | **str** | The email address of the individual associated with the form. | 
 **name** | **str** | The name of the individual or entity associated with the form. | 
 **reference_number** | **str** | A reference number for the form. | [optional] 
-**company_id** | **str** | The ID of the associated company. | 
+**company_id** | **str** | The ID of the associated company. Required when creating a form. | [optional] 
 **reference_id** | **str** | A reference identifier for the form. | [optional] 
 
 ## Example

@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,7 +36,6 @@ import json
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -45,28 +44,28 @@ class W8ImyFormRequest(BaseModel):
     W8ImyFormRequest
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The form type (always \"w8imy\" for this model).")
-    name: Optional[StrictStr] = Field(default=None, description="The name of the individual or entity associated with the form.")
-    citizenship_country: Optional[StrictStr] = Field(default=None, description="The country of citizenship.", alias="citizenshipCountry")
+    name: StrictStr = Field(description="The name of the individual or entity associated with the form.")
+    citizenship_country: StrictStr = Field(description="The country of citizenship.", alias="citizenshipCountry")
     disregarded_entity: Optional[StrictStr] = Field(default=None, description="The name of the disregarded entity receiving the payment (if applicable).", alias="disregardedEntity")
-    entity_type: Optional[StrictStr] = Field(default=None, description="The entity type.", alias="entityType")
-    fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status.", alias="fatcaStatus")
+    entity_type: StrictStr = Field(description="The entity type.  Available values:  - 1: QI (including a QDD). Complete Part III.  - 2: Nonqualified intermediary. Complete Part IV.  - 3: Territory financial institution. Complete Part V.  - 4: U.S. branch. Complete Part VI.  - 5: Withholding foreign partnership. Complete Part VII.  - 6: Withholding foreign trust. Complete Part VII.  - 7: Nonwithholding foreign partnership. Complete Part VIII.  - 8: Nonwithholding foreign simple trust. Complete Part VIII.  - 9: Nonwithholding foreign grantor trust. Complete Part VIII.", alias="entityType")
+    fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status.  Available values:  - 1: Nonparticipating foreign financial institution (FFI) (including an FFI related to a Reporting IGA FFI other than a deemed-compliant FFI, participating FFI, or exempt beneficial owner). Complete Part IX (if applicable).  - 2: Participating FFI.  - 3: Reporting Model 1 FFI.  - 4: Reporting Model 2 FFI.  - 5: Registered deemed-compliant FFI (other than a reporting Model 1 FFI, sponsored FFI, or nonreporting IGA FFI covered in Part XIX).  - 6: Territory financial institution. Complete Part V.  - 7: Sponsored FFI (other than a certified deemed-compliant sponsored, closely held investment vehicle). Complete Part X.  - 8: Certified deemed-compliant nonregistering local bank. Complete Part XII.  - 9: Certified deemed-compliant FFI with only low-value accounts. Complete Part XIII.  - 10: Certified deemed-compliant sponsored, closely held investment vehicle. Complete Part XIV.  - 11: Certified deemed-compliant limited life debt investment entity. Complete Part XV.  - 12: Certain investment entities that do not maintain financial accounts. Complete Part XVI.  - 13: Owner-documented FFI. Complete Part XI.  - 14: Restricted distributor. Complete Part XVII.  - 15: Foreign central bank of issue. Complete Part XVIII.  - 16: Nonreporting IGA FFI. Complete Part XIX.  - 17: Exempt retirement plans. Complete Part XX.  - 18: Excepted nonfinancial group entity. Complete Part XXI.  - 19: Excepted nonfinancial start-up company. Complete Part XXII.  - 20: Excepted nonfinancial entity in liquidation or bankruptcy. Complete Part XXIII.  - 21: Publicly traded NFFE or NFFE affiliate of a publicly traded corporation. Complete Part XXIV.  - 22: Excepted territory NFFE. Complete Part XXV.  - 23: Active NFFE. Complete Part XXVI.  - 24: Passive NFFE. Complete Part XXVII.  - 25: Direct reporting NFFE.  - 26: Sponsored direct reporting NFFE. Complete Part XXVIII.", alias="fatcaStatus")
     residence_address: Optional[StrictStr] = Field(default=None, description="The residential address of the individual or entity.", alias="residenceAddress")
     residence_city: Optional[StrictStr] = Field(default=None, description="The city of residence.", alias="residenceCity")
     residence_state: Optional[StrictStr] = Field(default=None, description="The state of residence.", alias="residenceState")
     residence_zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of the residence.", alias="residenceZip")
-    residence_country: Optional[StrictStr] = Field(default=None, description="The country of residence.", alias="residenceCountry")
+    residence_country: StrictStr = Field(description="The country of residence.", alias="residenceCountry")
     residence_is_mailing: Optional[StrictBool] = Field(default=None, description="Indicates whether the residence address is also the mailing address.", alias="residenceIsMailing")
     mailing_address: Optional[StrictStr] = Field(default=None, description="The mailing address.", alias="mailingAddress")
     mailing_city: Optional[StrictStr] = Field(default=None, description="The city of the mailing address.", alias="mailingCity")
     mailing_state: Optional[StrictStr] = Field(default=None, description="The state of the mailing address.", alias="mailingState")
     mailing_zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of the mailing address.", alias="mailingZip")
     mailing_country: Optional[StrictStr] = Field(default=None, description="The country of the mailing address.", alias="mailingCountry")
-    tin_type: Optional[StrictStr] = Field(default=None, description="The type of TIN provided.", alias="tinType")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Tax Identification Number (TIN) type.  Available values: - QI-EIN: Qualified Intermediary EIN - WP-EIN: Withholding Partnership EIN - WT-EIN: Withholding Trust EIN - EIN: Employer Identification Number", alias="tinType")
     tin: Optional[StrictStr] = Field(default=None, description="The taxpayer identification number (TIN).")
     giin: Optional[StrictStr] = Field(default=None, description="The global intermediary identification number (GIIN).")
     foreign_tin: Optional[StrictStr] = Field(default=None, description="The foreign taxpayer identification number (TIN).", alias="foreignTin")
     reference_number: Optional[StrictStr] = Field(default=None, description="A reference number for the form.", alias="referenceNumber")
-    disregarded_entity_fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status of disregarded entity or branch receiving payment.", alias="disregardedEntityFatcaStatus")
+    disregarded_entity_fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status of disregarded entity or branch receiving payment.  Available values:  - 1: Branch treated as nonparticipating FFI.  - 2: Participating FFI.  - 3: Reporting Model 1 FFI.  - 4: Reporting Model 2 FFI.  - 5: U.S. Branch", alias="disregardedEntityFatcaStatus")
     disregarded_address: Optional[StrictStr] = Field(default=None, description="The address for disregarded entities.", alias="disregardedAddress")
     disregarded_city: Optional[StrictStr] = Field(default=None, description="The city for disregarded entities.", alias="disregardedCity")
     disregarded_state: Optional[StrictStr] = Field(default=None, description="The state for disregarded entities.", alias="disregardedState")
@@ -130,7 +129,7 @@ class W8ImyFormRequest(BaseModel):
     foreign_central_bank_of_issue_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity is treated as the beneficial owner of the payment solely  for purposes of chapter 4 under Regulations section 1.1471-6(d)(4).", alias="foreignCentralBankOfIssueCertification")
     nonreporting_iga_ffi_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the entity meets the requirements to be considered a nonreporting financial institution to an applicable IGA.", alias="nonreportingIgaFfiCertification")
     iga_country: Optional[StrictStr] = Field(default=None, description="The country for the applicable IGA with the United States.", alias="igaCountry")
-    iga_model: Optional[StrictStr] = Field(default=None, description="The applicable IGA model.", alias="igaModel")
+    iga_model: Optional[StrictStr] = Field(default=None, description="The applicable IGA model.  Available values:  - 1: Model 1 IGA  - 2: Model 2 IGA", alias="igaModel")
     iga_legal_status_treatment: Optional[StrictStr] = Field(default=None, description="Specifies how the applicable IGA is treated under the IGA provisions or Treasury regulations.", alias="igaLegalStatusTreatment")
     iga_ffi_trustee_or_sponsor: Optional[StrictStr] = Field(default=None, description="The trustee or sponsor name for the nonreporting IGA FFI.", alias="igaFfiTrusteeOrSponsor")
     iga_ffi_trustee_is_foreign: Optional[StrictBool] = Field(default=None, description="Indicates whether the trustee for the nonreporting IGA FFI is foreign.", alias="igaFfiTrusteeIsForeign")
@@ -158,7 +157,7 @@ class W8ImyFormRequest(BaseModel):
     signer_name: Optional[StrictStr] = Field(default=None, description="The name of the signer.", alias="signerName")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
-    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company. Required when creating a form.", alias="companyId")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     __properties: ClassVar[List[str]] = ["eDeliveryConsentedAt", "signature", "type", "companyId", "referenceId", "email"]

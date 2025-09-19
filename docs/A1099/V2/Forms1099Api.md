@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 Create or update multiple 1099/1095/W2/1042S forms
 
-This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms.  Maximum of 5000 forms can be processed in a single bulk request.
+This endpoint allows you to create or update multiple 1099/1095/W2/1042S forms.  Maximum of 5000 forms can be processed in a single bulk request.    **Date Scheduling Rules:**    If federalEfileDate, stateEfileDate, or recipientEdeliveryDate are between current date and beginning of blackout period, scheduled to that date.  If dates are in the past or blackout period, scheduled to next available date.  For blackout period information, see https://www.track1099.com/info/IRS_info.  StateEfileDate must be on or after federalEfileDate.  Set dates to null to leave unscheduled.
 
 ### Example
 
@@ -48,9 +48,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
     dry_run = False # bool | defaults to false. If true, it will NOT change the DB. It will just return a report of what would've have been changed in the DB (optional) if omitted the server will use the default value of False
-    x_correlation_id = '16e56e1f-e623-4f23-9904-21c29b5b4545' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '5ef65de0-c394-4aa2-b249-d8bfcbe9b23a' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    form1099_list_request = {"type":"1099-NEC","forms":[{"type":"1099-NEC","issuerId":"12345","issuerReferenceId":"ISSUER-REF-2024","taxYear":2024,"referenceId":"NEC-REF-001","tin":"123456789","recipientName":"John Doe","tinType":"SSN","recipientSecondName":"Doe Enterprises","address":"123 Main Street","address2":"Suite 100","city":"New York","state":"NY","zip":"10001","email":"john.doe@example.com","accountNumber":"ACC123456","officeCode":"NYC01","countryCode":"US","nonemployeeCompensation":15000.0,"directSalesIndicator":true,"federalIncomeTaxWithheld":3000.0,"secondTinNotice":false,"federalEfileDate":"2024-03-15","stateEfileDate":"2024-03-20","recipientEdeliveryDate":"2024-03-25","postalMail":false,"tinMatch":true,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":500.0,"state":"NY","stateIdNumber":"NY123456","stateIncome":15000.0,"localTaxWithheld":250.0,"locality":"New York City","localityIdNumber":"NYC789","localIncome":15000.0}}]} # Form1099ListRequest |  (optional)
+    form1099_list_request = {"type":"1042-S","forms":[{"type":"1042-S","issuerId":"12345","issuerReferenceId":"issuer-001","issuerTin":"94-2765431","taxYear":2024,"referenceId":"1042S-REF-001","tin":"112233445","recipientName":"Michael Jackson","recipientSecondName":"SuperStart","address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","accountNumber":"ACC01","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2024-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2024-03-25","tinMatch":false,"noTin":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateIdNumber":"CA98765432"},"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}}]} # Form1099ListRequest |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create or update multiple 1099/1095/W2/1042S forms
@@ -110,7 +110,7 @@ Name | Type | Description  | Notes
 
 Create a 1099/1095/W2/1042S form
 
-Create a 1099/1095/W2/1042S form.
+Create a 1099/1095/W2/1042S form.    **Date Scheduling Rules:**    If federalEfileDate, stateEfileDate, or recipientEdeliveryDate are between current date and beginning of blackout period, scheduled to that date.  If dates are in the past or blackout period, scheduled to next available date.  For blackout period information, see https://www.track1099.com/info/IRS_info.  StateEfileDate must be on or after federalEfileDate.  Set dates to null to leave unscheduled.
 
 ### Example
 
@@ -138,9 +138,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'e4a7bf40-da9f-452a-b2db-c8b64721610b' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '5b55b569-4e1e-44d3-920c-65153461c426' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    get1099_form200_response = {"type":"1099-NEC","issuerId":"12345","issuerReferenceId":"ISSUER-REF-2024","taxYear":2024,"referenceId":"NEC-REF-001","tin":"123456789","recipientName":"John Doe","tinType":"SSN","recipientSecondName":"Doe Enterprises","address":"123 Main Street","address2":"Suite 100","city":"New York","state":"NY","zip":"10001","email":"john.doe@example.com","accountNumber":"ACC123456","officeCode":"NYC01","countryCode":"US","nonemployeeCompensation":15000.0,"directSalesIndicator":true,"federalIncomeTaxWithheld":3000.0,"secondTinNotice":false,"federalEfileDate":"2024-03-15","stateEfileDate":"2024-03-20","recipientEdeliveryDate":"2024-03-25","postalMail":false,"tinMatch":true,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":500.0,"state":"NY","stateIdNumber":"NY123456","stateIncome":15000.0,"localTaxWithheld":250.0,"locality":"New York City","localityIdNumber":"NYC789","localIncome":15000.0}} # Get1099Form200Response |  (optional)
+    get1099_form200_response = {"type":"1042-S","issuerId":"12345","referenceId":"1042S-REF-001","tin":"112233445","recipientName":"Michael Jackson","recipientSecondName":"SuperStart","address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","accountNumber":"ACC01","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2024-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2024-03-25","tinMatch":false,"noTin":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateIdNumber":"CA98765432"},"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}} # Get1099Form200Response |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create a 1099/1095/W2/1042S form
@@ -226,7 +226,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | The unique identifier of the desired form to delete.
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '8e01e950-8e1c-4b1b-9120-2e2452c6d590' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'e82ee14f-7146-41a5-b856-28f403d65e29' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -314,7 +314,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '7b8174a3-a873-4a05-a619-f362955f4608' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'f5198e72-fc87-4a4d-a09a-b2aa6cf70c38' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -403,7 +403,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     id = 'id_example' # str | The ID of the form
     avalara_version = '2.0.0' # str | API version
     mark_edelivered = True # bool | Optional boolean that if set indicates that the form should be marked as having been successfully edelivered (optional)
-    x_correlation_id = 'a4dd3a23-ae45-45a5-8612-75e2fe4c1f36' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '7fdfd0b2-cebf-4f25-8a65-6dd03811e77d' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -498,7 +498,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = 'f808e46a-fc55-4dd7-960d-13c6ba8176f2' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '97f7596c-99c0-4879-b47c-57df572a32c9' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -563,7 +563,7 @@ Name | Type | Description  | Notes
 
 Update a 1099/1095/W2/1042S form
 
-Update a 1099/1095/W2/1042S form.
+Update a 1099/1095/W2/1042S form.    **Date Update Rules:**    Possible to update scheduled dates (same validation rules apply).  Cannot change from scheduled to unscheduled status - must delete form and create new one.  If dates are between current date and blackout period, scheduled to that date.  If dates are in past or blackout period, scheduled to next available date.  For blackout period information, see https://www.track1099.com/info/IRS_info.  StateEfileDate must be on or after federalEfileDate.
 
 ### Example
 
@@ -592,9 +592,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '944ee583-b810-471c-852c-d3c6f8b93a4b' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '560aa857-d5ba-484b-9375-a14e9e57d7a8' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    get1099_form200_response = {"type":"1099-NEC","issuerId":"12345","issuerReferenceId":"ISSUER-REF-2024","taxYear":2024,"referenceId":"NEC-REF-001","tin":"123456789","recipientName":"John Doe","tinType":"SSN","recipientSecondName":"Doe Enterprises","address":"123 Main Street","address2":"Suite 100","city":"New York","state":"NY","zip":"10001","email":"john.doe@example.com","accountNumber":"ACC123456","officeCode":"NYC01","countryCode":"US","nonemployeeCompensation":15000.0,"directSalesIndicator":true,"federalIncomeTaxWithheld":3000.0,"secondTinNotice":false,"federalEfileDate":"2024-03-15","stateEfileDate":"2024-03-20","recipientEdeliveryDate":"2024-03-25","postalMail":false,"tinMatch":true,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":500.0,"state":"NY","stateIdNumber":"NY123456","stateIncome":15000.0,"localTaxWithheld":250.0,"locality":"New York City","localityIdNumber":"NYC789","localIncome":15000.0}} # Get1099Form200Response |  (optional)
+    get1099_form200_response = {"type":"1042-S","issuerId":"12345","referenceId":"1042S-REF-001","tin":"112233445","recipientName":"Michael Jackson","recipientSecondName":"SuperStart","address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","accountNumber":"ACC01","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2024-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2024-03-25","tinMatch":false,"noTin":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateIdNumber":"CA98765432"},"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}} # Get1099Form200Response |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Update a 1099/1095/W2/1042S form

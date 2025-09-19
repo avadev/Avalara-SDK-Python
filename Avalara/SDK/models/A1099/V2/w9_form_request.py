@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,7 +36,6 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -45,27 +44,27 @@ class W9FormRequest(BaseModel):
     W9FormRequest
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The form type (always \"w9\" for this model).")
-    name: Optional[StrictStr] = Field(default=None, description="The name of the individual or entity associated with the form.")
+    name: StrictStr = Field(description="The name of the individual or entity associated with the form.")
     business_name: Optional[StrictStr] = Field(default=None, description="The name of the business associated with the form.", alias="businessName")
-    business_classification: Optional[StrictStr] = Field(default=None, description="The classification of the business.", alias="businessClassification")
+    business_classification: StrictStr = Field(description="The classification of the business.  Available values:  - Individual: Individual/sole proprietor  - C Corporation: C Corporation  - S Corporation: S Corporation  - Partnership: Partnership  - Trust/estate: Trust/estate  - LLC-C: Limited liability company (C Corporation)  - LLC-S: Limited liability company (S Corporation)  - LLC-P: Limited liability company (Partnership)  - Other: Other (requires BusinessOther field to be populated)", alias="businessClassification")
     business_other: Optional[StrictStr] = Field(default=None, description="The classification description when \"businessClassification\" is \"Other\".", alias="businessOther")
     foreign_partner_owner_or_beneficiary: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual is a foreign partner, owner, or beneficiary.", alias="foreignPartnerOwnerOrBeneficiary")
     exempt_payee_code: Optional[StrictStr] = Field(default=None, description="The exempt payee code.", alias="exemptPayeeCode")
     exempt_fatca_code: Optional[StrictStr] = Field(default=None, description="The exemption from FATCA reporting code.", alias="exemptFatcaCode")
     foreign_country_indicator: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual or entity is in a foreign country.", alias="foreignCountryIndicator")
-    address: Optional[StrictStr] = Field(default=None, description="The address of the individual or entity.")
+    address: StrictStr = Field(description="The address of the individual or entity.")
     foreign_address: Optional[StrictStr] = Field(default=None, description="The foreign address of the individual or entity.", alias="foreignAddress")
-    city: Optional[StrictStr] = Field(default=None, description="The city of the address.")
-    state: Optional[StrictStr] = Field(default=None, description="The state of the address.")
-    zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of the address.")
+    city: Optional[StrictStr] = Field(description="The city of the address.")
+    state: Optional[StrictStr] = Field(description="The state of the address.")
+    zip: Optional[StrictStr] = Field(description="The ZIP code of the address.")
     account_number: Optional[StrictStr] = Field(default=None, description="The account number associated with the form.", alias="accountNumber")
-    tin_type: Optional[StrictStr] = Field(default=None, description="The type of TIN provided.", alias="tinType")
-    tin: Optional[StrictStr] = Field(default=None, description="The taxpayer identification number (TIN).")
+    tin_type: StrictStr = Field(description="Tax Identification Number (TIN) type. SSN/ITIN (for individuals) and EIN (for businesses).", alias="tinType")
+    tin: StrictStr = Field(description="The taxpayer identification number (TIN).")
     backup_withholding: Optional[StrictBool] = Field(default=None, description="Indicates whether backup withholding applies.", alias="backupWithholding")
     is1099able: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual or entity should be issued a 1099 form.")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
-    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company. Required when creating a form.", alias="companyId")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     __properties: ClassVar[List[str]] = ["eDeliveryConsentedAt", "signature", "type", "companyId", "referenceId", "email"]

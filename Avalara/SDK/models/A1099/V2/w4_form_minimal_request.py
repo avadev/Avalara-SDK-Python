@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -48,7 +48,7 @@ class W4FormMinimalRequest(BaseModel):
     employee_first_name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The first name of the employee.", alias="employeeFirstName")
     employee_last_name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The last name of the employee.", alias="employeeLastName")
     office_code: Optional[StrictStr] = Field(default=None, description="The office code associated with the form.", alias="officeCode")
-    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company. Required when creating a form.", alias="companyId")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     __properties: ClassVar[List[str]] = ["type", "companyId", "referenceId", "email"]
 

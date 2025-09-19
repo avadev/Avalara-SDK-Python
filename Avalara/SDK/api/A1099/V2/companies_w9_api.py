@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,8 +43,8 @@ from Avalara.SDK.model_utils import (  # noqa: F401
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
+from Avalara.SDK.models.A1099.V2.company_request import CompanyRequest
 from Avalara.SDK.models.A1099.V2.company_response import CompanyResponse
-from Avalara.SDK.models.A1099.V2.create_company_request import CreateCompanyRequest
 from Avalara.SDK.models.A1099.V2.paginated_query_result_model_company_response import PaginatedQueryResultModelCompanyResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
@@ -60,7 +60,7 @@ class CompaniesW9Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.8.3")
+        api_client.set_sdk_version("25.9.0")
         self.api_client = api_client
 		
         self.create_company_endpoint = _Endpoint(
@@ -79,7 +79,7 @@ class CompaniesW9Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'create_company_request',
+                    'company_request',
                 ],
                 'required': [
                     'avalara_version',
@@ -103,8 +103,8 @@ class CompaniesW9Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'create_company_request':
-                        (CreateCompanyRequest,),
+                    'company_request':
+                        (CompanyRequest,),
                 },
                 'attribute_map': {
                     'avalara_version': 'avalara-version',
@@ -115,7 +115,7 @@ class CompaniesW9Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'create_company_request': 'body',
+                    'company_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -386,7 +386,7 @@ class CompaniesW9Api(object):
                     'avalara_version',
                     'x_correlation_id',
                     'x_avalara_client',
-                    'create_company_request',
+                    'company_request',
                 ],
                 'required': [
                     'id',
@@ -413,8 +413,8 @@ class CompaniesW9Api(object):
                         (str,),
                     'x_avalara_client':
                         (str,),
-                    'create_company_request':
-                        (CreateCompanyRequest,),
+                    'company_request':
+                        (CompanyRequest,),
                 },
                 'attribute_map': {
                     'id': 'id',
@@ -427,7 +427,7 @@ class CompaniesW9Api(object):
                     'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
-                    'create_company_request': 'body',
+                    'company_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -469,7 +469,7 @@ class CompaniesW9Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            create_company_request (CreateCompanyRequest): The company to create. [optional]
+            company_request (CompanyRequest): The company to create. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -760,7 +760,7 @@ class CompaniesW9Api(object):
         Keyword Args:
             x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
             x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
-            create_company_request (CreateCompanyRequest): The updated company data. [optional]
+            company_request (CompanyRequest): The updated company data. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

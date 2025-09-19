@@ -36,7 +36,7 @@ import json
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from Avalara.SDK.models.A1099.V2.w8_ben_e_substantial_us_owner_data_model import W8BenESubstantialUsOwnerDataModel
+from Avalara.SDK.models.A1099.V2.A1099.V2.w8_ben_e_substantial_us_owner_data_model import W8BenESubstantialUsOwnerDataModel
 from typing import Optional, Set
 from typing_extensions import Self
 

@@ -6,17 +6,17 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | The form type (always \&quot;w4\&quot; for this model). | [optional] [readonly] 
-**employee_first_name** | **str** | The first name of the employee. | [optional] 
+**employee_first_name** | **str** | The first name of the employee. | 
 **employee_middle_name** | **str** | The middle name of the employee. | [optional] 
-**employee_last_name** | **str** | The last name of the employee. | [optional] 
+**employee_last_name** | **str** | The last name of the employee. | 
 **employee_name_suffix** | **str** | The name suffix of the employee. | [optional] 
-**tin_type** | **str** | The type of TIN provided. | [optional] 
-**tin** | **str** | The taxpayer identification number (TIN). | [optional] 
-**address** | **str** | The address of the employee. | [optional] 
-**city** | **str** | The city of residence of the employee. | [optional] 
-**state** | **str** | The state of residence of the employee. | [optional] 
-**zip** | **str** | The ZIP code of residence of the employee. | [optional] 
-**marital_status** | **str** | The marital status of the employee. | [optional] 
+**tin_type** | **str** | Tax Identification Number (TIN) type. | 
+**tin** | **str** | The taxpayer identification number (TIN). | 
+**address** | **str** | The address of the employee. Required unless exempt. | [optional] 
+**city** | **str** | The city of residence of the employee. Required unless exempt. | [optional] 
+**state** | **str** | The state of residence of the employee. Required unless exempt. | [optional] 
+**zip** | **str** | The ZIP code of residence of the employee. Required unless exempt. | [optional] 
+**marital_status** | **str** | The marital status of the employee. Required unless exempt.  Available values:  - Single: Single or Married filing separately  - Married: Married filing jointly or qualifying surviving spouse  - MarriedBut: Head of household. Check only if you&#39;re unmarried and pay more than half the costs of keeping up a home for yourself and a qualifying individual. | [optional] 
 **last_name_differs** | **bool** | Indicates whether the last name differs from prior records. | [optional] 
 **num_allowances** | **int** | The number of allowances claimed by the employee. | [optional] 
 **other_dependents** | **int** | The number of dependents other than allowances. | [optional] 
@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **office_code** | **str** | The office code associated with the form. | [optional] 
 **e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
 **signature** | **str** | The signature of the form. | [optional] 
-**company_id** | **str** | The ID of the associated company. | 
+**company_id** | **str** | The ID of the associated company. Required when creating a form. | [optional] 
 **reference_id** | **str** | A reference identifier for the form. | [optional] 
 **email** | **str** | The email address of the individual associated with the form. | [optional] 
 

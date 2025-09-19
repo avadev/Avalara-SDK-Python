@@ -5,11 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**type** | **str** | The form type (always \&quot;W4\&quot; for this model). | [optional] [readonly] 
 **employee_first_name** | **str** | The first name of the employee. | [optional] 
 **employee_middle_name** | **str** | The middle name of the employee. | [optional] 
 **employee_last_name** | **str** | The last name of the employee. | [optional] 
 **employee_name_suffix** | **str** | The name suffix of the employee. | [optional] 
-**tin_type** | **str** | The type of TIN provided. | [optional] 
+**tin_type** | **str** | Tax Identification Number (TIN) type. | [optional] 
 **tin** | **str** | The taxpayer identification number (TIN). | [optional] 
 **address** | **str** | The address of the employee. | [optional] 
 **city** | **str** | The city of residence of the employee. | [optional] 
@@ -24,6 +25,19 @@ Name | Type | Description | Notes
 **additional_withheld** | **float** | The additional amount withheld. | [optional] 
 **exempt_from_withholding** | **bool** | Indicates whether the employee is exempt from withholding. | [optional] 
 **office_code** | **str** | The office code associated with the form. | [optional] 
+**id** | **str** | The unique identifier for the form. | [optional] 
+**entry_status** | [**EntryStatusResponse**](EntryStatusResponse.md) | The entry status information for the form. | [optional] 
+**reference_id** | **str** | A reference identifier for the form. | [optional] 
+**company_id** | **str** | The ID of the associated company. | [optional] 
+**display_name** | **str** | The display name associated with the form. | [optional] 
+**email** | **str** | The email address of the individual associated with the form. | [optional] 
+**archived** | **bool** | Indicates whether the form is archived. | [optional] 
+**ancestor_id** | **str** | Form ID of previous version. | [optional] 
+**signature** | **str** | The signature of the form. | [optional] 
+**signed_date** | **datetime** | The date the form was signed. | [optional] 
+**e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
+**created_at** | **datetime** | The creation date of the form. | [optional] 
+**updated_at** | **datetime** | The last updated date of the form. | [optional] 
 
 ## Example
 

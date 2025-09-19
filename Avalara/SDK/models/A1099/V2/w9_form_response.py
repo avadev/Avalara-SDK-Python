@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,18 +33,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import ConfigDict, Field, StrictBool, StrictStr
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from Avalara.SDK.models.A1099.V2.entry_status_response import EntryStatusResponse
 from Avalara.SDK.models.A1099.V2.tin_match_status_response import TinMatchStatusResponse
-from Avalara.SDK.models.A1099.V2.w9_form_base_response import W9FormBaseResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
-class W9FormResponse(W9FormBaseResponse):
+class W9FormResponse(BaseModel):
     """
     W9FormResponse
     """ # noqa: E501
+    type: Optional[StrictStr] = Field(default=None, description="The form type (always \"W9\" for this model).")
     name: Optional[StrictStr] = Field(default=None, description="The name of the individual or entity associated with the form.")
     business_name: Optional[StrictStr] = Field(default=None, description="The name of the business associated with the form.", alias="businessName")
     business_classification: Optional[StrictStr] = Field(default=None, description="The classification of the business.", alias="businessClassification")
@@ -59,12 +60,35 @@ class W9FormResponse(W9FormBaseResponse):
     state: Optional[StrictStr] = Field(default=None, description="The state of the address.")
     zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of the address.")
     account_number: Optional[StrictStr] = Field(default=None, description="The account number associated with the form.", alias="accountNumber")
-    tin_type: Optional[StrictStr] = Field(default=None, description="The type of TIN provided.", alias="tinType")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Tax Identification Number (TIN) type.", alias="tinType")
     tin: Optional[StrictStr] = Field(default=None, description="The taxpayer identification number (TIN).")
     backup_withholding: Optional[StrictBool] = Field(default=None, description="Indicates whether backup withholding applies.", alias="backupWithholding")
     is1099able: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual or entity should be issued a 1099 form.")
     tin_match_status: Optional[TinMatchStatusResponse] = Field(default=None, description="The TIN Match status from IRS.", alias="tinMatchStatus")
-    __properties: ClassVar[List[str]] = ["id", "entryStatus", "referenceId", "companyId", "displayName", "email", "archived", "ancestorId", "signature", "signedDate", "eDeliveryConsentedAt", "createdAt", "updatedAt", "type"]
+    id: Optional[StrictStr] = Field(default=None, description="The unique identifier for the form.")
+    entry_status: Optional[EntryStatusResponse] = Field(default=None, description="The entry status information for the form.", alias="entryStatus")
+    reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company.", alias="companyId")
+    display_name: Optional[StrictStr] = Field(default=None, description="The display name associated with the form.", alias="displayName")
+    email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
+    archived: Optional[StrictBool] = Field(default=None, description="Indicates whether the form is archived.")
+    ancestor_id: Optional[StrictStr] = Field(default=None, description="Form ID of previous version.", alias="ancestorId")
+    signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
+    signed_date: Optional[datetime] = Field(default=None, description="The date the form was signed.", alias="signedDate")
+    e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
+    created_at: Optional[datetime] = Field(default=None, description="The creation date of the form.", alias="createdAt")
+    updated_at: Optional[datetime] = Field(default=None, description="The last updated date of the form.", alias="updatedAt")
+    __properties: ClassVar[List[str]] = ["type", "id", "entryStatus", "referenceId", "companyId", "displayName", "email", "archived", "ancestorId", "signature", "signedDate", "eDeliveryConsentedAt", "createdAt", "updatedAt"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9']):
+            raise ValueError("must be one of enum values ('W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,8 +120,10 @@ class W9FormResponse(W9FormBaseResponse):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "type",
         ])
 
         _dict = self.model_dump(
@@ -150,6 +176,7 @@ class W9FormResponse(W9FormBaseResponse):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "type": obj.get("type"),
             "id": obj.get("id"),
             "entryStatus": EntryStatusResponse.from_dict(obj["entryStatus"]) if obj.get("entryStatus") is not None else None,
             "referenceId": obj.get("referenceId"),
@@ -162,8 +189,7 @@ class W9FormResponse(W9FormBaseResponse):
             "signedDate": obj.get("signedDate"),
             "eDeliveryConsentedAt": obj.get("eDeliveryConsentedAt"),
             "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt"),
-            "type": obj.get("type")
+            "updatedAt": obj.get("updatedAt")
         })
         return _obj
 

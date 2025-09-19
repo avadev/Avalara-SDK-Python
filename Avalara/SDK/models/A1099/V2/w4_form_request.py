@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,7 +36,6 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -45,17 +44,17 @@ class W4FormRequest(BaseModel):
     W4FormRequest
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The form type (always \"w4\" for this model).")
-    employee_first_name: Optional[StrictStr] = Field(default=None, description="The first name of the employee.", alias="employeeFirstName")
+    employee_first_name: StrictStr = Field(description="The first name of the employee.", alias="employeeFirstName")
     employee_middle_name: Optional[StrictStr] = Field(default=None, description="The middle name of the employee.", alias="employeeMiddleName")
-    employee_last_name: Optional[StrictStr] = Field(default=None, description="The last name of the employee.", alias="employeeLastName")
+    employee_last_name: StrictStr = Field(description="The last name of the employee.", alias="employeeLastName")
     employee_name_suffix: Optional[StrictStr] = Field(default=None, description="The name suffix of the employee.", alias="employeeNameSuffix")
-    tin_type: Optional[StrictStr] = Field(default=None, description="The type of TIN provided.", alias="tinType")
-    tin: Optional[StrictStr] = Field(default=None, description="The taxpayer identification number (TIN).")
-    address: Optional[StrictStr] = Field(default=None, description="The address of the employee.")
-    city: Optional[StrictStr] = Field(default=None, description="The city of residence of the employee.")
-    state: Optional[StrictStr] = Field(default=None, description="The state of residence of the employee.")
-    zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of residence of the employee.")
-    marital_status: Optional[StrictStr] = Field(default=None, description="The marital status of the employee.", alias="maritalStatus")
+    tin_type: StrictStr = Field(description="Tax Identification Number (TIN) type.", alias="tinType")
+    tin: StrictStr = Field(description="The taxpayer identification number (TIN).")
+    address: Optional[StrictStr] = Field(default=None, description="The address of the employee. Required unless exempt.")
+    city: Optional[StrictStr] = Field(default=None, description="The city of residence of the employee. Required unless exempt.")
+    state: Optional[StrictStr] = Field(default=None, description="The state of residence of the employee. Required unless exempt.")
+    zip: Optional[StrictStr] = Field(default=None, description="The ZIP code of residence of the employee. Required unless exempt.")
+    marital_status: Optional[StrictStr] = Field(default=None, description="The marital status of the employee. Required unless exempt.  Available values:  - Single: Single or Married filing separately  - Married: Married filing jointly or qualifying surviving spouse  - MarriedBut: Head of household. Check only if you're unmarried and pay more than half the costs of keeping up a home for yourself and a qualifying individual.", alias="maritalStatus")
     last_name_differs: Optional[StrictBool] = Field(default=None, description="Indicates whether the last name differs from prior records.", alias="lastNameDiffers")
     num_allowances: Optional[StrictInt] = Field(default=None, description="The number of allowances claimed by the employee.", alias="numAllowances")
     other_dependents: Optional[StrictInt] = Field(default=None, description="The number of dependents other than allowances.", alias="otherDependents")
@@ -66,7 +65,7 @@ class W4FormRequest(BaseModel):
     office_code: Optional[StrictStr] = Field(default=None, description="The office code associated with the form.", alias="officeCode")
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
-    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company. Required when creating a form.", alias="companyId")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     __properties: ClassVar[List[str]] = ["eDeliveryConsentedAt", "signature", "type", "companyId", "referenceId", "email"]

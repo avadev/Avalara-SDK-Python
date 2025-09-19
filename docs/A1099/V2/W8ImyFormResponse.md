@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**type** | **str** | The form type (always \&quot;W8Imy\&quot; for this model). | [optional] [readonly] 
 **name** | **str** | The name of the individual or entity associated with the form. | [optional] 
 **citizenship_country** | **str** | The country of citizenship. | [optional] 
 **disregarded_entity** | **str** | The name of the disregarded entity receiving the payment (if applicable). | [optional] 
@@ -21,7 +22,7 @@ Name | Type | Description | Notes
 **mailing_state** | **str** | The state of the mailing address. | [optional] 
 **mailing_zip** | **str** | The ZIP code of the mailing address. | [optional] 
 **mailing_country** | **str** | The country of the mailing address. | [optional] 
-**tin_type** | **str** | The type of TIN provided. | [optional] 
+**tin_type** | **str** | Tax Identification Number (TIN) type. | [optional] 
 **tin** | **str** | The taxpayer identification number (TIN). | [optional] 
 **giin** | **str** | The global intermediary identification number (GIIN). | [optional] 
 **foreign_tin** | **str** | The foreign taxpayer identification number (TIN). | [optional] 
@@ -116,6 +117,19 @@ Name | Type | Description | Notes
 **sponsored_direct_reporting_nffe_certification** | **bool** | Certifies that the entity is a sponsored direct reporting NFFE. | [optional] 
 **direct_reporting_nffe_sponsoring_entity** | **str** | The name of the entity that sponsors the direct reporting NFFE. | [optional] 
 **signer_name** | **str** | The name of the signer. | [optional] 
+**id** | **str** | The unique identifier for the form. | [optional] 
+**entry_status** | [**EntryStatusResponse**](EntryStatusResponse.md) | The entry status information for the form. | [optional] 
+**reference_id** | **str** | A reference identifier for the form. | [optional] 
+**company_id** | **str** | The ID of the associated company. | [optional] 
+**display_name** | **str** | The display name associated with the form. | [optional] 
+**email** | **str** | The email address of the individual associated with the form. | [optional] 
+**archived** | **bool** | Indicates whether the form is archived. | [optional] 
+**ancestor_id** | **str** | Form ID of previous version. | [optional] 
+**signature** | **str** | The signature of the form. | [optional] 
+**signed_date** | **datetime** | The date the form was signed. | [optional] 
+**e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
+**created_at** | **datetime** | The creation date of the form. | [optional] 
+**updated_at** | **datetime** | The last updated date of the form. | [optional] 
 
 ## Example
 

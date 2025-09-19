@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.8.3
+@version    25.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,7 +36,6 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -47,7 +46,7 @@ class W9FormBaseRequest(BaseModel):
     e_delivery_consented_at: Optional[datetime] = Field(default=None, description="The date when e-delivery was consented.", alias="eDeliveryConsentedAt")
     signature: Optional[StrictStr] = Field(default=None, description="The signature of the form.")
     type: Optional[StrictStr] = Field(default=None, description="The form type.")
-    company_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The ID of the associated company.", alias="companyId")
+    company_id: Optional[StrictStr] = Field(default=None, description="The ID of the associated company. Required when creating a form.", alias="companyId")
     reference_id: Optional[StrictStr] = Field(default=None, description="A reference identifier for the form.", alias="referenceId")
     email: Optional[StrictStr] = Field(default=None, description="The email address of the individual associated with the form.")
     __properties: ClassVar[List[str]] = ["type", "companyId", "referenceId", "email"]
