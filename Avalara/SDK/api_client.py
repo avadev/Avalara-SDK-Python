@@ -186,7 +186,12 @@ class ApiClient(object):
         header_params = header_params or {}
         header_params.update(self.default_headers)
 
-        header_params['X-Avalara-Client'] = self.client_id
+        # Always set X-Avalara-SDK-Client to SDK info
+        header_params['X-Avalara-SDK-Client'] = self.client_id
+        
+        # If X-Avalara-Client is null/empty, set it to SDK info as well
+        if 'X-Avalara-Client' not in header_params or not header_params['X-Avalara-Client'] or not header_params['X-Avalara-Client'].strip():
+            header_params['X-Avalara-Client'] = self.client_id
         if self.cookie:
             header_params['Cookie'] = self.cookie
         if header_params:
