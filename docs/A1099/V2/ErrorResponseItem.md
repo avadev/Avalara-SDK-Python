@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | **str** |  | [optional] 
-**detail** | **str** |  | [optional] 
+**type** | **str** | An identifier for this occurrence of the problem.  It is the name of a request&#39;s field when specific to that field.  Otherwise, for other types of errors, its value is empty. | [optional] 
+**detail** | **str** | An explanation specific to this occurrence of the problem. | [optional] 
 
 ## Example
 

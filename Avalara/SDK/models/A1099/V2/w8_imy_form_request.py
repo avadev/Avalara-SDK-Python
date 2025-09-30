@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.9.0
+@version    25.10.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -47,8 +47,8 @@ class W8ImyFormRequest(BaseModel):
     name: StrictStr = Field(description="The name of the individual or entity associated with the form.")
     citizenship_country: StrictStr = Field(description="The country of citizenship.", alias="citizenshipCountry")
     disregarded_entity: Optional[StrictStr] = Field(default=None, description="The name of the disregarded entity receiving the payment (if applicable).", alias="disregardedEntity")
-    entity_type: StrictStr = Field(description="The entity type.  Available values:  - 1: QI (including a QDD). Complete Part III.  - 2: Nonqualified intermediary. Complete Part IV.  - 3: Territory financial institution. Complete Part V.  - 4: U.S. branch. Complete Part VI.  - 5: Withholding foreign partnership. Complete Part VII.  - 6: Withholding foreign trust. Complete Part VII.  - 7: Nonwithholding foreign partnership. Complete Part VIII.  - 8: Nonwithholding foreign simple trust. Complete Part VIII.  - 9: Nonwithholding foreign grantor trust. Complete Part VIII.", alias="entityType")
-    fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status.  Available values:  - 1: Nonparticipating foreign financial institution (FFI) (including an FFI related to a Reporting IGA FFI other than a deemed-compliant FFI, participating FFI, or exempt beneficial owner). Complete Part IX (if applicable).  - 2: Participating FFI.  - 3: Reporting Model 1 FFI.  - 4: Reporting Model 2 FFI.  - 5: Registered deemed-compliant FFI (other than a reporting Model 1 FFI, sponsored FFI, or nonreporting IGA FFI covered in Part XIX).  - 6: Territory financial institution. Complete Part V.  - 7: Sponsored FFI (other than a certified deemed-compliant sponsored, closely held investment vehicle). Complete Part X.  - 8: Certified deemed-compliant nonregistering local bank. Complete Part XII.  - 9: Certified deemed-compliant FFI with only low-value accounts. Complete Part XIII.  - 10: Certified deemed-compliant sponsored, closely held investment vehicle. Complete Part XIV.  - 11: Certified deemed-compliant limited life debt investment entity. Complete Part XV.  - 12: Certain investment entities that do not maintain financial accounts. Complete Part XVI.  - 13: Owner-documented FFI. Complete Part XI.  - 14: Restricted distributor. Complete Part XVII.  - 15: Foreign central bank of issue. Complete Part XVIII.  - 16: Nonreporting IGA FFI. Complete Part XIX.  - 17: Exempt retirement plans. Complete Part XX.  - 18: Excepted nonfinancial group entity. Complete Part XXI.  - 19: Excepted nonfinancial start-up company. Complete Part XXII.  - 20: Excepted nonfinancial entity in liquidation or bankruptcy. Complete Part XXIII.  - 21: Publicly traded NFFE or NFFE affiliate of a publicly traded corporation. Complete Part XXIV.  - 22: Excepted territory NFFE. Complete Part XXV.  - 23: Active NFFE. Complete Part XXVI.  - 24: Passive NFFE. Complete Part XXVII.  - 25: Direct reporting NFFE.  - 26: Sponsored direct reporting NFFE. Complete Part XXVIII.", alias="fatcaStatus")
+    entity_type: StrictStr = Field(description="Represents the entity type for W-8IMY tax forms.  W-8IMY forms only accept entity types 1-9, which is a subset of the full EntityType enum.", alias="entityType")
+    fatca_status: Optional[StrictStr] = Field(default=None, description="Represents the FATCA status types specifically for W8-IMY forms.  This is a subset of the full FatcaStatus enum, restricted to values 1-26 for W8-IMY forms.", alias="fatcaStatus")
     residence_address: Optional[StrictStr] = Field(default=None, description="The residential address of the individual or entity.", alias="residenceAddress")
     residence_city: Optional[StrictStr] = Field(default=None, description="The city of residence.", alias="residenceCity")
     residence_state: Optional[StrictStr] = Field(default=None, description="The state of residence.", alias="residenceState")
@@ -170,6 +170,43 @@ class W8ImyFormRequest(BaseModel):
 
         if value not in set(['W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9']):
             raise ValueError("must be one of enum values ('W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9')")
+        return value
+
+    @field_validator('entity_type')
+    def entity_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['QI', 'NonqualifiedIntermediary', 'TerritoryFinancialInstitution', 'USBranch', 'WithholdingForeignPartnership', 'WithholdingForeignTrust', 'NonwithholdingForeignPartnership', 'NonwithholdingForeignSimpleTrust', 'NonwithholdingForeignGrantorTrust']):
+            raise ValueError("must be one of enum values ('QI', 'NonqualifiedIntermediary', 'TerritoryFinancialInstitution', 'USBranch', 'WithholdingForeignPartnership', 'WithholdingForeignTrust', 'NonwithholdingForeignPartnership', 'NonwithholdingForeignSimpleTrust', 'NonwithholdingForeignGrantorTrust')")
+        return value
+
+    @field_validator('fatca_status')
+    def fatca_status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['NonparticipatingFFI', 'ParticipatingFFI', 'ReportingModel1FFI', 'ReportingModel2FFI', 'RegisteredDeemedCompliantFFI', 'TerritoryFinancialInstitution', 'SponsoredFFI', 'CertifiedDeemedCompliantNonregisteringLocalBank', 'CertifiedDeemedCompliantFFIWithLowValueAccounts', 'CertifiedDeemedCompliantSponsoredCloselyHeldInvestmentVehicle', 'CertifiedDeemedCompliantLimitedLifeDebtInvestmentEntity', 'CertainInvestmentEntitiesWithoutFinancialAccounts', 'OwnerDocumentedFFI', 'RestrictedDistributor', 'ForeignCentralBankOfIssue', 'NonreportingIGAFFI', 'ExemptRetirementPlans', 'ExceptedNonfinancialGroupEntity', 'ExceptedNonfinancialStartUpCompany', 'ExceptedNonfinancialEntityInLiquidationOrBankruptcy', 'PubliclyTradedNFFEOrAffiliateOfPubliclyTradedCorporation', 'ExceptedTerritoryNFFE', 'ActiveNFFE', 'PassiveNFFE', 'DirectReportingNFFE', 'SponsoredDirectReportingNFFE']):
+            raise ValueError("must be one of enum values ('NonparticipatingFFI', 'ParticipatingFFI', 'ReportingModel1FFI', 'ReportingModel2FFI', 'RegisteredDeemedCompliantFFI', 'TerritoryFinancialInstitution', 'SponsoredFFI', 'CertifiedDeemedCompliantNonregisteringLocalBank', 'CertifiedDeemedCompliantFFIWithLowValueAccounts', 'CertifiedDeemedCompliantSponsoredCloselyHeldInvestmentVehicle', 'CertifiedDeemedCompliantLimitedLifeDebtInvestmentEntity', 'CertainInvestmentEntitiesWithoutFinancialAccounts', 'OwnerDocumentedFFI', 'RestrictedDistributor', 'ForeignCentralBankOfIssue', 'NonreportingIGAFFI', 'ExemptRetirementPlans', 'ExceptedNonfinancialGroupEntity', 'ExceptedNonfinancialStartUpCompany', 'ExceptedNonfinancialEntityInLiquidationOrBankruptcy', 'PubliclyTradedNFFEOrAffiliateOfPubliclyTradedCorporation', 'ExceptedTerritoryNFFE', 'ActiveNFFE', 'PassiveNFFE', 'DirectReportingNFFE', 'SponsoredDirectReportingNFFE')")
+        return value
+
+    @field_validator('disregarded_entity_fatca_status')
+    def disregarded_entity_fatca_status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['1', '2', '3', '4', '5']):
+            raise ValueError("must be one of enum values ('1', '2', '3', '4', '5')")
+        return value
+
+    @field_validator('iga_model')
+    def iga_model_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['1', '2']):
+            raise ValueError("must be one of enum values ('1', '2')")
         return value
 
     model_config = ConfigDict(
