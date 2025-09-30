@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.9.0
+@version    25.10.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,7 +33,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from Avalara.SDK.models.A1099.V2.error_response_item import ErrorResponseItem
 from typing import Optional, Set
@@ -43,8 +43,8 @@ class ErrorResponse(BaseModel):
     """
     ErrorResponse
     """ # noqa: E501
-    title: Optional[StrictStr] = None
-    errors: Optional[List[ErrorResponseItem]] = None
+    title: Optional[StrictStr] = Field(default=None, description="A summary of the problem type.")
+    errors: Optional[List[ErrorResponseItem]] = Field(default=None, description="A list of errors detailing the problem type.")
     __properties: ClassVar[List[str]] = ["title", "errors"]
 
     model_config = ConfigDict(

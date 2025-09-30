@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**title** | **str** |  | [optional] 
-**errors** | [**List[ErrorResponseItem]**](ErrorResponseItem.md) |  | [optional] 
+**title** | **str** | A summary of the problem type. | [optional] 
+**errors** | [**List[ErrorResponseItem]**](ErrorResponseItem.md) | A list of errors detailing the problem type. | [optional] 
 
 ## Example
 
