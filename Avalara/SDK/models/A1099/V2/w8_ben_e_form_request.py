@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.10.0
+@version    25.10.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -48,9 +48,9 @@ class W8BenEFormRequest(BaseModel):
     name: StrictStr = Field(description="The name of the individual or entity associated with the form.")
     citizenship_country: StrictStr = Field(description="The country of citizenship.", alias="citizenshipCountry")
     disregarded_entity: Optional[StrictStr] = Field(default=None, description="The name of the disregarded entity receiving the payment (if applicable).", alias="disregardedEntity")
-    entity_type: StrictStr = Field(description="The entity type.  Available values:  - 1: Corporation  - 2: Disregarded entity  - 3: Partnership  - 4: Simple trust  - 5: Grantor trust  - 6: Complex trust  - 7: Estate  - 8: Foreign Government - Controlled Entity  - 9: Central Bank of Issue  - 10: Tax-exempt organization  - 11: Private foundation  - 12: International organization  - 13: Foreign Government - Controlled Integral Part", alias="entityType")
+    entity_type: StrictStr = Field(description="Represents the entity type for tax forms.  Each value corresponds to a specific entity classification.  - 1: Corporation  - 2: Disregarded entity  - 3: Partnership  - 4: Simple trust  - 5: Grantor trust  - 6: Complex trust  - 7: Estate  - 8: Foreign Government - Controlled Entity  - 9: Central Bank of Issue  - 10: Tax-exempt organization  - 11: Private foundation  - 12: International organization  - 13: Foreign Government - Controlled Integral Part", alias="entityType")
     making_treaty_claim: Optional[StrictBool] = Field(default=None, description="Indicates whether the entity is making a treaty claim.", alias="makingTreatyClaim")
-    fatca_status: StrictStr = Field(description="The FATCA status.  Available values:  - 1: Nonparticipating FFI (including a limited FFI or an FFI related to a Reporting IGA FFI other than a deemed-compliant FFI, participating FFI, or exempt beneficial owner)  - 2: Participating FFI  - 3: Reporting Model 1 FFI  - 4: Reporting Model 2 FFI  - 5: Registered deemed-compliant FFI (other than a reporting Model 1 FFI, sponsored FFI, or nonreporting IGA FFI covered in Part XII)  - 6: Sponsored FFI that has not obtained a GIIN  - 7: Certified deemed-compliant nonregistering local bank  - 8: Certified deemed-compliant FFI with only low-value accounts  - 9: Certified deemed-compliant sponsored, closely held investment vehicle  - 10: Certified deemed-compliant limited life debt investment entity  - 11: Certified deemed-compliant investment advisors and investment managers  - 12: Owner-documented FFI  - 13: Restricted distributor  - 14: Nonreporting IGA FFI  - 15: Foreign government, government of a U.S. possession, or foreign central bank of issue  - 16: International organization  - 17: Exempt retirement plans  - 18: Entity wholly owned by exempt beneficial owners  - 19: Territory financial institution  - 20: Nonfinancial group entity  - 21: Excepted nonfinancial start-up company  - 22: Excepted nonfinancial entity in liquidation or bankruptcy  - 23: 501(c) organization  - 24: Nonprofit organization  - 25: Publicly traded NFFE or NFFE affiliate of a publicly traded corporation  - 26: Excepted territory NFFE  - 27: Active NFFE  - 28: Passive NFFE  - 29: Excepted inter-affiliate FFI  - 30: Direct reporting NFFE  - 31: Sponsored direct reporting NFFE  - 32: Account that is not a financial account", alias="fatcaStatus")
+    fatca_status: StrictStr = Field(description="Represents the FATCA status types for tax forms.  Used for W8-BEN-E forms and FATCA compliance validations.  Values correspond to numeric identifiers used in forms.  - 1: Nonparticipating FFI (including a limited FFI or an FFI related to a Reporting IGA FFI other than a deemed-compliant FFI, participating FFI, or exempt beneficial owner)  - 2: Participating FFI  - 3: Reporting Model 1 FFI  - 4: Reporting Model 2 FFI  - 5: Registered deemed-compliant FFI (other than a reporting Model 1 FFI, sponsored FFI, or nonreporting IGA FFI covered in Part XII)  - 6: Sponsored FFI that has not obtained a GIIN  - 7: Certified deemed-compliant nonregistering local bank  - 8: Certified deemed-compliant FFI with only low-value accounts  - 9: Certified deemed-compliant sponsored, closely held investment vehicle  - 10: Certified deemed-compliant limited life debt investment entity  - 11: Certified deemed-compliant investment advisors and investment managers  - 12: Owner-documented FFI  - 13: Restricted distributor  - 14: Nonreporting IGA FFI  - 15: Foreign government, government of a U.S. possession, or foreign central bank of issue  - 16: International organization  - 17: Exempt retirement plans  - 18: Entity wholly owned by exempt beneficial owners  - 19: Territory financial institution  - 20: Nonfinancial group entity  - 21: Excepted nonfinancial start-up company  - 22: Excepted nonfinancial entity in liquidation or bankruptcy  - 23: 501(c) organization  - 24: Nonprofit organization  - 25: Publicly traded NFFE or NFFE affiliate of a publicly traded corporation  - 26: Excepted territory NFFE  - 27: Active NFFE  - 28: Passive NFFE  - 29: Excepted inter-affiliate FFI  - 30: Direct reporting NFFE  - 31: Sponsored direct reporting NFFE  - 32: Account that is not a financial account", alias="fatcaStatus")
     residence_address: Optional[StrictStr] = Field(default=None, description="The residential address of the individual or entity.", alias="residenceAddress")
     residence_city: Optional[StrictStr] = Field(default=None, description="The city of residence.", alias="residenceCity")
     residence_state: Optional[StrictStr] = Field(default=None, description="The state of residence.", alias="residenceState")
@@ -67,7 +67,7 @@ class W8BenEFormRequest(BaseModel):
     foreign_tin_not_required: Optional[StrictBool] = Field(default=None, description="Indicates whether a foreign TIN is not required.", alias="foreignTinNotRequired")
     foreign_tin: Optional[StrictStr] = Field(default=None, description="The foreign taxpayer identification number (TIN).", alias="foreignTin")
     reference_number: Optional[StrictStr] = Field(default=None, description="A reference number for the form.", alias="referenceNumber")
-    disregarded_entity_fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status of disregarded entity or branch receiving payment.  Available values:  - 1: Limited Branch  - 2: U.S. Branch  - 3: Participating FFI  - 4: Reporting Model 1 FFI  - 5: Reporting Model 2 FFI", alias="disregardedEntityFatcaStatus")
+    disregarded_entity_fatca_status: Optional[StrictStr] = Field(default=None, description="The FATCA status of disregarded entity or branch receiving payment.  Available values:  - 1: Branch treated as nonparticipating FFI  - 2: U.S. Branch  - 3: Participating FFI  - 4: Reporting Model 1 FFI  - 5: Reporting Model 2 FFI", alias="disregardedEntityFatcaStatus")
     disregarded_address: Optional[StrictStr] = Field(default=None, description="The address for disregarded entities.", alias="disregardedAddress")
     disregarded_city: Optional[StrictStr] = Field(default=None, description="The city for disregarded entities.", alias="disregardedCity")
     disregarded_state: Optional[StrictStr] = Field(default=None, description="The state for disregarded entities.", alias="disregardedState")
@@ -77,7 +77,7 @@ class W8BenEFormRequest(BaseModel):
     treaty_country_certification: Optional[StrictBool] = Field(default=None, description="Certifies the beneficial owner's country under the U.S. tax treaty.", alias="treatyCountryCertification")
     treaty_country: Optional[StrictStr] = Field(default=None, description="The treaty country of the beneficial owner.", alias="treatyCountry")
     benefit_limitation_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the beneficial owner is eligible for treaty benefits and meets any limitation on benefits requirements.", alias="benefitLimitationCertification")
-    benefit_limitation: Optional[StrictStr] = Field(default=None, description="The benefit limitation for tax treaty claims.  Available values:  - 1: Government  - 2: Tax exempt pension trust or pension fund  - 3: Other tax exempt organization  - 4: Publicly traded corporation  - 5: Subsidiary of a publicly traded corporation  - 6: Company that meets the ownership and base erosion test  - 7: Company that meets the derivative benefits test  - 8: Company with an item of income that meets active trade or business test  - 9: Favorable discretionary determination by the U.S. competent authority received  - 10: Other", alias="benefitLimitation")
+    benefit_limitation: Optional[StrictStr] = Field(default=None, description="The benefit limitation for tax treaty claims.  Available values:  - 1: Government  - 2: Tax exempt pension trust or pension fund  - 3: Other tax exempt organization  - 4: Publicly traded corporation  - 5: Subsidiary of a publicly traded corporation  - 6: Company that meets the ownership and base erosion test  - 7: Company that meets the derivative benefits test  - 8: Company with an item of income that meets active trade or business test  - 9: Favorable discretionary determination by the U.S. competent authority received  - 10: Other  - 11: No LOB article in treaty", alias="benefitLimitation")
     qualified_resident_status_certification: Optional[StrictBool] = Field(default=None, description="Certifies that the beneficial owner claims treaty benefits and meets the qualified resident status for specific U.S. source income.", alias="qualifiedResidentStatusCertification")
     treaty_article: Optional[StrictStr] = Field(default=None, description="Indicates the specific article and paragraph of the tax treaty under which the beneficial owner is claiming benefits.", alias="treatyArticle")
     withholding_rate: Optional[StrictStr] = Field(default=None, description="Specifies the reduced withholding rate claimed under the applicable tax treaty.", alias="withholdingRate")
@@ -155,6 +155,80 @@ class W8BenEFormRequest(BaseModel):
 
         if value not in set(['W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9']):
             raise ValueError("must be one of enum values ('W4', 'W8Ben', 'W8BenE', 'W8Imy', 'W9')")
+        return value
+
+    @field_validator('entity_type')
+    def entity_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['Corporation', 'DisregardedEntity', 'Partnership', 'SimpleTrust', 'GrantorTrust', 'ComplexTrust', 'Estate', 'ForeignGovernmentControlledEntity', 'CentralBankOfIssue', 'TaxExemptOrganization', 'PrivateFoundation', 'InternationalOrganization', 'ForeignGovernmentControlledIntegralPart']):
+            raise ValueError("must be one of enum values ('Corporation', 'DisregardedEntity', 'Partnership', 'SimpleTrust', 'GrantorTrust', 'ComplexTrust', 'Estate', 'ForeignGovernmentControlledEntity', 'CentralBankOfIssue', 'TaxExemptOrganization', 'PrivateFoundation', 'InternationalOrganization', 'ForeignGovernmentControlledIntegralPart')")
+        return value
+
+    @field_validator('fatca_status')
+    def fatca_status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['NonparticipatingFFI', 'ParticipatingFFI', 'ReportingModel1FFI', 'ReportingModel2FFI', 'RegisteredDeemedCompliantFFI', 'SponsoredFFIWithoutGIIN', 'CertifiedDeemedCompliantNonregisteringLocalBank', 'CertifiedDeemedCompliantFFIWithLowValueAccounts', 'CertifiedDeemedCompliantSponsoredCloselyHeldInvestmentVehicle', 'CertifiedDeemedCompliantLimitedLifeDebtInvestmentEntity', 'CertainInvestmentEntitiesWithoutFinancialAccounts', 'OwnerDocumentedFFI', 'RestrictedDistributor', 'NonreportingIGAFFI', 'ForeignGovernmentOrUSPossessionOrForeignCentralBank', 'InternationalOrganization', 'ExemptRetirementPlans', 'EntityWhollyOwnedByExemptBeneficialOwners', 'TerritoryFinancialInstitution', 'NonfinancialGroupEntity', 'ExceptedNonfinancialStartUpCompany', 'ExceptedNonfinancialEntityInLiquidationOrBankruptcy', 'Organization501c', 'NonprofitOrganization', 'PubliclyTradedNFFEOrAffiliateOfPubliclyTradedCorporation', 'ExceptedTerritoryNFFE', 'ActiveNFFE', 'PassiveNFFE', 'ExceptedInterAffiliateFFI', 'DirectReportingNFFE', 'SponsoredDirectReportingNFFE', 'AccountThatIsNotFinancialAccount']):
+            raise ValueError("must be one of enum values ('NonparticipatingFFI', 'ParticipatingFFI', 'ReportingModel1FFI', 'ReportingModel2FFI', 'RegisteredDeemedCompliantFFI', 'SponsoredFFIWithoutGIIN', 'CertifiedDeemedCompliantNonregisteringLocalBank', 'CertifiedDeemedCompliantFFIWithLowValueAccounts', 'CertifiedDeemedCompliantSponsoredCloselyHeldInvestmentVehicle', 'CertifiedDeemedCompliantLimitedLifeDebtInvestmentEntity', 'CertainInvestmentEntitiesWithoutFinancialAccounts', 'OwnerDocumentedFFI', 'RestrictedDistributor', 'NonreportingIGAFFI', 'ForeignGovernmentOrUSPossessionOrForeignCentralBank', 'InternationalOrganization', 'ExemptRetirementPlans', 'EntityWhollyOwnedByExemptBeneficialOwners', 'TerritoryFinancialInstitution', 'NonfinancialGroupEntity', 'ExceptedNonfinancialStartUpCompany', 'ExceptedNonfinancialEntityInLiquidationOrBankruptcy', 'Organization501c', 'NonprofitOrganization', 'PubliclyTradedNFFEOrAffiliateOfPubliclyTradedCorporation', 'ExceptedTerritoryNFFE', 'ActiveNFFE', 'PassiveNFFE', 'ExceptedInterAffiliateFFI', 'DirectReportingNFFE', 'SponsoredDirectReportingNFFE', 'AccountThatIsNotFinancialAccount')")
+        return value
+
+    @field_validator('residence_state')
+    def residence_state_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['AA', 'AE', 'AK', 'AL', 'AP', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY']):
+            raise ValueError("must be one of enum values ('AA', 'AE', 'AK', 'AL', 'AP', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY')")
+        return value
+
+    @field_validator('mailing_state')
+    def mailing_state_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['AA', 'AE', 'AK', 'AL', 'AP', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY']):
+            raise ValueError("must be one of enum values ('AA', 'AE', 'AK', 'AL', 'AP', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY')")
+        return value
+
+    @field_validator('disregarded_entity_fatca_status')
+    def disregarded_entity_fatca_status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['BranchTreatedAsNonparticipatingFFI', 'USBranch', 'ParticipatingFFI', 'ReportingModel1FFI', 'ReportingModel2FFI']):
+            raise ValueError("must be one of enum values ('BranchTreatedAsNonparticipatingFFI', 'USBranch', 'ParticipatingFFI', 'ReportingModel1FFI', 'ReportingModel2FFI')")
+        return value
+
+    @field_validator('disregarded_state')
+    def disregarded_state_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['AA', 'AE', 'AK', 'AL', 'AP', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY']):
+            raise ValueError("must be one of enum values ('AA', 'AE', 'AK', 'AL', 'AP', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY')")
+        return value
+
+    @field_validator('benefit_limitation')
+    def benefit_limitation_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['Government', 'TaxExemptPensionTrustOrPensionFund', 'OtherTaxExemptOrganization', 'PubliclyTradedCorporation', 'SubsidiaryOfPubliclyTradedCorporation', 'CompanyThatMeetsOwnershipAndBaseErosionTest', 'CompanyThatMeetsDerivativeBenefitsTest', 'CompanyWithItemOfIncomeThatMeetsActiveTradeOrBusinessTest', 'FavorableDiscretionaryDeterminationByUSCompetentAuthorityReceived', 'Other', 'NoLOBArticleInTreaty']):
+            raise ValueError("must be one of enum values ('Government', 'TaxExemptPensionTrustOrPensionFund', 'OtherTaxExemptOrganization', 'PubliclyTradedCorporation', 'SubsidiaryOfPubliclyTradedCorporation', 'CompanyThatMeetsOwnershipAndBaseErosionTest', 'CompanyThatMeetsDerivativeBenefitsTest', 'CompanyWithItemOfIncomeThatMeetsActiveTradeOrBusinessTest', 'FavorableDiscretionaryDeterminationByUSCompetentAuthorityReceived', 'Other', 'NoLOBArticleInTreaty')")
+        return value
+
+    @field_validator('iga_model')
+    def iga_model_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['Model1IGA', 'Model2IGA']):
+            raise ValueError("must be one of enum values ('Model1IGA', 'Model2IGA')")
         return value
 
     model_config = ConfigDict(
