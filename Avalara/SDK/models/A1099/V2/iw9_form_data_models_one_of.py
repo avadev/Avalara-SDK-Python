@@ -33,11 +33,11 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.w4_form_data_model import W4FormDataModel
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.w8_ben_form_data_model import W8BenFormDataModel
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.w8_bene_form_data_model import W8BeneFormDataModel
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.w8_imy_form_data_model import W8ImyFormDataModel
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.w9_form_data_model import W9FormDataModel
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.w4_form_data_model import W4FormDataModel
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.w8_ben_form_data_model import W8BenFormDataModel
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.w8_bene_form_data_model import W8BeneFormDataModel
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.w8_imy_form_data_model import W8ImyFormDataModel
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.w9_form_data_model import W9FormDataModel
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self

@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.10.0
+@version    25.10.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -61,7 +61,7 @@ class FormsW9Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.10.0")
+        api_client.set_sdk_version("25.10.1")
         self.api_client = api_client
 		
         self.create_and_send_w9_form_email_endpoint = _Endpoint(
@@ -340,6 +340,77 @@ class FormsW9Api(object):
             headers_map={
                 'avalara-version': '2.0',
                 'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            required_scopes='',
+            microservice='A1099'
+        )
+        self.get_w9_form_pdf_endpoint = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'bearer'
+                ],
+                'endpoint_path': '/w9/forms/{id}/pdf',
+                'operation_id': 'get_w9_form_pdf',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'id',
+                    'avalara_version',
+                    'x_correlation_id',
+                    'x_avalara_client',
+                ],
+                'required': [
+                    'id',
+                    'avalara_version',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'id':
+                        (str,),
+                    'avalara_version':
+                        (str,),
+                    'x_correlation_id':
+                        (str,),
+                    'x_avalara_client':
+                        (str,),
+                },
+                'attribute_map': {
+                    'id': 'id',
+                    'avalara_version': 'avalara-version',
+                    'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
+                },
+                'location_map': {
+                    'id': 'path',
+                    'avalara_version': 'header',
+                    'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'avalara-version': '2.0',
+                'accept': [
+                    'application/pdf',
                     'application/json'
                 ],
                 'content_type': [],
@@ -951,6 +1022,78 @@ class FormsW9Api(object):
         kwargs['id'] = id
         kwargs['avalara_version'] = avalara_version
         return self.get_w9_form_endpoint.call_with_http_info(**kwargs)
+
+    @avalara_retry_oauth(max_retry_attempts=2)
+    def get_w9_form_pdf(
+        self,
+        id,
+        avalara_version,
+        **kwargs
+    ):
+        """Download the PDF for a W9/W4/W8 form.  # noqa: E501
+
+        Returns the PDF file for a W9/W4/W8 form.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_w9_form_pdf(id, avalara_version, async_req=True)
+        >>> result = thread.get()
+
+        Args:
+            id (str): Id of the form
+            avalara_version (str): API version
+
+        Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
+            _return_http_data_only (bool): response data without head status
+                code and headers. Default is True.
+            _preload_content (bool): if False, the urllib3.HTTPResponse object
+                will be returned without reading/decoding response data.
+                Default is True.
+            _request_timeout (int/float/tuple): timeout setting for this request. If
+                one number provided, it will be total request timeout. It can also
+                be a pair (tuple) of (connection, read) timeouts.
+                Default is None.
+            _check_input_type (bool): specifies if type checking
+                should be done one the data sent to the server.
+                Default is True.
+            _check_return_type (bool): specifies if type checking
+                should be done one the data received from the server.
+                Default is True.
+            _host_index (int/None): specifies the index of the server
+                that we want to use.
+                Default is read from the configuration.
+            async_req (bool): execute request asynchronously
+
+        Returns:
+            None
+                If the method is called asynchronously, returns the request
+                thread.
+        """
+        self.__verify_api_client(self.api_client)
+        kwargs['async_req'] = kwargs.get(
+            'async_req', False
+        )
+        kwargs['_return_http_data_only'] = kwargs.get(
+            '_return_http_data_only', True
+        )
+        kwargs['_preload_content'] = kwargs.get(
+            '_preload_content', True
+        )
+        kwargs['_request_timeout'] = kwargs.get(
+            '_request_timeout', None
+        )
+        kwargs['_check_input_type'] = kwargs.get(
+            '_check_input_type', True
+        )
+        kwargs['_check_return_type'] = kwargs.get(
+            '_check_return_type', True
+        )
+        kwargs['_host_index'] = kwargs.get('_host_index')
+        kwargs['id'] = id
+        kwargs['avalara_version'] = avalara_version
+        return self.get_w9_form_pdf_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
     def list_w9_forms(
