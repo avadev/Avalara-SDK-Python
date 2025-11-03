@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.10.1
+@version    25.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -49,6 +49,7 @@ class Form1099Nec(BaseModel):
     """ # noqa: E501
     nonemployee_compensation: Optional[Union[StrictFloat, StrictInt]] = Field(description="Nonemployee compensation. Required if DirectSalesIndicator is false.", alias="nonemployeeCompensation")
     direct_sales_indicator: Optional[StrictBool] = Field(default=None, description="Payer made direct sales totaling $5,000 or more of consumer products to recipient for resale. Should be true if Nonemployee compensation is not provided.", alias="directSalesIndicator")
+    excess_golden_parachute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Excess golden parachute payments - Available only for tax year 2025 and later", alias="excessGoldenParachutePayments")
     federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld.", alias="federalIncomeTaxWithheld")
     type: StrictStr = Field(description="Form type.")
     id: Optional[StrictStr] = Field(default=None, description="Form ID. Unique identifier set when the record is created.")

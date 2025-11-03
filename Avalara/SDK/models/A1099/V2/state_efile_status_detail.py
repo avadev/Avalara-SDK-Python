@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.10.1
+@version    25.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,7 +33,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -45,7 +45,8 @@ class StateEfileStatusDetail(BaseModel):
     status: Optional[StrictStr] = None
     time: Optional[StrictStr] = None
     jurisdiction: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["status", "time", "jurisdiction"]
+    rejected_reason: Optional[StrictStr] = Field(default=None, alias="rejectedReason")
+    __properties: ClassVar[List[str]] = ["status", "time", "jurisdiction", "rejectedReason"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,6 +102,11 @@ class StateEfileStatusDetail(BaseModel):
         if self.jurisdiction is None and "jurisdiction" in self.model_fields_set:
             _dict['jurisdiction'] = None
 
+        # set to None if rejected_reason (nullable) is None
+        # and model_fields_set contains the field
+        if self.rejected_reason is None and "rejected_reason" in self.model_fields_set:
+            _dict['rejectedReason'] = None
+
         return _dict
 
     @classmethod
@@ -115,7 +121,8 @@ class StateEfileStatusDetail(BaseModel):
         _obj = cls.model_validate({
             "status": obj.get("status"),
             "time": obj.get("time"),
-            "jurisdiction": obj.get("jurisdiction")
+            "jurisdiction": obj.get("jurisdiction"),
+            "rejectedReason": obj.get("rejectedReason")
         })
         return _obj
 

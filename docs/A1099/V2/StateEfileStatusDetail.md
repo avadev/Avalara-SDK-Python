@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **status** | **str** |  | [optional] 
 **time** | **str** |  | [optional] 
 **jurisdiction** | **str** |  | [optional] 
+**rejected_reason** | **str** |  | [optional] 
 
 ## Example
 

@@ -49,7 +49,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms_w9_api.FormsW9Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'fa427ec8-fbb3-4e25-8c7e-2f81d68241ec' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'a31bfcd3-48f4-4459-86e7-2ce87c8eab6b' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     create_and_send_w9_form_email_request = {"type":"W9","email":"john.doe@example.com","name":"John Doe","accountNumber":"ACC01","companyId":"12345","referenceId":"REF-12345"} # CreateAndSendW9FormEmailRequest | Form to be created (optional)
     # example passing only required values which don't have defaults set
@@ -137,7 +137,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms_w9_api.FormsW9Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '6bde16cf-bc27-448b-8abd-a3461599deff' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '4d4842c6-baeb-4f47-970e-dc9a9da6e8f4' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     create_w9_form_request = {"type":"W9","name":"John Doe","businessName":"Acme Inc.","businessClassification":"Individual","businessOther":null,"foreignPartnerOwnerOrBeneficiary":false,"exemptPayeeCode":"5","exemptFatcaCode":"A","foreignCountryIndicator":false,"address":"123 Main St.","foreignAddress":null,"city":"Anytown","state":"CA","zip":"12345","accountNumber":"ACC123456","tinType":"SSN","tin":"543456789","backupWithholding":false,"is1099able":true,"eDeliveryConsentedAt":"2024-05-01T10:30:10.000000","signature":null,"companyId":"32553266","referenceId":"REF12345","email":"johndoe@example.com"} # CreateW9FormRequest | Form to be created (optional)
     # example passing only required values which don't have defaults set
@@ -224,7 +224,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | ID of the form to delete
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '4bc1a0f7-f202-4e27-ba6d-37645f4a839e' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'fc19f8c0-4c87-4387-8ab1-aa9d962df4eb' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -309,7 +309,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | ID of the form
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '7dd6cb2c-d9ed-4fb7-8f97-67d35d09e59e' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'd24ad701-0869-495f-ad6e-234ea6b363b5' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -363,7 +363,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_w9_form_pdf**
-> get_w9_form_pdf(id, avalara_version)
+> bytearray get_w9_form_pdf(id, avalara_version)
 
 Download the PDF for a W9/W4/W8 form.
 
@@ -395,12 +395,13 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '783194b6-5fc6-41c5-a5b4-1b02018e09dd' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '51c49fe8-a8d5-4e6c-93b2-271795eaa196' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
         # Download the PDF for a W9/W4/W8 form.
-        api_instance.get_w9_form_pdf(id, avalara_version)
+        api_response = api_instance.get_w9_form_pdf(id, avalara_version)
+        pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling FormsW9Api->get_w9_form_pdf: %s\n" % e)
 
@@ -408,7 +409,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Download the PDF for a W9/W4/W8 form.
-        api_instance.get_w9_form_pdf(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
+        api_response = api_instance.get_w9_form_pdf(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
+        pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling FormsW9Api->get_w9_form_pdf: %s\n" % e)
 ```
@@ -424,7 +426,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**bytearray**
 
 ### Authorization
 
@@ -440,10 +442,10 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | PDF stream |  -  |
-**400** | Bad request (e.g., invalid id) |  -  |
-**401** | Authentication failed |  -  |
-**404** | W9/W4/W8 form not found |  -  |
+**200** | Success |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
@@ -486,7 +488,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = 'c1b56927-f8e5-4243-8fd5-b5d13f7c0c29' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '9bfb0cee-b6e0-4c22-a8a2-4be68535c83e' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -578,7 +580,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | The ID of the W9/W4/W8 form.
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'ef646026-89fe-420b-bea9-e29ec45d9557' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'a615b830-d8f7-4687-afe7-c9987a509eac' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -668,7 +670,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | ID of the form to update
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'ac8f162c-fbee-4c4d-b9fa-986df02c90e3' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'eb20e211-254b-4e5f-a1a5-7e6f596e378b' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     create_w9_form_request = {"type":"W9","name":"John Doe","businessName":"Acme Inc.","businessClassification":"Individual","businessOther":null,"foreignPartnerOwnerOrBeneficiary":false,"exemptPayeeCode":"5","exemptFatcaCode":"A","foreignCountryIndicator":false,"address":"123 Main St.","foreignAddress":null,"city":"Anytown","state":"CA","zip":"12345","accountNumber":"ACC123456","tinType":"SSN","tin":"543456789","backupWithholding":false,"is1099able":true,"eDeliveryConsentedAt":"2024-05-01T10:30:10.000000","signature":null,"referenceId":"REF12345","email":"johndoe@example.com"} # CreateW9FormRequest | Form to be updated (optional)
     # example passing only required values which don't have defaults set
@@ -757,7 +759,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms_w9_api.FormsW9Api(api_client)
     id = 'id_example' # str | Id of the form
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'c332bc05-2179-4a35-bd1a-1d01a3d03e36' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'a757e3ef-d759-49bd-b130-28ef831f2126' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     file = None # bytearray |  (optional)
     # example passing only required values which don't have defaults set

@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.10.1
+@version    25.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -59,7 +59,7 @@ class Form1099Misc(BaseModel):
     gross_proceeds_paid_to_attorney: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Gross proceeds paid to an attorney", alias="grossProceedsPaidToAttorney")
     fish_purchased_for_resale: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Fish purchased for resale", alias="fishPurchasedForResale")
     section409_a_deferrals: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 409A deferrals", alias="section409ADeferrals")
-    excess_golden_parachute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="(Legacy field) Excess golden parachute payments", alias="excessGoldenParachutePayments")
+    excess_golden_parachute_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Excess golden parachute payments - Available only for tax year 2024 and earlier", alias="excessGoldenParachutePayments")
     nonqualified_deferred_compensation: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Nonqualified deferred compensation", alias="nonqualifiedDeferredCompensation")
     fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement.", alias="fatcaFilingRequirement")
     type: StrictStr = Field(description="Form type.")
