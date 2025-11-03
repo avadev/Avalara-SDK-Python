@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.10.1
+@version    25.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -59,7 +59,7 @@ class MandatesApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.10.1")
+        api_client.set_sdk_version("25.11.0")
         self.api_client = api_client
 		
         self.get_mandate_data_input_fields_endpoint = _Endpoint(

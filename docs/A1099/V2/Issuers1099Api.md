@@ -45,9 +45,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '0183bbfe-d8da-48ad-a320-b999accf40bd' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '8783a532-9268-4e0b-a0ff-44de4f71b537' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2024,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to create (optional)
+    issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to create (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create an issuer
@@ -132,7 +132,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to delete
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'c0d08fe4-5eaf-4902-aa48-db347d045ba2' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '5d63e7f2-9ded-4877-b46c-d4a9deaf226d' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -217,7 +217,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to retrieve
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '126ca6ac-f595-4b34-ada2-22cdd14960f5' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'd4b90233-dbcb-43a4-bbf7-d4c5d4e8ea6f' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -303,13 +303,13 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    filter = 'taxYear eq 2024' # str | A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>. (optional)
+    filter = 'taxYear eq 2025' # str | A filter statement to identify specific records to retrieve.  For more information on filtering, see <a href=\"https://developer.avalara.com/avatax/filtering-in-rest/\">Filtering in REST</a>. (optional)
     top = 56 # int | If zero or greater than 1000, return at most 1000 results.  Otherwise, return this number of results.  Used with skip to provide pagination for large datasets. (optional)
     skip = 56 # int | If nonzero, skip this number of results before returning data. Used with top to provide pagination for large datasets. (optional)
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = '51f8e5b5-bb09-4b2c-954f-f0f7b119003b' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '67f66334-e4f2-4d38-aca7-47de8ea93dc0' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -403,9 +403,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to update
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '508db50e-5f2e-404d-9974-509003a9dfa8' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '88269912-43b9-460b-b285-28c036924f06' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2024,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to update (optional)
+    issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to update (optional)
     # example passing only required values which don't have defaults set
     try:
         # Update an issuer
