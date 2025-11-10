@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.0
+@version    25.11.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -131,8 +131,8 @@ class Form1099K(BaseModel):
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B', 'Form1042S', 'Form1095C', 'Form1099Int']):
-            raise ValueError("must be one of enum values ('Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B', 'Form1042S', 'Form1095C', 'Form1099Int')")
+        if value not in set(['1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R']):
+            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R')")
         return value
 
     @field_validator('tin_type')
