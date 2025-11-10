@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.0
+@version    25.11.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -50,7 +50,6 @@ class CoveredIndividual(BaseModel):
     name_suffix: Optional[StrictStr] = Field(default=None, description="Covered individual's name suffix", alias="nameSuffix")
     tin: Optional[StrictStr] = Field(default=None, description="Covered individual's Federal Tax Identification Number (TIN).. SSN or ITIN. Required unless unavailable.")
     birth_date: Optional[date] = Field(default=None, description="Covered individual's date of birth - Required when SSN is missing.", alias="birthDate")
-    covered_all_months: Optional[StrictBool] = Field(default=None, description="Coverage indicator for all 12 months", alias="coveredAllMonths")
     covered_january: Optional[StrictBool] = Field(default=None, description="Coverage indicator for January", alias="coveredJanuary")
     covered_february: Optional[StrictBool] = Field(default=None, description="Coverage indicator for February", alias="coveredFebruary")
     covered_march: Optional[StrictBool] = Field(default=None, description="Coverage indicator for March", alias="coveredMarch")
@@ -63,7 +62,7 @@ class CoveredIndividual(BaseModel):
     covered_october: Optional[StrictBool] = Field(default=None, description="Coverage indicator for October", alias="coveredOctober")
     covered_november: Optional[StrictBool] = Field(default=None, description="Coverage indicator for November", alias="coveredNovember")
     covered_december: Optional[StrictBool] = Field(default=None, description="Coverage indicator for December", alias="coveredDecember")
-    __properties: ClassVar[List[str]] = ["id", "firstName", "middleName", "lastName", "nameSuffix", "tin", "birthDate", "coveredAllMonths", "coveredJanuary", "coveredFebruary", "coveredMarch", "coveredApril", "coveredMay", "coveredJune", "coveredJuly", "coveredAugust", "coveredSeptember", "coveredOctober", "coveredNovember", "coveredDecember"]
+    __properties: ClassVar[List[str]] = ["id", "firstName", "middleName", "lastName", "nameSuffix", "tin", "birthDate", "coveredJanuary", "coveredFebruary", "coveredMarch", "coveredApril", "coveredMay", "coveredJune", "coveredJuly", "coveredAugust", "coveredSeptember", "coveredOctober", "coveredNovember", "coveredDecember"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -140,11 +139,6 @@ class CoveredIndividual(BaseModel):
         # and model_fields_set contains the field
         if self.birth_date is None and "birth_date" in self.model_fields_set:
             _dict['birthDate'] = None
-
-        # set to None if covered_all_months (nullable) is None
-        # and model_fields_set contains the field
-        if self.covered_all_months is None and "covered_all_months" in self.model_fields_set:
-            _dict['coveredAllMonths'] = None
 
         # set to None if covered_january (nullable) is None
         # and model_fields_set contains the field
@@ -225,7 +219,6 @@ class CoveredIndividual(BaseModel):
             "nameSuffix": obj.get("nameSuffix"),
             "tin": obj.get("tin"),
             "birthDate": obj.get("birthDate"),
-            "coveredAllMonths": obj.get("coveredAllMonths"),
             "coveredJanuary": obj.get("coveredJanuary"),
             "coveredFebruary": obj.get("coveredFebruary"),
             "coveredMarch": obj.get("coveredMarch"),

@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.0
+@version    25.11.1
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -33,7 +33,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from Avalara.SDK.models.A1099.V2.get1099_form200_response import Get1099Form200Response
 from typing import Optional, Set
@@ -43,7 +43,7 @@ class Form1099ListRequest(BaseModel):
     """
     Form1099ListRequest
     """ # noqa: E501
-    type: Optional[StrictStr] = None
+    type: Optional[StrictStr] = Field(default=None, description="Available form types: * `1042-S` * `1095-B` * `1095-C` * `1099-DIV` * `1099-INT` * `1099-K` * `1099-MISC` * `1099-NEC` * `1099-R` ")
     forms: Optional[List[Get1099Form200Response]] = None
     __properties: ClassVar[List[str]] = ["type", "forms"]
 
@@ -53,8 +53,8 @@ class Form1099ListRequest(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B', 'Form1042S', 'Form1095C', 'Form1099Int']):
-            raise ValueError("must be one of enum values ('Form1099Nec', 'Form1099Misc', 'Form1099Div', 'Form1099R', 'Form1099K', 'Form1095B', 'Form1042S', 'Form1095C', 'Form1099Int')")
+        if value not in set(['1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R']):
+            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R')")
         return value
 
     model_config = ConfigDict(
