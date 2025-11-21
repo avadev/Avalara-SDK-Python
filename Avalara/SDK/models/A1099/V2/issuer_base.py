@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.1
+@version    25.11.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -47,9 +47,9 @@ class IssuerBase(BaseModel):
     tin: Optional[StrictStr] = Field(default=None, description="Federal Tax Identification Number (TIN).")
     reference_id: Optional[StrictStr] = Field(default=None, description="Internal reference ID. Never shown to any agency or recipient. If present, it will prefix download filenames. Allowed characters: letters, numbers, dashes, underscores, and spaces.", alias="referenceId")
     telephone: Optional[StrictStr] = Field(description="Contact phone number (must contain at least 10 digits, max 15 characters). For recipient inquiries.")
-    tax_year: Optional[StrictInt] = Field(description="Tax year for which the forms are being filed (e.g., 2024). Must be within current tax year and current tax year - 4.", alias="taxYear")
-    country_code: Optional[StrictStr] = Field(default=None, description="Two-letter IRS country code (e.g., 'US', 'CA'), as defined at https://www.irs.gov/e-file-providers/country-codes. If there is a transfer agent, use the transfer agent's shipping address.", alias="countryCode")
-    email: Optional[StrictStr] = Field(description="Contact email address. For recipient inquiries.")
+    tax_year: Optional[StrictInt] = Field(description="Tax year for which the forms are being filed (e.g., 2024). Must be within current tax year and current tax year - 4. It's only required on creation, and cannot be modified on update.", alias="taxYear")
+    country_code: Optional[StrictStr] = Field(description="Two-letter IRS country code (e.g., 'US', 'CA'), as defined at https://www.irs.gov/e-file-providers/country-codes. If there is a transfer agent, use the transfer agent's shipping address.", alias="countryCode")
+    email: Optional[StrictStr] = Field(default=None, description="Contact email address. For recipient inquiries. Phone will be used on communications if you don't specify an email")
     address: Optional[StrictStr] = Field(description="Address.")
     city: Optional[StrictStr] = Field(description="City.")
     state: Optional[StrictStr] = Field(description="Two-letter US state or Canadian province code (required for US/CA addresses).")

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **var_field** | **str** | The field containing the error | [optional] 
 **errors** | **List[str]** | The list of error messages | [optional] 
+**error_codes** | **List[str]** | The list of error codes (only present when api_error_codes flag is enabled) | [optional] 
 
 ## Example
 
