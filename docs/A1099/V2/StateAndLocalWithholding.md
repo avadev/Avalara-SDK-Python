@@ -7,11 +7,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **state_tax_withheld** | **float** | Amount of state tax that was withheld | [optional] 
 **state** | **str** | US state | [optional] 
-**state_id_number** | **str** | State ID number of the entity issuing the form | [optional] 
+**state_id** | **str** | State ID of the entity issuing the form | [optional] 
 **state_income** | **float** | Amount of state income | [optional] 
 **local_tax_withheld** | **float** | Amount of local tax that was withheld | [optional] 
 **locality** | **str** | Locality name | [optional] 
-**locality_id_number** | **str** | Locality ID number of the entity issuing the form | [optional] 
+**locality_id** | **str** | Locality ID of the entity issuing the form | [optional] 
 **local_income** | **float** | Amount of local income | [optional] 
 
 ## Example

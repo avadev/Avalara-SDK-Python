@@ -33,8 +33,8 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.issuer_command import IssuerCommand
-from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.issuer_response import IssuerResponse
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.issuer_command import IssuerCommand
+from Avalara.SDK.models.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.A1099.V2.issuer_response import IssuerResponse
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self

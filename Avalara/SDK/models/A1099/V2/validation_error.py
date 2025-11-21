@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.1
+@version    25.11.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -44,7 +44,8 @@ class ValidationError(BaseModel):
     """ # noqa: E501
     var_field: Optional[StrictStr] = Field(default=None, description="The field containing the error", alias="field")
     errors: Optional[List[StrictStr]] = Field(default=None, description="The list of error messages")
-    __properties: ClassVar[List[str]] = ["field", "errors"]
+    error_codes: Optional[List[StrictStr]] = Field(default=None, description="The list of error codes (only present when api_error_codes flag is enabled)", alias="errorCodes")
+    __properties: ClassVar[List[str]] = ["field", "errors", "errorCodes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,6 +96,11 @@ class ValidationError(BaseModel):
         if self.errors is None and "errors" in self.model_fields_set:
             _dict['errors'] = None
 
+        # set to None if error_codes (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_codes is None and "error_codes" in self.model_fields_set:
+            _dict['errorCodes'] = None
+
         return _dict
 
     @classmethod
@@ -108,7 +114,8 @@ class ValidationError(BaseModel):
 
         _obj = cls.model_validate({
             "field": obj.get("field"),
-            "errors": obj.get("errors")
+            "errors": obj.get("errors"),
+            "errorCodes": obj.get("errorCodes")
         })
         return _obj
 

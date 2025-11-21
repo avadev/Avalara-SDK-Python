@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.1
+@version    25.11.2
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -44,13 +44,13 @@ class StateAndLocalWithholding(BaseModel):
     """ # noqa: E501
     state_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of state tax that was withheld", alias="stateTaxWithheld")
     state: Optional[StrictStr] = Field(default=None, description="US state")
-    state_id_number: Optional[StrictStr] = Field(default=None, description="State ID number of the entity issuing the form", alias="stateIdNumber")
+    state_id: Optional[StrictStr] = Field(default=None, description="State ID of the entity issuing the form", alias="stateId")
     state_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of state income", alias="stateIncome")
     local_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of local tax that was withheld", alias="localTaxWithheld")
     locality: Optional[StrictStr] = Field(default=None, description="Locality name")
-    locality_id_number: Optional[StrictStr] = Field(default=None, description="Locality ID number of the entity issuing the form", alias="localityIdNumber")
+    locality_id: Optional[StrictStr] = Field(default=None, description="Locality ID of the entity issuing the form", alias="localityId")
     local_income: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of local income", alias="localIncome")
-    __properties: ClassVar[List[str]] = ["stateTaxWithheld", "state", "stateIdNumber", "stateIncome", "localTaxWithheld", "locality", "localityIdNumber", "localIncome"]
+    __properties: ClassVar[List[str]] = ["stateTaxWithheld", "state", "stateId", "stateIncome", "localTaxWithheld", "locality", "localityId", "localIncome"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,10 +101,10 @@ class StateAndLocalWithholding(BaseModel):
         if self.state is None and "state" in self.model_fields_set:
             _dict['state'] = None
 
-        # set to None if state_id_number (nullable) is None
+        # set to None if state_id (nullable) is None
         # and model_fields_set contains the field
-        if self.state_id_number is None and "state_id_number" in self.model_fields_set:
-            _dict['stateIdNumber'] = None
+        if self.state_id is None and "state_id" in self.model_fields_set:
+            _dict['stateId'] = None
 
         # set to None if state_income (nullable) is None
         # and model_fields_set contains the field
@@ -121,10 +121,10 @@ class StateAndLocalWithholding(BaseModel):
         if self.locality is None and "locality" in self.model_fields_set:
             _dict['locality'] = None
 
-        # set to None if locality_id_number (nullable) is None
+        # set to None if locality_id (nullable) is None
         # and model_fields_set contains the field
-        if self.locality_id_number is None and "locality_id_number" in self.model_fields_set:
-            _dict['localityIdNumber'] = None
+        if self.locality_id is None and "locality_id" in self.model_fields_set:
+            _dict['localityId'] = None
 
         # set to None if local_income (nullable) is None
         # and model_fields_set contains the field
@@ -145,11 +145,11 @@ class StateAndLocalWithholding(BaseModel):
         _obj = cls.model_validate({
             "stateTaxWithheld": obj.get("stateTaxWithheld"),
             "state": obj.get("state"),
-            "stateIdNumber": obj.get("stateIdNumber"),
+            "stateId": obj.get("stateId"),
             "stateIncome": obj.get("stateIncome"),
             "localTaxWithheld": obj.get("localTaxWithheld"),
             "locality": obj.get("locality"),
-            "localityIdNumber": obj.get("localityIdNumber"),
+            "localityId": obj.get("localityId"),
             "localIncome": obj.get("localIncome")
         })
         return _obj
