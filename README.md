@@ -1,4 +1,4 @@
-# Avalara.SDK - the Unified Java SDK for next gen Avalara services.
+# Avalara.SDK - the Unified Python SDK for next gen Avalara services.
 
 Unified SDK consists of services on top of which the Avalara Compliance Cloud platform is built. These services are foundational and provide functionality such as einvoicing.
 
@@ -348,3 +348,4 @@ Class | Method | HTTP request | Description
  - [Avalara.SDK.models.A1099.V2.W9FormMinimalRequest](docs/A1099/V2/W9FormMinimalRequest.md)
  - [Avalara.SDK.models.A1099.V2.W9FormRequest](docs/A1099/V2/W9FormRequest.md)
  - [Avalara.SDK.models.A1099.V2.W9FormResponse](docs/A1099/V2/W9FormResponse.md)
+
