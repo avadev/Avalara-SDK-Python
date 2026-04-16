@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 Submit a document
 
-This API used by the interoperability partners to submit a document to  their trading partners in Avalara on behalf of their customers. 
+Upload documents on behalf of interoperability partners and submit them to trading partners through the Avalara platform.
 
 ### Example
 
@@ -41,9 +41,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = interop_api.InteropApi(api_client)
     document_type = 'document_type_example' # str | Type of the document being uploaded. Partners will be configured in Avalara system to send only certain types of documents.
     interchange_type = 'interchange_type_example' # str | Type of interchange (codes in Avalara system that uniquely identifies a type of interchange). Partners will be configured in Avalara system to send documents belonging to certain types of interchanges.
-    avalara_version = '1.4' # str | The HTTP Header meant to specify the version of the API intended to be used
-    x_avalara_client = 'John's E-Invoicing-API Client' # str | You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\" (optional)
-    x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | The caller can use this as an identifier to use as a correlation id to trace the call. (optional)
+    avalara_version = '1.6' # str | Header that specifies the API version to use (for example \"1.6\").
+    x_avalara_client = 'John's E-Invoicing-API Client' # str | Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\"). (optional)
+    x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\"). (optional)
     file_name = None # bytearray | The file to be uploaded (e.g., UBL XML, CII XML). (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -69,9 +69,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **document_type** | **str**| Type of the document being uploaded. Partners will be configured in Avalara system to send only certain types of documents. |
  **interchange_type** | **str**| Type of interchange (codes in Avalara system that uniquely identifies a type of interchange). Partners will be configured in Avalara system to send documents belonging to certain types of interchanges. |
- **avalara_version** | **str**| The HTTP Header meant to specify the version of the API intended to be used |
- **x_avalara_client** | **str**| You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \&quot;Fingerprint\&quot; | [optional]
- **x_correlation_id** | **str**| The caller can use this as an identifier to use as a correlation id to trace the call. | [optional]
+ **avalara_version** | **str**| Header that specifies the API version to use (for example \&quot;1.6\&quot;). |
+ **x_avalara_client** | **str**| Optional header for a client identifier string used for diagnostics (for example \&quot;Fingerprint\&quot;). | [optional]
+ **x_correlation_id** | **str**| Optional correlation identifier provided by the caller to trace the call (for example \&quot;f3f0d19a-01a1-4748-8a58-f000d0424f43\&quot;). | [optional]
  **file_name** | [**bytearray**](bytearray.md)| The file to be uploaded (e.g., UBL XML, CII XML). | [optional]
 
 ### Return type
@@ -92,11 +92,11 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**202** | Document Accepted. This doesn&#39;t mean it is processed. This is just a transport ack. |  * X-Correlation-ID -  <br>  |
-**400** | Bad/Invalid Request. |  * X-Correlation-Id -  <br>  |
-**401** | Unauthorized |  * X-Correlation-Id -  <br>  |
-**403** | Forbidden |  * X-Correlation-Id -  <br>  |
-**500** | Internal server error |  * X-Correlation-Id -  <br>  |
+**202** | Document accepted for processing. Returns the interchange ID and acceptance message. This is a transport acknowledgment; processing occurs asynchronously. |  * X-Correlation-ID -  <br>  |
+**400** | Bad request. The request is invalid or contains missing or incorrect parameters. |  * X-Correlation-ID -  <br>  |
+**401** | Unauthorized. |  * X-Correlation-ID -  <br>  |
+**403** | Forbidden. |  * X-Correlation-ID -  <br>  |
+**500** | Internal server error. |  * X-Correlation-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 

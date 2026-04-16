@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -58,7 +58,7 @@ class DataInputFieldsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.11.2")
+        api_client.set_sdk_version("26.4.0")
         self.api_client = api_client
 		
         self.get_data_input_fields_endpoint = _Endpoint(
@@ -135,7 +135,7 @@ class DataInputFieldsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -154,7 +154,7 @@ class DataInputFieldsApi(object):
     ):
         """Returns the optionality of document fields for different country mandates  # noqa: E501
 
-        This endpoint provides a list of required, conditional, and optional fields for each country mandate. You can use the <code>mandates</code> endpoint to retrieve all available country mandates. You can use the $filter query parameter to retrieve fields for a particular mandate  # noqa: E501
+        This endpoint returns a list of required, conditional, and optional fields for each country mandate. Use the mandates endpoint to retrieve all available country mandates. Use the $filter query parameter to retrieve fields for a specific mandate.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -162,15 +162,15 @@ class DataInputFieldsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
-            filter (str): Filter by field name and value. This filter only supports <code>eq</code> and <code>contains</code>. Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            filter (str): Filter by field name and value. This filter supports only eq and contains. For more information, refer to the Avalara filtering guide.. [optional]
             top (int): The number of items to include in the result.. [optional]
             skip (int): The number of items to skip in the result.. [optional]
-            count (bool): When set to true, the count of the collection is also returned in the response body. [optional]
-            count_only (bool): When set to true, only the count of the collection is returned. [optional]
+            count (bool): When set to true, the response body also includes the count of items in the collection.. [optional]
+            count_only (bool): When set to true, the response returns only the count of items in the collection.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

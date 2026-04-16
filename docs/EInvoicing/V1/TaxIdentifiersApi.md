@@ -4,16 +4,16 @@ All URIs are relative to *https://api.sbx.avalara.com/einvoicing*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**tax_identifier_schema_by_country**](TaxIdentifiersApi.md#tax_identifier_schema_by_country) | **GET** /tax-identifiers/schema | Returns the tax identifier request &amp; response schema for a specific country.
+[**tax_identifier_schema_by_country**](TaxIdentifiersApi.md#tax_identifier_schema_by_country) | **GET** /tax-identifiers/schema | Returns the tax identifier request and response schema for a specific country.
 [**validate_tax_identifier**](TaxIdentifiersApi.md#validate_tax_identifier) | **POST** /tax-identifiers/validate | Validates a tax identifier.
 
 
 # **tax_identifier_schema_by_country**
 > TaxIdentifierSchemaByCountry200Response tax_identifier_schema_by_country(avalara_version, country_code)
 
-Returns the tax identifier request & response schema for a specific country.
+Returns the tax identifier request and response schema for a specific country.
 
-This endpoint retrieves the request and response schema required to validate tax identifiers based on a specific country's requirements. This can include both standard fields and any additional parameters required by the respective country's tax authority.
+Returns the tax identifier request and response schema for a specific country.
 
 ### Example
 
@@ -40,14 +40,14 @@ configuration = Avalara.SDK.Configuration(
 with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tax_identifiers_api.TaxIdentifiersApi(api_client)
-    avalara_version = '1.4' # str | The HTTP Header meant to specify the version of the API intended to be used.
-    country_code = 'DE' # str | The two-letter ISO-3166 country code for which the schema should be retrieved.
-    x_avalara_client = 'John's E-Invoicing-API Client' # str | You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". (optional)
-    x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | The caller can use this as an identifier to use as a correlation id to trace the call. (optional)
-    type = 'request' # str | Specifies whether to return the request or response schema. (optional)
+    avalara_version = '1.6' # str | Header that specifies the API version to use (for example \"1.6\").
+    country_code = 'DE' # str | Two-letter ISO 3166 country code for which to retrieve the schema (for example \"DE\").
+    x_avalara_client = 'John's E-Invoicing-API Client' # str | Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\"). (optional)
+    x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\"). (optional)
+    type = 'request' # str | Specifies which schema to return: \"request\" to receive the request validation schema or \"response\" to receive the response validation schema. (optional)
     # example passing only required values which don't have defaults set
     try:
-        # Returns the tax identifier request & response schema for a specific country.
+        # Returns the tax identifier request and response schema for a specific country.
         api_response = api_instance.tax_identifier_schema_by_country(avalara_version, country_code)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
@@ -56,7 +56,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        # Returns the tax identifier request & response schema for a specific country.
+        # Returns the tax identifier request and response schema for a specific country.
         api_response = api_instance.tax_identifier_schema_by_country(avalara_version, country_code, x_avalara_client=x_avalara_client, x_correlation_id=x_correlation_id, type=type)
         pprint(api_response)
     except Avalara.SDK.ApiException as e:
@@ -67,11 +67,11 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **avalara_version** | **str**| The HTTP Header meant to specify the version of the API intended to be used. |
- **country_code** | **str**| The two-letter ISO-3166 country code for which the schema should be retrieved. |
- **x_avalara_client** | **str**| You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \&quot;Fingerprint\&quot;. | [optional]
- **x_correlation_id** | **str**| The caller can use this as an identifier to use as a correlation id to trace the call. | [optional]
- **type** | **str**| Specifies whether to return the request or response schema. | [optional]
+ **avalara_version** | **str**| Header that specifies the API version to use (for example \&quot;1.6\&quot;). |
+ **country_code** | **str**| Two-letter ISO 3166 country code for which to retrieve the schema (for example \&quot;DE\&quot;). |
+ **x_avalara_client** | **str**| Optional header for a client identifier string used for diagnostics (for example \&quot;Fingerprint\&quot;). | [optional]
+ **x_correlation_id** | **str**| Optional correlation identifier provided by the caller to trace the call (for example \&quot;f3f0d19a-01a1-4748-8a58-f000d0424f43\&quot;). | [optional]
+ **type** | **str**| Specifies which schema to return: \&quot;request\&quot; to receive the request validation schema or \&quot;response\&quot; to receive the response validation schema. | [optional]
 
 ### Return type
 
@@ -91,11 +91,11 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  * X-Correlation-Id -  <br>  |
-**400** | Invalid request |  * X-Correlation-Id -  <br>  |
-**401** | Unauthorized |  * X-Correlation-Id -  <br>  |
-**403** | Forbidden |  * X-Correlation-Id -  <br>  |
-**500** | Internal server error |  * X-Correlation-Id -  <br>  |
+**200** | Returns an object containing countryCode, schemaType, and schema. The schema property contains a JSON Schema (Draft-07) used to validate tax identifier requests or responses for the specified country. |  * X-Correlation-ID -  <br>  |
+**400** | Invalid request |  * X-Correlation-ID -  <br>  |
+**401** | Unauthorized. |  * X-Correlation-ID -  <br>  |
+**403** | Forbidden. |  * X-Correlation-ID -  <br>  |
+**500** | Internal server error. |  * X-Correlation-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
@@ -132,10 +132,10 @@ configuration = Avalara.SDK.Configuration(
 with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tax_identifiers_api.TaxIdentifiersApi(api_client)
-    avalara_version = '1.4' # str | The HTTP Header meant to specify the version of the API intended to be used.
+    avalara_version = '1.6' # str | Header that specifies the API version to use (for example \"1.6\").
     tax_identifier_request = {"countryCode":"DE","identifierType":"vat","identifier":"123456789"} # TaxIdentifierRequest | 
-    x_avalara_client = 'John's E-Invoicing-API Client' # str | You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". (optional)
-    x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | The caller can use this as an identifier to use as a correlation id to trace the call. (optional)
+    x_avalara_client = 'John's E-Invoicing-API Client' # str | Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\"). (optional)
+    x_correlation_id = 'f3f0d19a-01a1-4748-8a58-f000d0424f43' # str | Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\"). (optional)
     # example passing only required values which don't have defaults set
     try:
         # Validates a tax identifier.
@@ -158,10 +158,10 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **avalara_version** | **str**| The HTTP Header meant to specify the version of the API intended to be used. |
+ **avalara_version** | **str**| Header that specifies the API version to use (for example \&quot;1.6\&quot;). |
  **tax_identifier_request** | [**TaxIdentifierRequest**](TaxIdentifierRequest.md)|  |
- **x_avalara_client** | **str**| You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \&quot;Fingerprint\&quot;. | [optional]
- **x_correlation_id** | **str**| The caller can use this as an identifier to use as a correlation id to trace the call. | [optional]
+ **x_avalara_client** | **str**| Optional header for a client identifier string used for diagnostics (for example \&quot;Fingerprint\&quot;). | [optional]
+ **x_correlation_id** | **str**| Optional correlation identifier provided by the caller to trace the call (for example \&quot;f3f0d19a-01a1-4748-8a58-f000d0424f43\&quot;). | [optional]
 
 ### Return type
 
@@ -181,12 +181,12 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success response. |  * X-Correlation-Id -  <br>  |
-**400** | Invalid request |  * X-Correlation-Id -  <br>  |
-**401** | Unauthorized |  * X-Correlation-Id -  <br>  |
-**403** | Forbidden |  * X-Correlation-Id -  <br>  |
-**429** | Rate limit exceeded |  * X-Correlation-Id -  <br>  |
-**500** | Internal server error |  * X-Correlation-Id -  <br>  |
+**200** | Validation completed. Returns a TaxIdentifierResponse object that includes countryCode and a value object with identifierType, identifier, and optional extensions when available. |  * X-Correlation-ID -  <br>  |
+**400** | Bad request. The request is invalid or contains missing or incorrect parameters. |  * X-Correlation-ID -  <br>  |
+**401** | Unauthorized. |  * X-Correlation-ID -  <br>  |
+**403** | Forbidden. |  * X-Correlation-ID -  <br>  |
+**429** | Rate limit exceeded. |  * X-Correlation-ID -  <br>  |
+**500** | Internal server error. |  * X-Correlation-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 

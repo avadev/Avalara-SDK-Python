@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **name** | **str** | Identifier name (e.g., Peppol Participant ID). | 
 **display_name** | **str** | Display name of the identifier. | [optional] 
 **value** | **str** | Value of the identifier. | 
+**extensions** | [**List[Extension]**](Extension.md) | Optional array used to carry additional metadata or configuration values for the identifier. | [optional] 
 
 ## Example
 

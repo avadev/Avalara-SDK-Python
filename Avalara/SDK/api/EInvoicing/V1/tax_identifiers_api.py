@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -60,7 +60,7 @@ class TaxIdentifiersApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.11.2")
+        api_client.set_sdk_version("26.4.0")
         self.api_client = api_client
 		
         self.tax_identifier_schema_by_country_endpoint = _Endpoint(
@@ -134,7 +134,7 @@ class TaxIdentifiersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -203,7 +203,7 @@ class TaxIdentifiersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -223,9 +223,9 @@ class TaxIdentifiersApi(object):
         country_code,
         **kwargs
     ):
-        """Returns the tax identifier request & response schema for a specific country.  # noqa: E501
+        """Returns the tax identifier request and response schema for a specific country.  # noqa: E501
 
-        This endpoint retrieves the request and response schema required to validate tax identifiers based on a specific country's requirements. This can include both standard fields and any additional parameters required by the respective country's tax authority.  # noqa: E501
+        Returns the tax identifier request and response schema for a specific country.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -233,13 +233,13 @@ class TaxIdentifiersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
-            country_code (str): The two-letter ISO-3166 country code for which the schema should be retrieved.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            country_code (str): Two-letter ISO 3166 country code for which to retrieve the schema (for example \"DE\").
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
-            type (str): Specifies whether to return the request or response schema.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
+            type (str): Specifies which schema to return: \"request\" to receive the request validation schema or \"response\" to receive the response validation schema.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -306,12 +306,12 @@ class TaxIdentifiersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
             tax_identifier_request (TaxIdentifierRequest):
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

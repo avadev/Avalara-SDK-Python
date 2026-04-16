@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -64,7 +64,7 @@ class DocumentsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.11.2")
+        api_client.set_sdk_version("26.4.0")
         self.api_client = api_client
 		
         self.download_document_endpoint = _Endpoint(
@@ -128,7 +128,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/pdf',
                     'application/xml',
@@ -194,7 +194,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -227,6 +227,7 @@ class DocumentsApi(object):
                     'count',
                     'count_only',
                     'filter',
+                    'include',
                     'top',
                     'skip',
                 ],
@@ -262,6 +263,8 @@ class DocumentsApi(object):
                         (str,),
                     'filter':
                         (str,),
+                    'include':
+                        (str,),
                     'top':
                         (int,),
                     'skip':
@@ -276,6 +279,7 @@ class DocumentsApi(object):
                     'count': '$count',
                     'count_only': '$countOnly',
                     'filter': '$filter',
+                    'include': '$include',
                     'top': '$top',
                     'skip': '$skip',
                 },
@@ -288,6 +292,7 @@ class DocumentsApi(object):
                     'count': 'query',
                     'count_only': 'query',
                     'filter': 'query',
+                    'include': 'query',
                     'top': 'query',
                     'skip': 'query',
                 },
@@ -295,7 +300,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -360,7 +365,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -431,7 +436,7 @@ class DocumentsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json',
                     'text/xml'
@@ -455,7 +460,7 @@ class DocumentsApi(object):
     ):
         """Returns a copy of the document  # noqa: E501
 
-        When the document is available, use this endpoint to download it as text, XML, or PDF. The output format needs to be specified in the Accept header, and it will vary depending on the mandate. If the file has not yet been created, then status code 404 (not found) is returned.  # noqa: E501
+        Downloads the document when it is available. Specify the output format in the Accept header. Returns 404 if the file has not been created.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -463,12 +468,12 @@ class DocumentsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
-            accept (str): This header indicates the MIME type of the document
-            document_id (str): The unique ID for this document that was returned in the POST /einvoicing/document response body
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            accept (str): Header that specifies the MIME type of the returned document.
+            document_id (str): The unique documentId returned in the POST /documents response body.
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -528,7 +533,7 @@ class DocumentsApi(object):
     ):
         """Fetch the inbound document from a tax authority  # noqa: E501
 
-        This API allows you to retrieve an inbound document. Pass key-value pairs as parameters in the request, such as the confirmation number, supplier number, and buyer VAT number.  # noqa: E501
+        Retrieves an inbound document. Provide key-value pairs as request parameters. Supported parameters vary by tax authority and country.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -536,11 +541,11 @@ class DocumentsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
             fetch_documents_request (FetchDocumentsRequest):
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -598,7 +603,7 @@ class DocumentsApi(object):
     ):
         """Returns a summary of documents for a date range  # noqa: E501
 
-        Get a list of documents on the Avalara E-Invoicing platform that have a processing date within the specified date range.  # noqa: E501
+        Returns a list of document summaries with a processing date within the specified date range.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -606,16 +611,17 @@ class DocumentsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
-            start_date (datetime): Start date of documents to return. This defaults to the previous month.. [optional]
-            end_date (datetime): End date of documents to return. This defaults to the current date.. [optional]
-            flow (str): Optionally filter by document direction, where issued = `out` and received = `in`. [optional]
-            count (str): When set to true, the count of the collection is also returned in the response body. [optional]
-            count_only (str): When set to true, only the count of the collection is returned. [optional]
-            filter (str): Filter by field name and value. This filter only supports <code>eq</code> . Refer to [https://developer.avalara.com/avatax/filtering-in-rest/](https://developer.avalara.com/avatax/filtering-in-rest/) for more information on filtering. Filtering will be done over the provided startDate and endDate. If no startDate or endDate is provided, defaults will be assumed.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            start_date (datetime): Start date for documents to return. Defaults to the previous month. Format: \"YYYY-MM-DDThh:mm:ss\".. [optional]
+            end_date (datetime): End date for documents to return. Defaults to the current date. Format: \"YYYY-MM-DDThh:mm:ss\".. [optional]
+            flow (str): Optional filter for document direction: issued uses \"out\" and received uses \"in\".. [optional]
+            count (str): When set to true, the response body also includes the count of items in the collection.. [optional]
+            count_only (str): When set to true, the response returns only the count of items in the collection.. [optional]
+            filter (str): Filter by field name and value. This filter supports only eq. For more information, refer to the Avalara filtering guide.. [optional]
+            include (str): When set to `events`, each document in the response includes its events array. Omit this parameter or use any other value to exclude events from the response.. [optional]
             top (int): The number of items to include in the result.. [optional]
             skip (int): The number of items to skip in the result.. [optional]
             _return_http_data_only (bool): response data without head status
@@ -675,7 +681,7 @@ class DocumentsApi(object):
     ):
         """Checks the status of a document  # noqa: E501
 
-        Using the unique ID from POST /einvoicing/documents response body, request the current status of a document.  # noqa: E501
+        Uses the documentId from the POST /documents response body to return the current status of a document.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -683,11 +689,11 @@ class DocumentsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
-            document_id (str): The unique ID for this document that was returned in the POST /einvoicing/documents response body
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            document_id (str): The unique documentId returned in the POST /documents response body.
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -755,12 +761,12 @@ class DocumentsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
             metadata (SubmitDocumentMetadata):
             data (object): The document to be submitted, as indicated by the metadata fields 'dataFormat' and 'dataFormatVersion'
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a fingerprint.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

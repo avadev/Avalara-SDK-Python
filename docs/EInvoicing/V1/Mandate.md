@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **input_data_formats** | [**List[InputDataFormats]**](InputDataFormats.md) | Format and version used when inputting the data | [optional] 
 **output_data_formats** | [**List[OutputDataFormats]**](OutputDataFormats.md) | Lists the supported output document formats for the country mandate. For countries where specifying an output document format is required (e.g., France), this array will contain the applicable formats. For other countries where output format selection is not necessary, the array will be empty. | [optional] 
 **workflow_ids** | [**List[WorkflowIds]**](WorkflowIds.md) | Workflow ID list | [optional] 
+**supported_document_statuses** | [**List[SupportedDocumentStatuses]**](SupportedDocumentStatuses.md) | List of document statuses defined by the mandate. | [optional] 
 
 ## Example
 

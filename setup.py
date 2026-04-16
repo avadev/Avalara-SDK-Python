@@ -17,14 +17,14 @@ AvaTax Software Development Kit for Python.
    See the License for the specific language governing permissions and
    limitations under the License.
 
-    Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    Avalara E-Invoicing API
+    An API that supports sending data for an E-Invoicing compliance use-case. 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -40,10 +40,10 @@ from setuptools import setup, find_packages  # noqa: H301
 from setuptools import setup, find_namespace_packages 
 
 NAME = "Avalara.SDK"
-VERSION = "25.11.2"
+VERSION = "26.4.0"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
-    "urllib3 >= 2.5.0",
+    "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
     "pydantic >= 2",
 ]
@@ -51,15 +51,14 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
-    description="Avalara 1099 &amp; W-9 API Definition",
-    author="Developer Support",
-    author_email="support@avalara.com",
+    description="Avalara E-Invoicing API",
+    author="OpenAPI Generator community",
+    author_email="team@openapitools.org",
     url="",
-    keywords=["OpenAPI", "OpenAPI-Generator", "Avalara 1099 & W-9 API Definition"],
+    keywords=["OpenAPI", "OpenAPI-Generator", "Avalara E-Invoicing API"],
     install_requires=REQUIRES,
     packages=find_namespace_packages(include=["Avalara.*"], exclude=["test", "tests"]),
     include_package_data=True,
-    license="Apache 2.0",
     long_description_content_type='text/markdown',
     long_description="""\
     SDK for Avalara Services for client use.   # noqa: E501

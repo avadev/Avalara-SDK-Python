@@ -6,10 +6,11 @@ Displays when a status event occurred
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**event_date_time** | **str** | The date and time when the status event occured, displayed in the format YYYY-MM-DDThh:mm:ss | [optional] 
+**event_date_time** | **str** | The date and time when the status event occurred, displayed in the format YYYY-MM-DDThh:mm:ss | [optional] 
 **message** | **str** | A message describing the status event | [optional] 
 **response_key** | **str** |  The type of number or acknowledgement returned by the tax authority (if applicable). For example, it could be an identification key, acknowledgement code, or any other relevant identifier. | [optional] 
 **response_value** | **str** | The corresponding value associated with the response key. This value is provided by the tax authority in response to the event. | [optional] 
+**category** | **str** | Represents the functional area or process stage where the status event occurred. Useful for grouping related events such as document processing, transmission, or validation. | [optional] 
 
 ## Example
 

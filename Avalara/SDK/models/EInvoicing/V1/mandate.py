@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -37,6 +37,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from Avalara.SDK.models.EInvoicing.V1.input_data_formats import InputDataFormats
 from Avalara.SDK.models.EInvoicing.V1.output_data_formats import OutputDataFormats
+from Avalara.SDK.models.EInvoicing.V1.supported_document_statuses import SupportedDocumentStatuses
 from Avalara.SDK.models.EInvoicing.V1.workflow_ids import WorkflowIds
 from typing import Optional, Set
 from typing_extensions import Self
@@ -58,7 +59,8 @@ class Mandate(BaseModel):
     input_data_formats: Optional[List[InputDataFormats]] = Field(default=None, description="Format and version used when inputting the data", alias="inputDataFormats")
     output_data_formats: Optional[List[OutputDataFormats]] = Field(default=None, description="Lists the supported output document formats for the country mandate. For countries where specifying an output document format is required (e.g., France), this array will contain the applicable formats. For other countries where output format selection is not necessary, the array will be empty.", alias="outputDataFormats")
     workflow_ids: Optional[List[WorkflowIds]] = Field(default=None, description="Workflow ID list", alias="workflowIds")
-    __properties: ClassVar[List[str]] = ["mandateId", "countryMandate", "countryCode", "description", "supportedByELRAPI", "mandateFormat", "eInvoicingFlow", "eInvoicingFlowDocumentationLink", "getInvoiceAvailableMediaType", "supportsInboundDigitalDocument", "inputDataFormats", "outputDataFormats", "workflowIds"]
+    supported_document_statuses: Optional[List[SupportedDocumentStatuses]] = Field(default=None, description="List of document statuses defined by the mandate.", alias="supportedDocumentStatuses")
+    __properties: ClassVar[List[str]] = ["mandateId", "countryMandate", "countryCode", "description", "supportedByELRAPI", "mandateFormat", "eInvoicingFlow", "eInvoicingFlowDocumentationLink", "getInvoiceAvailableMediaType", "supportsInboundDigitalDocument", "inputDataFormats", "outputDataFormats", "workflowIds", "supportedDocumentStatuses"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -120,6 +122,13 @@ class Mandate(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['workflowIds'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in supported_document_statuses (list)
+        _items = []
+        if self.supported_document_statuses:
+            for _item in self.supported_document_statuses:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['supportedDocumentStatuses'] = _items
         return _dict
 
     @classmethod
@@ -144,7 +153,8 @@ class Mandate(BaseModel):
             "supportsInboundDigitalDocument": obj.get("supportsInboundDigitalDocument"),
             "inputDataFormats": [InputDataFormats.from_dict(_item) for _item in obj["inputDataFormats"]] if obj.get("inputDataFormats") is not None else None,
             "outputDataFormats": [OutputDataFormats.from_dict(_item) for _item in obj["outputDataFormats"]] if obj.get("outputDataFormats") is not None else None,
-            "workflowIds": [WorkflowIds.from_dict(_item) for _item in obj["workflowIds"]] if obj.get("workflowIds") is not None else None
+            "workflowIds": [WorkflowIds.from_dict(_item) for _item in obj["workflowIds"]] if obj.get("workflowIds") is not None else None,
+            "supportedDocumentStatuses": [SupportedDocumentStatuses.from_dict(_item) for _item in obj["supportedDocumentStatuses"]] if obj.get("supportedDocumentStatuses") is not None else None
         })
         return _obj
 
