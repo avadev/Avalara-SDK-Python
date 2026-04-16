@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -42,11 +42,12 @@ class StatusEvent(BaseModel):
     """
     Displays when a status event occurred
     """ # noqa: E501
-    event_date_time: Optional[StrictStr] = Field(default=None, description="The date and time when the status event occured, displayed in the format YYYY-MM-DDThh:mm:ss", alias="eventDateTime")
+    event_date_time: Optional[StrictStr] = Field(default=None, description="The date and time when the status event occurred, displayed in the format YYYY-MM-DDThh:mm:ss", alias="eventDateTime")
     message: Optional[StrictStr] = Field(default=None, description="A message describing the status event")
     response_key: Optional[StrictStr] = Field(default=None, description=" The type of number or acknowledgement returned by the tax authority (if applicable). For example, it could be an identification key, acknowledgement code, or any other relevant identifier.", alias="responseKey")
     response_value: Optional[StrictStr] = Field(default=None, description="The corresponding value associated with the response key. This value is provided by the tax authority in response to the event.", alias="responseValue")
-    __properties: ClassVar[List[str]] = ["eventDateTime", "message", "responseKey", "responseValue"]
+    category: Optional[StrictStr] = Field(default=None, description="Represents the functional area or process stage where the status event occurred. Useful for grouping related events such as document processing, transmission, or validation.")
+    __properties: ClassVar[List[str]] = ["eventDateTime", "message", "responseKey", "responseValue", "category"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,6 +98,11 @@ class StatusEvent(BaseModel):
         if self.response_value is None and "response_value" in self.model_fields_set:
             _dict['responseValue'] = None
 
+        # set to None if category (nullable) is None
+        # and model_fields_set contains the field
+        if self.category is None and "category" in self.model_fields_set:
+            _dict['category'] = None
+
         return _dict
 
     @classmethod
@@ -112,7 +118,8 @@ class StatusEvent(BaseModel):
             "eventDateTime": obj.get("eventDateTime"),
             "message": obj.get("message"),
             "responseKey": obj.get("responseKey"),
-            "responseValue": obj.get("responseValue")
+            "responseValue": obj.get("responseValue"),
+            "category": obj.get("category")
         })
         return _obj
 

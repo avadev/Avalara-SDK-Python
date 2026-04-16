@@ -5,8 +5,8 @@ All URIs are relative to *https://api.sbx.avalara.com/einvoicing*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_webhook_subscription**](SubscriptionsApi.md#create_webhook_subscription) | **POST** /webhooks/subscriptions | Create a subscription to events
-[**delete_webhook_subscription**](SubscriptionsApi.md#delete_webhook_subscription) | **DELETE** /webhooks/subscriptions/{subscription-id} | Unsubscribe from events
-[**get_webhook_subscription**](SubscriptionsApi.md#get_webhook_subscription) | **GET** /webhooks/subscriptions/{subscription-id} | Get details of a subscription
+[**delete_webhook_subscription**](SubscriptionsApi.md#delete_webhook_subscription) | **DELETE** /webhooks/subscriptions/{subscriptionId} | Unsubscribe from events
+[**get_webhook_subscription**](SubscriptionsApi.md#get_webhook_subscription) | **GET** /webhooks/subscriptions/{subscriptionId} | Get details of a subscription
 [**list_webhook_subscriptions**](SubscriptionsApi.md#list_webhook_subscriptions) | **GET** /webhooks/subscriptions | List all subscriptions
 
 
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 Create a subscription to events
 
-Create a subscription to events exposed by registered systems.
+Create a new webhook subscription and return the created subscription details.
 
 ### Example
 
@@ -43,7 +43,7 @@ configuration = Avalara.SDK.Configuration(
 with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = subscriptions_api.SubscriptionsApi(api_client)
-    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.4\".
+    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.6\".
     subscription_registration = Avalara.SDK.SubscriptionRegistration() # SubscriptionRegistration | 
     x_correlation_id = 'x_correlation_id_example' # str | A unique identifier for tracking the request and its response (optional)
     x_avalara_client = 'x_avalara_client_example' # str | Client application identification (optional)
@@ -69,7 +69,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.4\&quot;. |
+ **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.6\&quot;. |
  **subscription_registration** | [**SubscriptionRegistration**](SubscriptionRegistration.md)|  |
  **x_correlation_id** | **str**| A unique identifier for tracking the request and its response | [optional]
  **x_avalara_client** | **str**| Client application identification | [optional]
@@ -92,10 +92,10 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Subscribed successfully |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**400** | Invalid input |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**401** | Not authenticated |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**403** | Access token does not have the required scope |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**201** | Subscription created successfully. Returns the created SubscriptionDetail object. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**400** | Bad request. The request payload is invalid or contains missing required fields. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**401** | Unauthorized. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**403** | Forbidden. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 
 Unsubscribe from events
 
-Remove a subscription from the webhooks dispatch service. All events and subscriptions are also deleted.
+Delete the specified webhook subscription.
 
 ### Example
 
@@ -130,8 +130,8 @@ configuration = Avalara.SDK.Configuration(
 with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = subscriptions_api.SubscriptionsApi(api_client)
-    subscription_id = 'subscription_id_example' # str | 
-    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.4\".
+    subscription_id = 'subscription_id_example' # str | Unique identifier of the subscription.
+    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.6\".
     x_correlation_id = 'x_correlation_id_example' # str | A unique identifier for tracking the request and its response (optional)
     x_avalara_client = 'x_avalara_client_example' # str | Client application identification (optional)
     # example passing only required values which don't have defaults set
@@ -154,8 +154,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **subscription_id** | **str**|  |
- **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.4\&quot;. |
+ **subscription_id** | **str**| Unique identifier of the subscription. |
+ **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.6\&quot;. |
  **x_correlation_id** | **str**| A unique identifier for tracking the request and its response | [optional]
  **x_avalara_client** | **str**| Client application identification | [optional]
 
@@ -177,10 +177,10 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Unsubscribed successfully |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**401** | Not authenticated |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**403** | Access token does not have the required scope |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**404** | Subscription not found |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**204** | Subscription deleted successfully. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**401** | Unauthorized. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**403** | Forbidden. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**404** | Subscription not found for the specified subscriptionId. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
@@ -216,8 +216,8 @@ configuration = Avalara.SDK.Configuration(
 with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = subscriptions_api.SubscriptionsApi(api_client)
-    subscription_id = 'subscription_id_example' # str | 
-    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.4\".
+    subscription_id = 'subscription_id_example' # str | Unique identifier of the subscription.
+    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.6\".
     x_correlation_id = 'x_correlation_id_example' # str | A unique identifier for tracking the request and its response (optional)
     x_avalara_client = 'x_avalara_client_example' # str | Client application identification (optional)
     # example passing only required values which don't have defaults set
@@ -242,8 +242,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **subscription_id** | **str**|  |
- **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.4\&quot;. |
+ **subscription_id** | **str**| Unique identifier of the subscription. |
+ **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.6\&quot;. |
  **x_correlation_id** | **str**| A unique identifier for tracking the request and its response | [optional]
  **x_avalara_client** | **str**| Client application identification | [optional]
 
@@ -265,10 +265,10 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Subscription details retrieved successfully |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**401** | Not authenticated |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**403** | Access token does not have the required scope |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**404** | Subscription not found |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**200** | Returns the SubscriptionDetail object for the specified subscriptionId. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**401** | Unauthorized. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**403** | Forbidden. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**404** | Subscription not found for the specified subscriptionId. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
@@ -277,7 +277,7 @@ Name | Type | Description  | Notes
 
 List all subscriptions
 
-Retrieve a list of all subscriptions.
+Retrieve a list of webhook subscriptions.
 
 ### Example
 
@@ -304,7 +304,7 @@ configuration = Avalara.SDK.Configuration(
 with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = subscriptions_api.SubscriptionsApi(api_client)
-    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.4\".
+    avalara_version = 'avalara_version_example' # str | The version of the API to use, e.g., \"1.6\".
     x_correlation_id = 'x_correlation_id_example' # str | A unique identifier for tracking the request and its response (optional)
     x_avalara_client = 'x_avalara_client_example' # str | Client application identification (optional)
     top = 56 # int | The number of items to include in the result. (optional)
@@ -333,7 +333,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.4\&quot;. |
+ **avalara_version** | **str**| The version of the API to use, e.g., \&quot;1.6\&quot;. |
  **x_correlation_id** | **str**| A unique identifier for tracking the request and its response | [optional]
  **x_avalara_client** | **str**| Client application identification | [optional]
  **top** | **int**| The number of items to include in the result. | [optional]
@@ -359,10 +359,10 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A list of subscriptions |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**401** | Not authenticated |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**403** | Access token does not have the required scope |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
-**500** | Internal server error |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**200** | Returns a list of webhook subscriptions in a SubscriptionListResponse object. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**401** | Unauthorized. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**403** | Forbidden. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
+**500** | Internal server error. |  * X-Correlation-ID - Correlation ID from the request, or a new one if not provided in request <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 

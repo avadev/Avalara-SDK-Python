@@ -7,7 +7,8 @@ Returns the current document ID and status
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The unique ID for this document | [optional] 
-**status** | **str** | Status of the document | [optional] 
+**status** | **str** | Document status. See the &#x60;supportedDocumentStatuses&#x60; field in the GET /mandates response for full status definitions. | [optional] 
+**business_status** | **str** | Represents the document&#39;s business lifecycle state based on responses from external actors (Tax Authority, PDP, or ERP), such as acceptance, rejection, or validation. | [optional] 
 **events** | [**List[StatusEvent]**](StatusEvent.md) |  | [optional] 
 
 ## Example

@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from Avalara.SDK.models.EInvoicing.V1.extension import Extension
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -46,7 +47,8 @@ class Identifier(BaseModel):
     name: Annotated[str, Field(strict=True, max_length=250)] = Field(description="Identifier name (e.g., Peppol Participant ID).")
     display_name: Optional[Annotated[str, Field(strict=True, max_length=250)]] = Field(default=None, description="Display name of the identifier.", alias="displayName")
     value: Annotated[str, Field(strict=True, max_length=250)] = Field(description="Value of the identifier.")
-    __properties: ClassVar[List[str]] = ["name", "displayName", "value"]
+    extensions: Optional[List[Extension]] = Field(default=None, description="Optional array used to carry additional metadata or configuration values for the identifier.")
+    __properties: ClassVar[List[str]] = ["name", "displayName", "value", "extensions"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,6 +89,13 @@ class Identifier(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in extensions (list)
+        _items = []
+        if self.extensions:
+            for _item in self.extensions:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['extensions'] = _items
         return _dict
 
     @classmethod
@@ -101,7 +110,8 @@ class Identifier(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "displayName": obj.get("displayName"),
-            "value": obj.get("value")
+            "value": obj.get("value"),
+            "extensions": [Extension.from_dict(_item) for _item in obj["extensions"]] if obj.get("extensions") is not None else None
         })
         return _obj
 

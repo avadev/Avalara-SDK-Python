@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -44,9 +44,10 @@ class DocumentStatusResponse(BaseModel):
     Returns the current document ID and status
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="The unique ID for this document")
-    status: Optional[StrictStr] = Field(default=None, description="Status of the document")
+    status: Optional[StrictStr] = Field(default=None, description="Document status. See the `supportedDocumentStatuses` field in the GET /mandates response for full status definitions.")
+    business_status: Optional[StrictStr] = Field(default=None, description="Represents the document's business lifecycle state based on responses from external actors (Tax Authority, PDP, or ERP), such as acceptance, rejection, or validation.", alias="businessStatus")
     events: Optional[List[StatusEvent]] = None
-    __properties: ClassVar[List[str]] = ["id", "status", "events"]
+    __properties: ClassVar[List[str]] = ["id", "status", "businessStatus", "events"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,6 +109,7 @@ class DocumentStatusResponse(BaseModel):
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "status": obj.get("status"),
+            "businessStatus": obj.get("businessStatus"),
             "events": [StatusEvent.from_dict(_item) for _item in obj["events"]] if obj.get("events") is not None else None
         })
         return _obj

@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -58,7 +58,7 @@ class InteropApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.11.2")
+        api_client.set_sdk_version("26.4.0")
         self.api_client = api_client
 		
         self.submit_interop_document_endpoint = _Endpoint(
@@ -145,7 +145,7 @@ class InteropApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -168,7 +168,7 @@ class InteropApi(object):
     ):
         """Submit a document  # noqa: E501
 
-        This API used by the interoperability partners to submit a document to  their trading partners in Avalara on behalf of their customers.   # noqa: E501
+        Upload documents on behalf of interoperability partners and submit them to trading partners through the Avalara platform.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -178,11 +178,11 @@ class InteropApi(object):
         Args:
             document_type (str): Type of the document being uploaded. Partners will be configured in Avalara system to send only certain types of documents.
             interchange_type (str): Type of interchange (codes in Avalara system that uniquely identifies a type of interchange). Partners will be configured in Avalara system to send documents belonging to certain types of interchanges.
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\". [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             file_name (bytearray): The file to be uploaded (e.g., UBL XML, CII XML).. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.

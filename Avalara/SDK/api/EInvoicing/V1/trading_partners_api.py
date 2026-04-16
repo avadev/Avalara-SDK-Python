@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -66,7 +66,7 @@ class TradingPartnersApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.11.2")
+        api_client.set_sdk_version("26.4.0")
         self.api_client = api_client
 		
         self.batch_search_participants_endpoint = _Endpoint(
@@ -141,7 +141,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -212,7 +212,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -283,7 +283,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -355,7 +355,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -425,7 +425,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'text/csv',
                     'application/json'
@@ -496,7 +496,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -585,7 +585,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -680,7 +680,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -755,7 +755,7 @@ class TradingPartnersApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -787,14 +787,14 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
-            name (str): A <b>human-readable</b> name for the batch search.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            name (str): A human-readable name for the batch search.
             notification_email (str): The email address to which a notification will be sent once the batch search is complete.
             file (bytearray): CSV file containing search parameters.  Input Constraints: - Maximum file size: 1 MB - File Header: Must be less than 500 KB - Total number of lines (including header): Must be 101 or fewer
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -863,12 +863,12 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
             trading_partner (TradingPartner):
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -927,7 +927,7 @@ class TradingPartnersApi(object):
     ):
         """Creates a batch of multiple trading partners.  # noqa: E501
 
-        This endpoint creates multiple trading partners in a single batch request. It accepts an array of trading partners and processes them synchronously. Supports a maximum of 100 records or 1 MB request payload. The batch is processed atomically and partial success is not allowed.  # noqa: E501
+        This endpoint creates multiple trading partners in a single batch request. It accepts an array of trading partners and processes them synchronously. Supports a maximum of 100 records or a 1 MB request payload.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -935,12 +935,12 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
             create_trading_partners_batch_request (CreateTradingPartnersBatchRequest):
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1007,12 +1007,12 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
-            id (str): The ID of the trading partner which is being deleted.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            id (str): Unique identifier of the trading partner.
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1079,12 +1079,12 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
-            id (str): The ID of the batch search for which the report should be downloaded.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            id (str): Unique identifier of the batch search for which to download the report.
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1151,12 +1151,12 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
-            id (str): The ID of the batch search that was submitted earlier.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            id (str): Unique identifier of the batch search.
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1222,16 +1222,16 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            filter (str): Filters the results by field name. Only the <code>eq</code> operator and the name field is supported. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/).. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            filter (str): Filters the results by field name. Only the eq operator and the name field are supported. For more information, refer to the Avalara filtering guide.. [optional]
             count (bool): When set to <code>true</code>, returns the total count of matching records included as <code>@recordSetCount</code> in the response body.. [optional]
             top (int): The number of items to include in the result.. [optional]
             skip (int): The number of items to skip in the result.. [optional]
             order_by (str): The <code>$orderBy</code> query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space.. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1297,17 +1297,17 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
-            search (str): Search by value supports logical <code>AND</code> / <code>OR</code> operators. Search is performed only over the name and identifier value fields. For more information, refer to [Query options overview - OData.](https://learn.microsoft.com/en-us/odata/concepts/queryoptions-overview#search).
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            search (str): Search by value supports logical AND and OR operators (case-sensitive). Search is performed only over the name and identifier value fields. For more information, refer to the OData query options overview documentation.
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            count (bool): When set to <code>true</code>, returns the total count of matching records included as <code>@recordSetCount</code> in the response body.. [optional]
-            filter (str): Filters the results using the <code>eq</code> operator. Supported fields: <code>network</code>, <code>country</code>, <code>documentType</code>, <code>idType</code>. For more information, refer to [AvaTax filtering guide](https://developer.avalara.com/avatax/filtering-in-rest/).. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            count (bool): When set to true, returns the total count of matching records included as @recordSetCount in the response body.. [optional]
+            filter (str): Filters the results using the eq operator. Supported fields include network, country, documentType, and idType. For more information, refer to the Avalara filtering guide.. [optional]
             top (int): The number of items to include in the result.. [optional]
             skip (int): The number of items to skip in the result.. [optional]
-            order_by (str): The <code>$orderBy</code> query parameter specifies the field and sorting direction for ordering the result set. The value is a string that combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space.. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            order_by (str): The $orderBy query parameter specifies the field and sorting direction for ordering the result set. The value combines a field name and a sorting direction (asc for ascending or desc for descending), separated by a space.. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1375,13 +1375,13 @@ class TradingPartnersApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The HTTP Header meant to specify the version of the API intended to be used.
-            id (str): The ID of the trading partner which is being updated.
+            avalara_version (str): Header that specifies the API version to use (for example \"1.6\").
+            id (str): Unique identifier of the trading partner.
             trading_partner (TradingPartner):
 
         Keyword Args:
-            x_avalara_client (str): You can freely use any text you wish for this value. This feature can help you diagnose and solve problems with your software. The header can be treated like a \"Fingerprint\".. [optional]
-            x_correlation_id (str): The caller can use this as an identifier to use as a correlation id to trace the call.. [optional]
+            x_avalara_client (str): Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\").. [optional]
+            x_correlation_id (str): Optional correlation identifier provided by the caller to trace the call (for example \"f3f0d19a-01a1-4748-8a58-f000d0424f43\").. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

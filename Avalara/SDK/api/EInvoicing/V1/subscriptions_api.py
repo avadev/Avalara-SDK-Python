@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -61,7 +61,7 @@ class SubscriptionsApi(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("25.11.2")
+        api_client.set_sdk_version("26.4.0")
         self.api_client = api_client
 		
         self.create_webhook_subscription_endpoint = _Endpoint(
@@ -123,7 +123,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -141,7 +141,7 @@ class SubscriptionsApi(object):
                 'auth': [
                     'Bearer'
                 ],
-                'endpoint_path': '/einvoicing/webhooks/subscriptions/{subscription-id}',
+                'endpoint_path': '/einvoicing/webhooks/subscriptions/{subscriptionId}',
                 'operation_id': 'delete_webhook_subscription',
                 'http_method': 'DELETE',
                 'servers': None,
@@ -180,7 +180,7 @@ class SubscriptionsApi(object):
                         (str,),
                 },
                 'attribute_map': {
-                    'subscription_id': 'subscription-id',
+                    'subscription_id': 'subscriptionId',
                     'avalara_version': 'avalara-version',
                     'x_correlation_id': 'X-Correlation-ID',
                     'x_avalara_client': 'X-Avalara-Client',
@@ -195,7 +195,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -211,7 +211,7 @@ class SubscriptionsApi(object):
                 'auth': [
                     'Bearer'
                 ],
-                'endpoint_path': '/einvoicing/webhooks/subscriptions/{subscription-id}',
+                'endpoint_path': '/einvoicing/webhooks/subscriptions/{subscriptionId}',
                 'operation_id': 'get_webhook_subscription',
                 'http_method': 'GET',
                 'servers': None,
@@ -250,7 +250,7 @@ class SubscriptionsApi(object):
                         (str,),
                 },
                 'attribute_map': {
-                    'subscription_id': 'subscription-id',
+                    'subscription_id': 'subscriptionId',
                     'avalara_version': 'avalara-version',
                     'x_correlation_id': 'X-Correlation-ID',
                     'x_avalara_client': 'X-Avalara-Client',
@@ -265,7 +265,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -349,7 +349,7 @@ class SubscriptionsApi(object):
                 }
             },
             headers_map={
-                'avalara-version': '1.4',
+                'avalara-version': '1.6',
                 'accept': [
                     'application/json'
                 ],
@@ -369,7 +369,7 @@ class SubscriptionsApi(object):
     ):
         """Create a subscription to events  # noqa: E501
 
-        Create a subscription to events exposed by registered systems.  # noqa: E501
+        Create a new webhook subscription and return the created subscription details.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -377,7 +377,7 @@ class SubscriptionsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The version of the API to use, e.g., \"1.4\".
+            avalara_version (str): The version of the API to use, e.g., \"1.6\".
             subscription_registration (SubscriptionRegistration):
 
         Keyword Args:
@@ -441,7 +441,7 @@ class SubscriptionsApi(object):
     ):
         """Unsubscribe from events  # noqa: E501
 
-        Remove a subscription from the webhooks dispatch service. All events and subscriptions are also deleted.  # noqa: E501
+        Delete the specified webhook subscription.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -449,8 +449,8 @@ class SubscriptionsApi(object):
         >>> result = thread.get()
 
         Args:
-            subscription_id (str):
-            avalara_version (str): The version of the API to use, e.g., \"1.4\".
+            subscription_id (str): Unique identifier of the subscription.
+            avalara_version (str): The version of the API to use, e.g., \"1.6\".
 
         Keyword Args:
             x_correlation_id (str): A unique identifier for tracking the request and its response. [optional]
@@ -521,8 +521,8 @@ class SubscriptionsApi(object):
         >>> result = thread.get()
 
         Args:
-            subscription_id (str):
-            avalara_version (str): The version of the API to use, e.g., \"1.4\".
+            subscription_id (str): Unique identifier of the subscription.
+            avalara_version (str): The version of the API to use, e.g., \"1.6\".
 
         Keyword Args:
             x_correlation_id (str): A unique identifier for tracking the request and its response. [optional]
@@ -584,7 +584,7 @@ class SubscriptionsApi(object):
     ):
         """List all subscriptions  # noqa: E501
 
-        Retrieve a list of all subscriptions.  # noqa: E501
+        Retrieve a list of webhook subscriptions.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -592,7 +592,7 @@ class SubscriptionsApi(object):
         >>> result = thread.get()
 
         Args:
-            avalara_version (str): The version of the API to use, e.g., \"1.4\".
+            avalara_version (str): The version of the API to use, e.g., \"1.6\".
 
         Keyword Args:
             x_correlation_id (str): A unique identifier for tracking the request and its response. [optional]

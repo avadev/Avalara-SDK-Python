@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.4.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -43,8 +43,9 @@ class TaxIdentifierSchemaByCountry200Response(BaseModel):
     TaxIdentifierSchemaByCountry200Response
     """ # noqa: E501
     country_code: StrictStr = Field(description="The two-letter ISO-3166 country code of the tax identifier.", alias="countryCode")
+    schema_type: StrictStr = Field(description="The type of schema returned: \"request\" or \"response\".", alias="schemaType")
     var_schema: Dict[str, Any] = Field(description="The JSON Schema definition, following Draft-07 specification, used to validate tax identifier data.", alias="schema")
-    __properties: ClassVar[List[str]] = ["countryCode", "schema"]
+    __properties: ClassVar[List[str]] = ["countryCode", "schemaType", "schema"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -98,6 +99,7 @@ class TaxIdentifierSchemaByCountry200Response(BaseModel):
 
         _obj = cls.model_validate({
             "countryCode": obj.get("countryCode"),
+            "schemaType": obj.get("schemaType"),
             "schema": obj.get("schema")
         })
         return _obj
