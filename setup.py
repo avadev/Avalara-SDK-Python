@@ -43,7 +43,7 @@ NAME = "Avalara.SDK"
 VERSION = "26.4.0"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
-    "urllib3 >= 1.25.3, < 2.1.0",
+    "urllib3 >= 2.5.0",
     "python-dateutil",
     "pydantic >= 2",
 ]
