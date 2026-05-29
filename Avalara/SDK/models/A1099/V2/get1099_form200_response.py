@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## 🔐 Authentication  Generate a **license key** from: *[Avalara Portal](https://www.avalara.com/us/en/signin.html) → Settings → License and API Keys*.  [More on authentication methods](https://developer.avalara.com/avatax-dm-combined-erp/common-setup/authentication/authentication-methods/)  [Test your credentials](https://developer.avalara.com/avatax/test-credentials/)  ## 📘 API & SDK Documentation  [Avalara SDK (.NET) on GitHub](https://github.com/avadev/Avalara-SDK-DotNet#avalarasdk--the-unified-c-library-for-next-gen-avalara-services)  [Code Examples – 1099 API](https://github.com/avadev/Avalara-SDK-DotNet/blob/main/docs/A1099/V2/Class1099IssuersApi.md#call1099issuersget) 
+    ## Authentication  #### Step 1: Generate API Credentials  Generate a *client ID* and *client secret* from your [Avalara1099 account](https://sbx.track1099.com/api_tokens): *Your Profile → API*.  #### Step 2: Get an Identity Token  Send a `POST` request to the **Identity Token URL** with your *client ID* and *client secret* from Step 1 as form-encoded parameters:  ```http POST https://identity.avalara.com/connect/token Content-Type: application/x-www-form-urlencoded  grant_type=client_credentials client_id=<your client ID> client_secret=<your client secret> ```  **Body parameters** - `grant_type` — Always `client_credentials` - `client_id` — Your *client ID* from Step 1 - `client_secret` — Your *client secret* from Step 1  **Successful response**  ```json {   \"access_token\": \"eyJhbGci...\",   \"expires_in\": 3600,   \"token_type\": \"Bearer\" } ```  Use the `access_token` as a bearer token in the `Authorization` header on every A1099 API request:  ```http Authorization: Bearer <access_token> ```  ---  For more on authenticating requests, see the [A1099 authentication guide](https://developer.avalara.com/1099-and-w-9/kny2997001535374/).  ---  ## Environments  #### Production - **Avalara 1099 API URL:** [`https://api.avalara.com/avalara1099`](https://api.avalara.com/avalara1099) - **Identity Token URL:** [`https://identity.avalara.com/connect/token`](https://identity.avalara.com/connect/token)  #### Sandbox - **Avalara 1099 API URL:** [`https://api.sbx.avalara.com/avalara1099`](https://api.sbx.avalara.com/avalara1099) - **Identity Token URL:** [`https://ai-sbx.avlr.sh/connect/token`](https://ai-sbx.avlr.sh/connect/token)  ---  ## API & SDK Documentation  [Avalara 1099 API Reference](https://developer.avalara.com/api-reference/avalara1099/avalara1099/)  [Avalara SDKs](https://developer.avalara.com/sdk/)  [Swagger](https://api.avalara.com/avalara1099/swagger/index.html?api-version=2.0) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    25.11.2
+@version    26.5.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -42,11 +42,12 @@ from Avalara.SDK.models.A1099.V2.form1099_k import Form1099K
 from Avalara.SDK.models.A1099.V2.form1099_misc import Form1099Misc
 from Avalara.SDK.models.A1099.V2.form1099_nec import Form1099Nec
 from Avalara.SDK.models.A1099.V2.form1099_r import Form1099R
+from Avalara.SDK.models.A1099.V2.form1099_w2 import Form1099W2
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-GET1099FORM200RESPONSE_ONE_OF_SCHEMAS = ["Form1042S", "Form1095B", "Form1095C", "Form1099Div", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099R"]
+GET1099FORM200RESPONSE_ONE_OF_SCHEMAS = ["Form1042S", "Form1095B", "Form1095C", "Form1099Div", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099R", "Form1099W2"]
 
 class Get1099Form200Response(BaseModel):
     """
@@ -70,14 +71,19 @@ class Get1099Form200Response(BaseModel):
     oneof_schema_8_validator: Optional[Form1099Nec] = None
     # data type: Form1099R
     oneof_schema_9_validator: Optional[Form1099R] = None
-    actual_instance: Optional[Union[Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R]] = None
-    one_of_schemas: Set[str] = { "Form1042S", "Form1095B", "Form1095C", "Form1099Div", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099R" }
+    # data type: Form1099W2
+    oneof_schema_10_validator: Optional[Form1099W2] = None
+    actual_instance: Optional[Union[Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R, Form1099W2]] = None
+    one_of_schemas: Set[str] = { "Form1042S", "Form1095B", "Form1095C", "Form1099Div", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099R", "Form1099W2" }
 
     model_config = ConfigDict(
         validate_assignment=True,
         protected_namespaces=(),
     )
 
+
+    discriminator_value_class_map: Dict[str, str] = {
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -139,12 +145,17 @@ class Get1099Form200Response(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099R`")
         else:
             match += 1
+        # validate data type: Form1099W2
+        if not isinstance(v, Form1099W2):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099W2`")
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R, Form1099W2. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R, Form1099W2. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -213,13 +224,19 @@ class Get1099Form200Response(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Form1099W2
+        try:
+            instance.actual_instance = Form1099W2.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R, Form1099W2. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R, Form1099W2. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -233,7 +250,7 @@ class Get1099Form200Response(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042S, Form1095B, Form1095C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099R, Form1099W2]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
