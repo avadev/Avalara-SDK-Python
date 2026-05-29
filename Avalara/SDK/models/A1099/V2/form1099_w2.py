@@ -37,43 +37,47 @@ from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from Avalara.SDK.models.A1099.V2.form1099_status_detail import Form1099StatusDetail
-from Avalara.SDK.models.A1099.V2.intermediary_or_flow_through import IntermediaryOrFlowThrough
-from Avalara.SDK.models.A1099.V2.primary_withholding_agent import PrimaryWithholdingAgent
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding import StateAndLocalWithholding
 from Avalara.SDK.models.A1099.V2.state_efile_status_detail import StateEfileStatusDetail
 from Avalara.SDK.models.A1099.V2.validation_error import ValidationError
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Form1042S(BaseModel):
+class Form1099W2(BaseModel):
     """
-    Form 1042-S: Foreign Person's U.S. Source Income Subject to Withholding
+    Form W-2: Wage and Tax Statement.
     """ # noqa: E501
-    tin_type: Optional[StrictStr] = Field(default=None, description="Tax Identification Number (TIN) type.  Available values: - EIN: Employer Identification Number - SSN: Social Security Number - ITIN: Individual Taxpayer Identification Number - ATIN: Adoption Taxpayer Identification Number", alias="tinType")
-    unique_form_id: Optional[StrictStr] = Field(description="Unique form identifier", alias="uniqueFormId")
-    recipient_date_of_birth: Optional[date] = Field(default=None, description="Recipient's date of birth", alias="recipientDateOfBirth")
-    recipient_giin: Optional[StrictStr] = Field(default=None, description="Recipient's Global Intermediary Identification Number (GIIN). A valid GIIN looks like 'XXXXXX.XXXXX.XX.XXX'.", alias="recipientGiin")
-    recipient_foreign_tin: Optional[StrictStr] = Field(default=None, description="Recipient's foreign TIN. Required if email is specified, must fill either this or Chap3StatusCode.", alias="recipientForeignTin")
-    lob_code: Optional[StrictStr] = Field(default=None, description="Limitation on Benefits (LOB) code for tax treaty purposes.  Available values:  - 01: Individual (Deprecated - valid only for tax years prior to 2019)  - 02: Government - contracting state/political subdivision/local authority  - 03: Tax exempt pension trust/Pension fund  - 04: Tax exempt/Charitable organization  - 05: Publicly-traded corporation  - 06: Subsidiary of publicly-traded corporation  - 07: Company that meets the ownership and base erosion test  - 08: Company that meets the derivative benefits test  - 09: Company with an item of income that meets the active trade or business test  - 10: Discretionary determination  - 11: Other  - 12: No LOB article in treaty", alias="lobCode")
-    income_code: Optional[StrictStr] = Field(description="Income code.  Available values:    Interest:  - 01: Interest paid by US obligors - general  - 02: Interest paid on real property mortgages  - 03: Interest paid to controlling foreign corporations  - 04: Interest paid by foreign corporations  - 05: Interest on tax-free covenant bonds  - 22: Interest paid on deposit with a foreign branch of a domestic corporation or partnership  - 29: Deposit interest  - 30: Original issue discount (OID)  - 31: Short-term OID  - 33: Substitute payment - interest  - 51: Interest paid on certain actively traded or publicly offered securities(1)  - 54: Substitute payments - interest from certain actively traded or publicly offered securities(1)    Dividend:  - 06: Dividends paid by U.S. corporations - general  - 07: Dividends qualifying for direct dividend rate  - 08: Dividends paid by foreign corporations  - 34: Substitute payment - dividends  - 40: Other dividend equivalents under IRC section 871(m) (formerly 871(l))  - 52: Dividends paid on certain actively traded or publicly offered securities(1)  - 53: Substitute payments - dividends from certain actively traded or publicly offered securities(1)  - 56: Dividend equivalents under IRC section 871(m) as a result of applying the combined transaction rules    Other:  - 09: Capital gains  - 10: Industrial royalties  - 11: Motion picture or television copyright royalties  - 12: Other royalties (for example, copyright, software, broadcasting, endorsement payments)  - 13: Royalties paid on certain publicly offered securities(1)  - 14: Real property income and natural resources royalties  - 15: Pensions, annuities, alimony, and/or insurance premiums  - 16: Scholarship or fellowship grants  - 17: Compensation for independent personal services(2)  - 18: Compensation for dependent personal services(2)  - 19: Compensation for teaching(2)  - 20: Compensation during studying and training(2)  - 23: Other income  - 24: Qualified investment entity (QIE) distributions of capital gains  - 25: Trust distributions subject to IRC section 1445  - 26: Unsevered growing crops and timber distributions by a trust subject to IRC section 1445  - 27: Publicly traded partnership distributions subject to IRC section 1446  - 28: Gambling winnings(3)  - 32: Notional principal contract income(4)  - 35: Substitute payment - other  - 36: Capital gains distributions  - 37: Return of capital  - 38: Eligible deferred compensation items subject to IRC section 877A(d)(1)  - 39: Distributions from a nongrantor trust subject to IRC section 877A(f)(1)  - 41: Guarantee of indebtedness  - 42: Earnings as an artist or athlete - no central withholding agreement(5)  - 43: Earnings as an artist or athlete - central withholding agreement(5)  - 44: Specified Federal procurement payments  - 50: Income previously reported under escrow procedure(6)  - 55: Taxable death benefits on life insurance contracts  - 57: Amount realized under IRC section 1446(f)  - 58: Publicly traded partnership distributions-undetermined  - 59: Consent fees  - 60: Loan syndication fees  - 61: Settlement payments", alias="incomeCode")
-    gross_income: Optional[Union[StrictFloat, StrictInt]] = Field(description="Gross income", alias="grossIncome")
-    withholding_indicator: Optional[StrictStr] = Field(description="Withholding indicator  Available values:  - 3: Chapter 3  - 4: Chapter 4", alias="withholdingIndicator")
-    tax_country_code: Optional[StrictStr] = Field(description="Country code", alias="taxCountryCode")
-    exemption_code_chap3: Optional[StrictStr] = Field(default=None, description="Exemption code (Chapter 3). Required if WithholdingIndicator is 3 (Chapter 3) and FederalTaxWithheld is 0. Required when using TaxRateChap3.  Can be left empty if FederalTaxWithheld is greater than 0.  Available values:  - 00: Not exempt  - 01: Effectively connected income  - 02: Exempt under IRC (other than portfolio interest)  - 03: Income is not from US sources  - 04: Exempt under tax treaty  - 05: Portfolio interest exempt under IRC  - 06: QI that assumes primary withholding responsibility  - 07: WFP or WFT  - 08: U.S. branch treated as U.S. Person  - 09: Territory FI treated as U.S. Person  - 10: QI represents that income is exempt  - 11: QSL that assumes primary withholding responsibility  - 12: Payee subjected to chapter 4 withholding  - 22: QDD that assumes primary withholding responsibility  - 23: Exempt under section 897(l)  - 24: Exempt under section 892", alias="exemptionCodeChap3")
-    exemption_code_chap4: Optional[StrictStr] = Field(default=None, description="Exemption code (Chapter 4). Required if WithholdingIndicator is 4 (Chapter 4).  Available values:  - 00: Not exempt  - 13: Grandfathered payment  - 14: Effectively connected income  - 15: Payee not subject to chapter 4 withholding  - 16: Excluded nonfinancial payment  - 17: Foreign Entity that assumes primary withholding responsibility  - 18: U.S. Payees - of participating FFI or registered deemed - compliant FFI  - 19: Exempt from withholding under IGA(6)  - 20: Dormant account(7)  - 21: Other - payment not subject to chapter 4 withholding", alias="exemptionCodeChap4")
-    tax_rate_chap3: Optional[StrictStr] = Field(default=None, description="Tax rate (Chapter 3) - Required if WithholdingIndicator is 3 (Chapter 3).  Available values:  - 00.00: 0.00%  - 02.00: 2.00%  - 04.00: 4.00%  - 04.90: 4.90%  - 04.95: 4.95%  - 05.00: 5.00%  - 07.00: 7.00%  - 08.00: 8.00%  - 10.00: 10.00%  - 12.00: 12.00%  - 12.50: 12.50%  - 14.00: 14.00%  - 15.00: 15.00%  - 17.50: 17.50%  - 20.00: 20.00%  - 21.00: 21.00%  - 24.00: 24.00%  - 25.00: 25.00%  - 27.50: 27.50%  - 28.00: 28.00%  - 30.00: 30.00%  - 37.00: 37.00%", alias="taxRateChap3")
-    withholding_allowance: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Withholding allowance", alias="withholdingAllowance")
-    federal_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal tax withheld", alias="federalTaxWithheld")
-    tax_not_deposited_indicator: Optional[StrictBool] = Field(default=None, description="Tax not deposited indicator", alias="taxNotDepositedIndicator")
-    academic_indicator: Optional[StrictBool] = Field(default=None, description="Academic indicator", alias="academicIndicator")
-    withholding_rate_pool_indicator: Optional[StrictBool] = Field(default=None, description="Box 7d withholding rate pool indicator", alias="withholdingRatePoolIndicator")
-    tax_withheld_other_agents: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Tax withheld by other agents", alias="taxWithheldOtherAgents")
-    amount_repaid: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount repaid to recipient", alias="amountRepaid")
-    tax_paid_agent: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Tax paid by withholding agent", alias="taxPaidAgent")
-    chap3_status_code: Optional[StrictStr] = Field(default=None, description="Chapter 3 status code - Required if WithholdingIndicator is 3 (Chapter 3). Available values: - 01: U.S. Withholding Agent - FI (Deprecated - valid only for tax years prior to 2020) - 02: U.S. Withholding Agent - Other (Deprecated - valid only for tax years prior to 2020) - 03: Territory FI - treated as U.S. Person - 04: Territory FI - not treated as U.S. Person - 05: U.S. branch - treated as U.S. Person - 06: U.S. branch - not treated as U.S. Person - 07: U.S. branch - ECI presumption applied - 08: Partnership other than Withholding Foreign Partnership - 09: Withholding Foreign Partnership - 10: Trust other than Withholding Foreign Trust - 11: Withholding Foreign Trust - 12: Qualified Intermediary - 13: Qualified Securities Lender - Qualified Intermediary - 14: Qualified Securities Lender - Other - 15: Corporation - 16: Individual - 17: Estate - 18: Private Foundation - 19: Government or International Organization - 20: Tax Exempt Organization (Section 501(c) entities) - 21: Unknown Recipient - 22: Artist or Athlete - 23: Pension - 24: Foreign Central Bank of Issue - 25: Nonqualified Intermediary - 26: Hybrid entity making Treaty Claim - 27: Withholding Rate Pool - General - 28: Withholding Rate Pool - Exempt Organization - 29: PAI Withholding Rate Pool - General - 30: PAI Withholding Rate Pool - Exempt Organization - 31: Agency Withholding Rate Pool - General - 32: Agency Withholding Rate Pool - Exempt Organization - 34: U.S. Withholding Agent-Foreign branch of FI (Deprecated - valid only for tax years prior to 2020) - 35: Qualified Derivatives Dealer - 36: Foreign Government - Integral Part - 37: Foreign Government - Controlled Entity - 38: Publicly Traded Partnership - 39: Disclosing Qualified Intermediary - 40: Partnership QDD - 41: U.S. government entity or tax exempt entity (other than section 501(c) entities)", alias="chap3StatusCode")
-    chap4_status_code: Optional[StrictStr] = Field(default=None, description="Chapter 4 status code. Required if WithholdingIndicator is 4 (Chapter 4). Required if email is specified, must fill either this or RecipientForeignTin. Available values: - 01: U.S. Withholding Agent - FI - 02: U.S. Withholding Agent - Other - 03: Territory FI - not treated as U.S. Person - 04: Territory FI - treated as U.S. Person - 05: Participating FFI - Other - 06: Participating FFI - Reporting Model 2 FFI - 07: Registered Deemed - Compliant FFI-Reporting Model 1 FFI - 08: Registered Deemed - Compliant FFI-Sponsored Entity - 09: Registered Deemed - Compliant FFI-Other - 10: Certified Deemed - Compliant FFI-Other - 11: Certified Deemed - Compliant FFI-FFI with Low Value Accounts - 12: Certified Deemed - Compliant FFI-Non-Registering Local Bank - 13: Certified Deemed - Compliant FFI-Sponsored Entity - 14: Certified Deemed - Compliant FFI-Investment Advisor or Investment Manager - 15: Nonparticipating FFI - 16: Owner-Documented FFI - 17: U.S. Branch - treated as U.S. person - 18: U.S. Branch - not treated as U.S. person (reporting under section 1471) - 19: Passive NFFE identifying Substantial U.S. Owners - 20: Passive NFFE with no Substantial U.S. Owners - 21: Publicly Traded NFFE or Affiliate of Publicly Traded NFFE - 22: Active NFFE - 23: Individual - 24: Section 501(c) Entities - 25: Excepted Territory NFFE - 26: Excepted NFFE - Other - 27: Exempt Beneficial Owner - 28: Entity Wholly Owned by Exempt Beneficial Owners - 29: Unknown Recipient - 30: Recalcitrant Account Holder - 31: Nonreporting IGA FFI - 32: Direct reporting NFFE - 33: U.S. reportable account - 34: Non-consenting U.S. account - 35: Sponsored direct reporting NFFE - 36: Excepted Inter-affiliate FFI - 37: Undocumented Preexisting Obligation - 38: U.S. Branch - ECI presumption applied - 39: Account Holder of Excluded Financial Account - 40: Passive NFFE reported by FFI - 41: NFFE subject to 1472 withholding - 42: Recalcitrant Pool - No U.S. Indicia - 43: Recalcitrant Pool - U.S. Indicia - 44: Recalcitrant Pool - Dormant Account - 45: Recalcitrant Pool - U.S. Persons - 46: Recalcitrant Pool - Passive NFFEs - 47: Nonparticipating FFI Pool - 48: U.S. Payees Pool - 49: QI - Recalcitrant Pool-General - 50: U.S. Withholding Agent-Foreign branch of FI", alias="chap4StatusCode")
-    primary_withholding_agent: Optional[PrimaryWithholdingAgent] = Field(default=None, description="Primary withholding agent information", alias="primaryWithholdingAgent")
-    intermediary_or_flow_through: Optional[IntermediaryOrFlowThrough] = Field(default=None, description="Intermediary or flow-through entity information", alias="intermediaryOrFlowThrough")
+    employee_first_name: Optional[StrictStr] = Field(default=None, description="Employee first name (max 15 chars).", alias="employeeFirstName")
+    employee_middle_name: Optional[StrictStr] = Field(default=None, description="Employee middle name (max 15 chars, optional).", alias="employeeMiddleName")
+    employee_last_name: Optional[StrictStr] = Field(default=None, description="Employee last name (max 20 chars).", alias="employeeLastName")
+    employee_name_suffix: Optional[StrictStr] = Field(default=None, description="Employee name suffix (Jr, Sr, III, etc — max 4 chars, optional).", alias="employeeNameSuffix")
+    wages: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Wages, tips, other compensation.")
+    federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld.", alias="federalIncomeTaxWithheld")
+    social_security_wages: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Social security wages.", alias="socialSecurityWages")
+    social_security_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Social security tax withheld.", alias="socialSecurityTaxWithheld")
+    medicare_wages: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Medicare wages and tips.", alias="medicareWages")
+    medicare_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Medicare tax withheld.", alias="medicareTaxWithheld")
+    social_security_tips: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Social security tips.", alias="socialSecurityTips")
+    allocated_tips: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Allocated tips.", alias="allocatedTips")
+    dependent_care_benefits: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Dependent care benefits.", alias="dependentCareBenefits")
+    nonqualified_plans_section457: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Non-qualified plan Section 457 distributions or contributions.", alias="nonqualifiedPlansSection457")
+    nonqualified_plans_not_section457: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Non-qualified plan NOT Section 457 distributions or contributions.", alias="nonqualifiedPlansNotSection457")
+    code12a: Optional[StrictStr] = Field(default=None, description="Letter code (A-Z, AA, BB, etc) for slot a.")
+    amount12a: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount for slot a.")
+    code12b: Optional[StrictStr] = Field(default=None, description="Letter code for slot b.")
+    amount12b: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount for slot b.")
+    code12c: Optional[StrictStr] = Field(default=None, description="Letter code for slot c.")
+    amount12c: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount for slot c.")
+    code12d: Optional[StrictStr] = Field(default=None, description="Letter code for slot d.")
+    amount12d: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount for slot d.")
+    statutory_employee_indicator: Optional[StrictBool] = Field(default=None, description="Statutory employee indicator.", alias="statutoryEmployeeIndicator")
+    retirement_plan_indicator: Optional[StrictBool] = Field(default=None, description="Retirement plan indicator.", alias="retirementPlanIndicator")
+    third_party_sick_pay_indicator: Optional[StrictBool] = Field(default=None, description="Third-party sick pay indicator.", alias="thirdPartySickPayIndicator")
+    third_party_sick_pay_withholding: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Third-party sick pay federal income tax withheld  (only effective when Avalara1099.Application.Forms1099.Models.Form1099W2.ThirdPartySickPayIndicator is true).", alias="thirdPartySickPayWithholding")
+    other14a: Optional[StrictStr] = Field(default=None, description="Other (max 30 chars) for slot a.")
+    other14b: Optional[StrictStr] = Field(default=None, description="Other (max 30 chars) for slot b.")
+    other14c: Optional[StrictStr] = Field(default=None, description="Other (max 30 chars) for slot c.")
+    state_and_local_withholding_secondary: Optional[StateAndLocalWithholding] = Field(default=None, description="Secondary state and local withholding slot.", alias="stateAndLocalWithholdingSecondary")
     type: StrictStr = Field(description="Form type.")
     id: Optional[StrictStr] = Field(default=None, description="Form ID. Unique identifier set when the record is created.")
     issuer_id: Optional[StrictStr] = Field(default=None, description="Issuer ID - only required when creating forms", alias="issuerId")
@@ -83,6 +87,7 @@ class Form1042S(BaseModel):
     reference_id: Optional[StrictStr] = Field(default=None, description="Internal reference ID. Never shown to any agency or recipient.", alias="referenceId")
     tin: Optional[StrictStr] = Field(default=None, description="Recipient's Federal Tax Identification Number (TIN).")
     recipient_name: Optional[StrictStr] = Field(description="Recipient name", alias="recipientName")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Tax Identification Number (TIN) type.  Available values: - EIN: Employer Identification Number - SSN: Social Security Number - ITIN: Individual Taxpayer Identification Number - ATIN: Adoption Taxpayer Identification Number", alias="tinType")
     recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
     address: Optional[StrictStr] = Field(description="Address.")
     address2: Optional[StrictStr] = Field(default=None, description="Address line 2.")
@@ -115,6 +120,13 @@ class Form1042S(BaseModel):
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["type", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "tin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEfileDate", "postalMail", "stateEfileDate", "recipientEdeliveryDate", "tinMatch", "noTin", "addressVerification", "stateAndLocalWithholding", "secondTinNotice", "federalEfileStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "eDeliveryStatus", "validationErrors", "createdAt", "updatedAt"]
 
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R', 'W-2']):
+            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R', 'W-2')")
+        return value
+
     @field_validator('tin_type')
     def tin_type_validate_enum(cls, value):
         """Validates the enum"""
@@ -123,93 +135,6 @@ class Form1042S(BaseModel):
 
         if value not in set(['EIN', 'SSN', 'ITIN', 'ATIN']):
             raise ValueError("must be one of enum values ('EIN', 'SSN', 'ITIN', 'ATIN')")
-        return value
-
-    @field_validator('lob_code')
-    def lob_code_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']):
-            raise ValueError("must be one of enum values ('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')")
-        return value
-
-    @field_validator('income_code')
-    def income_code_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['01', '02', '03', '04', '05', '22', '29', '30', '31', '33', '51', '54', '06', '07', '08', '34', '40', '52', '53', '56', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '23', '24', '25', '26', '27', '28', '32', '35', '36', '37', '38', '39', '41', '42', '43', '44', '50', '55', '57', '58', '59', '60', '61']):
-            raise ValueError("must be one of enum values ('01', '02', '03', '04', '05', '22', '29', '30', '31', '33', '51', '54', '06', '07', '08', '34', '40', '52', '53', '56', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '23', '24', '25', '26', '27', '28', '32', '35', '36', '37', '38', '39', '41', '42', '43', '44', '50', '55', '57', '58', '59', '60', '61')")
-        return value
-
-    @field_validator('withholding_indicator')
-    def withholding_indicator_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['3', '4']):
-            raise ValueError("must be one of enum values ('3', '4')")
-        return value
-
-    @field_validator('exemption_code_chap3')
-    def exemption_code_chap3_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '22', '23', '24']):
-            raise ValueError("must be one of enum values ('00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '22', '23', '24')")
-        return value
-
-    @field_validator('exemption_code_chap4')
-    def exemption_code_chap4_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['00', '13', '14', '15', '16', '17', '18', '19', '20', '21']):
-            raise ValueError("must be one of enum values ('00', '13', '14', '15', '16', '17', '18', '19', '20', '21')")
-        return value
-
-    @field_validator('tax_rate_chap3')
-    def tax_rate_chap3_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['00.00', '02.00', '04.00', '04.90', '04.95', '05.00', '07.00', '08.00', '10.00', '12.00', '12.50', '14.00', '15.00', '17.50', '20.00', '21.00', '24.00', '25.00', '27.50', '28.00', '30.00', '37.00']):
-            raise ValueError("must be one of enum values ('00.00', '02.00', '04.00', '04.90', '04.95', '05.00', '07.00', '08.00', '10.00', '12.00', '12.50', '14.00', '15.00', '17.50', '20.00', '21.00', '24.00', '25.00', '27.50', '28.00', '30.00', '37.00')")
-        return value
-
-    @field_validator('chap3_status_code')
-    def chap3_status_code_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['01', '02', '34', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '35', '36', '37', '38', '39', '40', '41']):
-            raise ValueError("must be one of enum values ('01', '02', '34', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '35', '36', '37', '38', '39', '40', '41')")
-        return value
-
-    @field_validator('chap4_status_code')
-    def chap4_status_code_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50']):
-            raise ValueError("must be one of enum values ('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50')")
-        return value
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R', 'W-2']):
-            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R', 'W-2')")
         return value
 
     model_config = ConfigDict(
@@ -230,7 +155,7 @@ class Form1042S(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Form1042S from a JSON string"""
+        """Create an instance of Form1099W2 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -252,11 +177,9 @@ class Form1042S(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
-            "tin_type",
             "id",
             "federal_efile_status",
             "state_efile_status",
@@ -496,7 +419,7 @@ class Form1042S(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Form1042S from a dict"""
+        """Create an instance of Form1099W2 from a dict"""
         if obj is None:
             return None
 
