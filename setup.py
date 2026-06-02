@@ -40,10 +40,10 @@ from setuptools import setup, find_packages  # noqa: H301
 from setuptools import setup, find_namespace_packages 
 
 NAME = "Avalara.SDK"
-VERSION = "26.5.0"
+VERSION = "26.5.1"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
-    "urllib3 >= 1.25.3, < 2.1.0",
+    "urllib3 >= 2.5.0",
     "python-dateutil",
     "pydantic >= 2",
 ]
