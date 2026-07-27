@@ -20,15 +20,15 @@ Name | Type | Description | Notes
 **state** | **str** | The state of the address. | 
 **zip** | **str** | The ZIP code of the address. | 
 **account_number** | **str** | The account number associated with the form. | [optional] 
-**tin_type** | **str** | Tax Identification Number (TIN) type. SSN/ITIN (for individuals) and EIN (for businesses). | 
+**tin_type** | **str** | Recipient classification.  The platform is transitioning from tax identifier classifications to recipient entity classifications. New values represent recipient entity types and should be preferred. Deprecated values represent identifier formats and remain supported for backward compatibility only.  Available values: - INDIVIDUAL: Recipient is an individual - BUSINESS: Recipient is a business - UNKNOWN: Recipient classification is unknown - EIN: (Deprecated - use BUSINESS) Employer Identification Number - SSN: (Deprecated - use INDIVIDUAL) Social Security Number - ITIN: (Deprecated - use INDIVIDUAL) Individual Taxpayer Identification Number - ATIN: (Deprecated - use INDIVIDUAL) Adoption Taxpayer Identification Number SSN/ITIN (for individuals) and EIN (for businesses). | 
 **tin** | **str** | The taxpayer identification number (TIN). | 
 **backup_withholding** | **bool** | Indicates whether backup withholding applies. | [optional] 
 **is1099able** | **bool** | Indicates whether the individual or entity should be issued a 1099 form. | [optional] 
-**e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
-**signature** | **str** | The signature of the form. | [optional] 
 **company_id** | **str** | The ID of the associated company. Required when creating a form. | [optional] 
 **reference_id** | **str** | A reference identifier for the form. | [optional] 
 **email** | **str** | The email address of the individual associated with the form. | [optional] 
+**e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
+**signature** | **str** | The signature of the form. | [optional] 
 
 ## Example
 

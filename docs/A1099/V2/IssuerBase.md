@@ -5,8 +5,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Legal name. Not the DBA name. | 
-**dba_name** | **str** | Doing Business As (DBA) name or continuation of a long legal name. Use either this or &#39;transferAgentName&#39;. | [optional] 
+**business_name** | **str** | Business name. Required when the recipient of the form is a business; should only be used for businesses. | 
+**business_name2** | **str** | Business name line 2. Should only be used for businesses. Use either this or &#39;transferAgentName&#39;. | [optional] 
+**name** | **str** | Legal name. Not the DBA name. Deprecated alias for &#39;businessName&#39;. | [optional] 
+**dba_name** | **str** | Doing Business As (DBA) name or continuation of a long legal name. Deprecated alias for &#39;businessName2&#39;. Use either this or &#39;transferAgentName&#39;. | [optional] 
+**tin_type** | **str** | Recipient classification.  The platform is transitioning from tax identifier classifications to recipient entity classifications. New values represent recipient entity types and should be preferred. Deprecated values represent identifier formats and remain supported for backward compatibility only.  Available values: - INDIVIDUAL: Recipient is an individual - BUSINESS: Recipient is a business - UNKNOWN: Recipient classification is unknown - EIN: (Deprecated - use BUSINESS) Employer Identification Number - SSN: (Deprecated - use INDIVIDUAL) Social Security Number - ITIN: (Deprecated - use INDIVIDUAL) Individual Taxpayer Identification Number - ATIN: (Deprecated - use INDIVIDUAL) Adoption Taxpayer Identification Number | [optional] 
+**first_name** | **str** | First name. Required when the recipient of the form is an individual; should only be used for individuals. | [optional] 
+**middle_name** | **str** | Middle name. Should only be used for individuals. | [optional] 
+**last_name** | **str** | Last name. Required when the recipient of the form is an individual; should only be used for individuals. | [optional] 
+**suffix** | **str** | Suffix name. Should only be used for individuals. | [optional] 
 **tin** | **str** | Federal Tax Identification Number (TIN). | [optional] 
 **reference_id** | **str** | Internal reference ID. Never shown to any agency or recipient. If present, it will prefix download filenames. Allowed characters: letters, numbers, dashes, underscores, and spaces. | [optional] 
 **telephone** | **str** | Contact phone number (must contain at least 10 digits, max 15 characters). For recipient inquiries. | 

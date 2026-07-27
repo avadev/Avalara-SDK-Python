@@ -7,7 +7,7 @@ Generic paginated model to wrap query response data
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **recordset_count** | **int** |  | [optional] 
-**value** | [**List[IssuerResponse]**](IssuerResponse.md) |  | [optional] 
+**value** | [**List[GetIssuer200Response]**](GetIssuer200Response.md) |  | [optional] 
 **next_link** | **str** |  | [optional] 
 
 ## Example

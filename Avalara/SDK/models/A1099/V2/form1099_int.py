@@ -18,13 +18,13 @@ AvaTax Software Development Kit for Python.
    limitations under the License.
 
     Avalara 1099 & W-9 API Definition
-    ## Authentication  #### Step 1: Generate API Credentials  Generate a *client ID* and *client secret* from your [Avalara1099 account](https://sbx.track1099.com/api_tokens): *Your Profile → API*.  #### Step 2: Get an Identity Token  Send a `POST` request to the **Identity Token URL** with your *client ID* and *client secret* from Step 1 as form-encoded parameters:  ```http POST https://identity.avalara.com/connect/token Content-Type: application/x-www-form-urlencoded  grant_type=client_credentials client_id=<your client ID> client_secret=<your client secret> ```  **Body parameters** - `grant_type` — Always `client_credentials` - `client_id` — Your *client ID* from Step 1 - `client_secret` — Your *client secret* from Step 1  **Successful response**  ```json {   \"access_token\": \"eyJhbGci...\",   \"expires_in\": 3600,   \"token_type\": \"Bearer\" } ```  Use the `access_token` as a bearer token in the `Authorization` header on every A1099 API request:  ```http Authorization: Bearer <access_token> ```  ---  For more on authenticating requests, see the [A1099 authentication guide](https://developer.avalara.com/1099-and-w-9/kny2997001535374/).  ---  ## Environments  #### Production - **Avalara 1099 API URL:** [`https://api.avalara.com/avalara1099`](https://api.avalara.com/avalara1099) - **Identity Token URL:** [`https://identity.avalara.com/connect/token`](https://identity.avalara.com/connect/token)  #### Sandbox - **Avalara 1099 API URL:** [`https://api.sbx.avalara.com/avalara1099`](https://api.sbx.avalara.com/avalara1099) - **Identity Token URL:** [`https://ai-sbx.avlr.sh/connect/token`](https://ai-sbx.avlr.sh/connect/token)  ---  ## API & SDK Documentation  [Avalara 1099 API Reference](https://developer.avalara.com/api-reference/avalara1099/avalara1099/)  [Avalara SDKs](https://developer.avalara.com/sdk/)  [Swagger](https://api.avalara.com/avalara1099/swagger/index.html?api-version=2.0) 
+    > **Note:** You must have an active Avalara 1099 & W-9 subscription to authenticate and use these APIs. If you don't have a subscription, please contact our [Sales team](https://www.avalara.com/us/en/products/1099/request-a-demo.html).  ## Authentication  The Avalara 1099 & W-9 API uses **Bearer Token Authentication**. To authenticate, acquire a bearer token using a **Client ID** and **Client Secret** that you generate in the Avalara 1099 & W-9 web application.  The sample cURL commands below use **production** URLs. For **sandbox**, replace them with the sandbox URLs listed in the Sandbox Environment table.  ### Option 1 — Client ID and Client Secret (recommended)  **Step 1: Create API credentials in the Avalara 1099 & W-9 web app**  For a full walkthrough, see the [Avalara 1099 & W-9 integration guide](https://developer.avalara.com/products/avalara-1099-and-w9/integration-guides/1099-and-w-9/siu2796410674799/).  > **Note:** To enable credential creation you must first enter a valid company address in **Account Settings > Account** and enable two-factor authentication in **Account Settings > Security**.  1. In Avalara 1099 & W-9, open **Account Settings** (gear icon, top-right of any page) and select **API**. 2. Click **Create new credentials** (a valid company address and 2FA are required). 3. Copy your **Client Id** and **Client Secret** securely — they will not be shown again after you leave the screen.  **Step 2: Request a bearer token**  ```bash curl -X POST 'https://identity.avalara.com/connect/token' \\   --header 'Content-Type: application/x-www-form-urlencoded' \\   --data-urlencode 'grant_type=client_credentials' \\   --data-urlencode 'client_id={{client_id}}' \\   --data-urlencode 'client_secret={{client_secret}}' ```  ### Option 2 — Account ID and License Key  If your organization already uses other Avalara products (AvaTax, CertCapture) and has access to the logged-in area of Avalara.com, you can generate the bearer token using your **Account ID** and **License Key**.  > **Note:** If you already have a license key for other Avalara products you can reuse it. Generating a new key will reset any previously created key.  1. Log in to Avalara.com. 2. Go to **Settings → License and API Keys**. 3. Click **Generate New Key**. 4. Note your **Account ID** from the Account menu.  ```bash curl -X POST 'https://identity.avalara.com/connect/token' \\   --header 'Content-Type: application/x-www-form-urlencoded' \\   --data-urlencode 'grant_type=client_credentials' \\   --data-urlencode 'client_id={{accountId}}' \\   --data-urlencode 'client_secret={{licenseKey}}' ```  ### Using and renewing the bearer token  Include the token in the `Authorization` header on every request:  ```http Authorization: Bearer {access_token} ```  Tokens expire after the number of seconds in the `expires_in` field of the token response. Your integration must renew the token before it expires.  **Example token response**  ```json {   \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI...\",   \"expires_in\": 3600,   \"token_type\": \"Bearer\",   \"scope\": \"avatax_api iam-ds\" } ```  ### Sandbox Environment  Use the same steps as production, replacing the base URLs:  | Purpose | Production | Sandbox | | --- | --- | --- | | Account & License Key management (web) | `https://www.avalara.com` | `https://sandbox.admin.avalara.com` | | Account & License Key management (API) | `https://rest.avatax.com` | `https://sandbox-rest.avatax.com` | | Token generation | `https://identity.avalara.com` | `https://ai-sbx.avlr.sh` |  ## Environments  #### Production - **Avalara 1099 API URL:** [`https://api.avalara.com/avalara1099`](https://api.avalara.com/avalara1099) - **Identity Token URL:** [`https://identity.avalara.com/connect/token`](https://identity.avalara.com/connect/token)  #### Sandbox - **Avalara 1099 API URL:** [`https://api.sbx.avalara.com/avalara1099`](https://api.sbx.avalara.com/avalara1099) - **Identity Token URL:** [`https://ai-sbx.avlr.sh/connect/token`](https://ai-sbx.avlr.sh/connect/token)  ---  ## API & SDK Documentation  [Avalara 1099 API Reference](https://developer.avalara.com/api-reference/avalara1099/avalara1099/)  [Avalara SDKs](https://developer.avalara.com/sdk/)  [Swagger](https://api.avalara.com/avalara1099/swagger/index.html?api-version=2.0) 
 
 @author     Sachin Baijal <sachin.baijal@avalara.com>
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.5.0
+@version    26.7.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -70,17 +70,13 @@ class Form1099Int(BaseModel):
     tax_year: Optional[StrictInt] = Field(default=None, description="Tax Year - only required when creating forms via $bulk-upsert", alias="taxYear")
     reference_id: Optional[StrictStr] = Field(default=None, description="Internal reference ID. Never shown to any agency or recipient.", alias="referenceId")
     tin: Optional[StrictStr] = Field(default=None, description="Recipient's Federal Tax Identification Number (TIN).")
-    recipient_name: Optional[StrictStr] = Field(description="Recipient name", alias="recipientName")
-    tin_type: Optional[StrictStr] = Field(default=None, description="Tax Identification Number (TIN) type.  Available values: - EIN: Employer Identification Number - SSN: Social Security Number - ITIN: Individual Taxpayer Identification Number - ATIN: Adoption Taxpayer Identification Number", alias="tinType")
-    recipient_second_name: Optional[StrictStr] = Field(default=None, description="Recipient second name", alias="recipientSecondName")
+    recipient_name: Optional[StrictStr] = Field(default=None, description="DEPRECATED: Use `businessName` for businesses; use `firstName`, `middleName`, `lastName`, and `suffixName` for individuals.", alias="recipientName")
     address: Optional[StrictStr] = Field(description="Address.")
     address2: Optional[StrictStr] = Field(default=None, description="Address line 2.")
     city: Optional[StrictStr] = Field(description="City.")
     state: Optional[StrictStr] = Field(default=None, description="Two-letter US state or Canadian province code (required for US/CA addresses).")
     zip: Optional[StrictStr] = Field(default=None, description="ZIP/postal code.")
     email: Optional[StrictStr] = Field(default=None, description="Recipient's Contact email address.")
-    account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
-    office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
     non_us_province: Optional[StrictStr] = Field(default=None, description="Province or region for non-US/CA addresses.", alias="nonUsProvince")
     country_code: Optional[StrictStr] = Field(description="Two-letter IRS country code (e.g., 'US', 'CA'), as defined at https://www.irs.gov/e-file-providers/country-codes.", alias="countryCode")
     federal_efile_date: Optional[date] = Field(default=None, description="Date when federal e-filing should be scheduled. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled.", alias="federalEfileDate")
@@ -88,10 +84,8 @@ class Form1099Int(BaseModel):
     state_efile_date: Optional[date] = Field(default=None, description="Date when state e-filing should be scheduled. Must be on or after federalEfileDate. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled.", alias="stateEfileDate")
     recipient_edelivery_date: Optional[date] = Field(default=None, description="Date when recipient e-delivery should be scheduled. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled.", alias="recipientEdeliveryDate")
     tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
-    no_tin: Optional[StrictBool] = Field(default=None, description="No TIN indicator", alias="noTin")
     address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
     state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
-    second_tin_notice: Optional[StrictBool] = Field(default=None, description="Second TIN notice", alias="secondTinNotice")
     federal_efile_status: Optional[Form1099StatusDetail] = Field(default=None, description="Federal e-file status.  Available values:  - unscheduled: Form has not been scheduled for federal e-filing  - scheduled: Form is scheduled for federal e-filing  - airlock: Form is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - sent: Form has been sent to the IRS  - accepted: Form was accepted by the IRS  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlock: Correction is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - corrected: A correction has been sent to the IRS  - corrected_accepted: Correction was accepted by the IRS  - rejected: Form was rejected by the IRS  - corrected_rejected: Correction was rejected by the IRS  - held: Form is held and will not be submitted to IRS (used for certain forms submitted only to states)", alias="federalEfileStatus")
     state_efile_status: Optional[List[StateEfileStatusDetail]] = Field(default=None, description="State e-file status.  Available values:  - unscheduled: Form has not been scheduled for state e-filing  - scheduled: Form is scheduled for state e-filing  - airlocked: Form is in process of being uploaded to the state  - sent: Form has been sent to the state  - rejected: Form was rejected by the state  - accepted: Form was accepted by the state  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlocked: Correction is in process of being uploaded to the state  - corrected_sent: Correction has been sent to the state  - corrected_rejected: Correction was rejected by the state  - corrected_accepted: Correction was accepted by the state", alias="stateEfileStatus")
     postal_mail_status: Optional[Form1099StatusDetail] = Field(default=None, description="Postal mail to recipient status.  Available values:  - unscheduled: Postal mail has not been scheduled  - pending: Postal mail is pending to be sent  - sent: Postal mail has been sent  - delivered: Postal mail has been delivered", alias="postalMailStatus")
@@ -101,8 +95,20 @@ class Form1099Int(BaseModel):
     validation_errors: Optional[List[ValidationError]] = Field(default=None, description="Validation errors", alias="validationErrors")
     created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
+    tin_type: Optional[StrictStr] = Field(default=None, description="Recipient classification.  The platform is transitioning from tax identifier classifications to recipient entity classifications. New values represent recipient entity types and should be preferred. Deprecated values represent identifier formats and remain supported for backward compatibility only.  Available values: - INDIVIDUAL: Recipient is an individual - BUSINESS: Recipient is a business - UNKNOWN: Recipient classification is unknown - EIN: (Deprecated - use BUSINESS) Employer Identification Number - SSN: (Deprecated - use INDIVIDUAL) Social Security Number - ITIN: (Deprecated - use INDIVIDUAL) Individual Taxpayer Identification Number - ATIN: (Deprecated - use INDIVIDUAL) Adoption Taxpayer Identification Number", alias="tinType")
+    business_name: Optional[StrictStr] = Field(default=None, description="Business name. Required when the recipient of the form is a business; should only be used for businesses.", alias="businessName")
+    business_name2: Optional[StrictStr] = Field(default=None, description="Business name line 2. Should only be used for businesses.", alias="businessName2")
+    first_name: Optional[StrictStr] = Field(default=None, description="First name. Required when the recipient of the form is an individual; should only be used for individuals.", alias="firstName")
+    middle_name: Optional[StrictStr] = Field(default=None, description="Middle name. Should only be used for individuals.", alias="middleName")
+    last_name: Optional[StrictStr] = Field(default=None, description="Last name. Required when the recipient of the form is an individual; should only be used for individuals.", alias="lastName")
+    suffix_name: Optional[StrictStr] = Field(default=None, description="Suffix name. Should only be used for individuals.", alias="suffixName")
+    recipient_second_name: Optional[StrictStr] = Field(default=None, description="DEPRECATED: Use `businessName2` instead.", alias="recipientSecondName")
+    account_number: Optional[StrictStr] = Field(default=None, description="Account number", alias="accountNumber")
+    office_code: Optional[StrictStr] = Field(default=None, description="Office code", alias="officeCode")
+    no_tin: Optional[StrictBool] = Field(default=None, description="No TIN indicator", alias="noTin")
+    second_tin_notice: Optional[StrictBool] = Field(default=None, description="Second TIN notice", alias="secondTinNotice")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "tin", "recipientName", "tinType", "recipientSecondName", "address", "address2", "city", "state", "zip", "email", "accountNumber", "officeCode", "nonUsProvince", "countryCode", "federalEfileDate", "postalMail", "stateEfileDate", "recipientEdeliveryDate", "tinMatch", "noTin", "addressVerification", "stateAndLocalWithholding", "secondTinNotice", "federalEfileStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "eDeliveryStatus", "validationErrors", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["type", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "tin", "recipientName", "address", "address2", "city", "state", "zip", "email", "nonUsProvince", "countryCode", "federalEfileDate", "postalMail", "stateEfileDate", "recipientEdeliveryDate", "tinMatch", "addressVerification", "stateAndLocalWithholding", "federalEfileStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "eDeliveryStatus", "validationErrors", "createdAt", "updatedAt", "tinType", "businessName", "businessName2", "firstName", "middleName", "lastName", "suffixName", "recipientSecondName", "accountNumber", "officeCode", "noTin", "secondTinNotice"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -117,8 +123,8 @@ class Form1099Int(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['EIN', 'SSN', 'ITIN', 'ATIN']):
-            raise ValueError("must be one of enum values ('EIN', 'SSN', 'ITIN', 'ATIN')")
+        if value not in set(['EIN', 'SSN', 'ITIN', 'ATIN', 'INDIVIDUAL', 'BUSINESS', 'UNKNOWN']):
+            raise ValueError("must be one of enum values ('EIN', 'SSN', 'ITIN', 'ATIN', 'INDIVIDUAL', 'BUSINESS', 'UNKNOWN')")
         return value
 
     model_config = ConfigDict(
@@ -259,16 +265,6 @@ class Form1099Int(BaseModel):
         if self.recipient_name is None and "recipient_name" in self.model_fields_set:
             _dict['recipientName'] = None
 
-        # set to None if tin_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.tin_type is None and "tin_type" in self.model_fields_set:
-            _dict['tinType'] = None
-
-        # set to None if recipient_second_name (nullable) is None
-        # and model_fields_set contains the field
-        if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
-            _dict['recipientSecondName'] = None
-
         # set to None if address (nullable) is None
         # and model_fields_set contains the field
         if self.address is None and "address" in self.model_fields_set:
@@ -298,16 +294,6 @@ class Form1099Int(BaseModel):
         # and model_fields_set contains the field
         if self.email is None and "email" in self.model_fields_set:
             _dict['email'] = None
-
-        # set to None if account_number (nullable) is None
-        # and model_fields_set contains the field
-        if self.account_number is None and "account_number" in self.model_fields_set:
-            _dict['accountNumber'] = None
-
-        # set to None if office_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.office_code is None and "office_code" in self.model_fields_set:
-            _dict['officeCode'] = None
 
         # set to None if non_us_province (nullable) is None
         # and model_fields_set contains the field
@@ -344,11 +330,6 @@ class Form1099Int(BaseModel):
         if self.tin_match is None and "tin_match" in self.model_fields_set:
             _dict['tinMatch'] = None
 
-        # set to None if no_tin (nullable) is None
-        # and model_fields_set contains the field
-        if self.no_tin is None and "no_tin" in self.model_fields_set:
-            _dict['noTin'] = None
-
         # set to None if address_verification (nullable) is None
         # and model_fields_set contains the field
         if self.address_verification is None and "address_verification" in self.model_fields_set:
@@ -358,11 +339,6 @@ class Form1099Int(BaseModel):
         # and model_fields_set contains the field
         if self.state_and_local_withholding is None and "state_and_local_withholding" in self.model_fields_set:
             _dict['stateAndLocalWithholding'] = None
-
-        # set to None if second_tin_notice (nullable) is None
-        # and model_fields_set contains the field
-        if self.second_tin_notice is None and "second_tin_notice" in self.model_fields_set:
-            _dict['secondTinNotice'] = None
 
         # set to None if federal_efile_status (nullable) is None
         # and model_fields_set contains the field
@@ -399,6 +375,66 @@ class Form1099Int(BaseModel):
         if self.validation_errors is None and "validation_errors" in self.model_fields_set:
             _dict['validationErrors'] = None
 
+        # set to None if tin_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.tin_type is None and "tin_type" in self.model_fields_set:
+            _dict['tinType'] = None
+
+        # set to None if business_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_name is None and "business_name" in self.model_fields_set:
+            _dict['businessName'] = None
+
+        # set to None if business_name2 (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_name2 is None and "business_name2" in self.model_fields_set:
+            _dict['businessName2'] = None
+
+        # set to None if first_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.first_name is None and "first_name" in self.model_fields_set:
+            _dict['firstName'] = None
+
+        # set to None if middle_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.middle_name is None and "middle_name" in self.model_fields_set:
+            _dict['middleName'] = None
+
+        # set to None if last_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_name is None and "last_name" in self.model_fields_set:
+            _dict['lastName'] = None
+
+        # set to None if suffix_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.suffix_name is None and "suffix_name" in self.model_fields_set:
+            _dict['suffixName'] = None
+
+        # set to None if recipient_second_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.recipient_second_name is None and "recipient_second_name" in self.model_fields_set:
+            _dict['recipientSecondName'] = None
+
+        # set to None if account_number (nullable) is None
+        # and model_fields_set contains the field
+        if self.account_number is None and "account_number" in self.model_fields_set:
+            _dict['accountNumber'] = None
+
+        # set to None if office_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.office_code is None and "office_code" in self.model_fields_set:
+            _dict['officeCode'] = None
+
+        # set to None if no_tin (nullable) is None
+        # and model_fields_set contains the field
+        if self.no_tin is None and "no_tin" in self.model_fields_set:
+            _dict['noTin'] = None
+
+        # set to None if second_tin_notice (nullable) is None
+        # and model_fields_set contains the field
+        if self.second_tin_notice is None and "second_tin_notice" in self.model_fields_set:
+            _dict['secondTinNotice'] = None
+
         return _dict
 
     @classmethod
@@ -420,16 +456,12 @@ class Form1099Int(BaseModel):
             "referenceId": obj.get("referenceId"),
             "tin": obj.get("tin"),
             "recipientName": obj.get("recipientName"),
-            "tinType": obj.get("tinType"),
-            "recipientSecondName": obj.get("recipientSecondName"),
             "address": obj.get("address"),
             "address2": obj.get("address2"),
             "city": obj.get("city"),
             "state": obj.get("state"),
             "zip": obj.get("zip"),
             "email": obj.get("email"),
-            "accountNumber": obj.get("accountNumber"),
-            "officeCode": obj.get("officeCode"),
             "nonUsProvince": obj.get("nonUsProvince"),
             "countryCode": obj.get("countryCode"),
             "federalEfileDate": obj.get("federalEfileDate"),
@@ -437,10 +469,8 @@ class Form1099Int(BaseModel):
             "stateEfileDate": obj.get("stateEfileDate"),
             "recipientEdeliveryDate": obj.get("recipientEdeliveryDate"),
             "tinMatch": obj.get("tinMatch"),
-            "noTin": obj.get("noTin"),
             "addressVerification": obj.get("addressVerification"),
             "stateAndLocalWithholding": StateAndLocalWithholding.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None,
-            "secondTinNotice": obj.get("secondTinNotice"),
             "federalEfileStatus": Form1099StatusDetail.from_dict(obj["federalEfileStatus"]) if obj.get("federalEfileStatus") is not None else None,
             "stateEfileStatus": [StateEfileStatusDetail.from_dict(_item) for _item in obj["stateEfileStatus"]] if obj.get("stateEfileStatus") is not None else None,
             "postalMailStatus": Form1099StatusDetail.from_dict(obj["postalMailStatus"]) if obj.get("postalMailStatus") is not None else None,
@@ -449,7 +479,19 @@ class Form1099Int(BaseModel):
             "eDeliveryStatus": Form1099StatusDetail.from_dict(obj["eDeliveryStatus"]) if obj.get("eDeliveryStatus") is not None else None,
             "validationErrors": [ValidationError.from_dict(_item) for _item in obj["validationErrors"]] if obj.get("validationErrors") is not None else None,
             "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt")
+            "updatedAt": obj.get("updatedAt"),
+            "tinType": obj.get("tinType"),
+            "businessName": obj.get("businessName"),
+            "businessName2": obj.get("businessName2"),
+            "firstName": obj.get("firstName"),
+            "middleName": obj.get("middleName"),
+            "lastName": obj.get("lastName"),
+            "suffixName": obj.get("suffixName"),
+            "recipientSecondName": obj.get("recipientSecondName"),
+            "accountNumber": obj.get("accountNumber"),
+            "officeCode": obj.get("officeCode"),
+            "noTin": obj.get("noTin"),
+            "secondTinNotice": obj.get("secondTinNotice")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

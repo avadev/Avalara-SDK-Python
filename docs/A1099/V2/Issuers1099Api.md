@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **create_issuer**
-> IssuerResponse create_issuer(avalara_version)
+> IssuerWriteResponse create_issuer(avalara_version)
 
 Create an issuer
 
@@ -27,7 +27,7 @@ import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import issuers1099_api
 IssuerRequest
-IssuerResponse
+IssuerWriteResponse
 ErrorResponse
 from pprint import pprint
     
@@ -45,9 +45,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'deb4448e-a364-4e99-b30c-9e876743be1f' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '86f494a4-440e-4bda-86a3-ad91885e318a' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to create (optional)
+    issuer_request = {"businessName":"Acme Corporation","businessName2":"Acme Widgets","name":"Acme Corporation","dbaName":"Acme Widgets","tinType":"BUSINESS","firstName":null,"middleName":null,"lastName":null,"suffix":null,"tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to create (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create an issuer
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**IssuerResponse**](IssuerResponse.md)
+[**IssuerWriteResponse**](IssuerWriteResponse.md)
 
 ### Authorization
 
@@ -132,7 +132,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to delete
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'fbe6b0c6-506b-4d42-951d-dfbd382b2223' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'f366a724-0f66-4b3c-97b1-2bf6a3a6336b' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -184,7 +184,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_issuer**
-> IssuerResponse get_issuer(id, avalara_version)
+> GetIssuer200Response get_issuer(id, avalara_version)
 
 Retrieve an issuer
 
@@ -198,7 +198,7 @@ Retrieve an issuer (also known as a Payer).
 import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import issuers1099_api
-IssuerResponse
+GetIssuer200Response
 ErrorResponse
 from pprint import pprint
     
@@ -217,7 +217,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to retrieve
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '9b9f0e80-4a47-4390-ae04-cedb799f6f0c' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'd9601a03-b428-423c-9f53-82eee07213e2' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -248,7 +248,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**IssuerResponse**](IssuerResponse.md)
+[**GetIssuer200Response**](GetIssuer200Response.md)
 
 ### Authorization
 
@@ -275,7 +275,7 @@ Name | Type | Description  | Notes
 
 List issuers
 
-List issuers (also known as Payers). Filterable fields are name, referenceId and taxYear.
+List issuers (also known as Payers). Filterable fields are businessName, businessName2, referenceId, taxYear, firstName, and lastName.
 
 ### Example
 
@@ -309,7 +309,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = '81488870-629b-4a05-8d4c-673e5db15454' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '4869c403-32c3-4c33-b2bd-b80de0fa0fad' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -370,11 +370,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **update_issuer**
-> update_issuer(id, avalara_version)
+> IssuerWriteResponse update_issuer(id, avalara_version)
 
 Update an issuer
 
-Update an issuer (also known as a Payer).
+Update an issuer (also known as a Payer). When the payload violates field-level business rules, the issuer is still persisted and the response body includes a `validationErrors[]` array describing each violation.
 
 ### Example
 
@@ -385,6 +385,7 @@ import time
 import Avalara.SDK
 from Avalara.SDK.api.A1099.V2 import issuers1099_api
 IssuerRequest
+IssuerWriteResponse
 ErrorResponse
 from pprint import pprint
     
@@ -403,13 +404,14 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to update
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '0c9b920f-cb85-4332-a9f6-bc06014dab8e' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'd43a2a4e-19f2-40a6-a5fe-e5efb7c8b93b' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    issuer_request = {"name":"Acme Corporation","dbaName":"Acme Widgets","tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to update (optional)
+    issuer_request = {"businessName":"Acme Corporation","businessName2":"Acme Widgets","name":"Acme Corporation","dbaName":"Acme Widgets","tinType":"BUSINESS","firstName":null,"middleName":null,"lastName":null,"suffix":null,"tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to update (optional)
     # example passing only required values which don't have defaults set
     try:
         # Update an issuer
-        api_instance.update_issuer(id, avalara_version)
+        api_response = api_instance.update_issuer(id, avalara_version)
+        pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Issuers1099Api->update_issuer: %s\n" % e)
 
@@ -417,7 +419,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Update an issuer
-        api_instance.update_issuer(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, issuer_request=issuer_request)
+        api_response = api_instance.update_issuer(id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client, issuer_request=issuer_request)
+        pprint(api_response)
     except Avalara.SDK.ApiException as e:
         print("Exception when calling Issuers1099Api->update_issuer: %s\n" % e)
 ```
@@ -434,7 +437,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**IssuerWriteResponse**](IssuerWriteResponse.md)
 
 ### Authorization
 
@@ -450,10 +453,11 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Issuer updated |  -  |
-**400** | Bad request (e.g., invalid sort key) |  -  |
+**200** | Issuer updated. Body may contain &#x60;validationErrors[]&#x60; when business rules failed. |  -  |
+**400** | Invalid id format, malformed JSON, or identity change rejected for an issuer with scheduled Forms 1099 (TIN, TIN type, or name are immutable in that case). |  -  |
 **401** | Unauthorized |  -  |
-**404** | Resource Not Found |  -  |
+**403** | Caller does not have access to this issuer. |  -  |
+**404** | Issuer not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 

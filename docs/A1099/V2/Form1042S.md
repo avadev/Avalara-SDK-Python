@@ -6,7 +6,6 @@ Form 1042-S: Foreign Person's U.S. Source Income Subject to Withholding
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tin_type** | **str** | Tax Identification Number (TIN) type.  Available values: - EIN: Employer Identification Number - SSN: Social Security Number - ITIN: Individual Taxpayer Identification Number - ATIN: Adoption Taxpayer Identification Number | [optional] [readonly] 
 **unique_form_id** | **str** | Unique form identifier | 
 **recipient_date_of_birth** | **date** | Recipient&#39;s date of birth | [optional] 
 **recipient_giin** | **str** | Recipient&#39;s Global Intermediary Identification Number (GIIN). A valid GIIN looks like &#39;XXXXXX.XXXXX.XX.XXX&#39;. | [optional] 
@@ -39,16 +38,13 @@ Name | Type | Description | Notes
 **tax_year** | **int** | Tax Year - only required when creating forms via $bulk-upsert | [optional] 
 **reference_id** | **str** | Internal reference ID. Never shown to any agency or recipient. | [optional] 
 **tin** | **str** | Recipient&#39;s Federal Tax Identification Number (TIN). | [optional] 
-**recipient_name** | **str** | Recipient name | 
-**recipient_second_name** | **str** | Recipient second name | [optional] 
+**recipient_name** | **str** | DEPRECATED: Use &#x60;businessName&#x60; for businesses; use &#x60;firstName&#x60;, &#x60;middleName&#x60;, &#x60;lastName&#x60;, and &#x60;suffixName&#x60; for individuals. | [optional] 
 **address** | **str** | Address. | 
 **address2** | **str** | Address line 2. | [optional] 
 **city** | **str** | City. | 
 **state** | **str** | Two-letter US state or Canadian province code (required for US/CA addresses). | [optional] 
 **zip** | **str** | ZIP/postal code. | [optional] 
 **email** | **str** | Recipient&#39;s Contact email address. | [optional] 
-**account_number** | **str** | Account number | [optional] 
-**office_code** | **str** | Office code | [optional] 
 **non_us_province** | **str** | Province or region for non-US/CA addresses. | [optional] 
 **country_code** | **str** | Two-letter IRS country code (e.g., &#39;US&#39;, &#39;CA&#39;), as defined at https://www.irs.gov/e-file-providers/country-codes. | 
 **federal_efile_date** | **date** | Date when federal e-filing should be scheduled. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled. | [optional] 
@@ -56,10 +52,8 @@ Name | Type | Description | Notes
 **state_efile_date** | **date** | Date when state e-filing should be scheduled. Must be on or after federalEfileDate. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled. | [optional] 
 **recipient_edelivery_date** | **date** | Date when recipient e-delivery should be scheduled. If set between current date and beginning of blackout period, scheduled to that date. If in the past or blackout period, scheduled to next available date. For blackout period information, see https://www.track1099.com/info/IRS_info. Set to null to leave unscheduled. | [optional] 
 **tin_match** | **bool** | Boolean indicating that TIN Matching should be scheduled for this form | [optional] 
-**no_tin** | **bool** | No TIN indicator | [optional] 
 **address_verification** | **bool** | Boolean indicating that address verification should be scheduled for this form | [optional] 
 **state_and_local_withholding** | [**StateAndLocalWithholding**](StateAndLocalWithholding.md) | State and local withholding information | [optional] 
-**second_tin_notice** | **bool** | Second TIN notice | [optional] 
 **federal_efile_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) | Federal e-file status.  Available values:  - unscheduled: Form has not been scheduled for federal e-filing  - scheduled: Form is scheduled for federal e-filing  - airlock: Form is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - sent: Form has been sent to the IRS  - accepted: Form was accepted by the IRS  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlock: Correction is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - corrected: A correction has been sent to the IRS  - corrected_accepted: Correction was accepted by the IRS  - rejected: Form was rejected by the IRS  - corrected_rejected: Correction was rejected by the IRS  - held: Form is held and will not be submitted to IRS (used for certain forms submitted only to states) | [optional] [readonly] 
 **state_efile_status** | [**List[StateEfileStatusDetail]**](StateEfileStatusDetail.md) | State e-file status.  Available values:  - unscheduled: Form has not been scheduled for state e-filing  - scheduled: Form is scheduled for state e-filing  - airlocked: Form is in process of being uploaded to the state  - sent: Form has been sent to the state  - rejected: Form was rejected by the state  - accepted: Form was accepted by the state  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlocked: Correction is in process of being uploaded to the state  - corrected_sent: Correction has been sent to the state  - corrected_rejected: Correction was rejected by the state  - corrected_accepted: Correction was accepted by the state | [optional] [readonly] 
 **postal_mail_status** | [**Form1099StatusDetail**](Form1099StatusDetail.md) | Postal mail to recipient status.  Available values:  - unscheduled: Postal mail has not been scheduled  - pending: Postal mail is pending to be sent  - sent: Postal mail has been sent  - delivered: Postal mail has been delivered | [optional] [readonly] 
@@ -69,6 +63,18 @@ Name | Type | Description | Notes
 **validation_errors** | [**List[ValidationError]**](ValidationError.md) | Validation errors | [optional] [readonly] 
 **created_at** | **datetime** | Date time when the record was created. | [optional] [readonly] 
 **updated_at** | **datetime** | Date time when the record was last updated. | [optional] [readonly] 
+**tin_type** | **str** | Recipient classification.  The platform is transitioning from tax identifier classifications to recipient entity classifications. New values represent recipient entity types and should be preferred. Deprecated values represent identifier formats and remain supported for backward compatibility only.  Available values: - INDIVIDUAL: Recipient is an individual - BUSINESS: Recipient is a business - UNKNOWN: Recipient classification is unknown - EIN: (Deprecated - use BUSINESS) Employer Identification Number - SSN: (Deprecated - use INDIVIDUAL) Social Security Number - ITIN: (Deprecated - use INDIVIDUAL) Individual Taxpayer Identification Number - ATIN: (Deprecated - use INDIVIDUAL) Adoption Taxpayer Identification Number | [optional] 
+**business_name** | **str** | Business name. Required when the recipient of the form is a business; should only be used for businesses. | [optional] 
+**business_name2** | **str** | Business name line 2. Should only be used for businesses. | [optional] 
+**first_name** | **str** | First name. Required when the recipient of the form is an individual; should only be used for individuals. | [optional] 
+**middle_name** | **str** | Middle name. Should only be used for individuals. | [optional] 
+**last_name** | **str** | Last name. Required when the recipient of the form is an individual; should only be used for individuals. | [optional] 
+**suffix_name** | **str** | Suffix name. Should only be used for individuals. | [optional] 
+**recipient_second_name** | **str** | DEPRECATED: Use &#x60;businessName2&#x60; instead. | [optional] 
+**account_number** | **str** | Account number | [optional] 
+**office_code** | **str** | Office code | [optional] 
+**no_tin** | **bool** | No TIN indicator | [optional] 
+**second_tin_notice** | **bool** | Second TIN notice | [optional] 
 
 ## Example
 
