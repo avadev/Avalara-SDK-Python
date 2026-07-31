@@ -43,8 +43,8 @@ from Avalara.SDK.model_utils import (  # noqa: F401
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from Avalara.SDK.models.A1099.V2.get_issuer200_response import GetIssuer200Response
 from Avalara.SDK.models.A1099.V2.issuer_request import IssuerRequest
+from Avalara.SDK.models.A1099.V2.issuer_response import IssuerResponse
 from Avalara.SDK.models.A1099.V2.issuer_write_response import IssuerWriteResponse
 from Avalara.SDK.models.A1099.V2.paginated_query_result_model_issuer_response import PaginatedQueryResultModelIssuerResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
@@ -208,7 +208,7 @@ class Issuers1099Api(object):
         )
         self.get_issuer_endpoint = _Endpoint(
             settings={
-                'response_type': (GetIssuer200Response,),
+                'response_type': (IssuerResponse,),
                 'auth': [
                     'bearer'
                 ],
@@ -635,7 +635,7 @@ class Issuers1099Api(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            GetIssuer200Response
+            IssuerResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """

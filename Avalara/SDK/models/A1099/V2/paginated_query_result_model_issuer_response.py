@@ -35,7 +35,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from Avalara.SDK.models.A1099.V2.get_issuer200_response import GetIssuer200Response
+from Avalara.SDK.models.A1099.V2.issuer_response import IssuerResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -44,7 +44,7 @@ class PaginatedQueryResultModelIssuerResponse(BaseModel):
     Generic paginated model to wrap query response data
     """ # noqa: E501
     recordset_count: Optional[StrictInt] = Field(default=None, alias="@recordsetCount")
-    value: Optional[List[GetIssuer200Response]] = None
+    value: Optional[List[IssuerResponse]] = None
     next_link: Optional[StrictStr] = Field(default=None, alias="@nextLink")
     __properties: ClassVar[List[str]] = ["@recordsetCount", "value", "@nextLink"]
 
@@ -122,7 +122,7 @@ class PaginatedQueryResultModelIssuerResponse(BaseModel):
 
         _obj = cls.model_validate({
             "@recordsetCount": obj.get("@recordsetCount"),
-            "value": [GetIssuer200Response.from_dict(_item) for _item in obj["value"]] if obj.get("value") is not None else None,
+            "value": [IssuerResponse.from_dict(_item) for _item in obj["value"]] if obj.get("value") is not None else None,
             "@nextLink": obj.get("@nextLink")
         })
         return _obj

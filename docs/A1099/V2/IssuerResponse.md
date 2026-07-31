@@ -5,9 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | Unique identifier set when the record is created. | [optional] 
-**created_at** | **datetime** | Date time when the record was created. | [optional] 
-**updated_at** | **datetime** | Date time when the record was last updated. | [optional] 
 **business_name** | **str** | Business name. Required when the recipient of the form is a business; should only be used for businesses. | 
 **business_name2** | **str** | Business name line 2. Should only be used for businesses. Use either this or &#39;transferAgentName&#39;. | [optional] 
 **name** | **str** | Legal name. Not the DBA name. Deprecated alias for &#39;businessName&#39;. | [optional] 
@@ -30,6 +27,9 @@ Name | Type | Description | Notes
 **foreign_province** | **str** | Province or region for non-US/CA addresses. | [optional] 
 **transfer_agent_name** | **str** | Name of the transfer agent, if applicable — optional; use either this or &#39;dbaName&#39;. | [optional] 
 **last_filing** | **bool** | Indicates if this is the issuer&#39;s final year filing. | 
+**id** | **str** | Unique identifier set when the record is created. | [optional] 
+**created_at** | **datetime** | Date time when the record was created. | [optional] 
+**updated_at** | **datetime** | Date time when the record was last updated. | [optional] 
 
 ## Example
 

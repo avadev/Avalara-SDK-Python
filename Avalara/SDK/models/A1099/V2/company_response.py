@@ -43,9 +43,6 @@ class CompanyResponse(BaseModel):
     """
     CompanyResponse
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier set when the record is created.")
-    created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
-    updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
     name: Optional[StrictStr] = Field(description="Legal name. Not the DBA name.")
     dba_name: Optional[StrictStr] = Field(default=None, description="Doing Business As (DBA) name or continuation of a long legal name.", alias="dbaName")
     email: Optional[StrictStr] = Field(description="Contact email address. For inquiries by vendors/employees.")
@@ -63,7 +60,10 @@ class CompanyResponse(BaseModel):
     resend_requests: Optional[StrictBool] = Field(default=None, description="Boolean to enable automatic reminder emails (default: false).", alias="resendRequests")
     resend_interval_days: Optional[StrictInt] = Field(default=None, description="Days between reminder emails (7-365, required if resendRequests is true).", alias="resendIntervalDays")
     max_reminder_attempts: Optional[StrictInt] = Field(default=None, description="Maximum number of reminder attempts (1-52, required if resendRequests is true).", alias="maxReminderAttempts")
-    __properties: ClassVar[List[str]] = ["name", "dbaName", "email", "address", "city", "state", "zip", "telephone", "tin", "referenceId", "doTinMatch", "groupName", "foreignProvince", "countryCode", "resendRequests", "resendIntervalDays", "maxReminderAttempts"]
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier set when the record is created.")
+    created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
+    updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
+    __properties: ClassVar[List[str]] = ["name", "dbaName", "email", "address", "city", "state", "zip", "telephone", "tin", "referenceId", "doTinMatch", "groupName", "foreignProvince", "countryCode", "resendRequests", "resendIntervalDays", "maxReminderAttempts", "id", "createdAt", "updatedAt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -217,7 +217,10 @@ class CompanyResponse(BaseModel):
             "countryCode": obj.get("countryCode"),
             "resendRequests": obj.get("resendRequests"),
             "resendIntervalDays": obj.get("resendIntervalDays"),
-            "maxReminderAttempts": obj.get("maxReminderAttempts")
+            "maxReminderAttempts": obj.get("maxReminderAttempts"),
+            "id": obj.get("id"),
+            "createdAt": obj.get("createdAt"),
+            "updatedAt": obj.get("updatedAt")
         })
         return _obj
 

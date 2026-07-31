@@ -43,9 +43,6 @@ class IssuerResponse(BaseModel):
     """
     IssuerResponse
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier set when the record is created.")
-    created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
-    updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
     business_name: Optional[StrictStr] = Field(description="Business name. Required when the recipient of the form is a business; should only be used for businesses.", alias="businessName")
     business_name2: Optional[StrictStr] = Field(default=None, description="Business name line 2. Should only be used for businesses. Use either this or 'transferAgentName'.", alias="businessName2")
     name: Optional[StrictStr] = Field(default=None, description="Legal name. Not the DBA name. Deprecated alias for 'businessName'.")
@@ -68,7 +65,10 @@ class IssuerResponse(BaseModel):
     foreign_province: Optional[StrictStr] = Field(default=None, description="Province or region for non-US/CA addresses.", alias="foreignProvince")
     transfer_agent_name: Optional[StrictStr] = Field(default=None, description="Name of the transfer agent, if applicable — optional; use either this or 'dbaName'.", alias="transferAgentName")
     last_filing: Optional[StrictBool] = Field(description="Indicates if this is the issuer's final year filing.", alias="lastFiling")
-    __properties: ClassVar[List[str]] = ["businessName", "businessName2", "name", "dbaName", "tinType", "firstName", "middleName", "lastName", "suffix", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling"]
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier set when the record is created.")
+    created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
+    updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
+    __properties: ClassVar[List[str]] = ["businessName", "businessName2", "name", "dbaName", "tinType", "firstName", "middleName", "lastName", "suffix", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling", "id", "createdAt", "updatedAt"]
 
     @field_validator('tin_type')
     def tin_type_validate_enum(cls, value):
@@ -262,7 +262,10 @@ class IssuerResponse(BaseModel):
             "zip": obj.get("zip"),
             "foreignProvince": obj.get("foreignProvince"),
             "transferAgentName": obj.get("transferAgentName"),
-            "lastFiling": obj.get("lastFiling")
+            "lastFiling": obj.get("lastFiling"),
+            "id": obj.get("id"),
+            "createdAt": obj.get("createdAt"),
+            "updatedAt": obj.get("updatedAt")
         })
         return _obj
 

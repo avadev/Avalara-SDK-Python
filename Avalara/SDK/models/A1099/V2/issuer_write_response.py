@@ -44,10 +44,6 @@ class IssuerWriteResponse(BaseModel):
     """
     IssuerWriteResponse
     """ # noqa: E501
-    validation_errors: Optional[List[ValidationError]] = Field(default=None, description="Field-level validation errors. Populated when a POST or PUT request violated business rules  but the issuer was still persisted. Each entry identifies the affected field and the issue.  Empty array when the payload was fully valid.", alias="validationErrors")
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier set when the record is created.")
-    created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
-    updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
     business_name: Optional[StrictStr] = Field(description="Business name. Required when the recipient of the form is a business; should only be used for businesses.", alias="businessName")
     business_name2: Optional[StrictStr] = Field(default=None, description="Business name line 2. Should only be used for businesses. Use either this or 'transferAgentName'.", alias="businessName2")
     name: Optional[StrictStr] = Field(default=None, description="Legal name. Not the DBA name. Deprecated alias for 'businessName'.")
@@ -70,7 +66,11 @@ class IssuerWriteResponse(BaseModel):
     foreign_province: Optional[StrictStr] = Field(default=None, description="Province or region for non-US/CA addresses.", alias="foreignProvince")
     transfer_agent_name: Optional[StrictStr] = Field(default=None, description="Name of the transfer agent, if applicable — optional; use either this or 'dbaName'.", alias="transferAgentName")
     last_filing: Optional[StrictBool] = Field(description="Indicates if this is the issuer's final year filing.", alias="lastFiling")
-    __properties: ClassVar[List[str]] = ["id", "createdAt", "updatedAt", "businessName", "businessName2", "name", "dbaName", "tinType", "firstName", "middleName", "lastName", "suffix", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling"]
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier set when the record is created.")
+    created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
+    updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
+    validation_errors: Optional[List[ValidationError]] = Field(default=None, description="Field-level validation errors. Populated when a POST or PUT request violated business rules  but the issuer was still persisted. Each entry identifies the affected field and the issue.  Empty array when the payload was fully valid.", alias="validationErrors")
+    __properties: ClassVar[List[str]] = ["businessName", "businessName2", "name", "dbaName", "tinType", "firstName", "middleName", "lastName", "suffix", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling", "id", "createdAt", "updatedAt", "validationErrors"]
 
     @field_validator('tin_type')
     def tin_type_validate_enum(cls, value):
@@ -123,6 +123,13 @@ class IssuerWriteResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in validation_errors (list)
+        _items = []
+        if self.validation_errors:
+            for _item in self.validation_errors:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['validationErrors'] = _items
         # set to None if business_name (nullable) is None
         # and model_fields_set contains the field
         if self.business_name is None and "business_name" in self.model_fields_set:
@@ -233,6 +240,11 @@ class IssuerWriteResponse(BaseModel):
         if self.last_filing is None and "last_filing" in self.model_fields_set:
             _dict['lastFiling'] = None
 
+        # set to None if validation_errors (nullable) is None
+        # and model_fields_set contains the field
+        if self.validation_errors is None and "validation_errors" in self.model_fields_set:
+            _dict['validationErrors'] = None
+
         return _dict
 
     @classmethod
@@ -245,9 +257,6 @@ class IssuerWriteResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt"),
             "businessName": obj.get("businessName"),
             "businessName2": obj.get("businessName2"),
             "name": obj.get("name"),
@@ -269,7 +278,11 @@ class IssuerWriteResponse(BaseModel):
             "zip": obj.get("zip"),
             "foreignProvince": obj.get("foreignProvince"),
             "transferAgentName": obj.get("transferAgentName"),
-            "lastFiling": obj.get("lastFiling")
+            "lastFiling": obj.get("lastFiling"),
+            "id": obj.get("id"),
+            "createdAt": obj.get("createdAt"),
+            "updatedAt": obj.get("updatedAt"),
+            "validationErrors": [ValidationError.from_dict(_item) for _item in obj["validationErrors"]] if obj.get("validationErrors") is not None else None
         })
         return _obj
 
