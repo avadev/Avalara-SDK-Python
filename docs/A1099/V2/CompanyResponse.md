@@ -5,9 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | Unique identifier set when the record is created. | [optional] 
-**created_at** | **datetime** | Date time when the record was created. | [optional] 
-**updated_at** | **datetime** | Date time when the record was last updated. | [optional] 
 **name** | **str** | Legal name. Not the DBA name. | 
 **dba_name** | **str** | Doing Business As (DBA) name or continuation of a long legal name. | [optional] 
 **email** | **str** | Contact email address. For inquiries by vendors/employees. | 
@@ -25,6 +22,9 @@ Name | Type | Description | Notes
 **resend_requests** | **bool** | Boolean to enable automatic reminder emails (default: false). | [optional] 
 **resend_interval_days** | **int** | Days between reminder emails (7-365, required if resendRequests is true). | [optional] 
 **max_reminder_attempts** | **int** | Maximum number of reminder attempts (1-52, required if resendRequests is true). | [optional] 
+**id** | **str** | Unique identifier set when the record is created. | [optional] 
+**created_at** | **datetime** | Date time when the record was created. | [optional] 
+**updated_at** | **datetime** | Date time when the record was last updated. | [optional] 
 
 ## Example
 

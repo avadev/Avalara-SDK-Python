@@ -1,6 +1,6 @@
 # Avalara.SDK.JobsApi
 
-All URIs are relative to *https://api.sbx.avalara.com/avalara1099*
+All URIs are relative to *https://api-ava1099.edge.qa.us-east-1.aws.avalara.io/avalara1099*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -41,7 +41,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = jobs_api.JobsApi(api_client)
     id = 'id_example' # str | Job id obtained from other API responses, like `/1099/bulk-upsert`.
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '2703d90c-9006-449d-b10d-2cf416cd6a4c' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '010a01be-bbf4-407e-afff-6151b0580377' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:

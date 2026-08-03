@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **employee_middle_name** | **str** | The middle name of the employee. | [optional] 
 **employee_last_name** | **str** | The last name of the employee. | 
 **employee_name_suffix** | **str** | The name suffix of the employee. | [optional] 
-**tin_type** | **str** | Tax Identification Number (TIN) type. | 
+**tin_type** | **str** | Recipient classification.  The platform is transitioning from tax identifier classifications to recipient entity classifications. New values represent recipient entity types and should be preferred. Deprecated values represent identifier formats and remain supported for backward compatibility only.  Available values: - INDIVIDUAL: Recipient is an individual - BUSINESS: Recipient is a business - UNKNOWN: Recipient classification is unknown - EIN: (Deprecated - use BUSINESS) Employer Identification Number - SSN: (Deprecated - use INDIVIDUAL) Social Security Number - ITIN: (Deprecated - use INDIVIDUAL) Individual Taxpayer Identification Number - ATIN: (Deprecated - use INDIVIDUAL) Adoption Taxpayer Identification Number | 
 **tin** | **str** | The taxpayer identification number (TIN). | 
 **address** | **str** | The address of the employee. Required unless exempt. | [optional] 
 **city** | **str** | The city of residence of the employee. Required unless exempt. | [optional] 
@@ -25,11 +25,11 @@ Name | Type | Description | Notes
 **additional_withheld** | **float** | The additional amount withheld. | [optional] 
 **exempt_from_withholding** | **bool** | Indicates whether the employee is exempt from withholding. | [optional] 
 **office_code** | **str** | The office code associated with the form. | [optional] 
-**e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
-**signature** | **str** | The signature of the form. | [optional] 
 **company_id** | **str** | The ID of the associated company. Required when creating a form. | [optional] 
 **reference_id** | **str** | A reference identifier for the form. | [optional] 
 **email** | **str** | The email address of the individual associated with the form. | [optional] 
+**e_delivery_consented_at** | **datetime** | The date when e-delivery was consented. | [optional] 
+**signature** | **str** | The signature of the form. | [optional] 
 
 ## Example
 
