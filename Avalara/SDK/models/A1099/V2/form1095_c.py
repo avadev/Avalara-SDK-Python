@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.7.0
+@version    26.9.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -108,8 +108,8 @@ class Form1095C(BaseModel):
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R', 'W-2']):
-            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-R', 'W-2')")
+        if value not in set(['1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', 'W-2']):
+            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', 'W-2')")
         return value
 
     model_config = ConfigDict(
