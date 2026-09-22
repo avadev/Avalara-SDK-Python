@@ -43,30 +43,23 @@ from Avalara.SDK.models.A1099.V2.validation_error import ValidationError
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Form1099R(BaseModel):
+class Form1099Patr(BaseModel):
     """
-    Form 1099-R: Distributions From Pensions, Annuities, Retirement or Profit-Sharing Plans, IRAs, Insurance Contracts, etc.                *At least one of the following amounts must be provided:*   Gross distribution, Taxable amount, Capital gain, Employee contributions/Designated Roth contributions or insurance premiums,  Net unrealized appreciation in employer's securities, Other amount, Total employee contributions,  Traditional IRA/SEP/SIMPLE or Roth conversion amount, or Amount allocable to IRR within 5 years
+    Form 1099-PATR: Taxable Distributions Received From Cooperatives                *At least one of the following amounts must be greater than zero:*  Patronage Dividends, Nonpatronage Distributions, Per-Unit Retain Allocations, or Redeemed Nonqualified Notices.                Federal Income Tax Withheld, when provided, must be less than the total of those four amounts.                Specified Cooperative may only be set when at least one of Qualified Payments,  Section 199A(a) Qualified Items, or Section 199A(a) SSTB Items is provided.                Form 1099-PATR has no state or local withholding boxes. `stateAndLocalWithholding` is not supported for this  form type on any endpoint: a supplied value is discarded rather than stored, and the field always reads back  as `null`.
     """ # noqa: E501
-    gross_distribution: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Gross distribution", alias="grossDistribution")
-    taxable_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Taxable amount", alias="taxableAmount")
-    taxable_amount_not_determined: Optional[StrictBool] = Field(default=None, description="Taxable amount not determined", alias="taxableAmountNotDetermined")
-    total_distribution_determined: Optional[StrictBool] = Field(default=None, description="Total distribution", alias="totalDistributionDetermined")
-    capital_gain: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Capital gain (included in Box 2a)", alias="capitalGain")
+    patronage_dividends: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Patronage dividends", alias="patronageDividends")
+    nonpatronage_distributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Nonpatronage distributions", alias="nonpatronageDistributions")
+    per_unit_retain_allocations: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Per-unit retain allocations", alias="perUnitRetainAllocations")
     federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
-    employee_contributions_or_designated_roth_or_insurance_premiums: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Employee contributions/Designated Roth contributions or insurance premiums", alias="employeeContributionsOrDesignatedRothOrInsurancePremiums")
-    net_unrealized_appreciation_in_employer_securities: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Net unrealized appreciation in employer's securities", alias="netUnrealizedAppreciationInEmployerSecurities")
-    distribution_code: Optional[StrictStr] = Field(description="Distribution code.    Available values:  - 1: Early distribution, no known exception (in most cases, under age 59½)  - 2: Early distribution, exception applies (under age 59½)  - 3: Disability  - 4: Death  - 5: Prohibited transaction  - 6: Section 1035 exchange (a tax-free exchange of life insurance, annuity, qualified long-term care insurance, or endowment contracts)  - 7: Normal distribution  - 8: Excess contributions plus earnings/excess deferrals (and/or earnings) taxable in payment year  - 9: Cost of current life insurance protection (premiums paid by a trustee or custodian for current insurance protection)  - A: May be eligible for 10-year tax option  - B: Designated Roth account distribution  - C: Reportable Death Benefits Under Section 6050Y(c)  - D: Annuity payments from nonqualified annuity payments and distributions from life insurance contracts that may be subject to tax under section 1411  - E: Distribution under Employee Plans Compliance Resolution System (EPCRS)  - F: Charitable gift annuity  - G: Direct rollover and rollover contribution  - H: Direct rollover of distribution from a designated Roth account to a Roth IRA  - J: Early distribution from a Roth IRA (This code may be used with a Code 8 or P)  - K: Distribution of IRA Assets Not Having A Readily Available FMV  - L: Loans treated as deemed distributions under section 72(p)  - M: Qualified Plan Loan Offsets  - N: Recharacterized IRA contribution made for year following payment year  - P: Excess contributions plus earnings/excess deferrals taxable for year prior to payment year  - Q: Qualified distribution from a Roth IRA (Distribution from a Roth IRA when the 5-year holding period has been met, and the recipient has reached 59½, has died, or is disabled)  - R: Recharacterized IRA contribution made for year prior to payment year  - S: Early distribution from a SIMPLE IRA in first 2 years no known exceptions  - T: Roth IRA distribution exception applies because participant has reached 59½, died or is disabled, but it is unknown if the 5-year period has been met  - U: Distribution from ESOP under Section 404(k)  - W: Charges or payments for purchasing qualified long-term care insurance contracts under combined arrangements  - Y: Qualified charitable distribution (QCD) claimed under section 408(d)(8) (Available for 2025 on)", alias="distributionCode")
-    second_distribution_code: Optional[StrictStr] = Field(default=None, description="Second distribution code. Must be a valid combination with the first distribution code.  See DistributionCode property documentation for code descriptions.    Valid combinations based on first distribution code:  - 1: _, 8, B, D, K, L, M, P  - 2: _, 8, B, D, K, L, M, P  - 3: _, D  - 4: _, 8, A, B, D, G, H, K, L, M, P  - 5: _  - 6: _, W  - 7: _, A, B, D, K, L, M  - 8: _, 1, 2, 4, B, J, K  - 9: _  - A: 4, 7  - B: _, 1, 2, 4, 7, 8, G, L, M, P, U  - C: _, D  - D: 1, 2, 3, 4, 7, C  - E: _  - F: _  - G: _, 4, B, K  - H: _, 4  - J: _, 8, P  - K: 1, 2, 4, 7, 8, G  - L: _, 1, 2, 4, 7, B  - M: _, 1, 2, 4, 7, B  - N: _  - P: _, 1, 2, 4, B, J  - Q: _  - R: _  - S: _  - T: _  - U: _, B  - W: _, 6  - Y: 4, 7, K                (_ indicates no second distribution code)    (format: firstDistributionCode: availableSecondDistributionCodes)", alias="secondDistributionCode")
-    ira_sep_simple: Optional[StrictBool] = Field(default=None, description="IRA/SEP/SIMPLE", alias="iraSepSimple")
-    traditional_ira_sep_simple_or_roth_conversion_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Traditional IRA/SEP/SIMPLE or Roth conversion amount", alias="traditionalIraSepSimpleOrRothConversionAmount")
-    other_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Other amount", alias="otherAmount")
-    other_percentage: Optional[StrictStr] = Field(default=None, description="Other percentage", alias="otherPercentage")
-    total_distribution_percentage: Optional[StrictStr] = Field(default=None, description="Total distribution percentage", alias="totalDistributionPercentage")
-    total_employee_contributions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total employee contributions", alias="totalEmployeeContributions")
-    amount_allocable_to_irr_within5_years: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount allocable to IRR within 5 years", alias="amountAllocableToIrrWithin5Years")
-    first_year_of_designated_roth_contribution: Optional[StrictStr] = Field(default=None, description="First year of designated Roth contribution", alias="firstYearOfDesignatedRothContribution")
-    date_of_payment: Optional[date] = Field(default=None, description="Date of payment", alias="dateOfPayment")
-    fatca_filing_requirement: Optional[StrictBool] = Field(default=None, description="FATCA filing requirement.", alias="fatcaFilingRequirement")
+    redeemed_nonqualified_notices: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Redeemed nonqualified notices", alias="redeemedNonqualifiedNotices")
+    section199_ag_deduction: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 199A(g) deduction", alias="section199AgDeduction")
+    qualified_payments: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Qualified payments (Section 199A(b)(7))", alias="qualifiedPayments")
+    section199_aa_qualified_items: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 199A(a) qualified items", alias="section199AaQualifiedItems")
+    section199_aa_sstb_items: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Section 199A(a) SSTB items", alias="section199AaSstbItems")
+    investment_credit: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Investment credit", alias="investmentCredit")
+    work_opportunity_credit: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Work opportunity credit", alias="workOpportunityCredit")
+    other_credits_and_deductions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Other credits and deductions", alias="otherCreditsAndDeductions")
+    specified_cooperative_indicator: Optional[StrictBool] = Field(default=None, description="Indicates the payer is a specified agricultural or horticultural cooperative", alias="specifiedCooperativeIndicator")
     type: StrictStr = Field(description="Form type.")
     id: Optional[StrictStr] = Field(default=None, description="Form ID. Unique identifier set when the record is created.")
     issuer_id: Optional[StrictStr] = Field(default=None, description="Issuer ID - only required when creating forms", alias="issuerId")
@@ -115,26 +108,6 @@ class Form1099R(BaseModel):
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["type", "id", "issuerId", "issuerReferenceId", "issuerTin", "taxYear", "referenceId", "tin", "recipientName", "address", "address2", "city", "state", "zip", "email", "nonUsProvince", "countryCode", "federalEfileDate", "postalMail", "stateEfileDate", "recipientEdeliveryDate", "tinMatch", "addressVerification", "stateAndLocalWithholding", "federalEfileStatus", "stateEfileStatus", "postalMailStatus", "tinMatchStatus", "addressVerificationStatus", "eDeliveryStatus", "validationErrors", "createdAt", "updatedAt", "tinType", "businessName", "businessName2", "firstName", "middleName", "lastName", "suffixName", "recipientSecondName", "accountNumber", "officeCode", "noTin", "secondTinNotice"]
 
-    @field_validator('distribution_code')
-    def distribution_code_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'Y']):
-            raise ValueError("must be one of enum values ('1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'Y')")
-        return value
-
-    @field_validator('second_distribution_code')
-    def second_distribution_code_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'W']):
-            raise ValueError("must be one of enum values ('1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'W')")
-        return value
-
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
@@ -170,7 +143,7 @@ class Form1099R(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Form1099R from a JSON string"""
+        """Create an instance of Form1099Patr from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -464,7 +437,7 @@ class Form1099R(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Form1099R from a dict"""
+        """Create an instance of Form1099Patr from a dict"""
         if obj is None:
             return None
 
