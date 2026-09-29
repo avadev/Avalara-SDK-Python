@@ -46,8 +46,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     codelist_id = 'ab123343-3432-423c-ac3f-53453scs9999' # str | System-generated unique identifier of the code list definition. Typically a UUID used to reference this code list internally or via APIs.
     country_code = 'FR' # str | Two-letter ISO 3166-1 alpha-2 country code indicating the jurisdiction this code list applies to.
     x_avalara_client = 'John's E-Invoicing-API Client' # str | Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\"). (optional)
-    effective_date = 'Tue Dec 31 16:00:00 PST 2024' # date | Filter code list versions by effective date. Returns versions that are effective on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, defaults to the current date. sunsetDate is required when effectiveDate is provided. (optional)
-    sunset_date = 'Wed Dec 30 16:00:00 PST 2026' # date | Filter code list versions by sunset date. Returns versions that have not yet sunset on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, only non-expired versions are returned. (optional)
+    effective_date = 'Wed Jan 01 00:00:00 UTC 2025' # date | Filter code list versions by effective date. Returns versions that are effective on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, defaults to the current date. sunsetDate is required when effectiveDate is provided. (optional)
+    sunset_date = 'Thu Dec 31 00:00:00 UTC 2026' # date | Filter code list versions by sunset date. Returns versions that have not yet sunset on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, only non-expired versions are returned. (optional)
     # example passing only required values which don't have defaults set
     try:
         # Retrieves a code list by ID for a specific country
@@ -139,8 +139,8 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     avalara_version = '1.6' # str | Header that specifies the API version to use (for example \"1.6\").
     country_code = 'FR' # str | Two-letter ISO 3166-1 alpha-2 country code indicating the jurisdiction for which code lists should be returned.
     x_avalara_client = 'John's E-Invoicing-API Client' # str | Optional header for a client identifier string used for diagnostics (for example \"Fingerprint\"). (optional)
-    effective_date = 'Tue Dec 31 16:00:00 PST 2024' # date | Filter code lists by effective date. Returns code lists that are effective on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, defaults to the current date. sunsetDate is required when effectiveDate is provided. (optional)
-    sunset_date = 'Wed Dec 30 16:00:00 PST 2026' # date | Filter code lists by sunset date. Returns code lists that have not yet sunset on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, only non-expired code lists are returned. (optional)
+    effective_date = 'Wed Jan 01 00:00:00 UTC 2025' # date | Filter code lists by effective date. Returns code lists that are effective on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, defaults to the current date. sunsetDate is required when effectiveDate is provided. (optional)
+    sunset_date = 'Thu Dec 31 00:00:00 UTC 2026' # date | Filter code lists by sunset date. Returns code lists that have not yet sunset on or before this date. Format: YYYY-MM-DD (ISO 8601). If not specified, only non-expired code lists are returned. (optional)
     count = 'true' # str | When set to true, the response body also includes the count of items in the collection. (optional)
     count_only = 'false' # str | When set to true, the response returns only the count of items in the collection. (optional)
     top = 56 # int | The number of items to include in the result. (optional)
