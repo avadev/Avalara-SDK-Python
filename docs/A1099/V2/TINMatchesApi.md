@@ -42,7 +42,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = tin_matches_api.TINMatchesApi(api_client)
     id = 'id_example' # str | The bulk ID
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'df30781a-da37-45b3-be01-d835e5d0ad8b' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '77d79db6-e884-4ef0-a76d-0c10c41f5993' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -133,7 +133,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = '98367ed4-44bb-4254-a388-ec2e63ac293e' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '8bd78a31-95dc-4091-9f0e-fd0647ecc6f5' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -227,7 +227,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tin_matches_api.TINMatchesApi(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '7d625954-787a-4153-8365-45cef8288be1' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '7f2a23f6-59ed-4fb9-95fd-7937e99952f5' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     real_time_tin_match_request = {"tinType":"BUSINESS","tin":"94-2765439","name":"Acme Corporation"} # RealTimeTinMatchRequest | Required data to perform TIN match (optional)
     # example passing only required values which don't have defaults set
@@ -316,7 +316,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tin_matches_api.TINMatchesApi(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '3f051c64-117a-46f1-b9b5-324064394c6a' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '88b0e4e3-1fd9-437c-9744-753f89dfef9f' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     bulk_tin_match_request = {"items":[{"referenceId":"ACME0001","tinType":"BUSINESS","tin":"94-2765439","name":"Acme Corporation"},{"referenceId":"123JD","tinType":"INDIVIDUAL","tin":"543-45-6789","name":"John Doe"}]} # BulkTinMatchRequest | Required TIN collection to perform bulk TIN match (optional)
     # example passing only required values which don't have defaults set

@@ -206,6 +206,7 @@ Class | Method | HTTP request | Description
 *Issuers1099Api* | [**delete_issuer**](docs/A1099/V2/Issuers1099Api.md#delete_issuer) | **DELETE** /1099/issuers/{id} | Delete an issuer
 *Issuers1099Api* | [**get_issuer**](docs/A1099/V2/Issuers1099Api.md#get_issuer) | **GET** /1099/issuers/{id} | Retrieve an issuer
 *Issuers1099Api* | [**get_issuers**](docs/A1099/V2/Issuers1099Api.md#get_issuers) | **GET** /1099/issuers | List issuers
+*Issuers1099Api* | [**resubmit_rejected_forms**](docs/A1099/V2/Issuers1099Api.md#resubmit_rejected_forms) | **POST** /1099/issuers/{issuerId}/$resubmit-rejected-forms | Request a replacement submission for an issuer's rejected forms
 *Issuers1099Api* | [**update_issuer**](docs/A1099/V2/Issuers1099Api.md#update_issuer) | **PUT** /1099/issuers/{id} | Update an issuer
 *JobsApi* | [**get_job**](docs/A1099/V2/JobsApi.md#get_job) | **GET** /jobs/{id} | Retrieves information about the job
 *TINMatchesApi* | [**get_bulk_tin_match**](docs/A1099/V2/TINMatchesApi.md#get_bulk_tin_match) | **GET** /tin-matches/$bulk/{id} | Get bulk TIN match details
@@ -326,6 +327,7 @@ Class | Method | HTTP request | Description
  - [Avalara.SDK.models.A1099.V2.Form1095B](docs/A1099/V2/Form1095B.md)
  - [Avalara.SDK.models.A1099.V2.Form1095C](docs/A1099/V2/Form1095C.md)
  - [Avalara.SDK.models.A1099.V2.Form1098](docs/A1099/V2/Form1098.md)
+ - [Avalara.SDK.models.A1099.V2.Form1098T](docs/A1099/V2/Form1098T.md)
  - [Avalara.SDK.models.A1099.V2.Form1099Base](docs/A1099/V2/Form1099Base.md)
  - [Avalara.SDK.models.A1099.V2.Form1099C](docs/A1099/V2/Form1099C.md)
  - [Avalara.SDK.models.A1099.V2.Form1099Div](docs/A1099/V2/Form1099Div.md)
@@ -337,6 +339,7 @@ Class | Method | HTTP request | Description
  - [Avalara.SDK.models.A1099.V2.Form1099Patr](docs/A1099/V2/Form1099Patr.md)
  - [Avalara.SDK.models.A1099.V2.Form1099R](docs/A1099/V2/Form1099R.md)
  - [Avalara.SDK.models.A1099.V2.Form1099S](docs/A1099/V2/Form1099S.md)
+ - [Avalara.SDK.models.A1099.V2.Form1099Sa](docs/A1099/V2/Form1099Sa.md)
  - [Avalara.SDK.models.A1099.V2.Form1099StatusDetail](docs/A1099/V2/Form1099StatusDetail.md)
  - [Avalara.SDK.models.A1099.V2.Form1099W2](docs/A1099/V2/Form1099W2.md)
  - [Avalara.SDK.models.A1099.V2.Get1099Form200Response](docs/A1099/V2/Get1099Form200Response.md)
@@ -357,6 +360,7 @@ Class | Method | HTTP request | Description
  - [Avalara.SDK.models.A1099.V2.RealTimeTinMatchIrsResponse](docs/A1099/V2/RealTimeTinMatchIrsResponse.md)
  - [Avalara.SDK.models.A1099.V2.RealTimeTinMatchRequest](docs/A1099/V2/RealTimeTinMatchRequest.md)
  - [Avalara.SDK.models.A1099.V2.RealTimeTinMatchResponse](docs/A1099/V2/RealTimeTinMatchResponse.md)
+ - [Avalara.SDK.models.A1099.V2.ResubmitRejectedFormsResponse](docs/A1099/V2/ResubmitRejectedFormsResponse.md)
  - [Avalara.SDK.models.A1099.V2.StateAndLocalWithholding](docs/A1099/V2/StateAndLocalWithholding.md)
  - [Avalara.SDK.models.A1099.V2.StateEfileStatusDetail](docs/A1099/V2/StateEfileStatusDetail.md)
  - [Avalara.SDK.models.A1099.V2.SubstantialUsOwnerRequest](docs/A1099/V2/SubstantialUsOwnerRequest.md)
