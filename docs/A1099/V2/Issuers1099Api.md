@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**delete_issuer**](Issuers1099Api.md#delete_issuer) | **DELETE** /1099/issuers/{id} | Delete an issuer
 [**get_issuer**](Issuers1099Api.md#get_issuer) | **GET** /1099/issuers/{id} | Retrieve an issuer
 [**get_issuers**](Issuers1099Api.md#get_issuers) | **GET** /1099/issuers | List issuers
+[**resubmit_rejected_forms**](Issuers1099Api.md#resubmit_rejected_forms) | **POST** /1099/issuers/{issuerId}/$resubmit-rejected-forms | Request a replacement submission for an issuer&#39;s rejected forms
 [**update_issuer**](Issuers1099Api.md#update_issuer) | **PUT** /1099/issuers/{id} | Update an issuer
 
 
@@ -45,7 +46,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '020085b2-ced8-4d4e-8d8e-aac8901ba664' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '5ae71043-1efc-47f3-931c-194f239999b9' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     issuer_request = {"businessName":"Acme Corporation","businessName2":"Acme Widgets","name":"Acme Corporation","dbaName":"Acme Widgets","tinType":"BUSINESS","firstName":null,"middleName":null,"lastName":null,"suffix":null,"tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to create (optional)
     # example passing only required values which don't have defaults set
@@ -132,7 +133,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to delete
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'eeca9729-5b2f-4ba1-a3c7-bf49c3705b52' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'f7a15738-d958-4708-aad8-eac25b686d81' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -217,7 +218,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to retrieve
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '1ba68926-014a-4e57-ac33-5120f7d67ad5' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '27ab9711-3475-41e4-b82a-2b7ce52ca884' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -309,7 +310,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = '0b7d8a8b-c34a-48e3-bf9e-86c475547496' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '1dbcdaf4-7ea0-46e9-b83c-b663e6178568' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -369,6 +370,94 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
+# **resubmit_rejected_forms**
+> ResubmitRejectedFormsResponse resubmit_rejected_forms(issuer_id, avalara_version)
+
+Request a replacement submission for an issuer's rejected forms
+
+Mirrors the UI's \"Resubmit Rejected Forms\" action: schedules a replacement submission for every one  of the issuer's forms currently in Rejected or RejectedWithErrors status, in a single action. There  is no per-form or per-submission selection. This call only schedules the resubmission — actual  transmission to the IRS remains asynchronous and batch-driven.
+
+### Example
+
+* Bearer Authentication (bearer):
+
+```python
+import time
+import Avalara.SDK
+from Avalara.SDK.api.A1099.V2 import issuers1099_api
+ResubmitRejectedFormsResponse
+ErrorResponse
+from pprint import pprint
+    
+# Define configuration object with parameters specified to your application.
+configuration = Avalara.SDK.Configuration(
+    app_name='test app'
+    app_version='1.0'
+    machine_name='some machine'
+    client_id='<Your Avalara Identity Client Id>'
+    client_secret='<Your Avalara Identity Client Secret>'
+    environment='sandbox'
+)
+# Enter a context with an instance of the API client
+with Avalara.SDK.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = issuers1099_api.Issuers1099Api(api_client)
+    issuer_id = 56 # int | Id of the issuer whose rejected forms should be resubmitted
+    avalara_version = '2.0.0' # str | API version
+    x_correlation_id = '0520f85b-11b0-4246-953f-e06f87029486' # str | Unique correlation Id in a GUID format (optional)
+    x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
+    # example passing only required values which don't have defaults set
+    try:
+        # Request a replacement submission for an issuer's rejected forms
+        api_response = api_instance.resubmit_rejected_forms(issuer_id, avalara_version)
+        pprint(api_response)
+    except Avalara.SDK.ApiException as e:
+        print("Exception when calling Issuers1099Api->resubmit_rejected_forms: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # Request a replacement submission for an issuer's rejected forms
+        api_response = api_instance.resubmit_rejected_forms(issuer_id, avalara_version, x_correlation_id=x_correlation_id, x_avalara_client=x_avalara_client)
+        pprint(api_response)
+    except Avalara.SDK.ApiException as e:
+        print("Exception when calling Issuers1099Api->resubmit_rejected_forms: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **issuer_id** | **int**| Id of the issuer whose rejected forms should be resubmitted |
+ **avalara_version** | **str**| API version |
+ **x_correlation_id** | **str**| Unique correlation Id in a GUID format | [optional]
+ **x_avalara_client** | **str**| Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . | [optional]
+
+### Return type
+
+[**ResubmitRejectedFormsResponse**](ResubmitRejectedFormsResponse.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Rejected forms scheduled for replacement submission |  -  |
+**401** | Authentication failed |  -  |
+**403** | Caller does not have access to this issuer |  -  |
+**404** | Issuer has no forms in Rejected or RejectedWithErrors status |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
+
 # **update_issuer**
 > IssuerWriteResponse update_issuer(id, avalara_version)
 
@@ -404,7 +493,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = issuers1099_api.Issuers1099Api(api_client)
     id = 'id_example' # str | Id of the issuer to update
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '5dcb2f2c-e12d-4e11-aeaa-dfbd23bbe954' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '542fb8dd-e4ec-49c2-aef5-f9159dd46aaf' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     issuer_request = {"businessName":"Acme Corporation","businessName2":"Acme Widgets","name":"Acme Corporation","dbaName":"Acme Widgets","tinType":"BUSINESS","firstName":null,"middleName":null,"lastName":null,"suffix":null,"tin":"94-2765431","referenceId":"issuer-001","telephone":"+1-555-123-4567","taxYear":2025,"countryCode":"US","email":"support@acmecorp.com","address":"123 Main Street","city":"San Francisco","state":"CA","zip":"94105","foreignProvince":"","transferAgentName":"","lastFiling":false} # IssuerRequest | The issuer to update (optional)
     # example passing only required values which don't have defaults set

@@ -22,7 +22,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.9.1
+@version    26.10.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -47,6 +47,7 @@ from Avalara.SDK.models.A1099.V2.issuer_request import IssuerRequest
 from Avalara.SDK.models.A1099.V2.issuer_response import IssuerResponse
 from Avalara.SDK.models.A1099.V2.issuer_write_response import IssuerWriteResponse
 from Avalara.SDK.models.A1099.V2.paginated_query_result_model_issuer_response import PaginatedQueryResultModelIssuerResponse
+from Avalara.SDK.models.A1099.V2.resubmit_rejected_forms_response import ResubmitRejectedFormsResponse
 from Avalara.SDK.exceptions import ApiTypeError, ApiValueError, ApiException
 from Avalara.SDK.oauth_helper.AvalaraSdkOauthUtils import avalara_retry_oauth
 
@@ -61,7 +62,7 @@ class Issuers1099Api(object):
     
     def __set_configuration(self, api_client):
         self.__verify_api_client(api_client)
-        api_client.set_sdk_version("26.9.1")
+        api_client.set_sdk_version("26.10.0")
         self.api_client = api_client
 		
         self.create_issuer_endpoint = _Endpoint(
@@ -353,6 +354,76 @@ class Issuers1099Api(object):
                     'order_by': 'query',
                     'count': 'query',
                     'count_only': 'query',
+                    'x_correlation_id': 'header',
+                    'x_avalara_client': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'avalara-version': '2.0',
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            required_scopes='',
+            microservice='A1099'
+        )
+        self.resubmit_rejected_forms_endpoint = _Endpoint(
+            settings={
+                'response_type': (ResubmitRejectedFormsResponse,),
+                'auth': [
+                    'bearer'
+                ],
+                'endpoint_path': '/1099/issuers/{issuerId}/$resubmit-rejected-forms',
+                'operation_id': 'resubmit_rejected_forms',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'issuer_id',
+                    'avalara_version',
+                    'x_correlation_id',
+                    'x_avalara_client',
+                ],
+                'required': [
+                    'issuer_id',
+                    'avalara_version',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'issuer_id':
+                        (int,),
+                    'avalara_version':
+                        (str,),
+                    'x_correlation_id':
+                        (str,),
+                    'x_avalara_client':
+                        (str,),
+                },
+                'attribute_map': {
+                    'issuer_id': 'issuerId',
+                    'avalara_version': 'avalara-version',
+                    'x_correlation_id': 'X-Correlation-Id',
+                    'x_avalara_client': 'X-Avalara-Client',
+                },
+                'location_map': {
+                    'issuer_id': 'path',
+                    'avalara_version': 'header',
                     'x_correlation_id': 'header',
                     'x_avalara_client': 'header',
                 },
@@ -737,6 +808,78 @@ class Issuers1099Api(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['avalara_version'] = avalara_version
         return self.get_issuers_endpoint.call_with_http_info(**kwargs)
+
+    @avalara_retry_oauth(max_retry_attempts=2)
+    def resubmit_rejected_forms(
+        self,
+        issuer_id,
+        avalara_version,
+        **kwargs
+    ):
+        """Request a replacement submission for an issuer's rejected forms  # noqa: E501
+
+        Mirrors the UI's \"Resubmit Rejected Forms\" action: schedules a replacement submission for every one  of the issuer's forms currently in Rejected or RejectedWithErrors status, in a single action. There  is no per-form or per-submission selection. This call only schedules the resubmission — actual  transmission to the IRS remains asynchronous and batch-driven.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.resubmit_rejected_forms(issuer_id, avalara_version, async_req=True)
+        >>> result = thread.get()
+
+        Args:
+            issuer_id (int): Id of the issuer whose rejected forms should be resubmitted
+            avalara_version (str): API version
+
+        Keyword Args:
+            x_correlation_id (str): Unique correlation Id in a GUID format. [optional]
+            x_avalara_client (str): Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) .. [optional]
+            _return_http_data_only (bool): response data without head status
+                code and headers. Default is True.
+            _preload_content (bool): if False, the urllib3.HTTPResponse object
+                will be returned without reading/decoding response data.
+                Default is True.
+            _request_timeout (int/float/tuple): timeout setting for this request. If
+                one number provided, it will be total request timeout. It can also
+                be a pair (tuple) of (connection, read) timeouts.
+                Default is None.
+            _check_input_type (bool): specifies if type checking
+                should be done one the data sent to the server.
+                Default is True.
+            _check_return_type (bool): specifies if type checking
+                should be done one the data received from the server.
+                Default is True.
+            _host_index (int/None): specifies the index of the server
+                that we want to use.
+                Default is read from the configuration.
+            async_req (bool): execute request asynchronously
+
+        Returns:
+            ResubmitRejectedFormsResponse
+                If the method is called asynchronously, returns the request
+                thread.
+        """
+        self.__verify_api_client(self.api_client)
+        kwargs['async_req'] = kwargs.get(
+            'async_req', False
+        )
+        kwargs['_return_http_data_only'] = kwargs.get(
+            '_return_http_data_only', True
+        )
+        kwargs['_preload_content'] = kwargs.get(
+            '_preload_content', True
+        )
+        kwargs['_request_timeout'] = kwargs.get(
+            '_request_timeout', None
+        )
+        kwargs['_check_input_type'] = kwargs.get(
+            '_check_input_type', True
+        )
+        kwargs['_check_return_type'] = kwargs.get(
+            '_check_return_type', True
+        )
+        kwargs['_host_index'] = kwargs.get('_host_index')
+        kwargs['issuer_id'] = issuer_id
+        kwargs['avalara_version'] = avalara_version
+        return self.resubmit_rejected_forms_endpoint.call_with_http_info(**kwargs)
 
     @avalara_retry_oauth(max_retry_attempts=2)
     def update_issuer(

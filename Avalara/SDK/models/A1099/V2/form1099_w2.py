@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.9.1
+@version    26.10.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -129,8 +129,8 @@ class Form1099W2(BaseModel):
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['1042-S', '1095-B', '1095-C', '1098', '1099-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', 'W-2']):
-            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1098', '1099-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', 'W-2')")
+        if value not in set(['1042-S', '1095-B', '1095-C', '1098', '1098-T', '1099-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', '1099-SA', 'W-2']):
+            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1098', '1098-T', '1099-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', '1099-SA', 'W-2')")
         return value
 
     @field_validator('tin_type')
@@ -390,6 +390,16 @@ class Form1099W2(BaseModel):
         # and model_fields_set contains the field
         if self.validation_errors is None and "validation_errors" in self.model_fields_set:
             _dict['validationErrors'] = None
+
+        # set to None if created_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.created_at is None and "created_at" in self.model_fields_set:
+            _dict['createdAt'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.updated_at is None and "updated_at" in self.model_fields_set:
+            _dict['updatedAt'] = None
 
         # set to None if tin_type (nullable) is None
         # and model_fields_set contains the field
