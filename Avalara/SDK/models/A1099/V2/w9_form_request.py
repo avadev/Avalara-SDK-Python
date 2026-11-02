@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.10.0
+@version    26.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -44,8 +44,13 @@ class W9FormRequest(BaseModel):
     W9FormRequest
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The form type (always \"w9\" for this model).")
-    name: StrictStr = Field(description="The name of the individual or entity associated with the form.")
-    business_name: Optional[StrictStr] = Field(default=None, description="The name of the business associated with the form.", alias="businessName")
+    name: Optional[StrictStr] = Field(default=None, description="The name of the individual or entity associated with the form. Required when neither firstName/lastName  nor businessName/name2 are provided. Up to 40 characters.")
+    first_name: Optional[StrictStr] = Field(default=None, description="Individual first name. Must be sent together with lastName; should only be used for individuals. Up to 40 characters.", alias="firstName")
+    middle_name: Optional[StrictStr] = Field(default=None, description="Individual middle name. Should only be used for individuals. Up to 40 characters.", alias="middleName")
+    last_name: Optional[StrictStr] = Field(default=None, description="Individual last name. Must be sent together with firstName; should only be used for individuals. Up to 40 characters.", alias="lastName")
+    suffix_name: Optional[StrictStr] = Field(default=None, description="Individual name suffix (e.g. Jr., Sr.). Should only be used for individuals. Up to 10 characters.", alias="suffixName")
+    business_name: Optional[StrictStr] = Field(default=None, description="DEPRECATED: The name of the business associated with the form. Use `name2` instead.", alias="businessName")
+    name2: Optional[StrictStr] = Field(default=None, description="The name of the business associated with the form. Replaces the deprecated `businessName` field.  When both `businessName` and `name2` are provided, `businessName` takes precedence.")
     business_classification: StrictStr = Field(description="The classification of the business.  Available values:  - Individual: Individual/sole proprietor  - C Corporation: C Corporation  - S Corporation: S Corporation  - Partnership: Partnership  - Trust/estate: Trust/estate  - LLC-C: Limited liability company (C Corporation)  - LLC-S: Limited liability company (S Corporation)  - LLC-P: Limited liability company (Partnership)  - Other: Other (requires BusinessOther field to be populated)", alias="businessClassification")
     business_other: Optional[StrictStr] = Field(default=None, description="The classification description when \"businessClassification\" is \"Other\".", alias="businessOther")
     foreign_partner_owner_or_beneficiary: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual is a foreign partner, owner, or beneficiary.", alias="foreignPartnerOwnerOrBeneficiary")

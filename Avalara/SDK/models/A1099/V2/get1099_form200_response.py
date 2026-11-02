@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.10.0
+@version    26.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -37,9 +37,12 @@ from Avalara.SDK.models.A1099.V2.form1042_s import Form1042S
 from Avalara.SDK.models.A1099.V2.form1095_b import Form1095B
 from Avalara.SDK.models.A1099.V2.form1095_c import Form1095C
 from Avalara.SDK.models.A1099.V2.form1098 import Form1098
+from Avalara.SDK.models.A1099.V2.form1098_e import Form1098E
 from Avalara.SDK.models.A1099.V2.form1098_t import Form1098T
+from Avalara.SDK.models.A1099.V2.form1099_b import Form1099B
 from Avalara.SDK.models.A1099.V2.form1099_c import Form1099C
 from Avalara.SDK.models.A1099.V2.form1099_div import Form1099Div
+from Avalara.SDK.models.A1099.V2.form1099_g import Form1099G
 from Avalara.SDK.models.A1099.V2.form1099_int import Form1099Int
 from Avalara.SDK.models.A1099.V2.form1099_k import Form1099K
 from Avalara.SDK.models.A1099.V2.form1099_misc import Form1099Misc
@@ -49,11 +52,13 @@ from Avalara.SDK.models.A1099.V2.form1099_r import Form1099R
 from Avalara.SDK.models.A1099.V2.form1099_s import Form1099S
 from Avalara.SDK.models.A1099.V2.form1099_sa import Form1099Sa
 from Avalara.SDK.models.A1099.V2.form1099_w2 import Form1099W2
+from Avalara.SDK.models.A1099.V2.form5498 import Form5498
+from Avalara.SDK.models.A1099.V2.form_w2_g import FormW2G
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-GET1099FORM200RESPONSE_ONE_OF_SCHEMAS = ["Form1042S", "Form1095B", "Form1095C", "Form1098", "Form1098T", "Form1099C", "Form1099Div", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099Patr", "Form1099R", "Form1099S", "Form1099Sa", "Form1099W2"]
+GET1099FORM200RESPONSE_ONE_OF_SCHEMAS = ["Form1042S", "Form1095B", "Form1095C", "Form1098", "Form1098E", "Form1098T", "Form1099B", "Form1099C", "Form1099Div", "Form1099G", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099Patr", "Form1099R", "Form1099S", "Form1099Sa", "Form1099W2", "Form5498", "FormW2G"]
 
 class Get1099Form200Response(BaseModel):
     """
@@ -67,32 +72,42 @@ class Get1099Form200Response(BaseModel):
     oneof_schema_3_validator: Optional[Form1095C] = None
     # data type: Form1098
     oneof_schema_4_validator: Optional[Form1098] = None
+    # data type: Form1098E
+    oneof_schema_5_validator: Optional[Form1098E] = None
     # data type: Form1098T
-    oneof_schema_5_validator: Optional[Form1098T] = None
+    oneof_schema_6_validator: Optional[Form1098T] = None
+    # data type: Form1099B
+    oneof_schema_7_validator: Optional[Form1099B] = None
     # data type: Form1099C
-    oneof_schema_6_validator: Optional[Form1099C] = None
+    oneof_schema_8_validator: Optional[Form1099C] = None
     # data type: Form1099Div
-    oneof_schema_7_validator: Optional[Form1099Div] = None
+    oneof_schema_9_validator: Optional[Form1099Div] = None
+    # data type: Form1099G
+    oneof_schema_10_validator: Optional[Form1099G] = None
     # data type: Form1099Int
-    oneof_schema_8_validator: Optional[Form1099Int] = None
+    oneof_schema_11_validator: Optional[Form1099Int] = None
     # data type: Form1099K
-    oneof_schema_9_validator: Optional[Form1099K] = None
+    oneof_schema_12_validator: Optional[Form1099K] = None
     # data type: Form1099Misc
-    oneof_schema_10_validator: Optional[Form1099Misc] = None
+    oneof_schema_13_validator: Optional[Form1099Misc] = None
     # data type: Form1099Nec
-    oneof_schema_11_validator: Optional[Form1099Nec] = None
+    oneof_schema_14_validator: Optional[Form1099Nec] = None
     # data type: Form1099Patr
-    oneof_schema_12_validator: Optional[Form1099Patr] = None
+    oneof_schema_15_validator: Optional[Form1099Patr] = None
     # data type: Form1099R
-    oneof_schema_13_validator: Optional[Form1099R] = None
+    oneof_schema_16_validator: Optional[Form1099R] = None
     # data type: Form1099S
-    oneof_schema_14_validator: Optional[Form1099S] = None
+    oneof_schema_17_validator: Optional[Form1099S] = None
     # data type: Form1099Sa
-    oneof_schema_15_validator: Optional[Form1099Sa] = None
+    oneof_schema_18_validator: Optional[Form1099Sa] = None
     # data type: Form1099W2
-    oneof_schema_16_validator: Optional[Form1099W2] = None
-    actual_instance: Optional[Union[Form1042S, Form1095B, Form1095C, Form1098, Form1098T, Form1099C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2]] = None
-    one_of_schemas: Set[str] = { "Form1042S", "Form1095B", "Form1095C", "Form1098", "Form1098T", "Form1099C", "Form1099Div", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099Patr", "Form1099R", "Form1099S", "Form1099Sa", "Form1099W2" }
+    oneof_schema_19_validator: Optional[Form1099W2] = None
+    # data type: Form5498
+    oneof_schema_20_validator: Optional[Form5498] = None
+    # data type: FormW2G
+    oneof_schema_21_validator: Optional[FormW2G] = None
+    actual_instance: Optional[Union[Form1042S, Form1095B, Form1095C, Form1098, Form1098E, Form1098T, Form1099B, Form1099C, Form1099Div, Form1099G, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2, Form5498, FormW2G]] = None
+    one_of_schemas: Set[str] = { "Form1042S", "Form1095B", "Form1095C", "Form1098", "Form1098E", "Form1098T", "Form1099B", "Form1099C", "Form1099Div", "Form1099G", "Form1099Int", "Form1099K", "Form1099Misc", "Form1099Nec", "Form1099Patr", "Form1099R", "Form1099S", "Form1099Sa", "Form1099W2", "Form5498", "FormW2G" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -138,9 +153,19 @@ class Get1099Form200Response(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1098`")
         else:
             match += 1
+        # validate data type: Form1098E
+        if not isinstance(v, Form1098E):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1098E`")
+        else:
+            match += 1
         # validate data type: Form1098T
         if not isinstance(v, Form1098T):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1098T`")
+        else:
+            match += 1
+        # validate data type: Form1099B
+        if not isinstance(v, Form1099B):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099B`")
         else:
             match += 1
         # validate data type: Form1099C
@@ -151,6 +176,11 @@ class Get1099Form200Response(BaseModel):
         # validate data type: Form1099Div
         if not isinstance(v, Form1099Div):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099Div`")
+        else:
+            match += 1
+        # validate data type: Form1099G
+        if not isinstance(v, Form1099G):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099G`")
         else:
             match += 1
         # validate data type: Form1099Int
@@ -198,12 +228,22 @@ class Get1099Form200Response(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `Form1099W2`")
         else:
             match += 1
+        # validate data type: Form5498
+        if not isinstance(v, Form5498):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `Form5498`")
+        else:
+            match += 1
+        # validate data type: FormW2G
+        if not isinstance(v, FormW2G):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `FormW2G`")
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098T, Form1099C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098E, Form1098T, Form1099B, Form1099C, Form1099Div, Form1099G, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2, Form5498, FormW2G. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098T, Form1099C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098E, Form1098T, Form1099B, Form1099C, Form1099Div, Form1099G, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2, Form5498, FormW2G. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -242,9 +282,21 @@ class Get1099Form200Response(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Form1098E
+        try:
+            instance.actual_instance = Form1098E.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into Form1098T
         try:
             instance.actual_instance = Form1098T.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into Form1099B
+        try:
+            instance.actual_instance = Form1099B.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -257,6 +309,12 @@ class Get1099Form200Response(BaseModel):
         # deserialize data into Form1099Div
         try:
             instance.actual_instance = Form1099Div.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into Form1099G
+        try:
+            instance.actual_instance = Form1099G.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -314,13 +372,25 @@ class Get1099Form200Response(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Form5498
+        try:
+            instance.actual_instance = Form5498.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into FormW2G
+        try:
+            instance.actual_instance = FormW2G.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098T, Form1099C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098E, Form1098T, Form1099B, Form1099C, Form1099Div, Form1099G, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2, Form5498, FormW2G. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098T, Form1099C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into Get1099Form200Response with oneOf schemas: Form1042S, Form1095B, Form1095C, Form1098, Form1098E, Form1098T, Form1099B, Form1099C, Form1099Div, Form1099G, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2, Form5498, FormW2G. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -334,7 +404,7 @@ class Get1099Form200Response(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042S, Form1095B, Form1095C, Form1098, Form1098T, Form1099C, Form1099Div, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], Form1042S, Form1095B, Form1095C, Form1098, Form1098E, Form1098T, Form1099B, Form1099C, Form1099Div, Form1099G, Form1099Int, Form1099K, Form1099Misc, Form1099Nec, Form1099Patr, Form1099R, Form1099S, Form1099Sa, Form1099W2, Form5498, FormW2G]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

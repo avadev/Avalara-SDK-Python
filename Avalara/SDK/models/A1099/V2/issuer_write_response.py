@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.10.0
+@version    26.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from Avalara.SDK.models.A1099.V2.federal_efile_error_response import FederalEfileErrorResponse
 from Avalara.SDK.models.A1099.V2.validation_error import ValidationError
 from typing import Optional, Set
 from typing_extensions import Self
@@ -69,8 +70,9 @@ class IssuerWriteResponse(BaseModel):
     id: Optional[StrictStr] = Field(default=None, description="Unique identifier set when the record is created.")
     created_at: Optional[datetime] = Field(default=None, description="Date time when the record was created.", alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, description="Date time when the record was last updated.", alias="updatedAt")
+    federal_efile_errors: Optional[List[FederalEfileErrorResponse]] = Field(default=None, description="Issuer-level IRS/IRIS rejection errors from the federal filing submissions of the issuer's forms that are still rejected and awaiting resubmission.", alias="federalEfileErrors")
     validation_errors: Optional[List[ValidationError]] = Field(default=None, description="Field-level validation errors. Populated when a POST or PUT request violated business rules  but the issuer was still persisted. Each entry identifies the affected field and the issue.  Empty array when the payload was fully valid.", alias="validationErrors")
-    __properties: ClassVar[List[str]] = ["businessName", "businessName2", "name", "dbaName", "tinType", "firstName", "middleName", "lastName", "suffix", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling", "id", "createdAt", "updatedAt", "validationErrors"]
+    __properties: ClassVar[List[str]] = ["businessName", "businessName2", "name", "dbaName", "tinType", "firstName", "middleName", "lastName", "suffix", "tin", "referenceId", "telephone", "taxYear", "countryCode", "email", "address", "city", "state", "zip", "foreignProvince", "transferAgentName", "lastFiling", "id", "createdAt", "updatedAt", "federalEfileErrors", "validationErrors"]
 
     @field_validator('tin_type')
     def tin_type_validate_enum(cls, value):
@@ -113,8 +115,10 @@ class IssuerWriteResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "federal_efile_errors",
             "validation_errors",
         ])
 
@@ -123,6 +127,13 @@ class IssuerWriteResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in federal_efile_errors (list)
+        _items = []
+        if self.federal_efile_errors:
+            for _item in self.federal_efile_errors:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['federalEfileErrors'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in validation_errors (list)
         _items = []
         if self.validation_errors:
@@ -282,6 +293,7 @@ class IssuerWriteResponse(BaseModel):
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),
+            "federalEfileErrors": [FederalEfileErrorResponse.from_dict(_item) for _item in obj["federalEfileErrors"]] if obj.get("federalEfileErrors") is not None else None,
             "validationErrors": [ValidationError.from_dict(_item) for _item in obj["validationErrors"]] if obj.get("validationErrors") is not None else None
         })
         return _obj

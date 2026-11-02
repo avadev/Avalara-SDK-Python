@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.10.0
+@version    26.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -36,6 +36,7 @@ import json
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from Avalara.SDK.models.A1099.V2.federal_efile_status_detail import FederalEfileStatusDetail
 from Avalara.SDK.models.A1099.V2.form1099_status_detail import Form1099StatusDetail
 from Avalara.SDK.models.A1099.V2.state_and_local_withholding import StateAndLocalWithholding
 from Avalara.SDK.models.A1099.V2.state_efile_status_detail import StateEfileStatusDetail
@@ -49,9 +50,14 @@ class Form1099K(BaseModel):
     """ # noqa: E501
     filer_type: Optional[StrictStr] = Field(description="Filer type for tax reporting purposes.  Available values:  - PSE: Payment Settlement Entity  - EPF: Electronic Payment Facilitator or other third party", alias="filerType")
     payment_type: Optional[StrictStr] = Field(description="Payment type for transaction classification.  Available values:  - PaymentCard: Payment card transactions  - ThirdPartyNetwork: Third party network transactions", alias="paymentType")
-    payment_settlement_entity_name_phone_number: Optional[StrictStr] = Field(default=None, description="Payment settlement entity name and phone number, if different from Filer's", alias="paymentSettlementEntityNamePhoneNumber")
+    payment_settlement_entity_name_phone_number: Optional[StrictStr] = Field(default=None, description="Payment settlement entity name and phone number, if different from Filer's.  Deprecated: the IRS reports the name and phone number as separate fields (PSENm and PSEPhoneNum).  Use Avalara1099.Application.Forms1099.Models.Form1099K.PaymentSettlementEntityName and Avalara1099.Application.Forms1099.Models.Form1099K.PaymentSettlementEntityPhoneNumber instead.  Kept for backward compatibility with existing integrations.", alias="paymentSettlementEntityNamePhoneNumber")
+    payment_settlement_entity_name: Optional[StrictStr] = Field(default=None, description="Payment settlement entity name, if different from Filer's", alias="paymentSettlementEntityName")
+    payment_settlement_entity_phone_number: Optional[StrictStr] = Field(default=None, description="Payment settlement entity phone number, if different from Filer's", alias="paymentSettlementEntityPhoneNumber")
     gross_amount_payment_card: Optional[Union[StrictFloat, StrictInt]] = Field(description="Gross amount of payment card/third party network transactions. This value must equal the total of all monthly payment amounts (January through December).", alias="grossAmountPaymentCard")
     card_not_present_transactions: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Card not present transactions", alias="cardNotPresentTransactions")
+    cash_tips: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Box 1c. Cash tips - Available only for tax year 2026 and later.  This amount is already included in GrossAmountPaymentCard (Box 1a) and is not added to it, so it may not exceed GrossAmountPaymentCard.", alias="cashTips")
+    treasury_tipped_occupation_code: Optional[StrictStr] = Field(default=None, description="Box 1d. Treasury Tipped Occupation Code (TTOC) for the payee's tipped occupation - Available only for tax year 2026 and later.  A three-digit, zero-padded code from the IRS enumeration: 000 (tips received in a nonqualifying occupation), 101-110, 201-211, 301-304,  401-409, 501-508, 601-611, 701-706, or 801-809. The form accepts up to two codes - see TreasuryTippedOccupationCode2 for the second.  Send the code exactly as three characters (\"001\", not \"1\"); leading zeros are not restored for you. Watch for spreadsheet software  that strips leading zeros when a code is exported to CSV and re-imported.", alias="treasuryTippedOccupationCode")
+    treasury_tipped_occupation_code2: Optional[StrictStr] = Field(default=None, description="Box 1d. Second Treasury Tipped Occupation Code (TTOC) - Available only for tax year 2026 and later.  Same three-digit code list and formatting rules as TreasuryTippedOccupationCode, and must differ from it.", alias="treasuryTippedOccupationCode2")
     merchant_category_code: Optional[StrictStr] = Field(default=None, description="Merchant category code (4 numbers)", alias="merchantCategoryCode")
     payment_transaction_number: Optional[Union[StrictFloat, StrictInt]] = Field(description="Number of payment transactions", alias="paymentTransactionNumber")
     federal_income_tax_withheld: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Federal income tax withheld", alias="federalIncomeTaxWithheld")
@@ -91,7 +97,7 @@ class Form1099K(BaseModel):
     tin_match: Optional[StrictBool] = Field(default=None, description="Boolean indicating that TIN Matching should be scheduled for this form", alias="tinMatch")
     address_verification: Optional[StrictBool] = Field(default=None, description="Boolean indicating that address verification should be scheduled for this form", alias="addressVerification")
     state_and_local_withholding: Optional[StateAndLocalWithholding] = Field(default=None, description="State and local withholding information", alias="stateAndLocalWithholding")
-    federal_efile_status: Optional[Form1099StatusDetail] = Field(default=None, description="Federal e-file status.  Available values:  - unscheduled: Form has not been scheduled for federal e-filing  - scheduled: Form is scheduled for federal e-filing  - airlock: Form is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - sent: Form has been sent to the IRS  - accepted: Form was accepted by the IRS  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlock: Correction is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - corrected: A correction has been sent to the IRS  - corrected_accepted: Correction was accepted by the IRS  - rejected: Form was rejected by the IRS  - corrected_rejected: Correction was rejected by the IRS  - held: Form is held and will not be submitted to IRS (used for certain forms submitted only to states)", alias="federalEfileStatus")
+    federal_efile_status: Optional[FederalEfileStatusDetail] = Field(default=None, description="Federal e-file status.  Available values:  - unscheduled: Form has not been scheduled for federal e-filing  - scheduled: Form is scheduled for federal e-filing  - airlock: Form is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - sent: Form has been sent to the IRS  - accepted: Form was accepted by the IRS  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlock: Correction is in process of being uploaded to the IRS (forms exist in this state for a very short period and cannot be updated while in this state)  - corrected: A correction has been sent to the IRS  - corrected_accepted: Correction was accepted by the IRS  - rejected: Form was rejected by the IRS  - corrected_rejected: Correction was rejected by the IRS  - held: Form is held and will not be submitted to IRS (used for certain forms submitted only to states)  When the form's most recent IRIS filing was rejected or accepted with errors, `errors` lists what the IRS reported.", alias="federalEfileStatus")
     state_efile_status: Optional[List[StateEfileStatusDetail]] = Field(default=None, description="State e-file status.  Available values:  - unscheduled: Form has not been scheduled for state e-filing  - scheduled: Form is scheduled for state e-filing  - airlocked: Form is in process of being uploaded to the state  - sent: Form has been sent to the state  - rejected: Form was rejected by the state  - accepted: Form was accepted by the state  - corrected_scheduled: Correction is scheduled to be sent  - corrected_airlocked: Correction is in process of being uploaded to the state  - corrected_sent: Correction has been sent to the state  - corrected_rejected: Correction was rejected by the state  - corrected_accepted: Correction was accepted by the state", alias="stateEfileStatus")
     postal_mail_status: Optional[Form1099StatusDetail] = Field(default=None, description="Postal mail to recipient status.  Available values:  - unscheduled: Postal mail has not been scheduled  - pending: Postal mail is pending to be sent  - sent: Postal mail has been sent  - delivered: Postal mail has been delivered", alias="postalMailStatus")
     tin_match_status: Optional[Form1099StatusDetail] = Field(default=None, description="TIN Match status.  Available values:  - none: TIN matching has not been performed  - pending: TIN matching request is pending  - matched: Name/TIN combination matches IRS records  - unknown: TIN is missing, invalid, or request contains errors  - rejected: Name/TIN combination does not match IRS records or TIN not currently issued", alias="tinMatchStatus")
@@ -138,8 +144,8 @@ class Form1099K(BaseModel):
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['1042-S', '1095-B', '1095-C', '1098', '1098-T', '1099-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', '1099-SA', 'W-2']):
-            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1098', '1098-T', '1099-C', '1099-DIV', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', '1099-SA', 'W-2')")
+        if value not in set(['1042-S', '1095-B', '1095-C', '1098', '1098-E', '1098-T', '1099-B', '1099-C', '1099-DIV', '1099-G', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', '1099-SA', '5498', 'W-2', 'W-2G']):
+            raise ValueError("must be one of enum values ('1042-S', '1095-B', '1095-C', '1098', '1098-E', '1098-T', '1099-B', '1099-C', '1099-DIV', '1099-G', '1099-INT', '1099-K', '1099-MISC', '1099-NEC', '1099-PATR', '1099-R', '1099-S', '1099-SA', '5498', 'W-2', 'W-2G')")
         return value
 
     @field_validator('tin_type')
@@ -506,7 +512,7 @@ class Form1099K(BaseModel):
             "tinMatch": obj.get("tinMatch"),
             "addressVerification": obj.get("addressVerification"),
             "stateAndLocalWithholding": StateAndLocalWithholding.from_dict(obj["stateAndLocalWithholding"]) if obj.get("stateAndLocalWithholding") is not None else None,
-            "federalEfileStatus": Form1099StatusDetail.from_dict(obj["federalEfileStatus"]) if obj.get("federalEfileStatus") is not None else None,
+            "federalEfileStatus": FederalEfileStatusDetail.from_dict(obj["federalEfileStatus"]) if obj.get("federalEfileStatus") is not None else None,
             "stateEfileStatus": [StateEfileStatusDetail.from_dict(_item) for _item in obj["stateEfileStatus"]] if obj.get("stateEfileStatus") is not None else None,
             "postalMailStatus": Form1099StatusDetail.from_dict(obj["postalMailStatus"]) if obj.get("postalMailStatus") is not None else None,
             "tinMatchStatus": Form1099StatusDetail.from_dict(obj["tinMatchStatus"]) if obj.get("tinMatchStatus") is not None else None,
