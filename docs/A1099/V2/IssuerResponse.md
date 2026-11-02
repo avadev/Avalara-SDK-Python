@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **id** | **str** | Unique identifier set when the record is created. | [optional] 
 **created_at** | **datetime** | Date time when the record was created. | [optional] 
 **updated_at** | **datetime** | Date time when the record was last updated. | [optional] 
+**federal_efile_errors** | [**List[FederalEfileErrorResponse]**](FederalEfileErrorResponse.md) | Issuer-level IRS/IRIS rejection errors from the federal filing submissions of the issuer&#39;s forms that are still rejected and awaiting resubmission. | [optional] [readonly] 
 
 ## Example
 

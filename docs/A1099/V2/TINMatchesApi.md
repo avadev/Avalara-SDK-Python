@@ -42,7 +42,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = tin_matches_api.TINMatchesApi(api_client)
     id = 'id_example' # str | The bulk ID
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '77d79db6-e884-4ef0-a76d-0c10c41f5993' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '03374952-7012-4525-9ea0-56e42dabc7d4' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -89,6 +89,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | Bulk TIN match details |  -  |
 **401** | Authentication failed |  -  |
 **404** | Bulk not found |  -  |
@@ -133,7 +134,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = '8bd78a31-95dc-4091-9f0e-fd0647ecc6f5' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '870967bd-fd8e-42ae-8123-2014d0b6acaa' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -186,6 +187,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | List of TIN match responses |  -  |
 **400** | Bad request (e.g., invalid sort key) |  -  |
 **401** | Authentication failed |  -  |
@@ -227,7 +229,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tin_matches_api.TINMatchesApi(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '7f2a23f6-59ed-4fb9-95fd-7937e99952f5' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '1b37371e-1fec-410e-a43c-5d877903c086' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     real_time_tin_match_request = {"tinType":"BUSINESS","tin":"94-2765439","name":"Acme Corporation"} # RealTimeTinMatchRequest | Required data to perform TIN match (optional)
     # example passing only required values which don't have defaults set
@@ -275,12 +277,12 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | IRS Service is not available. Client should retry later. |  -  |
 **200** | TIN match result (matched or rejected) |  -  |
 **400** | Bad request (e.g. invalid field values) |  -  |
 **401** | Authentication failed |  -  |
 **429** | Usage limit exceeded (10,000 successful calls per 24 hours) |  -  |
 **403** | Authorization failed (lack of permissions or product not purchased) |  -  |
-**503** | IRS Service is not available. Client should retry later. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
@@ -316,7 +318,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tin_matches_api.TINMatchesApi(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '88b0e4e3-1fd9-437c-9744-753f89dfef9f' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'a78efa3f-47be-4a5d-a2f4-07b9e16a1257' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     bulk_tin_match_request = {"items":[{"referenceId":"ACME0001","tinType":"BUSINESS","tin":"94-2765439","name":"Acme Corporation"},{"referenceId":"123JD","tinType":"INDIVIDUAL","tin":"543-45-6789","name":"John Doe"}]} # BulkTinMatchRequest | Required TIN collection to perform bulk TIN match (optional)
     # example passing only required values which don't have defaults set
@@ -364,6 +366,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **202** | Accepted submission, indicating it will be processed later and where to get results from |  -  |
 **400** | Bad request (e.g. invalid field values) |  -  |
 **401** | Authentication failed |  -  |

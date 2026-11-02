@@ -48,9 +48,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
     dry_run = False # bool | defaults to false. If true, it will NOT change the DB. It will just return a report of what would've have been changed in the DB (optional) if omitted the server will use the default value of False
-    x_correlation_id = '6ebfbe2e-4ee0-4a66-bd1a-b85f7a231d9f' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'f3f6a125-9683-44de-84e7-a35aad861b6d' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    form1099_list_request = {"type":"1042-S","forms":[{"type":"1042-S","issuerId":"12345","issuerReferenceId":"issuer-001","issuerTin":"94-2765431","taxYear":2025,"referenceId":"1042S-REF-001","tin":"112233445","recipientName":null,"address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2025-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2025-03-25","tinMatch":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateId":"CA98765432"},"tinType":"INDIVIDUAL","businessName":null,"businessName2":null,"firstName":"Michael","middleName":"Joseph","lastName":"Jackson","suffixName":"Jr","recipientSecondName":null,"accountNumber":"ACC01","noTin":false,"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"withholdingRatePoolIndicator":null,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}}]} # Form1099ListRequest |  (optional)
+    form1099_list_request = {"type":"1042-S","forms":[{"type":"1042-S","issuerId":"12345","issuerReferenceId":"issuer-001","issuerTin":"94-2765431","taxYear":2026,"referenceId":"1042S-REF-001","tin":"112233445","recipientName":null,"address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2026-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2026-03-25","tinMatch":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateId":"CA98765432"},"tinType":"INDIVIDUAL","businessName":null,"businessName2":null,"firstName":"Michael","middleName":"Joseph","lastName":"Jackson","suffixName":"Jr","recipientSecondName":null,"accountNumber":"ACC01","noTin":false,"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"withholdingRatePoolIndicator":null,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}}]} # Form1099ListRequest |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create or update multiple 1099/1095/W2/1042S forms
@@ -97,6 +97,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | Success |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
@@ -138,9 +139,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = forms1099_api.Forms1099Api(api_client)
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'b5b67ba5-a605-40a6-81ba-e67011f5e0e5' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '413aabed-02e8-4f97-934b-46bc00ba3d85' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    get1099_form200_response = {"type":"1042-S","issuerId":"12345","referenceId":"1042S-REF-001","tin":"112233445","recipientName":null,"address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2025-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2025-03-25","tinMatch":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateId":"CA98765432"},"tinType":"INDIVIDUAL","businessName":null,"businessName2":null,"firstName":"Michael","middleName":"Joseph","lastName":"Jackson","suffixName":"Jr","recipientSecondName":null,"accountNumber":"ACC01","noTin":false,"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"withholdingRatePoolIndicator":null,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}} # Get1099Form200Response |  (optional)
+    get1099_form200_response = {"type":"1042-S","issuerId":"12345","referenceId":"1042S-REF-001","tin":"112233445","recipientName":null,"address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2026-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2026-03-25","tinMatch":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateId":"CA98765432"},"tinType":"INDIVIDUAL","businessName":null,"businessName2":null,"firstName":"Michael","middleName":"Joseph","lastName":"Jackson","suffixName":"Jr","recipientSecondName":null,"accountNumber":"ACC01","noTin":false,"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"withholdingRatePoolIndicator":null,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}} # Get1099Form200Response |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Create a 1099/1095/W2/1042S form
@@ -186,6 +187,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
 **500** | Server Error |  -  |
@@ -226,7 +228,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | The unique identifier of the desired form to delete.
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'f41e7d08-4d01-48e7-8517-e69e88dfeab8' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '58eaeca0-f8ce-4407-a3f3-af22354c5eab' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -271,6 +273,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **204** | No Content |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
@@ -314,7 +317,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = '45a8d1d6-6749-49c6-aba7-af26e12032be' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '038dbf33-2ca4-41f4-bc32-e58774e2e318' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -361,6 +364,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | Success |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
@@ -403,7 +407,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     id = 'id_example' # str | The ID of the form
     avalara_version = '2.0.0' # str | API version
     mark_edelivered = True # bool | Optional boolean that if set indicates that the form should be marked as having been successfully edelivered (optional)
-    x_correlation_id = '937e70b0-33c3-4f2e-966a-2be03048e06e' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '973252ba-3cde-429f-82d6-5d1db25730c9' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -451,6 +455,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | Success |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
@@ -498,7 +503,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     order_by = 'order_by_example' # str | A comma separated list of sort statements in the format (fieldname) [ASC|DESC], for example id ASC. (optional)
     count = True # bool | If true, return the global count of elements in the collection. (optional)
     count_only = True # bool | If true, return ONLY the global count of elements in the collection.  It only applies when count=true. (optional)
-    x_correlation_id = '9473fcfd-36c1-4d60-8edf-b8faf6f4765f' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '549d97b7-5c09-4166-9981-dac91cf19858' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -550,6 +555,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | Success |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
@@ -592,9 +598,9 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = forms1099_api.Forms1099Api(api_client)
     id = 'id_example' # str | 
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'e4808387-f980-456b-bb19-49c90ce005c9' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = '8c2a33ad-c706-4c3f-b62e-6462c876c9de' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
-    get1099_form200_response = {"type":"1042-S","issuerId":"12345","referenceId":"1042S-REF-001","tin":"112233445","recipientName":null,"address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2025-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2025-03-25","tinMatch":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateId":"CA98765432"},"tinType":"INDIVIDUAL","businessName":null,"businessName2":null,"firstName":"Michael","middleName":"Joseph","lastName":"Jackson","suffixName":"Jr","recipientSecondName":null,"accountNumber":"ACC01","noTin":false,"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"withholdingRatePoolIndicator":null,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}} # Get1099Form200Response |  (optional)
+    get1099_form200_response = {"type":"1042-S","issuerId":"12345","referenceId":"1042S-REF-001","tin":"112233445","recipientName":null,"address":"1234 Corporate Blvd","address2":"Suite 500","city":"Anytown","state":"MA","zip":"12345","email":"email@example.com","nonUsProvince":null,"countryCode":"US","federalEfileDate":"2026-03-15","postalMail":true,"stateEfileDate":null,"recipientEdeliveryDate":"2026-03-25","tinMatch":false,"addressVerification":true,"stateAndLocalWithholding":{"stateTaxWithheld":50,"state":"CA","stateId":"CA98765432"},"tinType":"INDIVIDUAL","businessName":null,"businessName2":null,"firstName":"Michael","middleName":"Joseph","lastName":"Jackson","suffixName":"Jr","recipientSecondName":null,"accountNumber":"ACC01","noTin":false,"secondTinNotice":true,"uniqueFormId":"1234567890","recipientDateOfBirth":"1990-01-01","recipientGiin":"748291.59302.US.001","recipientForeignTin":"920456.38475.GM.002","lobCode":"06","incomeCode":"16","grossIncome":10000.5,"withholdingIndicator":"3","taxCountryCode":"GM","exemptionCodeChap3":"00","exemptionCodeChap4":"13","taxRateChap3":"30.00","withholdingAllowance":15,"federalTaxWithheld":1500.25,"taxNotDepositedIndicator":true,"academicIndicator":true,"withholdingRatePoolIndicator":null,"taxWithheldOtherAgents":100,"amountRepaid":200,"taxPaidAgent":50.5,"chap3StatusCode":"06","chap4StatusCode":"02","primaryWithholdingAgent":{"name":"Primary Agent Name","ein":"98-3456789"},"intermediaryOrFlowThrough":{"ein":"98-7654321","chap3StatusCode":"03","chap4StatusCode":"04","name":"Intermediary Name","giin":"748291.59302.US.002","countryCode":"US","foreignTin":"123-45-6789","address":"123 Main St.","city":"Cityville","state":"CA","zip":"98765"}} # Get1099Form200Response |  (optional)
     # example passing only required values which don't have defaults set
     try:
         # Update a 1099/1095/W2/1042S form
@@ -641,6 +647,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | Success |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |

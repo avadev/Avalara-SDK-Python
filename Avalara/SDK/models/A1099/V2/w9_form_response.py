@@ -24,7 +24,7 @@ AvaTax Software Development Kit for Python.
 @author     Jonathan Wenger <jonathan.wenger@avalara.com>
 @copyright  2022 Avalara, Inc.
 @license    https://www.apache.org/licenses/LICENSE-2.0
-@version    26.10.0
+@version    26.11.0
 @link       https://github.com/avadev/AvaTax-REST-V3-Python-SDK
 """
 
@@ -47,7 +47,12 @@ class W9FormResponse(BaseModel):
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The form type (always \"W9\" for this model).")
     name: Optional[StrictStr] = Field(default=None, description="The name of the individual or entity associated with the form.")
-    business_name: Optional[StrictStr] = Field(default=None, description="The name of the business associated with the form.", alias="businessName")
+    first_name: Optional[StrictStr] = Field(default=None, description="Individual first name.", alias="firstName")
+    middle_name: Optional[StrictStr] = Field(default=None, description="Individual middle name.", alias="middleName")
+    last_name: Optional[StrictStr] = Field(default=None, description="Individual last name.", alias="lastName")
+    suffix_name: Optional[StrictStr] = Field(default=None, description="Individual name suffix.", alias="suffixName")
+    business_name: Optional[StrictStr] = Field(default=None, description="DEPRECATED: The name of the business associated with the form. Use `name2` instead.", alias="businessName")
+    name2: Optional[StrictStr] = Field(default=None, description="The name of the business associated with the form. Replaces the deprecated `businessName` field.")
     business_classification: Optional[StrictStr] = Field(default=None, description="The classification of the business.", alias="businessClassification")
     business_other: Optional[StrictStr] = Field(default=None, description="The classification description when \"businessClassification\" is \"Other\".", alias="businessOther")
     foreign_partner_owner_or_beneficiary: Optional[StrictBool] = Field(default=None, description="Indicates whether the individual is a foreign partner, owner, or beneficiary.", alias="foreignPartnerOwnerOrBeneficiary")

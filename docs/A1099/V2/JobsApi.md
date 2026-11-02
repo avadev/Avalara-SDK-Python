@@ -41,7 +41,7 @@ with Avalara.SDK.ApiClient(configuration) as api_client:
     api_instance = jobs_api.JobsApi(api_client)
     id = 'id_example' # str | Job id obtained from other API responses, like `/1099/bulk-upsert`.
     avalara_version = '2.0.0' # str | API version
-    x_correlation_id = 'd583aa2b-23ac-46c3-8aa0-9b331b73ca3e' # str | Unique correlation Id in a GUID format (optional)
+    x_correlation_id = 'cb4adbd9-8864-4dee-b13f-3f323a253946' # str | Unique correlation Id in a GUID format (optional)
     x_avalara_client = 'Swagger UI; 22.1.0' # str | Identifies the software you are using to call this API. For more information on the client header, see [Client Headers](https://developer.avalara.com/avatax/client-headers/) . (optional)
     # example passing only required values which don't have defaults set
     try:
@@ -88,6 +88,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**503** | Server Error |  -  |
 **200** | Success |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
